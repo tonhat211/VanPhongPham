@@ -1,0 +1,44 @@
+.policy-container {
+  border: none;
+  max-width: 1400px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px 10px 10px 10px;
+}
+.policy-container .policy-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  padding: 10px 10px 10px 10px;
+  border: 2px blue solid;
+}
+.policy-container .policy-wrap .heading-bar {
+  font-size: 16px;
+  background: #fff;
+  padding-top: 15px;
+  color: black;
+  margin-left: 10px;
+}
+.policy-container .policy-wrap .heading-bar a {
+  color: black;
+}
+.policy-container .policy-wrap .policy-content {
+  padding-bottom: 1rem;
+}
+.policy-container .policy-wrap .policy-content .text-align {
+  text-align: start;
+  margin-left: 10px;
+  font-size: 18pt;
+  color: black;
+  font-weight: 700;
+}
+.policy-container .policy-wrap .policy-content li {
+  list-style: circle;
+}
+
+/*# sourceMappingURL=policyStyle.css.map */

@@ -1,0 +1,228 @@
+.info_container .title_info {
+  font-weight: 300;
+  font-size: 1.8rem;
+}
+.info_container .info_row {
+  gap: 20px;
+  grid-template-columns: 2fr 1.25fr;
+  display: grid;
+}
+.info_container .info_row .info_left .left_1 .left1_container {
+  flex-direction: column;
+  display: flex;
+}
+.info_container .info_row .info_left .left_1 .left1_container .infoBrand_status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.info_container .info_row .info_left .left_1 .left1_container .infoBrand_status .brand_product, .info_container .info_row .info_left .left_1 .left1_container .infoBrand_status .status_product {
+  position: relative;
+}
+.info_container .info_row .info_left .left_1 .left1_container .info_idP {
+  margin-top: 10px;
+}
+.info_container .info_row .info_left .left_1 .left1_container .product_data {
+  color: #2659f3;
+}
+.info_container .info_row .info_left .left_2 {
+  margin: 20px 0px;
+  border-radius: 3px;
+  padding: 20px;
+  background-color: #f1f1f1;
+  height: fit-content;
+}
+.info_container .info_row .info_left .left_2 .price_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.info_container .info_row .info_left .left_2 .price_container .prices {
+  font-size: 30px;
+  color: #2659f3;
+  font-weight: 500;
+}
+.info_container .info_row .info_left .left_2 .price_container .sale_price {
+  text-decoration: line-through;
+  font-size: 20px;
+}
+.info_container .info_row .info_left .left_2 .price_container .discounts_price {
+  margin-left: auto;
+  font-size: 20px;
+}
+.info_container .info_row .info_left .left_2 .price_container .discounts_price .idiscount {
+  font-size: 20px;
+  color: #f32c3d;
+}
+.info_container .info_row .info_left .left_3 .product_quatity {
+  gap: 20px;
+  display: flex;
+  align-items: center;
+}
+.info_container .info_row .info_left .left_3 .product_quatity .label_quantity {
+  margin-right: 10px;
+  font-weight: bold;
+}
+.info_container .info_row .info_left .left_3 .product_quatity .p_quantity {
+  display: flex;
+  align-items: center;
+}
+.info_container .info_row .info_left .left_3 .product_quatity .p_quantity .btn_decrement, .info_container .info_row .info_left .left_3 .product_quatity .p_quantity .btn_increment {
+  background-color: #ddd;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 0px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.info_container .info_row .info_left .left_3 .product_quatity .p_quantity .btn_decrement:hover, .info_container .info_row .info_left .left_3 .product_quatity .p_quantity .btn_increment:hover {
+  background-color: #ccc;
+}
+.info_container .info_row .info_left .left_3 .product_quatity .p_quantity .quantity_value {
+  text-align: center;
+  margin: 0px 10px;
+  width: 30px;
+  height: auto;
+  font-size: 16px;
+}
+.info_container .info_row .info_left .left_4 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.info_container .info_row .info_left .left_4 .add_Cart {
+  width: 50%;
+}
+.info_container .info_row .info_left .left_4 .buy_now {
+  width: 40%;
+}
+.info_container .info_row .info_left .left_4 .btn_cart, .info_container .info_row .info_left .left_4 .btn_buy {
+  white-space: nowrap;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.3s ease;
+}
+.info_container .info_row .info_left .left_4 .btn_cart {
+  border-radius: 5px;
+  background-color: white;
+  border: 1px solid #2659f3;
+  color: #2659f3;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 14px;
+  line-height: 45px;
+  font-weight: 600;
+}
+.info_container .info_row .info_left .left_4 .btn_cart .icart {
+  font-size: 25px;
+}
+.info_container .info_row .info_left .left_4 .btn_cart:hover {
+  background-color: #2659f3;
+  color: white;
+}
+.info_container .info_row .info_left .left_4 .btn_buy {
+  border-radius: 5px;
+  border: 1px solid #2659f3;
+  background-color: #2659f3;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 14px;
+  line-height: 45px;
+  font-weight: 600;
+}
+.info_container .info_row .info_left .left_4 .btn_buy:hover {
+  background-color: #007bff;
+}
+.info_container .info_row .info_right {
+  width: 100%;
+  height: fit-content;
+}
+.info_container .info_row .info_right .right_1 {
+  gap: 10px;
+  align-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  display: flex;
+  background: #dbe8ff;
+  border-radius: 6px;
+  margin: 15px 0px;
+  padding: 15px;
+  border: 2px dashed #2659f3;
+}
+.info_container .info_row .info_right .right_1 .right1_wrap {
+  font-weight: 600;
+  font-size: 15px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+}
+.info_container .info_row .info_right .right_2 {
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background: #dbe8ff;
+}
+.info_container .info_row .info_right .right2_container {
+  margin: 15px 0px;
+  width: 80%;
+  align-items: flex-start;
+  flex-direction: column;
+  display: flex;
+  border-radius: 6px;
+  gap: 10px;
+  flex-direction: column;
+  display: flex;
+}
+.info_container .info_row .info_right .right2_container .tickDiscount1, .info_container .info_row .info_right .right2_container .tickDiscount2 {
+  padding: 10px;
+  border-radius: 6px;
+  background-color: white;
+  height: fit-content;
+  flex-direction: row;
+  display: flex;
+}
+.info_container .info_row .info_right .right2_container .tickDiscount1 .tickDiscount_left, .info_container .info_row .info_right .right2_container .tickDiscount2 .tickDiscount_left {
+  font-size: 14px;
+  margin: auto;
+}
+.info_container .info_row .info_right .right2_container .tickDiscount1 .tickDiscount_right, .info_container .info_row .info_right .right2_container .tickDiscount2 .tickDiscount_right {
+  justify-content: space-between;
+  flex-direction: column;
+  display: flex;
+}
+.info_container .info_row .info_right .right2_container .tickDiscount1 .tickDiscount_right .tickDiscount_right1, .info_container .info_row .info_right .right2_container .tickDiscount2 .tickDiscount_right .tickDiscount_right1 {
+  text-align: center;
+  background: #dbe8ff;
+  font-weight: bold;
+  border: 1px dashed #2659f3;
+  color: #2659f3;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 15px;
+}
+.info_container .info_row .info_right .right2_container .tickDiscount1 .tickDiscount_right .tickDiscount_right2, .info_container .info_row .info_right .right2_container .tickDiscount2 .tickDiscount_right .tickDiscount_right2 {
+  white-space: nowrap;
+  font-weight: bold;
+  text-align: center;
+  width: fit-content;
+  background: #2659f3;
+  color: #fff;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 15px;
+}
+
+/*# sourceMappingURL=ProductsDetailsInfoStyles.css.map */

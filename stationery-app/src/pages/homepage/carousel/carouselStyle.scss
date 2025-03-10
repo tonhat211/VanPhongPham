@@ -1,0 +1,28 @@
+.top-carousel{
+    max-width: 70%;
+    max-height:fit-content;
+    // margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+}
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.3); /* Màu nền và độ mờ */
+    border-radius: 50%; /* Để tạo hình tròn */
+    width: 40px;
+    height: 40px;
+    
+  }
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: auto;
+  }
+  .carousel-control-prev{
+    padding-left: 20px;
+  }
+  .carousel-control-next{
+    padding-right: 20px;
+  }
+
+ 

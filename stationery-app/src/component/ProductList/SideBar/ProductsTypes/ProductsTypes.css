@@ -1,0 +1,20 @@
+.productsType_container {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  align-items: flex-start;
+}
+.productsType_container h2 {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  color: #2659f3;
+}
+.productsType_container .checkbox_wrap {
+  gap: 10px;
+  grid-template-columns: 1.5fr 1fr;
+  display: grid;
+}
+
+/*# sourceMappingURL=ProductsTypes.css.map */

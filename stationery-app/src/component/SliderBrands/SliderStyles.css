@@ -1,0 +1,38 @@
+.slider_brands .slick-slider {
+  width: 85%;
+  position: relative;
+}
+.slider_brands .slick-slider .slick-list {
+  overflow: hidden;
+}
+.slider_brands .slick-slider .slick-track {
+  display: flex;
+  gap: 10px;
+}
+.slider_brands .slick-slider .slick-prev:before, .slider_brands .slick-slider .slick-next:before {
+  color: #c1bebe;
+}
+.slider_brands .slick-slider .slick-prev {
+  left: -40px;
+}
+.slider_brands .slick-slider .slick-next {
+  right: -40px;
+}
+.slider_brands .slick-slider .slick-dots {
+  bottom: -30px;
+}
+.slider_brands .slick-slider .slick-dots li button:before {
+  font-size: 10px;
+  color: #c1bebe;
+}
+.slider_brands .slick-slider .slick-dots li.slick-active button:before {
+  color: #c1bebe;
+}
+.slider_brands .slider-container .imgs_wrap {
+  background-color: white;
+  cursor: pointer;
+  height: 61px;
+  width: 212px;
+}
+
+/*# sourceMappingURL=SliderStyles.css.map */

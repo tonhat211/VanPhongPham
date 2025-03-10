@@ -1,0 +1,32 @@
+.imgs_container {
+  gap: 10px;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  display: flex;
+  .img_large{
+
+    .large_imgDetail {
+      position: relative;
+      .imgDetail_large {
+        cursor: pointer;
+        width: 360px;
+        height: 360px;
+      }
+      .magnifier_img {
+        border: 1px solid #999797;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+      }
+    }
+  }
+  .list_imgs{
+    gap: 22px;
+    display: flex;
+    .imglist {
+      width: 74px;
+      height: 74px;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+.payment-med-wrap{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .mail-register{
+        width: 30%;
+        padding-left: 2rem;
+        
+        .sub-action{
+            color: #fff;
+            text-align: center;
+            background-color: #0d5cb6;
+            width: 90px;
+        }
+    }
+    .payment-title{
+        font-size: 25px;
+        color: #23486c;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+    .cert{
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .payment-med{
+        width: 30%;
+        padding-right: 2rem;
+        .payment-med-pic{
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            img{max-width: 100%;}
+        }
+    }
+}

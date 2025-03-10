@@ -1,0 +1,62 @@
+.listP_container {
+  gap: 2px;
+  padding: 40px 60px;
+  grid-template-columns: 0.5fr 2fr;
+  display: grid;
+  background-color: #f0f0f0;
+}
+.listP_container .listP_left {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+.listP_container .listP_right {
+  padding: 10px;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  background-color: white;
+  align-items: center;
+}
+.listP_container .listP_right .bannerAndSort img {
+  height: 290px;
+}
+.listP_container .listP_right .bannerAndSort .productItem_sort {
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+}
+.listP_container .listP_right .bannerAndSort .productItem_sort .sort {
+  text-transform: capitalize;
+  font-weight: 400;
+  color: #898989;
+}
+.listP_container .listP_right .bannerAndSort .productItem_sort .sort:hover {
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: white;
+  color: #2659f3;
+}
+.listP_container .listP_right .separator {
+  height: 1.5px;
+  background-color: #f0f0f0;
+  width: 100%;
+}
+.listP_container .listP_right .listProductsItem {
+  margin-left: 50px;
+  min-height: 489px;
+  padding: 20px 0px;
+  height: fit-content;
+  width: 100%;
+}
+.listP_container .listP_right .pagination_pages {
+  margin-right: 10px;
+  align-self: flex-end;
+  height: fit-content;
+  width: fit-content;
+}
+
+/*# sourceMappingURL=ListPageStyles.css.map */

@@ -1,0 +1,40 @@
+.description_container {
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  display: flex;
+}
+.description_container h2 {
+  margin-bottom: 0px;
+  align-self: flex-start;
+}
+.description_container .warp_descript {
+  width: 95%;
+}
+.description_container .warp_descript h4 {
+  margin: 15px 0px;
+  text-align: left;
+}
+.description_container .warp_descript p {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.description_container .warp_descript .name_p {
+  gap: 15px;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+}
+.description_container .warp_descript .improvement_p {
+  margin-bottom: 10px;
+}
+.description_container .characteristic_p span, .description_container .improvement_p span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/*# sourceMappingURL=ProductDiscriptionStyles.css.map */

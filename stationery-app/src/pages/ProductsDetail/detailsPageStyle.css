@@ -1,0 +1,35 @@
+.pdetails_main .pdetails_container {
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+.pdetails_main .pdetails_container .card1_container, .pdetails_main .pdetails_container .card2_container, .pdetails_main .pdetails_container .card3_container, .pdetails_main .pdetails_container .card4_container {
+  height: fit-content;
+  background-color: #ffffff;
+  border-radius: 8px;
+  width: 85%;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.pdetails_main .pdetails_container .card1_container .rows, .pdetails_main .pdetails_container .card2_container .rows, .pdetails_main .pdetails_container .card3_container .rows, .pdetails_main .pdetails_container .card4_container .rows {
+  display: flex;
+}
+.pdetails_main .pdetails_container .card1_container .rows .pdetails_imgs, .pdetails_main .pdetails_container .card2_container .rows .pdetails_imgs, .pdetails_main .pdetails_container .card3_container .rows .pdetails_imgs, .pdetails_main .pdetails_container .card4_container .rows .pdetails_imgs {
+  flex: 1;
+  padding-right: 20px;
+}
+.pdetails_main .pdetails_container .card1_container .rows .pdetails_info, .pdetails_main .pdetails_container .card2_container .rows .pdetails_info, .pdetails_main .pdetails_container .card3_container .rows .pdetails_info, .pdetails_main .pdetails_container .card4_container .rows .pdetails_info {
+  flex: 2;
+}
+.pdetails_main .pdetails_container .card2_container {
+  height: 550px !important;
+}
+.pdetails_main .pdetails_container .Label_sameTypes {
+  font-weight: bold;
+  text-align: left;
+}
+
+/*# sourceMappingURL=detailsPageStyle.css.map */

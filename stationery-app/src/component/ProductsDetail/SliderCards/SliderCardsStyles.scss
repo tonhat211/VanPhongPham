@@ -1,0 +1,44 @@
+.slick-slider {
+  width: 95%;
+  position: relative;
+
+  .slick-list {
+    overflow: hidden;
+  }
+
+  .slick-track {
+    display: flex;
+    gap: 10px;
+  }
+  .slick-prev:before, .slick-next:before {
+    color: #4a4ff5;
+  }
+  .slick-prev {
+    left: -40px;
+  }
+
+  .slick-next {
+    right: -40px;
+  }
+
+  .slick-dots {
+    bottom: -30px;
+
+    li button:before {
+      font-size: 10px;
+      color: #4a4ff5;
+    }
+
+    li.slick-active button:before {
+      color: #4a4ff5;
+    }
+  }
+}
+
+.slider-container {
+  flex-direction: row;
+  justify-content: center;
+  display: flex;
+  width: 98%;
+
+}

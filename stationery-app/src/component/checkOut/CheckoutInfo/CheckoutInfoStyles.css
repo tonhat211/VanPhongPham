@@ -1,0 +1,94 @@
+.checkOutInfo_main .checkOutInfo_header .logo_label {
+  text-indent: -9999px;
+  background: url("https://file.hstatic.net/1000230347/file/logo_web2_4343ca19bfcc4d59b6dec319e1111829.png") no-repeat;
+  width: 252px;
+  height: 58px;
+  color: #333333;
+}
+.checkOutInfo_main .checkOutInfo_header .sumary_header .item, .checkOutInfo_main .checkOutInfo_header .sumary_header .lastitem {
+  display: inline-block;
+  font-size: 0.85714em;
+  color: #999999;
+}
+.checkOutInfo_main .checkOutInfo_header .sumary_header .item a, .checkOutInfo_main .checkOutInfo_header .sumary_header .lastitem a {
+  color: #2b3033;
+}
+.checkOutInfo_main .checkOutInfo_header .sumary_header .item:after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 11px;
+  vertical-align: middle;
+  margin: 0 0.5em;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjExIiBvcGFjaXR5PSIuNCIgZmlsbD0iIzAwMCI+PHBhdGggZD0iTS41MjYgMS40MDhsNCA0LjY0NS4wMTQtLjgzLTQgNC4zNTQuOTIuODQ2IDQtNC4zNTYuMzc2LS40MS0uMzYyLS40Mi00LTQuNjQ1LS45NDguODE2eiIvPjwvc3ZnPg==), none;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .cus_info {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+  margin-left: 20px;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .cus_info .cus_avatar .css-i4bv87-MuiSvgIcon-root {
+  color: #9fa6b2;
+  font-size: 3.5rem;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .cus_info .cus_text {
+  margin-bottom: 1px;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container a {
+  color: #2b3033;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .form_info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .info_input {
+  position: relative;
+  margin-bottom: 20px;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .filled_input {
+  width: 100%;
+  padding: 10px 10px 10px 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .filled_input:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .input_label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  background-color: white;
+  color: #aaa;
+  pointer-events: none;
+  transition: 0.2s ease all;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .filled_input:focus ~ .input_label,
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .shrink {
+  top: -10px;
+  left: 5px;
+  font-size: 12px;
+  color: #007BFF;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .info_area {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container .info_area .info_input {
+  flex: 1;
+  min-width: 200px;
+}
+.checkOutInfo_main .checkOutInfo_form .checkOutForm_container label {
+  font-size: 14px;
+  color: #666;
+}
+
+/*# sourceMappingURL=CheckoutInfoStyles.css.map */

@@ -1,0 +1,144 @@
+.contact-page {
+  font-family: "Arial, sans-serif";
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.contact-page .contact-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 2em;
+}
+.contact-page .contact-description {
+  text-align: center;
+  color: #555;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+.contact-page .contact-section {
+  margin-top: 20px;
+}
+.contact-page .contact-section h2 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+.contact-page .contact-section p {
+  color: #555;
+  margin-bottom: 5px;
+}
+.contact-page .social-links {
+  text-align: center;
+}
+.contact-page .social-links .social-link {
+  margin: 0 10px;
+  font-size: 1.2em;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+.contact-page .social-links .social-link.facebook {
+  color: #fff;
+  background-color: #3b5998;
+}
+.contact-page .social-links .social-link.facebook:hover {
+  background-color: #2d4373;
+}
+.contact-page .social-links .social-link.instagram {
+  color: #fff;
+  background-color: #ab5e99;
+}
+.contact-page .social-links .social-link.instagram:hover {
+  background-color: #9b1c70;
+}
+.contact-page .feedback-section {
+  margin-top: 40px;
+  text-align: center;
+}
+.contact-page .feedback-section .toggle-feedback-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.contact-page .feedback-section .toggle-feedback-btn:hover {
+  background-color: #555;
+}
+.contact-page .feedback-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contact-page .feedback-modal .feedback-modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  width: 80%;
+  max-width: 500px;
+}
+.contact-page .feedback-modal .feedback-modal-content .close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.contact-page .feedback-modal .feedback-modal-content .feedback-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contact-page .feedback-modal .feedback-modal-content .feedback-form .form-group {
+  margin-bottom: 15px;
+  width: 100%;
+}
+.contact-page .feedback-modal .feedback-modal-content .feedback-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1em;
+  color: #333;
+}
+.contact-page .feedback-modal .feedback-modal-content .feedback-form .form-group input, .contact-page .feedback-modal .feedback-modal-content .feedback-form .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+.contact-page .feedback-modal .feedback-modal-content .feedback-form .form-group textarea {
+  resize: vertical;
+  height: 100px;
+}
+.contact-page .feedback-modal .feedback-modal-content .feedback-form .submit-feedback-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.contact-page .feedback-modal .feedback-modal-content .feedback-form .submit-feedback-btn:hover {
+  background-color: #555;
+}
+
+/*# sourceMappingURL=contactStyle.css.map */

@@ -1,0 +1,23 @@
+.checkOut_container {
+  gap: 2px;
+  padding: 40px 60px;
+  grid-template-columns: 1fr 1fr;
+  display: grid;
+  background-color: #f0f0f0;
+}
+.checkOut_container .checkOut_left {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+.checkOut_container .checkOut_right {
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+/*# sourceMappingURL=CheckoutPageStyles.css.map */

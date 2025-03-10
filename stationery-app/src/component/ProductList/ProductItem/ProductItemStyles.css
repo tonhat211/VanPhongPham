@@ -1,0 +1,125 @@
+.card {
+  width: 311.875px;
+  border: 1px solid gray;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+.card .card_top {
+  height: 311.875px;
+  width: 100%;
+}
+.card .card_top .wrapImgs {
+  padding-bottom: 10px;
+}
+.card .card_top .wrapImgs .img_other {
+  height: 311.875px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+.card .card_top .wrapImgs .img_other:hover {
+  transform: scale(1.05);
+}
+.card .card_bottom {
+  padding: 10px;
+  width: 100%;
+}
+.card .card_bottom .titleProduct {
+  color: #666666;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 14px;
+  margin: 0 10px 0 10px;
+  line-height: 1.5;
+  height: 42px;
+  text-transform: uppercase;
+  font-weight: bold;
+  justify-content: center;
+}
+.card .card_bottom .price_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.card .card_bottom .price_container .prices {
+  font-size: 18px;
+  color: #2659f3;
+  font-weight: bold;
+}
+.card .card_bottom .price_container .sale_price {
+  font-weight: bold;
+  color: #666666;
+  text-decoration: line-through;
+  font-size: 16px;
+}
+.card .card_bottom .others {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.card .card_bottom .others .others_discounts {
+  margin-left: 10px;
+  margin-right: 10px;
+  position: static;
+  width: 55px;
+  height: 32px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-image: url(https://file.hstatic.net/1000230347/file/tag-percent_b0f205ed1ad446b3adcf3087f5961d68.png);
+}
+.card .card_bottom .others .others_discounts .discounts_price {
+  padding-left: 15px;
+  width: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+}
+.card .card_bottom .others .others_discounts .discounts_price .idiscount {
+  font-size: 20px;
+  color: #f32c3d;
+}
+.card .card_bottom .others .others_btns {
+  display: flex;
+  align-items: center;
+}
+.card .card_bottom .others .others_btns .ivisible, .card .card_bottom .others .others_btns .iaddCart {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22%;
+  min-width: fit-content;
+  height: 30px;
+  cursor: pointer;
+}
+.card .card_bottom .others .others_btns .ivisible {
+  background-color: #2659f3;
+  margin-right: 15px;
+}
+.card .card_bottom .others .others_btns .iaddCart {
+  background-color: #c11313;
+  margin-right: 15px;
+}
+
+/*# sourceMappingURL=ProductItemStyles.css.map */

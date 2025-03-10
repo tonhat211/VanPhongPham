@@ -1,0 +1,40 @@
+.pdetails_main {
+  .pdetails_container {
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+
+    .card1_container, .card2_container, .card3_container, .card4_container {
+      height: fit-content;
+      background-color: #ffffff;
+      border-radius: 8px;
+      width: 85%;
+      padding: 20px;
+      margin-bottom: 20px;
+
+      .rows {
+        display: flex;
+
+        .pdetails_imgs {
+          flex: 1;
+          padding-right: 20px;
+        }
+
+        .pdetails_info {
+          flex: 2;
+        }
+      }
+    }
+
+    .card2_container {
+height: 550px !important;
+    }
+    .Label_sameTypes {
+      font-weight: bold;
+      text-align: left;
+    }
+  }
+}

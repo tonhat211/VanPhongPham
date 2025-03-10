@@ -1,0 +1,15 @@
+.productsPrices_container {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  align-items: flex-start;
+}
+.productsPrices_container h2 {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  color: #2659f3;
+}
+
+/*# sourceMappingURL=ProductPrices.css.map */

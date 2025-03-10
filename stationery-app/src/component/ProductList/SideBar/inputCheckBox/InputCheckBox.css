@@ -1,0 +1,19 @@
+.label_sidebar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.label_sidebar input[type=checkbox] {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+.label_sidebar .choose {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/*# sourceMappingURL=InputCheckBox.css.map */
