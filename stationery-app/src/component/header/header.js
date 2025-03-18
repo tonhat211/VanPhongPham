@@ -1,12 +1,7 @@
 import {memo} from "react";
 import Icon from '@mdi/react';
-import { mdiMagnify, mdiWeight } from '@mdi/js';
-import { mdiPhone } from '@mdi/js';
-import { mdiBell } from '@mdi/js';
-import { blue } from '@mui/material/colors';
-import { yellow } from '@mui/material/colors';
-import { mdiShoppingOutline } from '@mdi/js';
-
+import { mdiMagnify, mdiPhone, mdiBell,mdiShoppingOutline  } from '@mdi/js';
+import { blue,yellow } from '@mui/material/colors';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import logo from '../../resource/logo.webp';
 import './headerStyle.scss';
@@ -78,7 +73,7 @@ function Header (){
                                 <input  type="search"  value={searchTerm} name="search-product" placeholder="Tìm kiếm sản phẩm..." className="input-search"/>
                                 <span className="search-action">
                                     <button type="submit" className="search-button">
-                                        <Icon path={mdiMagnify} size={1} style={{ color: blue[800] }}/>
+                                        <Icon path={mdiMagnify} size={1} style={{ color: "white" }}/>
                                     </button>
                                 </span>
                             </form>
@@ -104,27 +99,26 @@ function Header (){
                             <ul>
                                 <li className="hot-line">
                                     <div className="icon">
-                                        <Icon path={mdiPhone} size={1} style={{ color: blue[800] }} />
+                                        <Icon path={mdiPhone} size={1} style={{ color: "white" }} />
                                     </div>
                                     <div className="detail">
-                                        <span>Hỗ trợ khách hàng</span>
                                         <a className="phone-num">1900 100 615</a>
+                                        <span>Hỗ trợ khách hàng</span>
                                     </div>
                                 </li>
                                 <li className="user-prof">
                                     <div className="icon">
-                                        <PersonOutlineOutlinedIcon style={{ color: blue[800]}} />
+                                        <PersonOutlineOutlinedIcon style={{ color:  "white"}} />
                                     </div>
                                     <div className="detail">
-                                        <a className="userName">User 1</a>
-                                        <small>Đăng xuất</small>
+                                        <a className="sign-in">Đăng nhập</a>
+                                        <a  className="sign-up">Đăng ký</a>
                                     </div>
                                 </li>
                                 <li className="cart-group">
                                     <div className="mini-cart">
                                         <a className="hover-cart" href="/cart">
-                                            <Icon path={mdiShoppingOutline} size={1} />
-                                            <span className="cart-text">Giỏ hàng</span>
+                                            <Icon path={mdiShoppingOutline} size={1.25} style={{ color: " #17479d"}}  />
                                             <span className="item-num">{cartItems.length}</span>
                                         </a>
                                         {/* cart hover xem các sản phẩm */}
@@ -161,14 +155,6 @@ function Header (){
 
                                         </div>
                                     </div>
-                                </li>
-                                <li className="noti-head">
-                                    <div className="noti-wrapper">
-                                        <div className="noti-head-count">{notidat.length == 0?0:notidat.length}</div>
-                                        <Icon path={mdiBell} size={1.3} style={{color: yellow[500]}} />
-
-                                    </div>
-
                                 </li>
                             </ul>
                         </div>

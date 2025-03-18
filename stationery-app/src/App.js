@@ -5,6 +5,7 @@ import CartPage from "./pages/CartPage/CartPage"; // Import the CartPage
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MasterLayout from "./layout/masterLayout";
 import RouterCustom from "./router";
+import HomePage from "./pages/homepage/homePage";
 
 function App() {
   
@@ -13,6 +14,7 @@ function App() {
   
       <BrowserRouter>
         <RouterCustom/>
+
       </BrowserRouter>
   );
 }

@@ -1,15 +1,22 @@
 //file này qui định các màu sắc của page (mục tiêu là có thể thay đổi theme sáng / tối)
-$light-theme-colors :(
+$colors :(
+        //background
     "primary-background":#f1f1f1,
-    "text-color": #000000,
-    "text-secondary-color": #666666,
-    "primary-color": #2659f3,
-    "secondary-color": #0d5cb6,
-    "price-color": #2659f3,
     "topbar-bg": #fdd835,
+        //color -search
     "topbar-color": #000000,
     "header-background": #2659f3,
     "header-color": #ffffff,
     "label-background": #ff910d,
-    "label-color": #ffffff,
+
+        //text
+        "text-color": #000000,
+        "text-secondary-color": #666666,
+        "primary-color": #2659f3,
+        //color -search
+        "secondary-color": #0d5cb6,
+        "header-btn-color": #17479d,
+        "header-text-color": #808089,
+        "placeholder_color": #363636,
+        "price-color": #2659f3,
 )
