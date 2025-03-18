@@ -1,12 +1,34 @@
-@import '../../style/theme/_color.scss';
+@import '../../style/style.scss';
+
+// styles
+$theme-colors: $colors;
+$text-colors: (
+        "placeholder_color" :  map-get($colors, "placeholder_color"),
+        "title": map-get($colors, "primary"),
+        "body": map-get($colors, "text-color"),
+        "muted": map-get($colors, "muted"),
+);
+
+@mixin typography($type) {
+    font-size: map-get($typography, $type, font-size);
+    line-height: map-get($typography, $type, line-height);
+    font-weight: map-get($typography, $type, font-weight);
+    font-family: map-get($typography, $type, font-family);
+    color: map-get($text-colors, $type);
+}
+
 .header{
     display: block;
     .mid-header{
-        background-color:map-get($map: $light-theme-colors, $key:"header-background" ) ;
-        color:map-get($map: $light-theme-colors, $key: "label-color");
+        background-color:map-get($theme-colors, "header-color" ) ;
+        color:map-get($theme-colors, "header-text-color");
         padding:10px 0px;
+        text-align: left;
+        font-weight: 400;
+        line-height: 1.5;
+        font-size: 1rem;
         .header-container{
-            background-color: map-get($map: $light-theme-colors, $key: header-background);
+            background-color: map-get($map: $colors, $key: header-color);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -14,8 +36,6 @@
             padding: 5px 0 5px 0;
             .wrapper{
                 display: flex;
-                width: 1400px;
-                // background-color: black;
                 align-items: center;
                 .header-right{
                     flex:1;
@@ -24,6 +44,7 @@
                     .logo-wrapper{
                         display: block;
                         .img-fluid{
+                            margin-left: 2.5rem;
                             max-width: 100%;
                             height: auto;
                         }
@@ -35,10 +56,10 @@
                     margin-right: 2rem;
                     .search-bar{
                         overflow: hidden;
-                        border-radius: .25rem;
+                        border-radius: 0.75rem;
                         position: relative;
                         margin-right: 2rem;
-                        
+
                     }
                     .input-group{
                         display: flex;
@@ -49,20 +70,19 @@
                             padding-bottom: 8px;
                         }
                         .input-search{
+                            @include typography("placeholder_color");
                             font-family: "inherit";
                             width: 100%;
                             height: 40px;
                             line-height: 40px;
                             outline: none;
-                            font-weight: 400;
-                            font-size: 1rem;
                             padding: 0 50px 0 10px;
                             float: right;
                             overflow: hidden;
                             background: #fff;
-                            border-radius: .25rem;
                             border: none;
-                            color: #363636;
+                            border: 1px solid #dddde3;
+                            border-radius: 0.75rem;
                         }
                     }
                     .search-action{
@@ -72,8 +92,7 @@
                         right: 0px;
                         z-index: 4;
                         height: 100%;
-                        border-radius: .25rem;
-                        background-color: map-get($map: $light-theme-colors, $key: secondary-color) ;
+                        border-radius: 0.75rem;
                         button{
                             display: flex;
                             align-items: center;
@@ -88,7 +107,7 @@
                             padding: .375rem .75rem;
                             border-radius: 0;
                             line-height: 1.5;
-                            background-color: map-get($map: $light-theme-colors, $key: topbar-bg);
+                            background-color: map-get($map: $colors, $key: header-btn-color);
                             cursor: pointer;
                         }
                         
@@ -107,6 +126,7 @@
                         display: flex;
                         padding-left: 0px;
                         list-style: none;
+                        justify-content: flex-end !important;
                         li{
                             display: flex;
                             align-items: flex-start;
@@ -114,7 +134,7 @@
                             .icon{
                                 width: 35px;
                                 height: 35px;
-                                background: #fbe263;
+                                background-color: map-get($map: $colors, $key: header-btn-color);
                                 border-radius: 50%;
                                 display: flex;
                                 justify-content: center;
@@ -126,17 +146,21 @@
                                 display: flex;
                                 flex-direction: column;
                                 flex: 1;
-                                font-size: 17px;
+                                font-size: 85%;
                                 a{
                                     display: block;
                                     font-weight: 700;
-                                    color: #fff;
+                                    color: map-get($map: $colors, $key: header-text-color);
                                 }
+                                .sign-up {
+                                    font-weight: 400 !important;
+                                }
+
                             }
                             .phone-num{
                                 text-decoration: none;
                             }
-                            
+
                             .mini-cart{
                                 position: relative;
                                 float: left;
@@ -145,27 +169,24 @@
                                     display: flex;
                                     align-items: center;
                                     padding: 6px;
-                                    border: 2px solid #fff;
-                                    border-radius: 6px;
                                     text-decoration: none;
-                                    color:#fff;
-                                    .cart-text{
-                                        margin-left: .5rem;
-                                        margin-right: .5rem;
-                                        font-size: 17px;
-                                        font-weight: 400;
-                                        line-height: 1.5rem;
-                                    }
+                                    color: #fff;
                                     .item-num{
-                                        display: block;
-                                        background: #fbe263;
-                                        padding: 2px 6px;
-                                        border-radius: 4px;
-                                        font-size: 15px;
-                                        color: map-get($map: $light-theme-colors, $key: primary-color);
+                                        right: 0px;
+                                        position: absolute;
+                                        top: -8px;
+                                        border-radius: 50%;
+                                        font-weight: bold;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        min-width: 20px;
+                                        border: 1px solid white;
+                                        height: fit-content;
+                                        background: red;
                                     }
                                 }
-                                
+
 
                                 //NOTE cart dropdown
                                 .top-cart-content{
@@ -191,25 +212,6 @@
 
                             }
                         }
-                        .noti-head{
-                            position:relative;
-                            cursor: pointer;
-                            .noti-wrapper{
-                                .noti-head-count{
-                                    position: absolute;
-                                    right: -4px;
-                                    top: -3px;
-                                    background: red;
-                                    font-size: 14px;
-                                    width: 20px;
-                                    height: 20px;
-                                    display: flex;
-                                    justify-content: center;
-                                    align-items: center;
-                                    border-radius: 50%;
-                                }
-                            }
-                    }
                 }
             }
         }
