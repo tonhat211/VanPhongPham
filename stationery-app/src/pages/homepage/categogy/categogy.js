@@ -1,67 +1,67 @@
 import {memo} from 'react';
 import "./categogyStyle.scss"
 import Icon from '@mdi/react';
-import { mdiFountainPen } from '@mdi/js';
-import { blue } from '@mui/material/colors';
-import { mdiChevronDoubleRight } from '@mdi/js';
-import { mdiPackage } from '@mdi/js';
-import { mdiPalette } from '@mdi/js';
 
-import { mdiNoteEdit } from '@mdi/js';
+import { mdiChevronRight } from '@mdi/js';
 
-import { mdiCrownCircleOutline } from '@mdi/js';
-import { mdiTools } from '@mdi/js';
-import { mdiBookOpenBlankVariant } from '@mdi/js';
-import { mdiDeskLamp } from '@mdi/js';
-import { mdiGift } from '@mdi/js';
 import { Link } from 'react-router-dom';
+
+import pen from "../../../resource/pen.webp"
+import vpp from "../../../resource/vpp.webp"
+import dcht from "../../../resource/dcht.webp"
+import art from "../../../resource/art.webp"
+import paper from "../../../resource/paper.webp"
+import vippen from "../../../resource/vippen.webp"
+import steamdiy from "../../../resource/steamdiy.webp"
+import book from "../../../resource/book.webp"
+import gift from "../../../resource/gift.webp"
 
 function Categogy(){
     const list =  [
+             {
+                 "icon": pen,
+                 "label":"Bút viết",
+             },
+         {
+             "icon":vpp,
+             "label":"Văn phòng phẩm",
+         },
+             {
+                 "icon":dcht,
+                 "label":"Dụng Cụ Học Tập",
+             },
+             {
+                 "icon": art,
+                 "label":"Mỹ Thuật",
+             },
+             {
+                 "icon": paper,
+                 "label":"Giấy In",
+             },
+             {
+                 "icon": vippen,
+                 "label":"Bút cao cấp",
+             },
             {
-                "icon":mdiFountainPen ,
-                "label":"Bút viết",
-            },
-            {
-                "icon":mdiPackage,
-                "label":"Dụng Cụ Học Tập",
-            },
-            {
-                "icon":mdiPalette,
-                "label":"Mỹ Thuật",
-            },
-            {
-                "icon":mdiNoteEdit,
-                "label":"Giấy In",
-            },
-            {
-                "icon":mdiCrownCircleOutline,
-                "label":"Bút cao cấp",
-            },
-            {
-                "icon":mdiTools,
+                "icon": steamdiy,
                 "label":"STEAM & DIY",
             },
-            {
-                "icon":mdiBookOpenBlankVariant,
-                "label":"Sách",
-            },
-            {
-                "icon":mdiDeskLamp,
-                "label":"Sản phẩm Rạng Đông, Inochi",
-            },
-            {
-                "icon":mdiGift,
-                "label":"Quà tặng - Lifestyle"
-            },
+             {
+                 "icon": book,
+                 "label":"Sách",
+             },
+             {
+                 "icon": gift,
+                 "label":"Quà tặng - Lifestyle"
+             },
         ];
         const generateQueryParams = () => {
             const queryParams = new URLSearchParams();
-            
+
             list.forEach(ct => {
                 queryParams.append("categogy",ct);
             })
-        
+
             return queryParams.toString();
           };
 
@@ -71,28 +71,16 @@ function Categogy(){
                 <li className='item'>
                     {list.map(item =>{
                         return(
-                            <Link to={"/products"} className='item-link' title='Bút viết'>
+                            <Link to={"/products"} className='item-link' title=''>
                                 <span>
-                                    <Icon path={item.icon} className='left-icon' size={1} style={{ color: blue[800] }} />
+                                    <img src={item.icon} className='left-icon' alt={item.label} style={{ width: 24, height: 24 }} />
                                     {item.label}
                                 </span>
-                                <Icon path={mdiChevronDoubleRight} className='right-icon' size={1} />
+                                <Icon path={mdiChevronRight} className='right-icon' size={1} />
                             </Link>
                         )
                     })}
-                    {/* <div className='beside-dropdown'>
-                        <ul className='sub-list'>
-                            <div className='row'>
-                                <div className='col'>
-                                    <li className='sub-list-item'>
-                                        <a>
-                                            <span>Bộ sưu tập bút xóa được</span>
-                                        </a>
-                                    </li>
-                                </div>
-                            </div>
-                        </ul>
-                    </div> */}
+
                 </li>
             </ul>
         </div>

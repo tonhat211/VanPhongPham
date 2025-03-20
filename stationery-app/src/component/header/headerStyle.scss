@@ -18,7 +18,15 @@ $text-colors: (
 }
 
 .header{
+    position: sticky;
+    top: 0;
     display: block;
+    z-index: 1000;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    &.scrolled {
+        background-color: rgba(255, 255, 255, 0.98);
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+    }
     .mid-header{
         background-color:map-get($theme-colors, "header-color" ) ;
         color:map-get($theme-colors, "header-text-color");
@@ -52,7 +60,6 @@ $text-colors: (
                 }
                 .header-center{
                     flex: 1 2;
-                    max-width: 33.33%;
                     margin-right: 2rem;
                     .search-bar{
                         overflow: hidden;
@@ -180,7 +187,7 @@ $text-colors: (
                                         display: flex;
                                         justify-content: center;
                                         align-items: center;
-                                        min-width: 20px;
+                                        min-width: 22px;
                                         border: 1px solid white;
                                         height: fit-content;
                                         background: red;

@@ -1,20 +1,23 @@
 .cate-container{
-    width: 30%;
+    width: 100%;
     max-height: fit-content;
     display: block;
     position: relative;
-    margin-top: 20px;
     .cate-list{
         height: fit-content;
         border-radius: 0.5rem 0 0 0.5rem;
         width: 100%;
         .item{
+            padding: 5px 10px 10px 10px;
+            border-radius: 0.5rem;
             cursor: pointer;
             border-bottom: 0;
             border-width: 0 0 1px;
             display: block;
             background-color: #fff;
-            border: 1px solid rgba(0, 0, 0, .125);
+            .tilte {
+                padding: 5px 0px 0px 10px !important;
+            }
             a{
                 display: flex;
                 color: black;
@@ -24,11 +27,10 @@
                 text-decoration: none;
                 align-items: center;
                 justify-content: space-between;
-                padding: 4px 0 4px 0;
+                padding: 5px 0 5px 0;
                 span{
                     .left-icon {
-                        margin-right: 8px; // Thêm khoảng cách phải
-                        margin-right: 8px;
+                        margin-right: 24px; // Thêm khoảng cách phải
                     }
                 }
                 .right-icon{

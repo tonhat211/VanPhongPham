@@ -1,6 +1,6 @@
 import {memo} from "react";
 import Icon from '@mdi/react';
-import { mdiMagnify, mdiPhone, mdiBell,mdiShoppingOutline  } from '@mdi/js';
+import { mdiMagnify, mdiPhone,mdiCart  } from '@mdi/js';
 import { blue,yellow } from '@mui/material/colors';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import logo from '../../resource/logo.webp';
@@ -56,9 +56,27 @@ function Header (){
               window.location.href = `/search?query=${encodeURIComponent(searchTerm)}`;
           }
       };
+
+      // handle shadow scroll
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
     
     return (
-        <header className="header">
+        <header className={`header ${scrolled ? "scrolled" : ""}`}>
             <div className="mid-header">
                 <div className="header-container">
                     <div className="wrapper">
@@ -118,7 +136,7 @@ function Header (){
                                 <li className="cart-group">
                                     <div className="mini-cart">
                                         <a className="hover-cart" href="/cart">
-                                            <Icon path={mdiShoppingOutline} size={1.25} style={{ color: " #17479d"}}  />
+                                            <Icon path={mdiCart} size={1.25} style={{ color: " #17479d"}}  />
                                             <span className="item-num">{cartItems.length}</span>
                                         </a>
                                         {/* cart hover xem các sản phẩm */}
