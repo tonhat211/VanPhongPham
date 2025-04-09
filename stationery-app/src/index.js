@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
-
 import './style/style.scss'
 import {createTheme, ThemeProvider} from "@mui/material";
 import { Provider } from 'react-redux';
@@ -10,6 +8,7 @@ import store from './redux/store'
 import App from './App'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import GlobalStyles from './component/GlobalStyles';
 const theme = createTheme({
     root: {
 
@@ -19,8 +18,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-       <App />
-       <ToastContainer position="top-right" autoClose={1500} />
+        <GlobalStyles>
+          <App />
+          <ToastContainer position="top-right" autoClose={1500} />
+        </GlobalStyles>
+       
     </Provider>,
   </React.StrictMode>
   

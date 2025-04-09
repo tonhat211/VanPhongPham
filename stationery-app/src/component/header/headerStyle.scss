@@ -1,3 +1,5 @@
+@import '../GlobalStyles/GlobalStyles.scss';
+
 @import '../../style/style.scss';
 
 // styles
@@ -13,7 +15,7 @@ $text-colors: (
     font-size: map-get($typography, $type, font-size);
     line-height: map-get($typography, $type, line-height);
     font-weight: map-get($typography, $type, font-weight);
-    font-family: map-get($typography, $type, font-family);
+    font-family:  'Poppins', sans-serif;
     color: map-get($text-colors, $type);
 }
 

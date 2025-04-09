@@ -1,0 +1,81 @@
+.search-form {
+    border: 1px solid #dddde3;
+    border-radius: 10px;
+    overflow: hidden;
+    min-width: 100%;
+
+    input {
+        border: none;
+        outline: none;
+        padding: 10px;
+        width: 100%;
+        
+    }
+
+    &:focus-within {
+        // outline: 2px solid var(--primary-color);
+        box-shadow: 0 0 0 .25rem var(--primary-hover-color);
+
+    }
+
+    i {
+        margin: auto 10px;
+    }
+
+}
+
+.search-btn {
+    width: 40px;
+    &:hover {
+        cursor: pointer;
+        opacity: 0.4;
+    }
+}
+
+.search-box {
+    background-color: #fff;
+    width: 100%;
+    box-shadow: 1px 0px 6px 0.25rem var(--primary-hover-color);
+    padding: 10px;
+    max-height: 80vh;
+    min-height: 70vh;
+    border-radius: 20px;
+
+}
+
+.search-result-item {
+    display: flex;
+    border-radius: 10px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: var(--primary-hover-color);
+    }
+
+    img {
+       width: 100%; 
+       padding: 5px;
+       border-radius: 10px;
+
+    }
+
+    .name {
+        font-size: 1.3rem;
+    }
+
+    .current-price {
+        font-size: 1.5rem;
+        color: var(--price-color);
+        display: block;
+        font-weight: 600;
+    }
+
+    .init-price {
+        font-size: 1.1rem;
+        color: var(--text-secondary-color);
+        text-decoration: line-through;
+        display: block;
+    }
+
+}
+
