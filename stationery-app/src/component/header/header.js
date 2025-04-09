@@ -88,7 +88,7 @@ function Header (){
                         <div className="header-center">
                             {/* //search form */}
                             <form  onSubmit={handleSubmit }  method="get" className=" input-group search-bar" role="search">
-                                <input  type="search"  value={searchTerm} name="search-product" placeholder="Tìm kiếm sản phẩm..." className="input-search"/>
+                                <input  type="search"  value={searchTerm} name="search-product" placeholder="Tìm kiếm sản phẩm..." className="input-search" onChange=""/>
                                 <span className="search-action">
                                     <button type="submit" className="search-button">
                                         <Icon path={mdiMagnify} size={1} style={{ color: "white" }}/>
