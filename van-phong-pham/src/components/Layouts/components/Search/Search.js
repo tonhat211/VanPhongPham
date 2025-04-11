@@ -77,10 +77,7 @@ function Search() {
 
     return (
         <div
-            className="grid-col-5"
-            style={{
-                margin: '0 20px',
-            }}
+
         >
             <HeadlessTippy
                 interactive

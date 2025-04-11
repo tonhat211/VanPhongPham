@@ -34,7 +34,7 @@
 
 .search-box {
     background-color: #fff;
-    width: 100%;
+    width: 100% !important;
     box-shadow: 1px 0px 6px 0.25rem var(--primary-hover-color);
     padding: 10px;
     max-height: 80vh;
