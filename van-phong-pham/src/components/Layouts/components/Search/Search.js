@@ -89,7 +89,7 @@ function Search() {
                 controller.abort(); // Huỷ API call nếu input thay đổi quá nhanh
             };
         } else {
-            setSearchRestults(null);
+            setSearchRestults([]);
         }
     }, [searchInput]);
 
