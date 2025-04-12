@@ -6,15 +6,16 @@
     --text-secondary-color: #666666;
     --primary-color: #2659f3;
     --secondary-color: #0d5cb6;
-    --price-color: #2659f3;
     --topbar-bg: #fdd835;
     --topbar-color: #000000;
     --header-background: #ffffff;
     --header-color: #17479d;
     --label-background: #ff910d;
     --label-color: #ffffff;
-    --primary-hover-color: #2659f32e;
+    --primary-boxShadow-color: #2659f32e;
+    --primary-hover-color: #2659f317;
     --price-color: #fa0303;
+    --primary-backround-color:#efefef;
 
 
 }
@@ -78,6 +79,12 @@ body {
     display: flex;
     justify-content: space-between;
 }
+
+.d-flex-al-center {
+    display: flex;
+    align-items: center;
+}
+
 
 .d-flex-center-center {
     display: flex;
@@ -229,3 +236,16 @@ body {
     border-radius: 10px;
 }
 /* end scroll bar*/
+
+
+.divider {
+    border: 1px solid var(--primary-boxShadow-color); 
+}
+
+.container {
+    padding-top: 80px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: var(--primary-backround-color);
+    display: flex;
+}
