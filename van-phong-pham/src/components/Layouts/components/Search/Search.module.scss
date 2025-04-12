@@ -4,11 +4,14 @@
     overflow: hidden;
     min-width: 100%;
 
+
     input {
         border: none;
         outline: none;
         padding: 10px;
         width: 100%;
+        font-size: 1.6rem;
+        height: 40px;
         
     }
 
@@ -35,11 +38,15 @@
 .search-box {
     background-color: #fff;
     width: 100%;
-    box-shadow: 1px 0px 6px 0.25rem var(--primary-hover-color);
+    box-shadow: 1px 0px 6px 0.25rem var(--primary-boxShadow-color);
     padding: 10px;
     max-height: 80vh;
-    min-height: 70vh;
     border-radius: 20px;
+
+    .title {
+        padding: 5px;
+        font-weight: 600;
+    }
 
 }
 
@@ -77,5 +84,49 @@
         display: block;
     }
 
+}
+
+.recent-search-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 10px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: var(--primary-hover-color);
+    }
+
+    p {
+        display: block;
+        color: var(--text-secondary-color);
+        font-size: 1.2rem;
+    }
+
+    i {
+        &:hover {
+            opacity: 0.3;
+        }
+    }
+}
+
+.trend-search-item {
+    padding: 6px 10px;
+    margin: 4px 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-boxShadow-color);
+    color: var(--header-color);
+    border-radius: 20px;
+    font-size: 1.2rem;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.3;
+    }
+    
+  
 }
 

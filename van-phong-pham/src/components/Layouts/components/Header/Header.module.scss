@@ -3,9 +3,85 @@
     // justify-content: space-between;
     align-items: center;
     padding: 10px;
+    position: fixed;
+    z-index: 1;
+    background-color: white;
 
 }
 
 .logo {
     width: 100%;
+}
+
+.header-menu-item {
+    padding: 7px;
+    border-radius: 10px;
+    &:hover {
+        cursor: pointer;
+        background-color: var(--primary-hover-color);
+    }
+
+    i {
+        height: 30px;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--header-color);
+        border-radius: 50%;
+        color: white;
+        font-size: 1.0rem;
+        
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--text-secondary-color);
+        display: block;
+        margin-left: 10px;
+        margin-bottom: 4px;
+
+        &:hover {
+            color: var(--header-color);
+        }
+    }
+}
+
+.cart-item {
+    padding: 10px;
+    border-radius: 10px;
+    &:hover {
+        cursor: pointer;
+        background-color: var(--primary-hover-color);
+    }
+
+    .cart-item-icon {
+        position: relative;
+        font-size: 2.5rem;
+        color: var(--header-color);
+
+        .cart-amount-item {
+            position: absolute;
+            color: white;
+            background-color: var(--price-color);
+            height: 20px;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            right: -50%;
+            transform: translate(-50%, -50%); 
+    
+    
+            span {
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+        }
+    } 
+        
+
+  
 }

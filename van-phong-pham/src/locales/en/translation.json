@@ -1,5 +1,8 @@
 {
     "welcome": "Welcome to our website!",
     "language": "Language",
-    "search product": "Search product..."
+    "search-product": "Search product...",
+    "more-product": "More products",
+    "recent-search": "Recent search",
+    "trend-search": "Trend search"
 }
