@@ -16,6 +16,9 @@
     --primary-hover-color: #2659f317;
     --price-color: #fa0303;
     --primary-backround-color:#efefef;
+    --breadcrumb-backround-color:#dbe8ff;
+
+    --red-light-a:#ffe0e2;
 
 
 }
@@ -244,8 +247,26 @@ body {
 
 .container {
     padding-top: 80px;
+    background-color: var(--primary-backround-color);
+}
+
+.main-container {
+    padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
-    background-color: var(--primary-backround-color);
     display: flex;
+}
+
+.content {
+    width: 100%;
+}
+
+// .container-2 {
+//     padding-top: 80px;
+//     background-color: var(--primary-backround-color);
+
+// }
+
+.uppercase-text {
+    text-transform: uppercase;
 }

@@ -4,5 +4,11 @@
     "search-product": "Search product...",
     "more-product": "More products",
     "recent-search": "Recent search",
-    "trend-search": "Trend search"
+    "trend-search": "Trend search",
+    "featured-category": "Featured Categories",
+    "home": "Home",
+    "product-type": "Types of Products",
+    "brand": "Brands",
+    "price-range": "Price Ranges",
+    "color": "Colors"
 }
