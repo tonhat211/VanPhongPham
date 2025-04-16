@@ -1,0 +1,214 @@
+.container-footer {
+  .brand-swiper {
+    padding: 2rem 1rem;
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        height: 5rem;
+        object-fit: contain;
+        max-width: 100%;
+      }
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      color: #333;
+      width: 30px;
+      height: 30px;
+      background-color: var(--primary-backround-color);
+      border-radius: 50%;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swiper-button-prev:hover,
+    .swiper-button-next:hover {
+      background-color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .swiper-button-prev {
+      left: 1rem;
+    }
+
+    .swiper-button-next {
+      right: 1rem;
+    }
+
+    .swiper-button-disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .swiper-button-prev::after,
+    .swiper-button-next::after {
+      font-size: 1.5rem;
+      font-weight: 900;
+    }
+  }
+
+  .middle-footer-wrapper {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    border-top: 1px solid #ebebf0;
+    border-bottom: 1px solid #ebebf0;
+    margin-left: 4rem;
+    margin-right: 4rem;
+
+    .payment-med-wrap {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .mail-register {
+        .payment-title {
+          font-size: 16px;
+          font-weight: bold;
+          text-transform: uppercase;
+          color: var(--text-fourth-color);
+          margin-bottom: 1.5rem;
+        }
+
+        .form-res {
+          .contact-form {
+            .input-group {
+              display: flex;
+              max-width: 320px;
+              border: 1px solid #ccc;
+              border-radius: 8px; // bo góc nhẹ
+              overflow: hidden;
+
+              .form-control {
+                flex: 1;
+                padding: 0.5rem 1rem;
+                border: none;
+                font-size: 14px;
+                border-radius: 0;
+
+                &::placeholder {
+                  color: #999;
+                }
+
+                &:focus {
+                  outline: none;
+                }
+              }
+
+              .sub-action {
+                padding: 0.5rem 1rem;
+                background-color: var(--secondary-color);
+                color: white;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                border-radius: 0;
+              }
+
+              .sub-action:hover {
+                background-color: #0040aa;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .payment-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--text-fourth-color);
+    margin-bottom: 1.5rem;
+  }
+  .payment-med-pic {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 40px;
+      height: auto;
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .sitemap-footer {
+    .custom-footer {
+      font-size: 14px;
+      color: #808089;
+      line-height: 1.6;
+
+      .footer-section {
+        background-color: #ffffff;
+        padding: 2rem 1rem;
+      }
+
+      .footer-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 2.4rem;
+        margin: 3rem 2rem;
+      }
+
+      .footer-col {
+        flex: 1;
+        max-width: 25%;
+      }
+
+      .footer-logo {
+        margin-bottom: 1rem;
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+      }
+
+      .footer-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #17479d;
+      }
+
+      .company-info {
+        font-size: 1.5rem;
+
+        strong {
+          color: #000;
+        }
+      }
+
+      p {
+        margin: 0 0 0.5rem;
+      }
+
+      strong {
+        font-weight: bold;
+        color: var(--header-color);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding: 1rem;
+        background-color: #e8efff;
+        color: #3b71ca;
+      }
+    }
+  }
+}

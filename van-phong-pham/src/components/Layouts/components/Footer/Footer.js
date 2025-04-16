@@ -1,62 +1,150 @@
+import footerStyles from "./Footer.scss"
+import brandsSliderImgs from "~/data/BrandsSliderImgs";
+import midFooterImgs from "~/data/midFooterImgs";
+import React, { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
 import images from '~/assets/images';
-
 function Footer() {
     return  (
-        <footer className="text-center lg:text-left text-gray-500">
-            {/* Phần nội dung chính */}
-            <section className="bg-white">
-                <div className="max-w-screen-xl mx-auto px-4 py-4">
-                    <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-5">
-                        {/* Cột 1: Logo & Giới thiệu */}
-                        <div>
-                            <h6 className="font-bold mb-3">
-                                <img src={images.logo} alt="Thiên Long" className="max-w-[200px] mx-auto lg:mx-0" />
-                            </h6>
-                            <p className="text-xl text-[var(--text-third-color) leading-relaxed">
-                                <strong className="text-2xl text-black font-bold">
-                                    Công ty Cổ Phần Tập Đoàn Thiên Long
-                                </strong>
-                                <br />
-                                GPĐKKD số 0301464830 do Sở KHĐT TP. Hồ Chí Minh cấp ngày 14/03/2005.
-                            </p>
+        <div className="container-footer">
+            {/* Slider*/}
+            <div className="brand-slider-wrapper">
+                <Swiper
+                    modules={[Navigation, Autoplay]}
+                    spaceBetween={30}
+                    slidesPerView={5}
+                    navigation
+                    loop={true}
+                    autoplay={false}
+                    className="brand-swiper"
+                    breakpoints={{
+                        320: { slidesPerView: 2 },
+                        640: { slidesPerView: 3 },
+                        768: { slidesPerView: 4 },
+                        1024: { slidesPerView: 5 },
+                    }}
+                >
+                    {brandsSliderImgs.map((brand) => (
+                        <SwiperSlide key={brand.id}>
+                            <img
+                                src={brand.images[0].url}
+                                alt={brand.images[0].alt || `Brand ${brand.id}`}
+                            />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+            {/* End Slider*/}
+            {/* middle-footer*/}
+            <div className="middle-footer-wrapper">
+                <div className="payment-med-wrap">
+                    <div className="mail-register">
+                        <p className="payment-title">Đăng kí nhận bản tin</p>
+                        <div className="form-res">
+                            <form acceptCharset="UTF-8" action="/account/contact" className="contact-form"
+                                  method="post">
+                                <div className="input-group">
+                                    <input className="form-control" type="email" placeholder="Nhập địa chỉ email" />
+                                    <button className="sub-action">Đăng kí</button>
+                                </div>
+                            </form>
                         </div>
-                        {/* Cột 2: Địa chỉ công ty */}
-                        <div>
-                            <h6 className="font-bold mb-3 text-[var(--header-color)] text-2xl">ĐỊA CHỈ CÔNG TY</h6>
-                            <p className="text-xl text-[var(--text-third-color) leading-relaxed mb-2">
-                                <strong className="text-[var(--header-color)] font-bold">Head Office:</strong> Tầng 10, Sofic Tower, Số 10 Đường Mai Chí Thọ, Phường Thủ Thiêm, TP Thủ Đức, TP Hồ Chí Minh, Việt Nam.
-                            </p>
-                            <p className="text-xl text-[var(--text-third-color) leading-relaxed">
-                                <strong className="text-[var(--header-color)] font-bold">Miền Bắc:</strong> Số 38, đường Gamuda Gardens 2-5, KĐT C2 - Gamuda Gardens, Hoàng Mai, Hà Nội.
-                            </p>
-                        </div>
-                        {/* Cột 3: Hỗ trợ khách hàng */}
-                        <div>
-                            <h6 className="font-bold mb-3 text-[var(--header-color)] text-2xl">HỖ TRỢ KHÁCH HÀNG</h6>
-                            <p className="text-xl text-[var(--header-color)] font-bold mb-1">Hotline: 1900 866 819</p>
-                            <p className="text-xl text-black font-bold mb-1">Thứ 2 - Thứ 6 (8h - 17h)</p>
-                            <p className="text-xl text-black font-bold mb-1">salesonline@thienlongvn.com</p>
-                            <p className="text-xl text-[var(--text-third-color)">Hướng dẫn mua hàng</p>
-                            <p className="text-xl text-[var(--text-third-color)">Chính sách giao hàng</p>
-                            <p className="text-xl text-[var(--text-third-color)">Chính sách đổi trả & hoàn tiền</p>
-                        </div>
-                        {/* Cột 4: Về thienlong.vn */}
-                        <div>
-                            <h6 className="font-bold mb-3 text-[var(--header-color)] text-2xl">VỀ THIENLONG.VN</h6>
-                            <p className="text-xl text-[var(--text-third-color) mb-1">Giới thiệu</p>
-                            <p className="text-xl text-[var(--text-third-color) mb-1">Dịch vụ in ấn quảng cáo</p>
-                            <p className="text-xl text-[var(--text-third-color) mb-1">Chính sách bảo mật chung</p>
-                            <p className="text-xl text-[var(--text-third-color) mb-1">Chính sách bảo mật thông tin cá nhân</p>
-                            <p className="text-xl text-[var(--text-third-color)]">Thông tin liên hệ</p>
+                    </div>
+
+                    <div className="cert">
+                        <p className="payment-title">Chứng nhận</p>
+                        <a href="#">
+                            <img src="https://theme.hstatic.net/1000230347/1000782290/14/footer_bct.png?v=25344" />
+                        </a>
+                    </div>
+
+                    <div className="payment-med">
+                        <p className="payment-title">
+                            phương thức thanh toán
+                        </p>
+                        <div className="payment-med-pic">
+                            {midFooterImgs.map((item) =>
+                                item.images.map((img, idx) => (
+                                    <a
+                                        href={img.href || "#"}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        key={`${item.id}-${idx}`}
+                                    >
+                                        <img className="payment-icon" src={img.url} alt={img.alt || "payment-icon"} />
+                                    </a>
+                                ))
+                            )}
                         </div>
                     </div>
                 </div>
-            </section>
-            {/* Phần dưới cùng */}
-            <div className="text-center text-2xl p-2 bg-[#e8efff] text-[var(--header-color)]">
-                © 2021 Copyright - Bản quyền thuộc Tập đoàn Thiên Long
             </div>
-        </footer>
+            {/* End middle-footer*/}
+            {/* sitemap-footer*/}
+            <div className="sitemap-footer">
+                <footer className="custom-footer">
+                    <section className="footer-section">
+                        <div className="footer-container">
+                            <div className="footer-col">
+                                <div className="footer-logo">
+                                    <img className="img-fluid" src={images.logo} alt="Thiên Long" />
+                                </div>
+                                <p className="company-info ">
+                                    <strong>Thienlong.vn - Website thương mại điện tử thuộc Tập đoàn Thiên Long</strong>
+                                    <br />
+                                    Công ty Cổ Phần Tập Đoàn Thiên Long
+
+                                    GPĐKKD số 0301464830 do Sở KHĐT TP. Hồ Chí Minh cấp ngày 14/03/2005.
+                                </p>
+                            </div>
+
+                            <div className="footer-col">
+                                <h6 className="footer-title">ĐỊA CHỈ CÔNG TY</h6>
+                                <p>
+                                    <strong>Head Office:</strong> Tầng 10, Sofic Tower, Số 10 Đường Mai Chí Thọ,
+                                    Phường Thủ Thiêm, Thành Phố Thủ Đức, Thành Phố Hồ Chí Minh, Việt Nam
+                                </p>
+                                <p>
+                                    <strong>Miền Bắc:</strong>  Số 38, đường Gamuda Gardens 2-5, Khu đô thị mới C2
+                                    - Gamuda Gardens, Phường Trần Phú, Quận Hoàng Mai,
+                                    Thành phố Hà Nội, Việt Nam.
+                                </p>
+                            </div>
+
+                            <div className="footer-col">
+                                <h6 className="footer-title">HỖ TRỢ KHÁCH HÀNG</h6>
+                                <p><strong style={{ color: 'black' }}>Hotline: 1900 866 819</strong></p>
+                                <p><strong style={{ color: 'black' }}>Thứ 2 - Thứ 6 (8h - 17h)</strong></p>
+                                <p><strong style={{ color: 'black' }}>salesonline@thienlongvn.com</strong></p>
+                                <p>Hướng dẫn mua hàng</p>
+                                <p>Hướng dẫn thanh toán</p>
+                                <p>Chính sách giao hàng</p>
+                                <p>Chính sách đổi trả & hoàn tiền</p>
+                            </div>
+
+                            <div className="footer-col">
+                                <h6 className="footer-title">VỀ THIENLONG.VN</h6>
+                                <p>Giới thiệu</p>
+                                <p>Dịch vụ in ấn quảng cáo</p>
+                                <p>Chính sách bảo mật chung</p>
+                                <p>Chính sách bảo mật thông tin cá nhân</p>
+                                <p>Thông tin liên hệ</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="footer-bottom">
+                        © 2021 Copyright - Bản quyền thuộc Tập đoàn Thiên Long
+                    </div>
+                </footer>
+            </div>
+            {/* End sitemap-footer*/}
+        </div>
     );
 }
 
