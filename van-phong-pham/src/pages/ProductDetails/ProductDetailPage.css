@@ -1,0 +1,19 @@
+.product-detail-container {
+  display: flex;
+  flex-direction: column;
+}
+.product-detail-container .product-detail-section1, .product-detail-container .discript-product-detail-section2, .product-detail-container .product-reviewAndRating-section3 {
+  height: fit-content;
+  padding: 1rem;
+  margin: 1.5rem 0rem;
+  display: flex;
+  flex-direction: row;
+  background-color: var(--header-background);
+  border-radius: 1rem;
+  width: 100%;
+}
+.product-detail-container .product-detail-section1 .pdetails-info {
+  margin-left: 2rem;
+}
+
+/*# sourceMappingURL=ProductDetailPage.css.map */

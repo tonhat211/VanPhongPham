@@ -1,0 +1,27 @@
+.product-detail-container {
+display: flex;
+  flex-direction: column;
+  .product-detail-section1, .discript-product-detail-section2, .product-reviewAndRating-section3 {
+    height: fit-content;
+    padding: 1rem;
+    margin: 1.5rem 0rem;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--header-background);
+    border-radius: 1rem;
+    width: 100%;
+  }
+
+  .product-detail-section1 {
+    .pdetails-info {
+      margin-left: 2rem;
+    }
+  }
+
+.discript-product-detail-section2 {
+
+}
+ .product-reviewAndRating-section3 {
+
+ }
+}

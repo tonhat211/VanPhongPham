@@ -1,0 +1,79 @@
+.product-gallery {
+  .mainSwiper {
+    width: 360px;
+    height: 360px;
+    overflow: hidden;
+
+    .swiper-slide {
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background-color: #f4f9ff;
+        border: 1px solid #e5e7eb;
+        border-radius: 0; // ảnh không bo góc
+      }
+    }
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: #333;
+    width: 30px;
+    height: 30px;
+    background-color: var(--primary-backround-color);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background-color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    &::after {
+      font-size: 1.5rem;
+      font-weight: 900;
+    }
+  }
+
+  .thumbSwiper {
+    margin-top: 0.5rem;
+    width: 360px;
+
+    .swiper-slide {
+      height: 74px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid transparent;
+      transition: border 0.3s;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background-color: #ffffff;
+        border-radius: 6px;
+      }
+
+      &:hover {
+        border-color: #1d4ed8;
+      }
+
+      &.swiper-slide-thumb-active {
+        border-color: #1d4ed8;
+      }
+    }
+  }
+}

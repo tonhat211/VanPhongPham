@@ -1,0 +1,209 @@
+.review-rating-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-family: Arial, sans-serif;
+  padding: 1rem;
+}
+.review-rating-container h3 {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.review-rating-container .rating-summary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.review-rating-container .rating-summary .rating-total-star {
+  width: 40%;
+  height: 50px;
+  background-color: blue;
+}
+.review-rating-container .rating-summary .star-warpper-container {
+  display: flex;
+  flex-direction: column;
+}
+.review-rating-container .rating-summary .star-warpper-container .star-hover-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+.review-rating-container .rating-summary .star-warpper-container .star-hover-wrapper .star-icon {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.review-rating-container .rating-summary .star-warpper-container .star-hover-wrapper .star-icon svg {
+  color: #999;
+  font-size: 24px;
+}
+.review-rating-container .rating-summary .star-warpper-container .star-hover-wrapper .star-icon.active svg {
+  color: #f7b500;
+}
+.review-rating-container .rating-summary .star-warpper-container .star-hover-wrapper .star-icon:hover {
+  border-color: #f7b500;
+}
+.review-rating-container .popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.review-rating-container .popup-overlay .popup-content {
+  background: #fff;
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.review-rating-container .popup-overlay .popup-content h4 {
+  margin-bottom: 1rem;
+  font-size: 20px;
+}
+.review-rating-container .popup-overlay .popup-content .popup-stars {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.review-rating-container .popup-overlay .popup-content .popup-stars .popup-star {
+  cursor: pointer;
+}
+.review-rating-container .popup-overlay .popup-content .popup-stars .popup-star svg {
+  font-size: 30px;
+  color: #ccc;
+}
+.review-rating-container .popup-overlay .popup-content .popup-stars .popup-star.active svg {
+  color: #f7b500;
+}
+.review-rating-container .popup-overlay .popup-content textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 14px;
+  resize: none;
+}
+.review-rating-container .popup-overlay .popup-content .image-upload {
+  margin-bottom: 1rem;
+}
+.review-rating-container .popup-overlay .popup-content .image-upload label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.review-rating-container .popup-overlay .popup-content .image-upload .upload-box {
+  width: 80px;
+  height: 80px;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+}
+.review-rating-container .popup-overlay .popup-content .popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.review-rating-container .popup-overlay .popup-content .popup-buttons button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.review-rating-container .popup-overlay .popup-content .popup-buttons button:first-child {
+  background: #eee;
+}
+.review-rating-container .popup-overlay .popup-content .popup-buttons button:last-child {
+  background: #f7b500;
+  color: #fff;
+}
+.review-rating-container .filter-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.review-rating-container .filter-bar span {
+  font-weight: bold;
+}
+.review-rating-container .filter-bar button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.review-rating-container .filter-bar button.active {
+  background: #f7b500;
+  color: #fff;
+  border-color: #f7b500;
+}
+.review-rating-container .filter-bar button:hover {
+  background: rgba(247, 181, 0, 0.2);
+}
+.review-rating-container .filter-bar .sort-select {
+  margin-left: auto;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.review-rating-container .review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.review-rating-container .review-list .review-item {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+.review-rating-container .review-list .review-item .review-stars {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+.review-rating-container .review-list .review-item .review-stars .review-star {
+  color: #f7b500;
+}
+.review-rating-container .review-list .review-item .review-email {
+  display: block;
+  font-size: 13px;
+  color: #777;
+  margin-top: 0.5rem;
+}
+.review-rating-container .pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.review-rating-container .pagination-controls button {
+  padding: 0.4rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.review-rating-container .pagination-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/*# sourceMappingURL=ReviewAndRating.css.map */
