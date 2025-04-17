@@ -10,7 +10,7 @@ import {
     faArrowTrendUp,
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import styles from './Product.module.scss';
 import images from '~/assets/images';
@@ -22,6 +22,7 @@ import { Product as ProductModel, StarRating } from '~/models';
 const cx = classNames.bind(styles);
 
 function Product() {
+    const { category } = useParams();
     const [page, setPage] = useState(3);
     //code chinh thuc
     // const location = useLocation();
@@ -29,10 +30,23 @@ function Product() {
     // const category = queryParams.get('category');
 
     // test
-    const category = '/but-viet';
+    // const category = '/but-viet';
+    // useEffect(() => {
+    //     axios.get(`http://localhost:8080/api/products/category/${category}`)
+    //       .then(response => {
+    //         setProducts(response.data);
+    //       })
+    //       .catch(error => {
+    //         console.error('Error fetching products:', error);
+    //       });
+    //   }, [category]);
 
-    let parent = menus.find((m) => m.link === category);
+    console.log('category: ' +category);
+
+    let parent = menus.find((m) => m.link === "/"+category);
     if (!parent) parent = null;
+
+    console.log('parent: ' +parent);
 
     // du lieu demo
     const products = [
@@ -303,7 +317,7 @@ function Product() {
                     <SubSidebar />
                 </div>
                 <div className={classNames(cx('content'))} style={{ flex: 1 }}>
-                    <p className={classNames(cx('title'), 'uppercase-text')}>{parent.title || 'Tất cả'}</p>
+                    <p className={classNames(cx('title'), 'uppercase-text')}>{parent?.title || 'Tất cả'}</p>
                     <div className="d-flex" style={{ marginTop: '20px' }}>
                         <p>Sắp xếp:</p>
                         <ul className={classNames(cx('sort-option-list'))}>

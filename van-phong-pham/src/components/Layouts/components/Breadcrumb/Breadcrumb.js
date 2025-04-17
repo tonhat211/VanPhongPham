@@ -1,13 +1,17 @@
 import classNames from 'classnames/bind';
 import { Link, useLocation  } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import styles from './Breadcrumb.module.scss';
+import { getLabelKeyFromSlug } from './labelMap';
+
 const cx = classNames.bind(styles);
 
 
 function Breadcrumb() {
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter((x) => x);
+    const { t } = useTranslation();
     return (
        <div className={cx('wrapper')}>
             <ul>
@@ -21,9 +25,9 @@ function Breadcrumb() {
                     return (
                         <li key={to} className={cx({ active: isLast })}>
                             {isLast ? (
-                                <span>{decodeURIComponent(value)}</span>
+                                <span>{t(getLabelKeyFromSlug(value))}</span>
                             ) : (
-                                <Link to={to}>{decodeURIComponent(value)}</Link>
+                                <Link to={to}>{t(getLabelKeyFromSlug(value))}</Link>
                             )}
                         </li>
                     );

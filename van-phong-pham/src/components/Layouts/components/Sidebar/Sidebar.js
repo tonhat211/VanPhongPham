@@ -39,9 +39,10 @@ function Sidebar() {
     );
 
     function MenuItem({ item }) {
+        const pageUrl = '/products';
         return (
             <li className={cx('menu-item')}>
-                <Link {...(item.link && { to: item.link })}>
+                <Link {...(item.link && { to: pageUrl+item.link })}>
                     {item.icon && (
                         <div className="grid-col-1_5">
                             <img src={item.icon} />
@@ -66,7 +67,6 @@ function Sidebar() {
     }
 
     function MenuList({ items, className }) {
-        console.log('menu list', items.length);
         return (
             <ul className={cx('menu-list', className)}>
                 {items.map((item, index) => (

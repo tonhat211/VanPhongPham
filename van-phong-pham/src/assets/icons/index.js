@@ -12,6 +12,11 @@ const icons = {
     icon_than_thiet: require('~/assets/icons/icon_than_thiet.webp'),
     icon_noi_bo: require('~/assets/icons/icon_noi_bo.webp'),
     icon_parker_logo: require('~/assets/icons/icon_parker_logo.webp'),
+    icon_cod: require('~/assets/icons/icon_cod.svg').default,
+    icon_momo: require('~/assets/icons/icon_momo.svg').default,
+    icon_shopeepay: require('~/assets/icons/icon_shopeepay.svg').default,
+    icon_vnpay: require('~/assets/icons/icon_vnpay.svg').default,
+    icon_zalopay: require('~/assets/icons/icon_zalopay.svg').default
 
 
     
