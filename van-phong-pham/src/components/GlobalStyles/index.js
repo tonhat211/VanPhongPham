@@ -1,5 +1,5 @@
 import './GlobalStyles.scss'
-import './tailwind.scss'
+// import './tailwind.scss'
 function GlobalStyles({children}) {
     return children
 }

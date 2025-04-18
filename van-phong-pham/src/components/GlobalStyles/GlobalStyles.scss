@@ -8,6 +8,7 @@
     --text-fourth-color:#23486c;
     --primary-color: #2659f3;
     --secondary-color: #0d5cb6;
+    --third-color: #338dbc;
     --topbar-bg: #fdd835;
     --topbar-color: #000000;
     --header-background: #ffffff;
@@ -17,9 +18,11 @@
     --primary-boxShadow-color: #2659f32e;
     --primary-hover-color: #2659f317;
     --price-color: #fa0303;
-    --primary-backround-color:#efefef;
+    --primary-backround-color: #efefef;
+    --breadcrumb-backround-color: #dbe8ff;
 
-
+    --red-light-a: #ffe0e2;
+    --border-color: rgba(23, 23, 23, 0.14);
 }
 
 * {
@@ -33,7 +36,7 @@ html {
 }
 
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 1.6rem;
 }
 
@@ -42,31 +45,31 @@ body {
 //     font-weight: 300;
 //     font-style: normal;
 //   }
-  
+
 //   .poppins-regular {
 //     font-family: "Poppins", sans-serif;
 //     font-weight: 400;
 //     font-style: normal;
 //   }
-  
+
 //   .poppins-medium {
 //     font-family: "Poppins", sans-serif;
 //     font-weight: 500;
 //     font-style: normal;
 //   }
-  
+
 //   .poppins-semibold {
 //     font-family: "Poppins", sans-serif;
 //     font-weight: 600;
 //     font-style: normal;
 //   }
-  
+
 //   .poppins-bold {
 //     font-family: "Poppins", sans-serif;
 //     font-weight: 700;
 //     font-style: normal;
 //   }
-  
+
 //   .poppins-light-italic {
 //     font-family: "Poppins", sans-serif;
 //     font-weight: 300;
@@ -86,7 +89,6 @@ body {
     display: flex;
     align-items: center;
 }
-
 
 .d-flex-center-center {
     display: flex;
@@ -159,7 +161,7 @@ body {
 }
 
 .grid-col-9 {
-    width:75%;
+    width: 75%;
 }
 
 .grid-col-9_6 {
@@ -239,15 +241,46 @@ body {
 }
 /* end scroll bar*/
 
-
 .divider {
-    border: 1px solid var(--primary-boxShadow-color); 
+    border: 1px solid var(--primary-boxShadow-color);
 }
 
 .container {
     padding-top: 80px;
+    background-color: var(--primary-backround-color);
+}
+
+.main-container {
+    padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
-    background-color: var(--primary-backround-color);
     display: flex;
 }
+
+.content {
+    width: 100%;
+}
+
+// .container-2 {
+//     padding-top: 80px;
+//     background-color: var(--primary-backround-color);
+
+// }
+
+.uppercase-text {
+    text-transform: uppercase;
+}
+
+.p-20 {
+    padding: 20px;
+}
+
+.p-0-80 {
+    padding: 0 80px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+

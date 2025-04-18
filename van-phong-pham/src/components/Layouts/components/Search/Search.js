@@ -10,15 +10,9 @@ import styles from './Search.module.scss';
 import images from '~/assets/images';
 import { productApi } from '~/api';
 import { getRecentSearches, addRecentSearch, removeRecentSearch } from '~/utils/recentSearch';
+import { formatMoney } from '~/utils';
 
 const cx = classNames.bind(styles);
-
-const moneyFormatter = new Intl.NumberFormat('vi-VN', {
-    // nen tach thanh 1 file bo vao utils
-    style: 'currency',
-    currency: 'VND',
-    minimumFractionDigits: 0,
-});
 
 // du lieu de demo
 const recentSearchList = ['but bi', 'thuoc ke', 'tay'];
@@ -218,8 +212,8 @@ function Search() {
                             marginTop: '10px',
                         }}
                     >
-                        <p className={cx('current-price')}>{moneyFormatter.format(item.currentPrice)}</p>
-                        <p className={cx('init-price')}>{moneyFormatter.format(item.initPrice)}</p>
+                        <p className={cx('current-price')}>{formatMoney(item.currentPrice)}</p>
+                        <p className={cx('init-price')}>{formatMoney(item.initPrice)}</p>
                     </div>
                 </div>
             </div>
