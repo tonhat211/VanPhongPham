@@ -1,13 +1,12 @@
 import Header from '../components/Header'
 import Footer from '../components/Footer/Footer'
-import Sidebar from '../components/Sidebar'
 
-function DefaultLayout({children}) {
+function CategoryLayout({children}) {
     return (
         <div>
             <Header />
             <div className='container'>
-                <Sidebar />
+                <div className='breadcrumb'>breadcrumb</div>
                 <div className='content'>  
                     {children}
                 </div>
@@ -17,4 +16,4 @@ function DefaultLayout({children}) {
     )
 }
 
-export default DefaultLayout;
+export default CategoryLayout;

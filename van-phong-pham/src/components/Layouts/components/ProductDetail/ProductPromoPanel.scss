@@ -1,0 +1,92 @@
+.info_right {
+  width: 100%;
+  height: fit-content;
+
+  .right_1 {
+    gap: 10px;
+    align-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    display: flex;
+    background: #dbe8ff;
+    border-radius: 6px;
+    margin: 15px 0px;
+    padding: 15px;
+    border: 2px dashed #2659f3;
+
+    .right1_wrap {
+      font-weight: 400;
+      font-size: 1.5rem;
+      gap: 10px;
+      display: flex;
+      align-items: center;
+      .icon {
+        font-size: 2.5rem;
+        color: var(--header-color);
+      }
+    }
+  }
+
+  .right_2 {
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background: #dbe8ff;
+  }
+
+  .right2_container {
+    margin: 15px 0px;
+    width: 90%;
+    align-items: flex-start;
+    flex-direction: column;
+    display: flex;
+    border-radius: 6px;
+    gap: 10px;
+
+    .tickDiscount1,
+    .tickDiscount2 {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      background-color: white;
+      height: fit-content;
+      flex-direction: row;
+      display: flex;
+
+      .tickDiscount_left {
+        font-size: 14px;
+        margin: auto;
+      }
+
+      .tickDiscount_right {
+        justify-content: space-between;
+        flex-direction: column;
+        display: flex;
+
+        .tickDiscount_right1 {
+          text-align: center;
+          background: #dbe8ff;
+          font-weight: bold;
+          border: 1px dashed #2659f3;
+          color: #2659f3;
+          padding: 5px;
+          font-size: 12px;
+          border-radius: 15px;
+        }
+
+        .tickDiscount_right2 {
+          white-space: nowrap;
+          font-weight: bold;
+          text-align: center;
+          width: fit-content;
+          background: #2659f3;
+          color: #fff;
+          padding: 5px;
+          font-size: 12px;
+          border-radius: 15px;
+        }
+      }
+    }
+  }
+}

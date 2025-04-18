@@ -1,0 +1,108 @@
+.search-form {
+  border: 1px solid #dddde3;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 100%;
+}
+.search-form input {
+  border: none;
+  outline: none;
+  padding: 10px;
+  width: 100%;
+  font-size: 1.6rem;
+  height: 40px;
+}
+.search-form:focus-within {
+  box-shadow: 0 0 0 0.25rem var(--primary-hover-color);
+}
+.search-form i {
+  margin: auto 10px;
+}
+
+.search-btn {
+  width: 40px;
+}
+.search-btn:hover {
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.search-box {
+  background-color: #fff;
+  width: 100%;
+  box-shadow: 1px 0px 6px 0.25rem var(--primary-boxShadow-color);
+  padding: 10px;
+  max-height: 80vh;
+  border-radius: 20px;
+}
+.search-box .title {
+  padding: 5px;
+  font-weight: 600;
+}
+
+.search-result-item {
+  display: flex;
+  border-radius: 10px;
+}
+.search-result-item:hover {
+  cursor: pointer;
+  background-color: var(--primary-hover-color);
+}
+.search-result-item img {
+  width: 100%;
+  padding: 5px;
+  border-radius: 10px;
+}
+.search-result-item .name {
+  font-size: 1.3rem;
+}
+.search-result-item .current-price {
+  font-size: 1.5rem;
+  color: var(--price-color);
+  display: block;
+  font-weight: 600;
+}
+.search-result-item .init-price {
+  font-size: 1.1rem;
+  color: var(--text-secondary-color);
+  text-decoration: line-through;
+  display: block;
+}
+
+.recent-search-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+.recent-search-item:hover {
+  cursor: pointer;
+  background-color: var(--primary-hover-color);
+}
+.recent-search-item p {
+  display: block;
+  color: var(--text-secondary-color);
+  font-size: 1.2rem;
+}
+.recent-search-item i:hover {
+  opacity: 0.3;
+}
+
+.trend-search-item {
+  padding: 6px 10px;
+  margin: 4px 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-boxShadow-color);
+  color: var(--header-color);
+  border-radius: 20px;
+  font-size: 1.2rem;
+}
+.trend-search-item:hover {
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+/*# sourceMappingURL=Search.module.css.map */
