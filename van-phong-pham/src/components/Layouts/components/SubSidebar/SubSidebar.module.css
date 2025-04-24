@@ -1,0 +1,80 @@
+@charset "UTF-8";
+.wrapper {
+  border-right: 1px solid #ccc;
+}
+
+.menu-list-container {
+  padding: 10px 10px;
+}
+
+.title {
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.menu-list {
+  list-style-type: none;
+}
+.menu-list li {
+  display: flex;
+  margin: 10px 0;
+  font-size: 1.4rem;
+  align-items: center;
+}
+.menu-list li label {
+  display: inline-block;
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 4px 0;
+  font-size: 1.2rem;
+}
+.menu-list li input[type=checkbox] {
+  transform-origin: center;
+  transform: scale(1.5); /* Tăng kích thước checkbox */
+  -webkit-transform: scale(1.5); /* Dành cho trình duyệt Webkit */
+  -moz-transform: scale(1.5); /* Dành cho trình duyệt Firefox */
+  margin-right: 10px;
+  margin-left: 5px;
+}
+
+.color-selector {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.color-option {
+  display: inline-block;
+}
+
+.color-box {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.color-box:hover {
+  border-color: #888;
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: white;
+  pointer-events: none;
+}
+
+/*# sourceMappingURL=SubSidebar.module.css.map */

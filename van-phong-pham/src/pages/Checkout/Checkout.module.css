@@ -1,0 +1,278 @@
+.wrapper {
+  background-color: #fafafa;
+}
+.wrapper .content-container {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  background-color: white;
+}
+.wrapper .content-container .title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.wrapper .content-container form select {
+  border: 1px solid #aaa;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+.wrapper .content-container form select:focus-visible {
+  box-shadow: 0 0 0 0.25rem var(--primary-hover-color);
+  outline: none;
+}
+.wrapper .content-container .note-input {
+  width: 100%;
+  padding: 15px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+.wrapper .account-info {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 15px;
+}
+.wrapper .account-info .avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  aspect-ratio: 1/1;
+  margin-right: 10px;
+}
+.wrapper .account-info .info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.wrapper .account-info .info-container .name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+.wrapper .account-info .info-container .info {
+  font-size: 1.2rem;
+  color: var(--text-secondary-color);
+}
+.wrapper .checkout-item {
+  border: 1px solid var(--border-color);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wrapper .checkout-item:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.wrapper .checkout-item:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.wrapper .checkout-item p {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.wrapper .circle-checkbox {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+  display: flex;
+  align-items: center;
+}
+.wrapper .circle-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.wrapper .circle-checkbox .checkmark {
+  position: absolute;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  transition: 0.3s;
+}
+.wrapper .circle-checkbox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+.wrapper .circle-checkbox input:checked ~ .checkmark {
+  background-color: black;
+  border-color: black;
+}
+.wrapper .circle-checkbox .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.wrapper .circle-checkbox input:checked ~ .checkmark::after {
+  display: block;
+}
+.wrapper .circle-checkbox .checkmark::after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+.wrapper .circle-checkbox .img-container {
+  width: 30px;
+  aspect-ratio: 1/1;
+  margin-right: 10px;
+}
+.wrapper .circle-checkbox .img-container img {
+  width: 100%;
+}
+.wrapper .cart-item {
+  margin-bottom: 20px;
+}
+.wrapper .cart-item img {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+.wrapper .cart-item .product-info {
+  padding: 0 10px;
+}
+.wrapper .cart-item .product-info .name {
+  font-size: 1.4rem;
+  color: black;
+}
+.wrapper .cart-item .product-info i {
+  color: var(--text-secondary-color);
+}
+.wrapper .cart-item .product-info i:hover {
+  cursor: pointer;
+  opacity: 0.3;
+}
+.wrapper .cart-item .product-info button {
+  padding: 7px;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  border: none;
+  margin: 10px 0;
+}
+.wrapper .cart-item .product-info .current-price {
+  font-size: 1.5rem;
+  color: var(--price-color);
+  display: block;
+  font-weight: 600;
+}
+.wrapper .cart-item .product-info .init-price {
+  font-size: 1.1rem;
+  color: var(--text-secondary-color);
+  text-decoration: line-through;
+  display: block;
+}
+.wrapper .cart-item .product-info .qty-control {
+  display: flex;
+}
+.wrapper .cart-item .product-info .qty-control i {
+  border: 1px solid var(--border-color);
+  width: 30px;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  margin: 0;
+}
+.wrapper .cart-item .product-info .qty-control i:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.wrapper .cart-item .product-info .qty-control i:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.wrapper .cart-item .product-info .qty-control i:hover {
+  color: #ccc;
+  opacity: 1;
+}
+.wrapper .cart-item .product-info .qty-control input {
+  border: 1px solid var(--border-color);
+  width: 60px;
+  outline: none;
+  text-align: center;
+}
+.wrapper .cart-item .product-info .qty-control input:focus-visible {
+  outline: none;
+}
+.wrapper .voucher-container button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 15px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: white;
+  color: var(--text-secondary-color);
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+.wrapper .voucher-container button:hover {
+  cursor: pointer;
+  opacity: 0.3;
+}
+.wrapper .voucher-container input {
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  margin-right: 20px;
+}
+.wrapper .voucher-container .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  padding: 15px 10px;
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+.wrapper .voucher-container .btn:hover {
+  cursor: pointer;
+  opacity: 0.3;
+}
+.wrapper .summary-container {
+  font-size: 1.4rem;
+}
+.wrapper .summary-container .order-btn {
+  width: 100%;
+  border: none;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1.6rem;
+}
+.wrapper .summary-container .order-btn:hover {
+  cursor: pointer;
+  opacity: 0.3;
+}
+.wrapper .voucher-list-container .title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/*# sourceMappingURL=Checkout.module.css.map */

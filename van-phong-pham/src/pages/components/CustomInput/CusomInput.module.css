@@ -1,0 +1,53 @@
+.input-custom {
+  display: flex;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  overflow: hidden;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+.input-custom i {
+  margin: 0 10px;
+}
+.input-custom:focus-within {
+  box-shadow: 0 0 0 0.25rem var(--primary-hover-color);
+}
+.input-custom .input-content {
+  display: flex;
+  flex-direction: column-reverse;
+  position: relative;
+  width: 90%;
+}
+.input-custom .input-content input {
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 1.4rem;
+  outline: none;
+  border: none;
+}
+.input-custom .input-content label {
+  color: #999;
+  font-size: 1.4rem;
+  pointer-events: none;
+  transition: 0.2s ease;
+  opacity: 1;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+.input-custom .input-content input:focus ~ label {
+  display: block;
+  font-size: 1.2rem;
+  opacity: 1;
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 0 10px;
+  padding-top: 4px;
+}
+.input-custom .input-content input:focus {
+  padding-top: 4px;
+}
+
+/*# sourceMappingURL=CusomInput.module.css.map */
