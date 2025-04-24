@@ -1,0 +1,13 @@
+.wrapper {
+  padding: 20px 110px;
+  background-color: white;
+}
+.wrapper .logo-container:hover {
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+.wrapper .logo {
+  width: 100%;
+}
+
+/*# sourceMappingURL=CheckoutHeader.module.css.map */

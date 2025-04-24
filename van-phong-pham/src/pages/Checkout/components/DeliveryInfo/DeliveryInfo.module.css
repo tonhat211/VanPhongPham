@@ -1,0 +1,40 @@
+.wrapper {
+  padding-top: 40px;
+  border-right: 1px solid var(--text-secondary-color);
+  height: 100vh;
+}
+.wrapper .content {
+  padding-top: 40px;
+  padding-right: 60px;
+}
+.wrapper .title {
+  font-size: 1.6rem;
+  color: black;
+  text-transform: uppercase;
+}
+.wrapper form {
+  margin-top: 20px;
+}
+.wrapper form input, .wrapper form select {
+  border: 1px solid var(--text-secondary-color);
+  padding: 15px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.wrapper form input:focus-visible, .wrapper form select:focus-visible {
+  box-shadow: 0 0 0 0.25rem var(--primary-hover-color);
+  outline: none;
+}
+.wrapper button {
+  background-color: var(--third-color);
+  color: white;
+  border: none;
+  padding: 15px;
+  margin-top: 20px;
+}
+.wrapper button:hover {
+  filter: brightness(1.2);
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=DeliveryInfo.module.css.map */

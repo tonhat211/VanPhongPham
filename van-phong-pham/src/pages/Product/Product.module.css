@@ -1,0 +1,56 @@
+.content-container {
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.subsidebar-container {
+  overflow: auto;
+  position: sticky;
+  top: 20px;
+  max-height: 100vh;
+  transition: top 0.3s ease;
+  scrollbar-width: none;
+}
+
+.content {
+  padding: 20px 10px;
+}
+.content .title {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--text-secondary-color);
+}
+.content .sort-option-list {
+  display: flex;
+  list-style-type: none;
+}
+.content .sort-option-list li a {
+  padding: 10px 10px;
+  color: var(--text-secondary-color);
+  text-decoration: none;
+  font-size: 1.4rem;
+}
+.content .sort-option-list li a:hover {
+  border-bottom: 2px solid var(--primary-color);
+  cursor: pointer;
+  color: var(--primary-color);
+}
+.content .sort-option-list li a.active {
+  border-bottom: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+.content .pagination-container {
+  display: flex;
+  justify-content: right;
+  margin-top: 10px;
+}
+
+.recent-viewed-product .title {
+  padding: 20px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/*# sourceMappingURL=Product.module.css.map */
