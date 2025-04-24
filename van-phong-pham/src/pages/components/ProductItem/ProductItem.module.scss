@@ -1,0 +1,127 @@
+.product-item {
+    // padding: 10px;
+    height: 447px;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid white;
+
+    &:hover {
+        border: 1px solid var(--primary-color);
+        img {
+            transform: scale(1.1); /* phóng to nhẹ */
+        }
+
+        .name-container p {
+            color: var(--primary-color);
+        }
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .img-container {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        background-color: black;
+        overflow: hidden;
+        object-fit: cover;
+
+        img {
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+    }
+
+    .info-container {
+        padding: 10px;
+    }
+
+    .label-container {
+        display: flex;
+        align-items: center;
+        .label {
+            font-size: 1.2rem;
+            padding: 5px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+            i {
+                margin-right: 5px;
+            }
+            margin-right: 10px;
+        }
+
+        .like-label {
+            background-color: var(--red-light-a);
+            color: var(--price-color);
+        }
+
+        .sold-label {
+            background-color: var(--breadcrumb-backround-color);
+            color: var(--primary-color);
+        }
+    }
+
+    .name-container {
+        margin-top: 10px;
+        p {
+            font-size: 1.2rem;
+            color: var(--text-secondary-color);
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Số dòng tối đa */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.7rem;
+        }
+    }
+
+    .rate-container {
+        margin-top: 10px;
+        display: flex;
+        align-items: baseline;
+
+        p {
+            margin-left: 10px;
+            font-size: 1.1rem;
+            color: black;
+        }
+    }
+
+    .price-container {
+        margin-top: 10px;
+
+        .current-price {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            display: block;
+            font-weight: 600;
+        }
+
+        .init-price {
+            margin-top: 10px;
+            font-size: 1.3rem;
+            color: var(--text-secondary-color);
+            text-decoration: line-through;
+            display: block;
+        }
+
+        .discount-label {
+            font-size: 1rem;
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-left: 10px;
+
+            background-color: var(--red-light-a);
+            color: var(--price-color);
+        }
+    }
+
+    .btn-container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

@@ -15,7 +15,7 @@ function ProductDetailLayout({children}) {
             </div>
             <Footer />
         </div>
-    )
+    );
 }
 
 export default ProductDetailLayout;

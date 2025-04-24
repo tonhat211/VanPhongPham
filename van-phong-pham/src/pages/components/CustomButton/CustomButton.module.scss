@@ -1,0 +1,86 @@
+.fancy-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  // padding: 8px 20px 8px 8px;
+  // padding: 4px;
+  padding-right: 20px;
+  border: none;
+  background-color: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.3s ease;
+  
+}
+
+.fancy-button::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  width: 20px;
+  height: 24px;
+  background-color: var(--primary-color);
+  border-radius: 999px;
+  z-index: 0;
+  // z-index: 4;
+  transition: transform 0.4s ease;
+  // transform: translateY(-50%) scale(15);
+}
+
+.fancy-button:hover::before {
+  transform: translateY(-50%) scale(15); 
+}
+
+.icon-circle {
+  position: relative;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // z-index: 1;
+  flex-shrink: 0;
+
+ 
+}
+
+.label {
+  position: relative;
+  margin-left: 12px;
+  font-weight: 500;
+  color: var(--primary-color);
+  // z-index: 1;
+  transition: color 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.fancy-button:hover .label {
+  color: white;
+}
+
+.default-icon {
+  display: block;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.after-icon {
+  display: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fancy-button:hover .default-icon,
+.icon-circle:hover .default-icon {
+  display: none;
+  
+}
+
+.fancy-button:hover .after-icon,
+.icon-circle:hover .after-icon {
+  display: block;
+}
