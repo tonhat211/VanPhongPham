@@ -1,26 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './ProductPromoPanel.scss';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import StarOutlineOutlinedIcon from '@mui/icons-material/StarOutlineOutlined';
 import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
 import LocalActivityOutlinedIcon from '@mui/icons-material/LocalActivityOutlined';
+import TickDiscount from '~/components/Layouts/components/ProductDetail/discountsticket/TickDiscount';
 
 function ProductPromoPanel() {
-    const [isCopied, setIsCopied] = useState(false);
-
-    const handleCopyClick = () => {
-        const codeElement = document.querySelector('.tickDiscount_left strong');
-        const code = codeElement ? codeElement.innerText : '';
-
-        if (isCopied) {
-            alert('Mã đã được sao chép');
-        } else {
-            navigator.clipboard.writeText(code)
-                .then(() => setIsCopied(true))
-                .catch(err => console.error('Lỗi copy: ', err));
-        }
-    };
-
     return (
         <div className="info_right">
             <div className="right_1">
@@ -42,40 +28,8 @@ function ProductPromoPanel() {
                 </div>
             </div>
 
-            <div className="right_2">
-                <div className="right2_container">
-                    <div className="tickDiscount1">
-                        <div className="tickDiscount_left">
-                            <h4>Giảm 200.000đ</h4>
-                            <p>Đơn hàng từ 700.000đ</p>
-                            <p>Mã: <strong>0724SALE50</strong></p>
-                            <p>30/04/2025</p>
-                        </div>
-                        <div className="tickDiscount_right">
-                            <div className="tickDiscount_right1">Điều kiện</div>
-                            <div className="tickDiscount_right2" onClick={handleCopyClick}>
-                                {isCopied ? 'Đã sao chép' : 'Sao chép mã'}
-                            </div>
-                        </div>
-                    </div>
+              <TickDiscount/>
 
-                    <div className="tickDiscount1">
-                        <div className="tickDiscount_left">
-                            <h4>Giảm 200.000đ</h4>
-                            <p>Đơn hàng từ 700.000đ</p>
-                            <p>Mã: <strong>0724SALE50</strong></p>
-                            <p>30/04/2025</p>
-                        </div>
-                        <div className="tickDiscount_right">
-                            <div className="tickDiscount_right1">Điều kiện</div>
-                            <div className="tickDiscount_right2" onClick={handleCopyClick}>
-                                {isCopied ? 'Đã sao chép' : 'Sao chép mã'}
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
     );
 }
