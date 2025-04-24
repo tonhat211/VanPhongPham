@@ -1,5 +1,9 @@
 .cart-container {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.cart-container .cart-info, .cart-container .carousel-section {
+  width: 1315px;
   margin-top: 24px;
   margin-bottom: 24px;
   padding-left: 20px;
@@ -9,28 +13,28 @@
   background: #fff;
   padding-bottom: 16px;
 }
-.cart-container .cart-wrapper {
+.cart-container .cart-info .cart-wrapper, .cart-container .carousel-section .cart-wrapper {
   display: grid;
   grid-template-columns: 70% 1fr;
   grid-gap: 15px;
 }
-.cart-container .cart-left {
+.cart-container .cart-info .cart-left, .cart-container .carousel-section .cart-left {
   flex: 2;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.cart-container .cart-title {
+.cart-container .cart-info .cart-title, .cart-container .carousel-section .cart-title {
   padding-top: 16px;
   font-size: 28px;
   margin-bottom: 16px;
 }
-.cart-container .cart-items {
+.cart-container .cart-info .cart-items, .cart-container .carousel-section .cart-items {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.cart-container .cart-item {
+.cart-container .cart-info .cart-item, .cart-container .carousel-section .cart-item {
   display: flex;
   align-items: center;
   border: 1px solid #eee;
@@ -38,36 +42,36 @@
   border-radius: 8px;
   position: relative;
 }
-.cart-container .cart-item .item-image {
+.cart-container .cart-info .cart-item .item-image, .cart-container .carousel-section .cart-item .item-image {
   width: 100px;
   height: 100px;
   object-fit: contain;
   border-radius: 8px;
   margin-right: 16px;
 }
-.cart-container .cart-item .item-details {
+.cart-container .cart-info .cart-item .item-details, .cart-container .carousel-section .cart-item .item-details {
   flex: 1;
 }
-.cart-container .cart-item .item-details .item-title {
+.cart-container .cart-info .cart-item .item-details .item-title, .cart-container .carousel-section .cart-item .item-details .item-title {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 4px;
 }
-.cart-container .cart-item .item-details .item-brand {
+.cart-container .cart-info .cart-item .item-details .item-brand, .cart-container .carousel-section .cart-item .item-details .item-brand {
   color: #666;
   font-size: 14px;
 }
-.cart-container .cart-item .item-price {
+.cart-container .cart-info .cart-item .item-price, .cart-container .carousel-section .cart-item .item-price {
   margin-right: 24px;
   font-size: 16px;
   font-weight: 600;
 }
-.cart-container .cart-item .item-price del {
+.cart-container .cart-info .cart-item .item-price del, .cart-container .carousel-section .cart-item .item-price del {
   font-size: 14px;
   margin-left: 8px;
   color: #888;
 }
-.cart-container .cart-item .item-price .discount {
+.cart-container .cart-info .cart-item .item-price .discount, .cart-container .carousel-section .cart-item .item-price .discount {
   background: var(--price-color);
   color: var(--label-color);
   font-size: 12px;
@@ -76,13 +80,13 @@
   font-weight: 500;
   margin-left: 8px;
 }
-.cart-container .cart-item .item-quantity {
+.cart-container .cart-info .cart-item .item-quantity, .cart-container .carousel-section .cart-item .item-quantity {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-right: 24px;
 }
-.cart-container .cart-item .item-quantity button {
+.cart-container .cart-info .cart-item .item-quantity button, .cart-container .carousel-section .cart-item .item-quantity button {
   width: 32px;
   height: 32px;
   border: 1px solid #ddd;
@@ -91,10 +95,10 @@
   font-size: 18px;
   border-radius: 4px;
 }
-.cart-container .cart-item .item-quantity button:hover {
+.cart-container .cart-info .cart-item .item-quantity button:hover, .cart-container .carousel-section .cart-item .item-quantity button:hover {
   background: #f0f0f0;
 }
-.cart-container .cart-item .item-quantity input {
+.cart-container .cart-info .cart-item .item-quantity input, .cart-container .carousel-section .cart-item .item-quantity input {
   width: 5rem;
   text-align: center;
   border: 1px solid #ddd;
@@ -102,7 +106,7 @@
   border-radius: 4px;
   background: #f9f9f9;
 }
-.cart-container .cart-item .item-remove {
+.cart-container .cart-info .cart-item .item-remove, .cart-container .carousel-section .cart-item .item-remove {
   background: transparent;
   border: none;
   font-size: 20px;
@@ -112,43 +116,43 @@
   right: 16px;
   top: 16px;
 }
-.cart-container .cart-item .item-remove:hover {
+.cart-container .cart-info .cart-item .item-remove:hover, .cart-container .carousel-section .cart-item .item-remove:hover {
   color: var(--primary-hover-color);
 }
-.cart-container .cart-empty {
+.cart-container .cart-info .cart-empty, .cart-container .carousel-section .cart-empty {
   text-align: center;
   padding: 60px 0;
   font-size: 18px;
   font-weight: 500;
   color: var(--text-third-color);
 }
-.cart-container .cart-empty .link-homepage {
+.cart-container .cart-info .cart-empty .link-homepage, .cart-container .carousel-section .cart-empty .link-homepage {
   color: var(--primary-color);
 }
-.cart-container .cart-note {
+.cart-container .cart-info .cart-note, .cart-container .carousel-section .cart-note {
   font-size: 14px;
 }
-.cart-container .cart-note .shipping-note {
+.cart-container .cart-info .cart-note .shipping-note, .cart-container .carousel-section .cart-note .shipping-note {
   color: var(--text-secondary-color);
   margin-bottom: 16px;
   display: flex;
   align-items: center;
 }
-.cart-container .cart-note .shipping-note .icon-shipping {
+.cart-container .cart-info .cart-note .shipping-note .icon-shipping, .cart-container .carousel-section .cart-note .shipping-note .icon-shipping {
   margin-right: 1rem;
   font-size: 2rem;
   color: var(--primary-color);
 }
-.cart-container .cart-note .company-invoice {
+.cart-container .cart-info .cart-note .company-invoice, .cart-container .carousel-section .cart-note .company-invoice {
   margin-bottom: 16px;
   color: red;
   display: flex;
   align-items: center;
 }
-.cart-container .cart-note .company-invoice input[type=checkbox] {
+.cart-container .cart-info .cart-note .company-invoice input[type=checkbox], .cart-container .carousel-section .cart-note .company-invoice input[type=checkbox] {
   margin-right: 8px;
 }
-.cart-container .cart-note textarea {
+.cart-container .cart-info .cart-note textarea, .cart-container .carousel-section .cart-note textarea {
   width: 80%;
   min-height: 80px;
   padding: 8px;
@@ -157,7 +161,7 @@
   resize: vertical;
   font-size: 14px;
 }
-.cart-container .cart-right {
+.cart-container .cart-info .cart-right, .cart-container .carousel-section .cart-right {
   flex: 1;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -167,21 +171,21 @@
   flex-direction: column;
   height: fit-content;
 }
-.cart-container .cart-right .total-cart-container {
+.cart-container .cart-info .cart-right .total-cart-container, .cart-container .carousel-section .cart-right .total-cart-container {
   justify-content: space-between;
   flex-direction: row;
   display: flex;
   margin-bottom: 16px;
 }
-.cart-container .cart-right .total-cart-container .total-title {
+.cart-container .cart-info .cart-right .total-cart-container .total-title, .cart-container .carousel-section .cart-right .total-cart-container .total-title {
   font-size: 18px;
   font-weight: 600;
 }
-.cart-container .cart-right .total-cart-container .total-price {
+.cart-container .cart-info .cart-right .total-cart-container .total-price, .cart-container .carousel-section .cart-right .total-cart-container .total-price {
   font-size: 22px;
   font-weight: 700;
 }
-.cart-container .cart-right .checkout-button {
+.cart-container .cart-info .cart-right .checkout-button, .cart-container .carousel-section .cart-right .checkout-button {
   background-color: #007bff;
   color: white;
   padding: 12px;
@@ -193,14 +197,14 @@
   margin-bottom: 20px;
   transition: background 0.2s;
 }
-.cart-container .cart-right .checkout-button:hover {
+.cart-container .cart-info .cart-right .checkout-button:hover, .cart-container .carousel-section .cart-right .checkout-button:hover {
   background-color: #0056b3;
 }
-.cart-container .cart-empty {
+.cart-container .cart-info .cart-empty, .cart-container .carousel-section .cart-empty {
   text-align: center;
   padding: 40px 0;
 }
-.cart-container .cart-empty p {
+.cart-container .cart-info .cart-empty p, .cart-container .carousel-section .cart-empty p {
   font-size: 16px;
   color: #888;
 }
