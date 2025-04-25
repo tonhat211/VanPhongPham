@@ -1,0 +1,103 @@
+.wrapper {
+    border-radius: 10px;
+    background-color: var(--primary-backround-color);
+    border: none;
+    padding: 15px;
+    margin-left: 15px;
+
+    h1 {
+        color: orange;
+        font-size: 2rem;
+        text-transform: uppercase;
+        padding: 0;
+        margin: 0;
+        margin-bottom: 15px;
+
+        
+    }
+
+    .add-btn {
+        background-color: white;
+        border: 1px solid var(--primary-color);
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px;
+
+    }
+
+    .address-list-container {
+        margin-top: 10px;
+    }
+
+    .address-item {
+        padding: 10px;
+        background-color: white;
+        margin-bottom: 10px;
+        border-radius: 10px;
+
+        .label {
+            font-size: 1.3rem;
+            color: var(--text-secondary-color);
+
+        } 
+    
+        .value {
+            font-size: 1.3rem;
+            color: var(--header-color);
+            font-weight: 600;
+        }
+
+        .default-label {
+            font-size: 1rem;
+            color: green;
+            margin-left: 20px;
+            
+        }
+
+        .edit-address-btn {
+            font-size: 1.3rem;
+            color: var(--third-color);
+            &:hover {
+                cursor: pointer;
+                filter: brightness(1.5);
+            }
+        }
+
+        .delete-address-btn {
+            font-size: 1.3rem;
+            color: var(--price-color);
+            &:hover {
+                cursor: pointer;
+                filter: brightness(1.5);
+            }
+        }
+    }
+
+    .form-container {
+        
+        form {
+        
+            select {
+                border: 1px solid #aaa;
+                padding: 10px;
+                width: 100%;
+                margin-bottom: 10px;
+                border-radius: 10px;
+                font-size: 1.2rem;
+    
+                &:focus-visible {
+                    box-shadow: 0 0 0 0.25rem var(--primary-hover-color);
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    .confirm-container {
+        .label {
+            margin-bottom: 10px;
+        }
+    }
+
+   
+}

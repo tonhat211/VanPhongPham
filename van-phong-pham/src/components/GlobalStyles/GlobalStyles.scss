@@ -85,6 +85,17 @@ body {
     justify-content: space-between;
 }
 
+.d-flex-space-around {
+    display: flex;
+    justify-content: space-around;
+}
+
+.d-flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+
 .d-flex-al-center {
     display: flex;
     align-items: center;
@@ -188,6 +199,10 @@ body {
     align-items: center;
     text-decoration: none;
     color: var(--text-secondary-color);
+    padding: 7px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+
     &:hover {
         cursor: pointer;
         opacity: 0.3;
@@ -214,6 +229,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.cancel-btn {
+    color: var(--text-secondary-color);
+    border: 1px solid var(--text-secondary-color);
+    background-color: white;
+}
+
+.confirm-btn {
+    color: white;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+
 }
 /* end btns*/
 
@@ -281,6 +309,13 @@ body {
 
 .mb-10 {
     margin-bottom: 10px;
+}
+
+.note {
+    color: var(--primary-color);
+    font-style: italic;
+    font-size: 1rem;
+    font-weight: thin;
 }
 
 

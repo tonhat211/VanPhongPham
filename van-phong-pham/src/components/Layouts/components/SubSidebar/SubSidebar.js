@@ -57,14 +57,14 @@ function SubSidebar() {
                         <li className={classNames(cx('more-btn'), 'btn')} onClick={() => setExpanded(!expanded)}>
                             {expanded ? (
                                 <>
-                                    Thu gọn{' '}
+                                    {t('less')}
                                     <i>
                                         <FontAwesomeIcon icon={faAngleUp} style={{ marginLeft: '5px' }} />
                                     </i>
                                 </>
                             ) : (
                                 <>
-                                    Xem thêm{' '}
+                                    {t('more')}
                                     <i>
                                         <FontAwesomeIcon icon={faAngleDown} style={{ marginLeft: '5px' }} />
                                     </i>

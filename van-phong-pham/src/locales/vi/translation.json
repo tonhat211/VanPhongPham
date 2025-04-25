@@ -42,6 +42,39 @@
     "total-product-money": "Tổng tiền hàng",
     "shipping-fee": "Phí vận chuyển",
     "total-payment-money": "Tổng thanh toán",
-    "let-order": "Đặt hàng"
+    "let-order": "Đặt hàng",
+    "account-general": "Tổng quan tài khoản",
+    "member-program": "Chương trình thành viên",
+    "order-list": "Danh sách đơn hàng",
+    "address-notebook": "Sổ địa chỉ",
+    "account-info": "Thông tin tài khoản",
+    "hello": "Xin chào",
+    "birthday": "Ngày sinh",
+    "more": "Xem thêm",
+    "less": "Thu gọn",
+    "order-on": "Đặt vào",
+    "complete-on": "Hoàn thành vào",
+    "your-order": "Đơn hàng của bạn",
+    "confirm":"Xác nhận",
+    "order": "Đơn hàng",
+    "cancel": "Hủy",
+    "complete": "Hoàn thành",
+    "review": "Đánh giá",
+    "note": "Lưu ý",
+    "cannot-reverse": "Không thể hoàn tác",
+    "received-and-payed-success": "Bạn đã nhận hàng và thanh toán thành công",
+    "just-can-review-once": "Bạn chỉ có thể đánh giá một lần duy nhất cho cả đơn hàng",
+    "classification": "Phân loại",
+    "type-here": "Nhập nội dung tại đây",
+    "your-address": "Địa chỉ của bạn",
+    "add-address": "Thêm địa chỉ",
+    "add-new-address": "Thêm địa chỉ mới",
+    "set-as-default": "Đặt làm mặc định",
+    "edit-address": "Sửa địa chỉ",
+    "default": "Mặc định",
+    "delete": "Xóa"
+
+
+
   
 }

@@ -59,6 +59,23 @@
             padding-top: 4px;
         } 
 
+        &.has-value {
+            input {
+                padding-top: 4px;
+            }
+    
+            label {
+                display: block;
+                font-size: 1.2rem;
+                opacity: 1;
+                position: relative;
+                top: 0;
+                left: 0;
+                padding: 0 10px;
+                padding-top: 4px;
+            }
+        }
+
     
     }
 }

@@ -17,8 +17,6 @@ const icons = {
     icon_shopeepay: require('~/assets/icons/icon_shopeepay.svg').default,
     icon_vnpay: require('~/assets/icons/icon_vnpay.svg').default,
     icon_zalopay: require('~/assets/icons/icon_zalopay.svg').default
-
-
     
 
 };

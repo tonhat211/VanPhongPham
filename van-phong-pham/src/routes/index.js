@@ -2,7 +2,7 @@ import Home from '~/pages/Home';
 // import ProductDetail from '~/pages/ProductDetail';
 import Category from '~/pages/Category';
 import { CategoryLayout, ProductDetailLayout, ProductLayout, NoneLayout } from '~/components/Layouts';
-import {Product, Checkout} from '~/pages';
+import {Product, Checkout, Account} from '~/pages';
 import ProductDetailPage from '~/pages/ProductDetails/ProductDetailPage';
 
 import ProductCardsPage from '~/pages/productCardsPage/productCardsPage'
@@ -17,9 +17,9 @@ const publicRoutes  = [
     { path: '/products/:category', component: Product, layout: ProductLayout},
     // { path: '/product-detail', component: ProductDetail, layout: ProductDetailLayout},
     { path: '/category', component: Category, layout: CategoryLayout },
-    // { path: '/', component: Checkout, layout: NoneLayout},
     { path: '/checkout', component: Checkout, layout: NoneLayout},
     { path: '/detail', component: ProductDetailPage, layout: ProductDetailLayout },
+    { path: '/account', component: Account, layout: ProductLayout},
     { path: '/cart', component: ProductCardsPage, layout: ProductCardsLayout },
 ]
 
