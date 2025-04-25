@@ -1,0 +1,72 @@
+.carousel-wrapper {
+  padding: 20px;
+  overflow: hidden;
+}
+.carousel-wrapper .carousel-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.carousel-wrapper .swiper {
+  width: 100%;
+  overflow: hidden;
+}
+.carousel-wrapper .swiper-wrapper {
+  display: flex;
+  transition-timing-function: ease;
+}
+.carousel-wrapper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  width: auto !important;
+  max-width: 250px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.carousel-wrapper .swiper-slide > div {
+  width: 100%;
+  max-width: 250px;
+}
+.carousel-wrapper .swiper-slide .grid-col-3 {
+  width: 100% !important;
+  max-width: 250px;
+  padding: 0 !important;
+  margin: 0 auto;
+}
+.carousel-wrapper .swiper-button-prev,
+.carousel-wrapper .swiper-button-next {
+  color: #333;
+  width: 30px;
+  height: 30px;
+  background-color: var(--primary-backround-color);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.carousel-wrapper .swiper-button-prev:hover,
+.carousel-wrapper .swiper-button-next:hover {
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+.carousel-wrapper .swiper-button-prev {
+  left: 1rem;
+}
+.carousel-wrapper .swiper-button-next {
+  right: 1rem;
+}
+.carousel-wrapper .swiper-button-disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+.carousel-wrapper .swiper-button-prev::after,
+.carousel-wrapper .swiper-button-next::after {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+/*# sourceMappingURL=CarouselCards.css.map */
