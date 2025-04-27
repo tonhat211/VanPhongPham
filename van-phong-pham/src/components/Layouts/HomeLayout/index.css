@@ -1,0 +1,9 @@
+.homepage-layout-container {
+  padding-top: 95px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: var(--primary-backround-color);
+  display: flex;
+}
+
+/*# sourceMappingURL=index.css.map */

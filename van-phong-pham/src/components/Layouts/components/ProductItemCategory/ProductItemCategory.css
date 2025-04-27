@@ -1,0 +1,12 @@
+.product-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+}
+.product-list .grid-col-3 {
+  width: 100% !important;
+}
+
+/*# sourceMappingURL=ProductItemCategory.css.map */
