@@ -3,6 +3,7 @@ const productsData = [
     {
         "id": "600022385",
         "name": "Ream giấy A4",
+        // loai trong danh muc
         "category": "papers",'categogyID':'1',
         "title": "Combo 5 Ream giấy A4 70 gsm IK Copy (500 tờ) - Hàng nhập khẩu Indonesia",
         "brand": "IK Copy",
@@ -40,7 +41,9 @@ const productsData = [
                 "alt": ""
             }
         ],
+        //phan loai mau sac
         "colors": ["white", "blue"],
+        //phan loai sp
         // "categories": ["hong", "xanh", "tim"],
         "status": [
             {

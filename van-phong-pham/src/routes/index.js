@@ -7,11 +7,12 @@ import ProductDetailPage from '~/pages/ProductDetails/ProductDetailPage';
 
 import ProductCardsPage from '~/pages/productCardsPage/productCardsPage'
 import ProductCardsLayout from '~/components/Layouts/ProductCardsLayout';
+import HomeLayout from '~/components/Layouts/HomeLayout';
 
 // nhung route KHONG can dang nhap van xem duoc
 const publicRoutes  = [
-    { path: '/', component: Home},
-    { path: '/Home', component: Home},
+    { path: '/', component: Home, layout: HomeLayout},
+    { path: '/Home', component: Home, layout: HomeLayout},
     // { path: '/', component: Product, layout: ProductLayout},
     { path: '/products', component: Product, layout: ProductLayout},
     { path: '/products/:category', component: Product, layout: ProductLayout},
