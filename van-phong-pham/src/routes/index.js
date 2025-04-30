@@ -8,6 +8,8 @@ import ProductDetailPage from '~/pages/ProductDetails/ProductDetailPage';
 import ProductCardsPage from '~/pages/productCardsPage/productCardsPage'
 import ProductCardsLayout from '~/components/Layouts/ProductCardsLayout';
 import HomeLayout from '~/components/Layouts/HomeLayout';
+import RegisterPages from '~/pages/registerPages';
+import RegisterLayout from '~/components/Layouts/registerLayout/RegisterLayout';
 
 // nhung route KHONG can dang nhap van xem duoc
 const publicRoutes  = [
@@ -22,6 +24,8 @@ const publicRoutes  = [
     { path: '/checkout', component: Checkout, layout: NoneLayout},
     { path: '/detail', component: ProductDetailPage, layout: ProductDetailLayout },
     { path: '/cart', component: ProductCardsPage, layout: ProductCardsLayout },
+    { path: '/register', component: RegisterPages, layout: RegisterLayout },
+
 ]
 
 // nhung route PHAI DANG NHAP moi xem duoc
