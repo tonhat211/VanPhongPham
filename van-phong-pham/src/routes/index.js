@@ -22,6 +22,7 @@ const publicRoutes  = [
     { path: '/detail', component: ProductDetailPage, layout: ProductDetailLayout },
     { path: '/account', component: Account, layout: ProductLayout},
     { path: '/cart', component: ProductCardsPage, layout: ProductCardsLayout },
+
 ]
 
 // nhung route PHAI DANG NHAP moi xem duoc
