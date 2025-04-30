@@ -268,7 +268,7 @@ body {
   color: var(--primary-color);
   font-style: italic;
   font-size: 1rem;
-  font-weight: thin;
+  font-weight: 400;
 }
 
 /*# sourceMappingURL=GlobalStyles.css.map */
