@@ -10,7 +10,7 @@ import hotProductsHomePage from '~/data/hotProductsHomePage';
 import ProductItemCategory from '~/components/Layouts/components/ProductItemCategory/ProductItemCategory';
 import Button from '@mui/material/Button';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-function Home() {git
+function Home() {
     return (
         <div className="home-container">
             <div className="banner-top-container">
