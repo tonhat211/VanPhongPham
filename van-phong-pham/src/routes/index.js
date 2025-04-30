@@ -10,6 +10,8 @@ import ProductCardsLayout from '~/components/Layouts/ProductCardsLayout';
 import HomeLayout from '~/components/Layouts/HomeLayout';
 import RegisterPages from '~/pages/registerPages';
 import RegisterLayout from '~/components/Layouts/registerLayout/RegisterLayout';
+import LoginPage from '~/pages/LoginPage/LoginPage';
+import LoginLayout from '~/components/Layouts/loginLayout/LoginLayout';
 
 // nhung route KHONG can dang nhap van xem duoc
 const publicRoutes  = [
@@ -25,7 +27,7 @@ const publicRoutes  = [
     { path: '/account', component: Account, layout: ProductLayout},
     { path: '/cart', component: ProductCardsPage, layout: ProductCardsLayout },
     { path: '/register', component: RegisterPages, layout: RegisterLayout },
-
+    { path: '/login', component: LoginPage, layout: LoginLayout },
 
 ]
 

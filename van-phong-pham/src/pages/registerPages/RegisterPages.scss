@@ -9,7 +9,7 @@
   padding: 80px 20px;
   .register-section {
     background: rgba(0, 0, 0, 0.4);
-    background: #0f3f8e;
+    //background: #0f3f8e;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
@@ -19,6 +19,7 @@
     color: white;
 
     h4 {
+      text-transform: uppercase;
       text-align: center;
       font-size: 24px;
       font-weight: bold;
@@ -128,8 +129,12 @@
       .account-title {
         color: #dadada;
         a {
-          color: #ffc107 !important;
+          color: #ffc107;
           font-weight: 700 !important;
+          cursor: pointer;
+          &:hover {
+            color: #deb639;
+          }
         }
       }
       .account-gg-fb {
