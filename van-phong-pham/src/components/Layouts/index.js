@@ -3,3 +3,5 @@ export {default as CategoryLayout} from './CategoryLayout'
 export {default as ProductDetailLayout} from './ProductDetailLayout'
 export {default as ProductLayout} from './ProductLayout'
 export {default as NoneLayout} from './NoneLayout'
+export {default as AdminLayout} from './AdminLayout'
+
