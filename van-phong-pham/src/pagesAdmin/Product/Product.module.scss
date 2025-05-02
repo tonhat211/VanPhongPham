@@ -1,0 +1,41 @@
+.wrapper {
+
+    .search-form {
+        border: 1px solid #dddde3;
+        border-radius: 10px;
+        overflow: hidden;
+        min-width: 100%;
+    
+    
+        input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 1.6rem;
+            height: 40px;
+            
+        }
+    
+        &:focus-within {
+            // outline: 2px solid var(--primary-color);
+            box-shadow: 0 0 0 .25rem var(--primary-hover-color);
+    
+        }
+    
+        i {
+            margin: auto 10px;
+        }
+
+        .search-btn {
+            width: 40px;
+            &:hover {
+                cursor: pointer;
+                opacity: 0.4;
+            }
+        }
+    
+    }
+
+ 
+}

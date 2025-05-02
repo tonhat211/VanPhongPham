@@ -3,7 +3,7 @@ import Home from '~/pages/Home';
 import Category from '~/pages/Category';
 import { CategoryLayout, ProductDetailLayout, ProductLayout, NoneLayout, AdminLayout } from '~/components/Layouts';
 import {Product, Checkout, Account} from '~/pages';
-import {Employee} from '~/pagesAdmin';
+import {Employee, Product as AdminProduct} from '~/pagesAdmin';
 import ProductDetailPage from '~/pages/ProductDetails/ProductDetailPage';
 
 import ProductCardsPage from '~/pages/productCardsPage/productCardsPage'
@@ -16,7 +16,7 @@ import LoginLayout from '~/components/Layouts/loginLayout/LoginLayout';
 
 // nhung route KHONG can dang nhap van xem duoc
 const publicRoutes  = [
-    { path: '/', component: Home, layout: HomeLayout},
+    // { path: '/', component: Home, layout: HomeLayout},
     { path: '/Home', component: Home, layout: HomeLayout},
     // { path: '/', component: Product, layout: ProductLayout},
     { path: '/products', component: Product, layout: ProductLayout},
@@ -29,7 +29,9 @@ const publicRoutes  = [
     { path: '/cart', component: ProductCardsPage, layout: ProductCardsLayout },
     { path: '/register', component: RegisterPages, layout: RegisterLayout },
     { path: '/login', component: LoginPage, layout: LoginLayout },
-    { path: '/admin', component: Employee, layout: AdminLayout },
+    { path: '/admin/employee', component: Employee, layout: AdminLayout },
+    { path: '/admin/product', component: AdminProduct, layout: AdminLayout },
+    // { path: '/', component: AdminProduct, layout: AdminLayout },
 
 ]
 

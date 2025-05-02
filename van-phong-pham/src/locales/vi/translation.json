@@ -72,7 +72,12 @@
     "set-as-default": "Đặt làm mặc định",
     "edit-address": "Sửa địa chỉ",
     "default": "Mặc định",
-    "delete": "Xóa"
+    "delete": "Xóa",
+    "manage": "Quản lý",
+    "dashboard": "Thống kê",
+    "customer": "Khách hàng",
+    "employee":"Nhân viên",
+    "ui": "Giao diện"
 
 
 
