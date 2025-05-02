@@ -16,7 +16,7 @@ import LoginLayout from '~/components/Layouts/loginLayout/LoginLayout';
 
 // nhung route KHONG can dang nhap van xem duoc
 const publicRoutes  = [
-    // { path: '/', component: Home, layout: HomeLayout},
+    { path: '/', component: Home, layout: HomeLayout},
     { path: '/Home', component: Home, layout: HomeLayout},
     // { path: '/', component: Product, layout: ProductLayout},
     { path: '/products', component: Product, layout: ProductLayout},
