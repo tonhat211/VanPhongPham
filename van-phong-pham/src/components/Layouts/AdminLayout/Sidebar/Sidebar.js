@@ -2,12 +2,13 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
 import styles from './Sidebar.module.scss';
 import MenuItem from '~/models/MenuItem';
 
+import useI18n from '~/hooks/useI18n';
 const cx = classNames.bind(styles);
+
 
 const menuData = [
     new MenuItem('Thống kê', '/admin/dashboard'),
@@ -19,20 +20,7 @@ const menuData = [
 ]
 
 function Sidebar() {
-    const { t, i18n } = useTranslation();
-    //thay doi ngon ngu
-    const changeLanguage = (lang) => {
-        i18n.changeLanguage(lang);
-    };
-
-    // khi click vao menu item, thi truyen item duoc chon vao url de nhung trang khac (products) co the lay
-    // const navigate = useNavigate();
-
-    // const handleClick = (item) => {
-    //     navigate(`/subsidebar?item=${encodeURIComponent(item.name)}`);
-    // };
-    ///////////////////////////////////////////////
-
+    const {t, lower} = useI18n();
     return (
         <div className={classNames(cx('wrapper'), 'grid-col-2')}>
             <div className={classNames(cx('menu-container'))}>

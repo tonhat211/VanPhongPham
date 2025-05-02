@@ -5,7 +5,7 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import Breadcrumb from './Breadcrumb';
 
-import styles from './style.module.scss';
+import styles from './AdminLayout.module.scss';
 const cx = classNames.bind(styles);
 
 function AdminLayout({ children }) {
