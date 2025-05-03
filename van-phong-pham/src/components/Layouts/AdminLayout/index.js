@@ -6,6 +6,7 @@ import Sidebar from './Sidebar';
 import Breadcrumb from './Breadcrumb';
 
 import styles from './AdminLayout.module.scss';
+import Footer from '~/components/Layouts/components/Footer';
 const cx = classNames.bind(styles);
 
 function AdminLayout({ children }) {
@@ -19,6 +20,7 @@ function AdminLayout({ children }) {
                     <div className={cx('content')}>{children}</div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }

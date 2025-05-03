@@ -1,0 +1,29 @@
+.wrapper .search-form {
+  border: 1px solid #dddde3;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 100%;
+}
+.wrapper .search-form input {
+  border: none;
+  outline: none;
+  padding: 10px;
+  width: 100%;
+  font-size: 1.6rem;
+  height: 40px;
+}
+.wrapper .search-form:focus-within {
+  box-shadow: 0 0 0 0.25rem var(--primary-hover-color);
+}
+.wrapper .search-form i {
+  margin: auto 10px;
+}
+.wrapper .search-form .search-btn {
+  width: 40px;
+}
+.wrapper .search-form .search-btn:hover {
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+/*# sourceMappingURL=Product.module.css.map */

@@ -1,0 +1,33 @@
+.wrapper .heading {
+  font-size: 3rem;
+  font-weight: 600;
+}
+.wrapper ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  margin-top: 4px;
+  font-size: 1.4rem;
+}
+.wrapper ul li {
+  margin-right: 8px;
+}
+.wrapper ul li::after {
+  content: "/";
+  margin-left: 8px;
+}
+.wrapper ul li:last-child::after {
+  content: "";
+}
+.wrapper ul li a {
+  color: var(--text-secondary-color);
+  text-decoration: none;
+}
+.wrapper ul li a:hover {
+  cursor: pointer;
+}
+.wrapper ul li.active span {
+  color: #bbb;
+}
+
+/*# sourceMappingURL=Breadcrumb.module.css.map */

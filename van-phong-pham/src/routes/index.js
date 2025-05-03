@@ -13,6 +13,8 @@ import RegisterPages from '~/pages/registerPages';
 import RegisterLayout from '~/components/Layouts/registerLayout/RegisterLayout';
 import LoginPage from '~/pages/LoginPage/LoginPage';
 import LoginLayout from '~/components/Layouts/loginLayout/LoginLayout';
+import Customer from '~/pagesAdmin/Customer/Customer';
+import Orders from '~/pagesAdmin/Orders';
 
 // nhung route KHONG can dang nhap van xem duoc
 const publicRoutes  = [
@@ -31,7 +33,8 @@ const publicRoutes  = [
     { path: '/login', component: LoginPage, layout: LoginLayout },
     { path: '/admin/employee', component: Employee, layout: AdminLayout },
     { path: '/admin/product', component: AdminProduct, layout: AdminLayout },
-    // { path: '/', component: AdminProduct, layout: AdminLayout },
+    { path: '/admin/customer', component: Customer, layout: AdminLayout },
+    { path: '/admin/order', component: Orders, layout: AdminLayout },
 
 ]
 
