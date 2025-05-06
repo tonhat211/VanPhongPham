@@ -17,6 +17,10 @@
     border-radius: 5px;
     position: relative;
     min-width: 300px;
+    max-height: 90%;
+    overflow-y: auto;
+
+
 }
 
 .close-btn {

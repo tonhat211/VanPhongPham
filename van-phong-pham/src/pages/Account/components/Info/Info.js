@@ -52,7 +52,7 @@ function Info() {
                     <CustomInput
                         value={birthday.toLocaleDateString('vi-VN')}
                         onChange={(e) => setBirthday(e.target.value)}
-                        onClick={() => openModal('BIRTHDAY_CALENDAR')}
+                        onClick={() => openModal(MODAL_TYPES.BIRTHDAY_CALENDAR)}
                         label={t('birthday')}
                         className="mb-10"
                     />
