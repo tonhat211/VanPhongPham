@@ -29,7 +29,7 @@
     "@mui/system": "^7.0.2",
     "@mui/types": "^7.4.1",
     "@mui/utils": "^7.0.2",
-    "@mui/x-data-grid": "^8.1.0",
+    "@mui/x-data-grid": "^8.2.0",
     "@mui/x-date-pickers": "^8.1.0",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/dom": "^10.4.0",
