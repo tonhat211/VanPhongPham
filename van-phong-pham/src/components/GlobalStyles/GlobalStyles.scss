@@ -5,7 +5,7 @@
     --text-color: #000000;
     --text-secondary-color: #666666;
     --text-third-color: #808089;
-    --text-fourth-color:#23486c;
+    --text-fourth-color: #23486c;
     --primary-color: #2659f3;
     --secondary-color: #0d5cb6;
     --third-color: #338dbc;
@@ -79,6 +79,11 @@ body {
     display: flex;
 }
 
+.d-flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
 .d-flex-space-between {
     display: flex;
     justify-content: space-between;
@@ -93,7 +98,6 @@ body {
     display: flex;
     justify-content: center;
 }
-
 
 .d-flex-al-center {
     display: flex;
@@ -240,7 +244,6 @@ body {
     color: white;
     background-color: var(--primary-color);
     border: 1px solid var(--primary-color);
-
 }
 /* end btns*/
 
@@ -317,4 +320,45 @@ body {
     font-weight: 400;
 }
 
+.w-fit {
+    width: fit-content;
+}
 
+.custom-table {
+    border-collapse: collapse;
+    width: 100%;
+
+    th {
+        border-bottom: 1px solid #ddd;
+    }
+
+    td.center {
+        text-align: center;
+    }
+
+    td {
+        padding: 4px;
+        img {
+            width: 100%;
+        }
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+}
+
+.custom-table.fixed-layout {
+    table-layout: fixed;
+}
+
+.fake-a {
+    text-decoration: none;
+    color: var(--primary-color);
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+        filter: brightness(1.5);
+    }
+}
