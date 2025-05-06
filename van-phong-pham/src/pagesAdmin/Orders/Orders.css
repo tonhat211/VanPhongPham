@@ -1,0 +1,131 @@
+.orders-container {
+  font-family: "Poppins", sans-serif;
+}
+.orders-container .MuiDataGrid-root {
+  border: none;
+  font-size: 14px;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-columnHeaderTitle {
+  color: var(--label-admin);
+  padding: 1rem 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-cell {
+  white-space: normal;
+  line-height: 1.5;
+  align-items: flex-start;
+  padding: 0.5rem 1rem;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-row {
+  min-height: 80px;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-row:nth-of-type(odd) {
+  background-color: #fafafa;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-row:nth-of-type(even) {
+  background-color: #ffffff;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-row:hover {
+  background-color: #f0f8ff;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=id] {
+  font-weight: bold;
+  color: var(--label-admin);
+  text-align: center;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=status] {
+  font-weight: bold;
+  color: #e53935;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=total] {
+  font-weight: 500;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=action] {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=action] .MuiSelect-select {
+  padding: 6px 16px;
+  font-size: 14px;
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=action] .MuiButton-root {
+  margin-left: 1rem;
+  font-size: 14px;
+  text-transform: none;
+  padding: 4px 10px;
+  background-color: transparent;
+  color: var(--header-color);
+}
+.orders-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=action] .MuiButton-root:hover {
+  background-color: #2659f3;
+  color: white;
+}
+
+.title-dialog {
+  text-align: center;
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+}
+
+.order-dialog-content {
+  font-size: 17px;
+  padding: 8px 16px;
+}
+.order-dialog-content .info-row {
+  font-size: 17px;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.order-dialog-content .info-col {
+  font-size: 17px;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+.order-dialog-content .MuiTypography-root {
+  font-size: inherit;
+  margin-bottom: 6px;
+  line-height: 1.5;
+  color: #333;
+}
+.order-dialog-content b {
+  color: var(--label-admin);
+}
+.order-dialog-content ul {
+  padding-left: 16px;
+  margin: 6px 0;
+}
+.order-dialog-content ul li {
+  margin-bottom: 4px;
+}
+.order-dialog-content .button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.order-dialog-content .button-group .print-btn {
+  font-size: 14px;
+  padding: 6px 18px;
+  border-radius: 5px;
+  text-transform: none;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+}
+.order-dialog-content .button-group .MuiButton-outlined {
+  border: 1px solid #2659f3;
+  color: #2659f3;
+}
+.order-dialog-content .button-group .MuiButton-outlined:hover {
+  background-color: #2659f3;
+  color: white;
+}
+
+/*# sourceMappingURL=Orders.css.map */

@@ -1,0 +1,151 @@
+.orders-container {
+  font-family: 'Poppins', sans-serif;
+
+  .MuiDataGrid-root {
+    border: none;
+    font-size: 14px;
+
+    .MuiDataGrid-columnHeaderTitle {
+      color: var(--label-admin);
+      padding: 1rem 1rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .MuiDataGrid-cell {
+      white-space: normal;
+      line-height: 1.5;
+      align-items: flex-start;
+      padding: 0.5rem 1rem;
+    }
+
+    .MuiDataGrid-row {
+      min-height: 80px;
+
+      &:nth-of-type(odd) {
+        background-color: #fafafa;
+      }
+
+      &:nth-of-type(even) {
+        background-color: #ffffff;
+      }
+
+      &:hover {
+        background-color: #f0f8ff;
+      }
+    }
+
+    .MuiDataGrid-cell[data-field='id'] {
+      font-weight: bold;
+      color: var(--label-admin);
+      text-align: center;
+    }
+
+    .MuiDataGrid-cell[data-field='status'] {
+      font-weight: bold;
+      color: #e53935;
+    }
+
+    .MuiDataGrid-cell[data-field='total'] {
+      font-weight: 500;
+    }
+
+    .MuiDataGrid-cell[data-field='action'] {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      padding: 1rem;
+
+      .MuiSelect-select {
+        padding: 6px 16px;
+        font-size: 14px;
+      }
+
+      .MuiButton-root {
+        margin-left: 1rem;
+        font-size: 14px;
+        text-transform: none;
+        padding: 4px 10px;
+        background-color: transparent;
+        color: var( --header-color);
+
+        &:hover {
+          background-color: #2659f3;
+          color: white;
+        }
+      }
+    }
+  }
+
+}
+.title-dialog {
+  text-align: center;
+  font-size: 2rem!important;
+  font-weight: 600!important;
+}
+
+.order-dialog-content {
+  font-size: 17px;
+  padding: 8px 16px;
+
+  .info-row {
+    font-size: 17px;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .info-col {
+    font-size: 17px;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+  }
+  .MuiTypography-root {
+    font-size: inherit;
+    margin-bottom: 6px;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  b {
+    color: var(--label-admin);
+  }
+
+  ul {
+    padding-left: 16px;
+    margin: 6px 0;
+    li {
+      margin-bottom: 4px;
+    }
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+
+    .print-btn {
+      font-size: 14px;
+      padding: 6px 18px;
+      border-radius: 5px;
+      text-transform: none;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .MuiButton-outlined {
+      border: 1px solid #2659f3;
+      color: #2659f3;
+
+      &:hover {
+        background-color: #2659f3;
+        color: white;
+      }
+    }
+
+  }
+}

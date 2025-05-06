@@ -21,6 +21,8 @@
   --breadcrumb-backround-color: #dbe8ff;
   --red-light-a: #ffe0e2;
   --border-color: rgba(23, 23, 23, 0.14);
+  --label-admin:#007aff;
+  --background-admin: linear-gradient(90deg, #09bce4 0%, #2659f3 100%);
 }
 
 * {

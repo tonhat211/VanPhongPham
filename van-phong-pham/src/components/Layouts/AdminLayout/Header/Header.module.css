@@ -1,0 +1,47 @@
+.wrapper {
+  position: fixed;
+  padding: 10px 20px;
+  z-index: 1;
+  background-color: white;
+}
+.wrapper img {
+  width: 100%;
+}
+.wrapper .menu {
+  position: relative;
+}
+.wrapper .menu .menu-btn {
+  font-size: 1.4rem;
+  color: var(--header-color);
+}
+.wrapper .menu .menu-btn i {
+  margin-left: 4px;
+}
+.wrapper .menu .menu-btn:hover {
+  cursor: pointer;
+  filter: brightness(1.5);
+}
+.wrapper .menu .submenu {
+  position: absolute;
+  background-color: white;
+  right: 0;
+  width: max-content;
+  font-size: 1.4rem;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+.wrapper .menu .submenu li {
+  list-style-type: none;
+  padding: 10px;
+}
+.wrapper .menu .submenu li:hover {
+  cursor: pointer;
+  background-color: var(--primary-hover-color);
+}
+.wrapper .menu .submenu li a {
+  text-decoration: none;
+  color: var(--text-secondary-color);
+  width: 100%;
+}
+
+/*# sourceMappingURL=Header.module.css.map */

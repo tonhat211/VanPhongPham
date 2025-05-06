@@ -13,10 +13,12 @@ import RegisterPages from '~/pages/registerPages';
 import RegisterLayout from '~/components/Layouts/registerLayout/RegisterLayout';
 import LoginPage from '~/pages/LoginPage/LoginPage';
 import LoginLayout from '~/components/Layouts/loginLayout/LoginLayout';
+import Customer from '~/pagesAdmin/Customer/Customer';
+import Orders from '~/pagesAdmin/Orders';
 
 // nhung route KHONG can dang nhap van xem duoc
 const publicRoutes  = [
-    // { path: '/', component: Home, layout: HomeLayout},
+    { path: '/', component: Home, layout: HomeLayout},
     { path: '/Home', component: Home, layout: HomeLayout},
     // { path: '/', component: Product, layout: ProductLayout},
     { path: '/products', component: Product, layout: ProductLayout},
@@ -32,7 +34,9 @@ const publicRoutes  = [
     { path: '/admin/employee', component: Employee, layout: AdminLayout },
     { path: '/admin/product', component: AdminProduct, layout: AdminLayout },
     { path: '/admin/dashboard', component: Dashboard, layout: AdminLayout },
-    { path: '/', component: Dashboard, layout: AdminLayout },
+    // { path: '/', component: Dashboard, layout: AdminLayout },
+    { path: '/admin/customer', component: Customer, layout: AdminLayout },
+    { path: '/admin/order', component: Orders, layout: AdminLayout },
 
 ]
 
