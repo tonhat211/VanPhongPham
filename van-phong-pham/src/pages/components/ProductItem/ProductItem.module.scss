@@ -4,7 +4,7 @@
     overflow: hidden;
     border-radius: 10px;
     border: 1px solid white;
-
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
     &:hover {
         border: 1px solid var(--primary-color);
         img {
@@ -79,7 +79,7 @@
     .rate-container {
         margin-top: 10px;
         display: flex;
-        align-items: baseline;
+        align-items: center;
 
         p {
             margin-left: 10px;

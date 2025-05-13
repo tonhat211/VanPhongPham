@@ -4,33 +4,32 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
-import { menus, brands, priceRanges, colors } from '~/data';
+import { priceRanges, colors } from '~/data';
 import styles from './SubSidebar.module.scss';
+import { useData } from '~/context/DataContext';
 
 const cx = classNames.bind(styles);
 
 function SubSidebar() {
     const { t, i18n } = useTranslation();
+    const { menus, brands } = useData();
 
     //thay doi ngon ngu
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
     };
-    //code chinh thuc
-    // const location = useLocation();
-    // const queryParams = new URLSearchParams(location.search);
-    // const category = queryParams.get('category');
 
-    // test
-    const category = '/but-viet';
+    const { category } = useParams();
 
     let parent = menus.find((m) => m.link === category);
+
     if (!parent) parent = null;
 
     return (
         <div className={classNames(cx('wrapper'))}>
-            <MenuList items={parent?.submenu || menus} title={t('product-type')} filterType="menu" />
+            <MenuList items={parent?.subs || menus} title={t('product-type')} filterType="menu" />
             <MenuList items={brands} title={t('brand')} filterType="brand" />
             <MenuList items={priceRanges} title={t('price-range')} filterType="price" />
             <MenuList items={colors} title={t('color')} filterType="color" />

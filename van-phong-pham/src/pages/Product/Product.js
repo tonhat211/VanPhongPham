@@ -10,7 +10,7 @@ import {
     faArrowTrendUp,
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 
 import styles from './Product.module.scss';
 import images from '~/assets/images';
@@ -18,277 +18,77 @@ import SubSidebar from '~/components/Layouts/components/SubSidebar';
 import { menus, brands, priceRanges, colors } from '~/data';
 import { ProductItem, Pagination } from '../components';
 import { Product as ProductModel, StarRating } from '~/models';
+import { getProductsByCategory } from '~/api/productApi';
 
 const cx = classNames.bind(styles);
 
 function Product() {
-    const { category } = useParams();
-    const [page, setPage] = useState(3);
-    //code chinh thuc
-    // const location = useLocation();
-    // const queryParams = new URLSearchParams(location.search);
-    // const category = queryParams.get('category');
+    console.log('product screen');
+    const { category } = useParams(); // lấy từ URL path
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    // test
-    // const category = '/but-viet';
-    // useEffect(() => {
-    //     axios.get(`http://localhost:8080/api/products/category/${category}`)
-    //       .then(response => {
-    //         setProducts(response.data);
-    //       })
-    //       .catch(error => {
-    //         console.error('Error fetching products:', error);
-    //       });
-    //   }, [category]);
+    const [page, setPage] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [totalPages, setTotalPages] = useState(1);
 
-    console.log('category: ' +category);
+    const sortBy = searchParams.get('sortBy') || 'price';
+    const direction = searchParams.get('direction') || 'asc';
+    const size = parseInt(searchParams.get('size') || '10');
+    const sub = searchParams.get('sub');
+    const [products, setProducts] = useState(null);
 
-    let parent = menus.find((m) => m.link === "/"+category);
+    useEffect(() => {
+        searchParams.set('page', page);
+        searchParams.set('sortBy', sortBy);
+        searchParams.set('direction', direction);
+        searchParams.set('size', size);
+        setSearchParams(searchParams);
+
+        setLoading(true);
+        getProductsByCategory({
+            category,
+            sub,
+            sortBy,
+            direction,
+            page,
+            size,
+        })
+            .then((data) => {
+                // console.log('products creen: ' + JSON.stringify(data, null, 2));
+                setProducts(data.content); // nếu backend trả về Page<>
+                const pageInfo = data.pageInfo;
+                setPage(pageInfo.page);
+                setTotalPages(pageInfo.totalPages);
+            })
+            .catch((err) => {
+                // console.error(err);
+                alert('Không thể tải sản phẩm');
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [category, sortBy, direction, page, size, sub]);
+
+    let parent = menus.find((m) => m.link === '/' + category);
     if (!parent) parent = null;
 
-    console.log('parent: ' +parent);
-
-    // du lieu demo
-    const products = [
-        new ProductModel(
-            1,
-            'Bút gel Quick Dry Thiên Long GEL-066 - Premium Tip - Vật liệu tái chế',
-            15300,
-            17000,
-            10,
-            images.product1,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            2,
-            'Combo 20 Bút Gel Thiên Long Doraemon GEL-012/DO Nature - Mực tím - Phiên bản 2025',
-            190300,
-            220000,
-            10,
-            images.product2,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            3,
-            'Bút mực gel khô nhanh - nét viết êm mượt Flexgel Thiên Long GEL-042 - Dành cho Văn Phòng Sinh Viên Học sinh',
-            45300,
-            67000,
-            30,
-            images.product3,
-            864,
-            4.6,
-            600,
-        ),
-
-        new ProductModel(
-            4,
-            'Bút gel Quick Dry Thiên Long GEL-066 - Premium Tip - Vật liệu tái chế',
-            15300,
-            17000,
-            10,
-            images.product1,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            5,
-            'Combo 20 Bút Gel Thiên Long Doraemon GEL-012/DO Nature - Mực tím - Phiên bản 2025',
-            190300,
-            220000,
-            10,
-            images.product2,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            6,
-            'Bút mực gel khô nhanh - nét viết êm mượt Flexgel Thiên Long GEL-042 - Dành cho Văn Phòng Sinh Viên Học sinh',
-            45300,
-            67000,
-            30,
-            images.product3,
-            864,
-            4.6,
-            600,
-        ),
-        new ProductModel(
-            1,
-            'Bút gel Quick Dry Thiên Long GEL-066 - Premium Tip - Vật liệu tái chế',
-            15300,
-            17000,
-            10,
-            images.product1,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            2,
-            'Combo 20 Bút Gel Thiên Long Doraemon GEL-012/DO Nature - Mực tím - Phiên bản 2025',
-            190300,
-            220000,
-            10,
-            images.product2,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            3,
-            'Bút mực gel khô nhanh - nét viết êm mượt Flexgel Thiên Long GEL-042 - Dành cho Văn Phòng Sinh Viên Học sinh',
-            45300,
-            67000,
-            30,
-            images.product3,
-            864,
-            4.6,
-            600,
-        ),
-
-        new ProductModel(
-            4,
-            'Bút gel Quick Dry Thiên Long GEL-066 - Premium Tip - Vật liệu tái chế',
-            15300,
-            17000,
-            10,
-            images.product1,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            5,
-            'Combo 20 Bút Gel Thiên Long Doraemon GEL-012/DO Nature - Mực tím - Phiên bản 2025',
-            190300,
-            220000,
-            10,
-            images.product2,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            6,
-            'Bút mực gel khô nhanh - nét viết êm mượt Flexgel Thiên Long GEL-042 - Dành cho Văn Phòng Sinh Viên Học sinh',
-            45300,
-            67000,
-            30,
-            images.product3,
-            864,
-            4.6,
-            600,
-        ),
-        new ProductModel(
-            1,
-            'Bút gel Quick Dry Thiên Long GEL-066 - Premium Tip - Vật liệu tái chế',
-            15300,
-            17000,
-            10,
-            images.product1,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            2,
-            'Combo 20 Bút Gel Thiên Long Doraemon GEL-012/DO Nature - Mực tím - Phiên bản 2025',
-            190300,
-            220000,
-            10,
-            images.product2,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            3,
-            'Bút mực gel khô nhanh - nét viết êm mượt Flexgel Thiên Long GEL-042 - Dành cho Văn Phòng Sinh Viên Học sinh',
-            45300,
-            67000,
-            30,
-            images.product3,
-            864,
-            4.6,
-            600,
-        ),
-
-        new ProductModel(
-            4,
-            'Bút gel Quick Dry Thiên Long GEL-066 - Premium Tip - Vật liệu tái chế',
-            15300,
-            17000,
-            10,
-            images.product1,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            5,
-            'Combo 20 Bút Gel Thiên Long Doraemon GEL-012/DO Nature - Mực tím - Phiên bản 2025',
-            190300,
-            220000,
-            10,
-            images.product2,
-            864,
-            4.6,
-            600,
-            'new',
-        ),
-        new ProductModel(
-            6,
-            'Bút mực gel khô nhanh - nét viết êm mượt Flexgel Thiên Long GEL-042 - Dành cho Văn Phòng Sinh Viên Học sinh',
-            45300,
-            67000,
-            30,
-            images.product3,
-            864,
-            4.6,
-            600,
-        ),
-        new ProductModel(
-            6,
-            'Bút mực gel khô nhanh - nét viết êm mượt Flexgel Thiên Long GEL-042 - Dành cho Văn Phòng Sinh Viên Học sinh',
-            45300,
-            67000,
-            30,
-            images.product3,
-            864,
-            4.6,
-            600,
-        ),
-        new ProductModel(
-            6,
-            'Bút mực gel khô nhanh - nét viết êm mượt Flexgel Thiên Long GEL-042 - Dành cho Văn Phòng Sinh Viên Học sinh',
-            45300,
-            67000,
-            30,
-            images.product3,
-            864,
-            4.6,
-            600,
-        ),
-    ];
 
     const barRef = useRef(null);
 
+    const handlePageChange = (newPage) => {
+        newPage = newPage-1;
+        console.log("handlePageChange newpage: " + newPage)
+        setPage(newPage);
+        searchParams.set('page', newPage);
+        setSearchParams(searchParams); // Cập nhật URL
+    };
+
+      const updateSort = (newSortBy, newDirection) => {
+        searchParams.set('sortBy', newSortBy);
+        searchParams.set('direction', newDirection);
+        searchParams.set('page', 1); 
+        setSearchParams(searchParams);
+    };
 
     useEffect(() => {
         const handleWindowScroll = () => {
@@ -296,10 +96,10 @@ function Product() {
 
             if (currentScroll >= 1500 && barRef.current) {
                 const barScroll = currentScroll - 1500;
-        
+
                 barRef.current.scrollTo({
                     top: barScroll,
-                    behavior: 'smooth'
+                    behavior: 'smooth',
                 });
             }
         };
@@ -309,6 +109,9 @@ function Product() {
             window.removeEventListener('scroll', handleWindowScroll);
         };
     }, []);
+
+    console.log("totalpage: " + totalPages);
+    console.log("page:" + page);
 
     return (
         <div className={classNames(cx('wrapper'))}>
@@ -322,27 +125,46 @@ function Product() {
                         <p>Sắp xếp:</p>
                         <ul className={classNames(cx('sort-option-list'))}>
                             <li>
-                                <Link className={classNames(cx('active'))}>Giá tăng dần</Link>
+                                <Link
+                                    className={classNames(cx({ active: sortBy === 'price' && direction === 'asc' }))}
+                                    onClick={() => updateSort('price', 'asc')}
+                                >
+                                    Giá tăng dần
+                                </Link>
                             </li>
                             <li>
-                                <Link>Giá giảm dần</Link>
+                                <Link
+                                    className={classNames(cx({ active: sortBy === 'price' && direction === 'desc' }))}
+                                    onClick={() => updateSort('price', 'desc')}
+                                >
+                                    Giá giảm dần
+                                </Link>
                             </li>
                             <li>
-                                <Link>Hàng mới</Link>
+                                <Link
+                                    className={classNames(
+                                        cx({ active: sortBy === 'createdDate' && direction === 'desc' }),
+                                    )}
+                                    onClick={() => updateSort('createdDate', 'desc')}
+                                >
+                                    Hàng mới
+                                </Link>
                             </li>
                         </ul>
                     </div>
                     <div className={classNames(cx('divider'))} style={{ marginTop: '14px' }}></div>
-                    <ProductList items={products} />
+                    {products && <ProductList items={products} />}
                     <div className={classNames(cx('pagination-container'))}>
-                        <Pagination totalPages={10} currentPage={page} onPageChange={setPage} />
+                        <Pagination totalPages={totalPages} currentPage={page+1} onPageChange={handlePageChange} />
                     </div>
                 </div>
             </div>
-            <div className={classNames(cx('content-container', 'recent-viewed-product'))}>
-                <p className={classNames(cx('title'))}>Sản phẩm đã xem</p>
-                <ProductList items={products.slice(0, 4)} />
-            </div>
+            {products && (
+                <div className={classNames(cx('content-container', 'recent-viewed-product'))}>
+                    <p className={classNames(cx('title'))}>Sản phẩm đã xem</p>
+                    <ProductList items={products.slice(0, 4)} />
+                </div>
+            )}
         </div>
     );
 

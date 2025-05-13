@@ -2,9 +2,9 @@ import MenuItem from '~/models/MenuItem';
 import icons from '~/assets/icons';
 
 const menus = [
-  new MenuItem('Bút viết', '/but-viet', icons.icon_but_viet, [
-    new MenuItem('BST bút Hoshi - Công nghệ Nhật Bản', '/products/phones'),
-    new MenuItem('Bộ sưu tập bút xóa được Mazzic', '/products/laptops'),
+  new MenuItem('Bút viết', 'but-viet', icons.icon_but_viet, [
+    new MenuItem('BST bút Hoshi - Công nghệ Nhật Bản', 'products/bst-but-hoshi'),
+    new MenuItem('Bộ sưu tập bút xóa được Mazzic', 'products/laptops'),
     new MenuItem('Bút lông kim', '/products/laptops',null,[
         new MenuItem('BST bút Hoshi - Công nghệ Nhật Bản', '/products/phones'),
         new MenuItem('Bộ sưu tập bút xóa được Mazzic', '/products/laptops'),
@@ -16,10 +16,8 @@ const menus = [
     new MenuItem('Bút Gel Xóa Được', '/products/laptops'),
     new MenuItem('Bút Máy xóa được', '/products/laptops'),
     new MenuItem('Bút Máy', '/products/laptops')
-
-
   ]),
-  new MenuItem('Văn phòng phẩm', '/van-phong-pham', icons.icon_van_phong_pham),
+  new MenuItem('Văn phòng phẩm', 'van-phong-pham', icons.icon_van_phong_pham),
   new MenuItem('Dụng cụ học tập', '/dung-cu-hoc-tap',  icons.icon_dung_cu_hoc_tap, [
     new MenuItem('lap', '/products/phones'),
     new MenuItem('lap', '/products/phones'),

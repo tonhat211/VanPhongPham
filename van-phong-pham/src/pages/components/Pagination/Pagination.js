@@ -8,13 +8,15 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
     const pages = [];
 
     // Nút "Previous"
-    pages.push(
-        <button key="prev" onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>
-            <i>
-                <FontAwesomeIcon icon={faAngleLeft} />
-            </i>
-        </button>,
-    );
+    if (totalPages > 1) {
+        pages.push(
+            <button key="prev" onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>
+                <i>
+                    <FontAwesomeIcon icon={faAngleLeft} />
+                </i>
+            </button>,
+        );
+    }
 
     // Trang đầu
     pages.push(
@@ -24,7 +26,8 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
     );
 
     // Dấu "..."
-    if (currentPage - 2 > 2) {
+    // if (currentPage - 2 > 2) {
+    if (currentPage - 2 > 1) {
         pages.push(<span key="start-ellipsis">...</span>);
     }
 
@@ -56,7 +59,8 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
     }
 
     // Dấu "..."
-    if (currentPage + 2 < totalPages - 1) {
+    // if (currentPage + 2 < totalPages - 1) {
+    if (currentPage + 2 < totalPages) {
         pages.push(<span key="end-ellipsis">...</span>);
     }
 
@@ -74,13 +78,15 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
     }
 
     // Nút "Next"
-    pages.push(
-        <button key="next" onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-            <i>
-                <FontAwesomeIcon icon={faAngleRight} />
-            </i>
-        </button>,
-    );
+    if (totalPages > 1) {
+        pages.push(
+            <button key="next" onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                <i>
+                    <FontAwesomeIcon icon={faAngleRight} />
+                </i>
+            </button>,
+        );
+    }
 
     return <div className={cx('pagination')}>{pages}</div>;
 }
