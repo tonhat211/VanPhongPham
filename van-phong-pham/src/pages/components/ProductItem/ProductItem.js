@@ -20,16 +20,16 @@ function ProductItem({ item }) {
             <div className={cx('product-item')}>
                 <Link>
                     <div className={cx('img-container')}>
-                        <img src={item.thumbnail} alt="But bi" />
+                        <img src={item.thumbnail} alt="" />
                     </div>
                     <div className={cx('info-container')}>
                         <div className={cx('label-container')}>
-                            {item.status && (
+                            {item.label && (
                                 <p className={cx('label', 'like-label')}>
                                     <i>
                                         <FontAwesomeIcon icon={faThumbsUp} />
                                     </i>
-                                    {item.status}
+                                    {item.label}
                                 </p>
                             )}
                             {item.soldQty && (
@@ -45,15 +45,15 @@ function ProductItem({ item }) {
                             <p>{item.name}</p>
                         </div>
                         <div className={cx('rate-container')}>
-                            <StarRating rate={item.rateAvg} />
-                            <p>
-                                (<span>{item.rateNum}</span>)
+                            <StarRating rate={item.avgRating} />
+                            <p style={{alignItems:'center'}}> 
+                                (<span>{item.totalReview}</span>)
                             </p>
                         </div>
                         <div className={cx('price-container')}>
-                            <p className={cx('current-price')}>{formatMoney(item.currentPrice)}</p>
+                            <p className={cx('current-price')}>{formatMoney(item.price)}</p>
                             <div className="d-flex" style={{ alignItems: 'center' }}>
-                                <p className={cx('init-price')}>{formatMoney(item.currentPrice)}</p>
+                                <p className={cx('init-price')}>{formatMoney(item.initPrice)}</p>
                                 <p className={cx('discount-label')}>
                                     - <span>{item.discount}</span>%
                                 </p>

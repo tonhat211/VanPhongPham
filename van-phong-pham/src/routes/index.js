@@ -20,9 +20,8 @@ import Orders from '~/pagesAdmin/Orders';
 const publicRoutes  = [
     { path: '/', component: Home, layout: HomeLayout},
     { path: '/Home', component: Home, layout: HomeLayout},
-    // { path: '/', component: Product, layout: ProductLayout},
-    { path: '/products', component: Product, layout: ProductLayout},
-    { path: '/products/:category', component: Product, layout: ProductLayout},
+    { path: '/product', component: Product, layout: ProductLayout},
+    { path: '/product/:category', component: Product, layout: ProductLayout},
     // { path: '/product-detail', component: ProductDetail, layout: ProductDetailLayout},
     { path: '/category', component: Category, layout: CategoryLayout },
     { path: '/checkout', component: Checkout, layout: NoneLayout},
@@ -34,7 +33,7 @@ const publicRoutes  = [
     { path: '/admin/employee', component: Employee, layout: AdminLayout },
     { path: '/admin/product', component: AdminProduct, layout: AdminLayout },
     { path: '/admin/dashboard', component: Dashboard, layout: AdminLayout },
-    // { path: '/', component: Dashboard, layout: AdminLayout },
+    { path: '/', component: Dashboard, layout: AdminLayout },
     { path: '/admin/customer', component: Customer, layout: AdminLayout },
     { path: '/admin/order', component: Orders, layout: AdminLayout },
 

@@ -1,1 +1,1 @@
-export { default as productApi } from '~/api/productApi';
+// export { default as productApi } from '~/api/productApi';

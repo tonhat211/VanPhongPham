@@ -4,6 +4,7 @@ class Product {
       this.name = name;
       this.currentPrice = currentPrice;
       this.initPrice = initPrice;
+      this.initPrice = initPrice;
       this.discount = discount;
       this.thumbnail = thumbnail;
       this.soldQty = soldQty;
