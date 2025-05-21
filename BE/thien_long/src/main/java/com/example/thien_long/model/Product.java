@@ -1,6 +1,7 @@
 package com.example.thien_long.model;
 
 import com.example.thien_long.service.Constant;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -44,8 +45,8 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews=new ArrayList<>();
 
-    @Column(name = "description")
-    private String description = null;
+    @Column(name = "description", columnDefinition = "JSON")
+    private String description;
 
     @Column(name = "is_deleted", nullable = false)
     private int isDeleted = Constant.NOT_DELETED;
@@ -70,6 +71,21 @@ public class Product {
 
     @Column(name = "create_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
+
+    public Product() {
+    }
+
+    public Product(long id) {
+        this.id = id;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
 
     public SubCategory getSubCategory() {
         return subCategory;

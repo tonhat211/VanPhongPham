@@ -1,32 +1,67 @@
-import './ProductDetailPage.scss'
+import './ProductDetailPage.scss';
 import ProductImageGallery from '~/components/Layouts/components/ProductDetail/ProductImageGallery';
 import ProductsDetailsInfo from '~/components/Layouts/components/ProductDetail/ProductsDetailsInfo';
 import ProductDetailsDiscription from '~/components/Layouts/components/ProductDetail/ProductDetailsDiscription';
 import ReviewAndRating from '~/components/Layouts/components/ProductDetail/ReviewAndRating';
 import CarouselCards from '~/components/Layouts/components/ProductDetail/carouselCards/CarouselCards';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getProductDetail } from '~/api/productApi';
+import { DatasetRounded } from '@mui/icons-material';
 
 function ProductDetailPage() {
-    const productId = "600022385";
+    const productId = '600022385';
+    const { id } = useParams();
+    const [product, setProduct] = useState(null);
+    const [isLoading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        getProductDetail({
+            id,
+        })
+            .then((data) => {
+                setProduct(data);
+                //    console.log("setProduct:" +JSON.stringify(data,null,2));
+            })
+            .catch((err) => {
+                console.error('Lỗi tải sản phẩm:', err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [id]);
+
+    useEffect(() => {
+        if (product) {
+            console.log('Product đã được cập nhật:', JSON.stringify(product, null, 2));
+        }
+    }, [product]);
+
     return (
         <div className="product-detail-container">
-            <div className="product-detail-section1">
-                <ProductImageGallery productId={productId} />
-                <div className=" pdetails-info ">
-                    <ProductsDetailsInfo productId={productId} />
-                </div>
-            </div>
-            <div className="carousel-section">
-                <CarouselCards />
-            </div>
-            <div className="discript-product-detail-section2">
-                <ProductDetailsDiscription productId={productId} />
-            </div>
-            <div className="product-reviewAndRating-section3">
-                <ReviewAndRating productId={productId} />
-            </div>
+            {product ? (
+                <>
+                    <div className="product-detail-section1">
+                        <ProductImageGallery images={product.images} />
+                        <div className=" pdetails-info ">
+                            <ProductsDetailsInfo product={product} />
+                        </div>
+                    </div>
+                    <div className="discript-product-detail-section2">
+                        <ProductDetailsDiscription description={JSON.parse(product.description)} />
+                    </div>
+                    <div className="product-reviewAndRating-section3">
+                        <ReviewAndRating product={product} />
+                    </div>{' '}
+                    <div className="carousel-section">
+                        <CarouselCards />
+                    </div>
+                </>
+            ) : (
+                <p>Đang tai san pham</p>
+            )}
         </div>
-
-
     );
 }
 

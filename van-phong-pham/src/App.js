@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { publicRoutes } from '~/routes';
 import { DefaultLayout } from '~/components/Layouts';
@@ -30,6 +31,7 @@ function App() {
                             );
                         })}
                     </Routes>
+                    <ToastContainer position="top-right" autoClose={3000} />
                 </div>
             </DataProvider>
         </Router>

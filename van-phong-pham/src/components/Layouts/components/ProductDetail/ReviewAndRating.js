@@ -5,7 +5,7 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import productsData from '~/data/productData';
 
-function ReviewAndRating({ productId }) {
+function ReviewAndRating({ product }) {
     const [selectedRating, setSelectedRating] = useState(null);
     const [hoverRating, setHoverRating] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
@@ -13,8 +13,7 @@ function ReviewAndRating({ productId }) {
     const [sortOrder, setSortOrder] = useState('newest'); // newest | oldest
     const reviewsPerPage = 3;
 
-    const product = productsData.find((p) => p.id === productId);
-    const productReviews = reviews.filter((r) => r.productID === productId);
+    const productReviews = product.reviews;
 
     let filteredReviews = selectedRating
         ? productReviews.filter((r) => r.rating === selectedRating)
@@ -124,15 +123,15 @@ function ReviewAndRating({ productId }) {
 
             {/* Danh sách đánh giá */}
             <div className="review-list">
-                {paginatedReviews.map((review) => (
-                    <div key={review.id} className="review-item">
+                {paginatedReviews.map((item) => (
+                    <div key={item.id} className="review-item">
                         <div className="review-stars">
-                            {[...Array(review.rating)].map((_, i) => (
+                            {[...Array(item.rating)].map((_, i) => (
                                 <StarIcon key={i} className="review-star filled" />
                             ))}
                         </div>
-                        <p>{review.text}</p>
-                        <span className="review-email">{review.email}</span>
+                        <p>{item.content}</p>
+                        <span className="review-email">{item.userName}</span>
                     </div>
                 ))}
             </div>

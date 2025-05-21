@@ -38,7 +38,7 @@ function Sidebar() {
     );
 
     function MenuItem({ item }) {
-        const pageUrl = '/product';
+        const pageUrl = '/products';
         const fullUrl = `${pageUrl}/${item.link}`;
 
         return (

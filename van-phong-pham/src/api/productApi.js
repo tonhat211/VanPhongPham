@@ -1,47 +1,28 @@
-import axios from 'axios';
+import axiosInstance, { SERVER_URL_BASE } from './axiosInstance';
 
 import images from '~/assets/images';
+import ProductDetailModel from '~/models/ProductDetailModel';
 import ProductModel from '~/models/ProductModel';
 
-const API_BASE = 'http://localhost:8080/api/v1';
-const SERVER_URL_BASE = 'http://localhost:8080';
-
 // localhost:8080/api/v1/product/category/but-viet?sub=bst-but-hoshi&sortBy=price&direction=asc&page=0&size=10
+
 export async function getProductsByCategory({
     category,
     sub,
+    brands,
+    priceRange,
     sortBy = 'price',
     direction = 'asc',
     page = 0,
     size = 1,
 }) {
-    console.log('getProductsByCategory');
-    const url = new URL(`${API_BASE}/product/${category}`);
-    const params = { sub, sortBy, direction, page, size };
+    let url = `/products/${category}`;
+    if(!category) url = '/products';
+    const params = { sub, brands, priceRange, sortBy, direction, page, size };
 
-    Object.keys(params).forEach((key) => {
-        if (params[key] !== undefined && params[key] !== null) {
-            url.searchParams.append(key, params[key]);
-        }
-    });
+    const response = await axiosInstance.get(url, { params });
 
-    // console.log(JSON.stringify(url, null, 2))
-
-    const response = await fetch(url.toString(), {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include', // nếu dùng HttpOnly cookie
-    });
-
-    if (!response.ok) {
-        throw new Error('Không thể tải sản phẩm');
-    }
-    console.log('getProductsByCategory: ok');
-    const data = await response.json();
-
-    // console.log('data: ', JSON.stringify(data, null, 2));
+    const data = response.data;
 
     const products = data.content.map(
         (item) =>
@@ -55,7 +36,7 @@ export async function getProductsByCategory({
                 item.avgRating,
                 item.totalReview,
                 item.discount,
-                item.soldQty
+                item.soldQty,
             ),
     );
 
@@ -72,4 +53,46 @@ export async function getProductsByCategory({
     };
 }
 
+export async function getProductDetail({ id }) {
+    console.log('getProductDetail: ' + id);
+    const url = `/products/detail/${id}`;
+    const response = await axiosInstance.get(url);
+    const data = response.data;
 
+    const details = data.productDetails.map(
+        (item) =>
+            new ProductDetailModel.Detail(item.id, item.title, item.initPrice, item.price, item.qty, item.discount),
+    );
+
+    const images = data.images.map((item) => new ProductDetailModel.Image(`${SERVER_URL_BASE}/${item}`));
+
+    const reviews = data.reviews.map(
+        (item) =>
+            new ProductDetailModel.Review(
+                item.id,
+                item.user.id,
+                item.user.name,
+                item.rating,
+                item.content,
+                item.productDetail,
+            ),
+    );
+
+    const productDetail = new ProductDetailModel(
+        data.id,
+        data.name,
+        data.label,
+        data.brand,
+        data.avgRating,
+        data.totalReview,
+        data.soldQty,
+        data.description,
+        details,
+        images,
+        reviews,
+    );
+
+    // console.log(JSON.stringify(productDetail,null,2));
+
+    return productDetail;
+}

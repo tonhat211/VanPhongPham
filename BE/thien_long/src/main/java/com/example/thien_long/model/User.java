@@ -33,6 +33,15 @@ public class User {
     @Column(name="is_deleted", nullable = false)
     private int isDeleted = Constant.NOT_DELETED;
 
+    public User() {
+    }
+
+    public User(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+
     public long getId() {
         return id;
     }

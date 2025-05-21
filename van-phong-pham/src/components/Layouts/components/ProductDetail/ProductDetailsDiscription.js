@@ -3,13 +3,13 @@ import { useState } from 'react';
 import Button from '@mui/material/Button';
 import './ProductDetailsDiscription.scss';
 
-function ProductDetailsDiscription({ productId }) {
-    const product = productsData.find(item => item.id === productId);
+function ProductDetailsDiscription({ description }) {
+    // const product = productsData.find(item => item.id === productId);
     const [isExpanded, setIsExpanded] = useState(false);
     const maxContentLength = 1;
 
     const renderDescription = () => {
-        const itemsToRender = isExpanded ? product.descript : product.descript.slice(0, maxContentLength);
+        const itemsToRender = isExpanded ? description : description.slice(0, maxContentLength);
 
         return itemsToRender.map((item, index) => {
             if (item.type === "text") {

@@ -17,7 +17,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults()) // kích hoạt CORS
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/product/**").permitAll()
+                        .requestMatchers("/api/v1/products/**").permitAll()
                         .requestMatchers("/api/v1/menu/**").permitAll()
                         .requestMatchers(
                                 "/images/**",  // cho phép truy cập ảnh
