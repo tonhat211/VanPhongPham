@@ -12,14 +12,13 @@ export const DataProvider = ({ children }) => {
     useEffect(() => {
         getPrimaryCategories(1)
             .then(setMenus)
-            .catch(() => alert('Không thể tải menu'));
-
+            .catch(() => console.log('Không thể tải menu'));
         getPrimaryCategories(9)
             .then(setFeatureMenus)
-            .catch(() => alert('Không thể tải feature menu'));
+            .catch(() => console.log('Không thể tải feature menu'));
         getBrands()
             .then(setBrands)
-            .catch(() => alert('Không thể tải feature menu'));
+            .catch(() => console.log('Không thể tải feature menu'));
     }, []);
 
     return <DataContext.Provider value={{ menus, featureMenus,brands }}>{children}</DataContext.Provider>;

@@ -19,6 +19,7 @@ import { menus, brands, priceRanges, colors } from '~/data';
 import { ProductItem, Pagination } from '../components';
 import { Product as ProductModel, StarRating } from '~/models';
 import { getProductsByCategory } from '~/api/productApi';
+import { useUpdateUrlParams  } from '~/utils/url';
 
 const cx = classNames.bind(styles);
 
@@ -26,68 +27,70 @@ function Product() {
     console.log('product screen');
     const { category } = useParams(); // lấy từ URL path
     const [searchParams, setSearchParams] = useSearchParams();
+    const updateUrlParams = useUpdateUrlParams ();
 
-    const [page, setPage] = useState(0);
+    const page = parseInt(searchParams.get('page')) || 0;
     const [loading, setLoading] = useState(true);
     const [totalPages, setTotalPages] = useState(1);
 
     const sortBy = searchParams.get('sortBy') || 'price';
     const direction = searchParams.get('direction') || 'asc';
-    const size = parseInt(searchParams.get('size') || '10');
+    const size = parseInt(searchParams.get('size') || '1');
     const sub = searchParams.get('sub');
+    const brands = searchParams.get('brands');
+    const priceRange = searchParams.get('priceRange');
     const [products, setProducts] = useState(null);
+    let recentlyViewedProducts = localStorage.getItem('recentlyViewedProducts');
+    if(recentlyViewedProducts) {
+        recentlyViewedProducts = JSON.parse(recentlyViewedProducts);
+    }
+    // console.log('recentlyViewedProducts: ' + recentlyViewedProducts);
 
     useEffect(() => {
-        searchParams.set('page', page);
-        searchParams.set('sortBy', sortBy);
-        searchParams.set('direction', direction);
-        searchParams.set('size', size);
-        setSearchParams(searchParams);
-
         setLoading(true);
         getProductsByCategory({
             category,
             sub,
+            brands,
+            priceRange,
             sortBy,
             direction,
             page,
             size,
         })
             .then((data) => {
-                // console.log('products creen: ' + JSON.stringify(data, null, 2));
-                setProducts(data.content); // nếu backend trả về Page<>
+                setProducts(data.content);
                 const pageInfo = data.pageInfo;
-                setPage(pageInfo.page);
+
                 setTotalPages(pageInfo.totalPages);
             })
             .catch((err) => {
-                // console.error(err);
-                alert('Không thể tải sản phẩm');
+                console.error('Lỗi tải sản phẩm:', err);
             })
             .finally(() => {
                 setLoading(false);
             });
-    }, [category, sortBy, direction, page, size, sub]);
+    }, [category, sortBy, direction, page, size, sub,brands,priceRange]);
 
     let parent = menus.find((m) => m.link === '/' + category);
     if (!parent) parent = null;
 
-
     const barRef = useRef(null);
 
     const handlePageChange = (newPage) => {
-        newPage = newPage-1;
-        console.log("handlePageChange newpage: " + newPage)
-        setPage(newPage);
-        searchParams.set('page', newPage);
-        setSearchParams(searchParams); // Cập nhật URL
+        const actualPage = newPage - 1;
+        updateUrlParams( {
+            page: actualPage,
+        });
     };
 
-      const updateSort = (newSortBy, newDirection) => {
-        searchParams.set('sortBy', newSortBy);
-        searchParams.set('direction', newDirection);
-        searchParams.set('page', 1); 
-        setSearchParams(searchParams);
+    const updateSort = (newSortBy, newDirection) => {
+        // updateUrlParams(searchParams, setSearchParams, {
+        //     sortBy: newSortBy,
+        //     direction: newDirection,
+        //     page: 0,
+        // });
+        updateUrlParams({ sortBy: newSortBy, direction : newDirection, page: 0 });
     };
 
     useEffect(() => {
@@ -110,9 +113,6 @@ function Product() {
         };
     }, []);
 
-    console.log("totalpage: " + totalPages);
-    console.log("page:" + page);
-
     return (
         <div className={classNames(cx('wrapper'))}>
             <div className={classNames(cx('content-container', 'product-show-container'), 'd-flex')}>
@@ -125,44 +125,50 @@ function Product() {
                         <p>Sắp xếp:</p>
                         <ul className={classNames(cx('sort-option-list'))}>
                             <li>
-                                <Link
+                                <a
                                     className={classNames(cx({ active: sortBy === 'price' && direction === 'asc' }))}
-                                    onClick={() => updateSort('price', 'asc')}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        updateSort('price', 'asc');
+                                    }}
                                 >
                                     Giá tăng dần
-                                </Link>
+                                </a>
                             </li>
                             <li>
-                                <Link
+                                <a
                                     className={classNames(cx({ active: sortBy === 'price' && direction === 'desc' }))}
-                                    onClick={() => updateSort('price', 'desc')}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        updateSort('price', 'desc');
+                                    }}
                                 >
                                     Giá giảm dần
-                                </Link>
+                                </a>
                             </li>
-                            <li>
-                                <Link
+                            {/* <li>
+                                <a
                                     className={classNames(
                                         cx({ active: sortBy === 'createdDate' && direction === 'desc' }),
                                     )}
                                     onClick={() => updateSort('createdDate', 'desc')}
                                 >
                                     Hàng mới
-                                </Link>
-                            </li>
+                                </a>
+                            </li> */}
                         </ul>
                     </div>
                     <div className={classNames(cx('divider'))} style={{ marginTop: '14px' }}></div>
                     {products && <ProductList items={products} />}
                     <div className={classNames(cx('pagination-container'))}>
-                        <Pagination totalPages={totalPages} currentPage={page+1} onPageChange={handlePageChange} />
+                        <Pagination totalPages={totalPages} currentPage={page + 1} onPageChange={handlePageChange} />
                     </div>
                 </div>
             </div>
-            {products && (
+            {recentlyViewedProducts && (
                 <div className={classNames(cx('content-container', 'recent-viewed-product'))}>
                     <p className={classNames(cx('title'))}>Sản phẩm đã xem</p>
-                    <ProductList items={products.slice(0, 4)} />
+                    <ProductList items={recentlyViewedProducts.slice(0, 4)} />
                 </div>
             )}
         </div>

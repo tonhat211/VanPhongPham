@@ -7,9 +7,9 @@ const cx = classNames.bind(styles);
 function ProductItemCategory({ categoryID }) {
     const filteredList = productList.filter(item => Number(item.categoryID) === Number(categoryID)).slice(0, 8);
 
-    console.log('productList:', productList);
-    console.log('filteredList:', filteredList);
-    console.log('categoryID:', categoryID);
+    // console.log('productList:', productList);
+    // console.log('filteredList:', filteredList);
+    // console.log('categoryID:', categoryID);
 
     return (
         <div className={cx('product-list')}>

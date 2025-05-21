@@ -5,6 +5,7 @@ public class Constant {
     public static final int DELETED = 1;
 
     public static final String PRODUCT_IMG_DIR = "images/products";
+    public static final String THUMBNAIL_IMG_DIR = "images/thumbnails";
     public static final String ICON_IMG_DIR = "images/icons";
 
     // hash password

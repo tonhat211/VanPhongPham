@@ -1,8 +1,11 @@
 package com.example.thien_long.model;
 
 import com.example.thien_long.service.Constant;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "product_details")
 public class ProductDetail {
@@ -19,12 +22,41 @@ public class ProductDetail {
     private int qty;
     @Column(name="is_deleted", nullable = false)
     private int isDeleted = Constant.NOT_DELETED;
-    @Column(name="saled_qty", nullable = false)
-    private int saledQty; // viet ham tu dong cap nhat moi ngay
+    @Column(name="sold_qty", nullable = false)
+    private int soldQty; // viet ham tu dong cap nhat moi ngay
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+
+//    @Transient
+//    @JsonProperty("discount")
+//    public int getDiscount() {
+//        return 100 - (int) ((price/initPrice) * 100);
+//    }
+
+    @Transient
+    private int discount;
+
+    public ProductDetail() {
+    }
+
+    public ProductDetail(long id, String title, double initPrice, double price, int qty) {
+        this.id = id;
+        this.title = title;
+        this.initPrice = initPrice;
+        this.price = price;
+        this.qty = qty;
+        this.discount = 100 - (int) ((price/initPrice) * 100);
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
 
     public Product getProduct() {
         return product;
@@ -82,11 +114,11 @@ public class ProductDetail {
         this.isDeleted = isDeleted;
     }
 
-    public int getSaledQty() {
-        return saledQty;
+    public int getSoldQty() {
+        return soldQty;
     }
 
-    public void setSaledQty(int saledQty) {
-        this.saledQty = saledQty;
+    public void setSoldQty(int soldQty) {
+        this.soldQty = soldQty;
     }
 }

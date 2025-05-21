@@ -29,7 +29,7 @@ public class BasicProductResponse {
         this.avgRating = avgRating;
         this.totalReview = totalReview;
         this.soldQty = soldQty;
-        if(thumbnailImg!=null) this.thumbnail = Constant.PRODUCT_IMG_DIR+"/" +thumbnailImg.getUrl();
+        if(thumbnailImg!=null) this.thumbnail = Constant.THUMBNAIL_IMG_DIR+"/" +thumbnailImg.getUrl();
         this.discount = 100 - (int) ((price/initPrice) * 100);
     }
 

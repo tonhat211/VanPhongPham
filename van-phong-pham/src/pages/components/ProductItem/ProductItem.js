@@ -10,7 +10,7 @@ import styles from './ProductItem.module.scss';
 import images from '~/assets/images';
 import { default as StarRating } from '../StarRating';
 import { default as CustomButton } from '../CustomButton';
-import { formatMoney } from '~/utils';
+import { formatMoney, addToRecentlyViewed } from '~/utils';
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +18,9 @@ function ProductItem({ item }) {
     return (
         <div className="grid-col-3" style={{ padding: '10px' }}>
             <div className={cx('product-item')}>
-                <Link>
+                <Link to={`/products/detail/${item.id}`}
+                  onClick={() => addToRecentlyViewed(item)}
+>
                     <div className={cx('img-container')}>
                         <img src={item.thumbnail} alt="" />
                     </div>

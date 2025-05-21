@@ -5,11 +5,11 @@ import ProductPromoPanel from '~/components/Layouts/components/ProductDetail/Pro
 import ProductInfoPanel from '~/components/Layouts/components/ProductDetail/ProductInfoPanel';
 
 
-function ProductsDetailsInfo({ productId }) {
+function ProductsDetailsInfo({ product }) {
     return (
         <div className="info_container">
             <div className="info_row">
-                <ProductInfoPanel productId={productId} />
+                <ProductInfoPanel product={product} />
                 <ProductPromoPanel />
             </div>
 
