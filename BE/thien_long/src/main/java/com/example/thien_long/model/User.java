@@ -2,6 +2,10 @@ package com.example.thien_long.model;
 
 import com.example.thien_long.service.Constant;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,6 +14,9 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +30,7 @@ public class User {
     @Column(name="pwd", nullable = false)
     private String pwd;
 
-    @Column(name="birthday", nullable = false)
+    @Column(name = "birthday", nullable = true)
     private LocalDate birthday;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -32,9 +39,6 @@ public class User {
 
     @Column(name="is_deleted", nullable = false)
     private int isDeleted = Constant.NOT_DELETED;
-
-    public User() {
-    }
 
     public User(long id, String name) {
         this.id = id;
@@ -97,4 +101,5 @@ public class User {
     public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
     }
+
 }
