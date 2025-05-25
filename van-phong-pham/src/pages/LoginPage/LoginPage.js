@@ -33,7 +33,7 @@ function LoginPage() {
                 </div>
                 <p className="account-title">
                     Bạn chưa có tài khoản?
-                    <a> Đăng ký tại đây </a>
+                    <a href="/register"> Đăng ký tại đây </a>
                 </p>
             </div>
         </>

@@ -15,6 +15,8 @@ import LoginPage from '~/pages/LoginPage/LoginPage';
 import LoginLayout from '~/components/Layouts/loginLayout/LoginLayout';
 import Customer from '~/pagesAdmin/Customer/Customer';
 import Orders from '~/pagesAdmin/Orders';
+import OtpVerificationPage from '~/pages/VerifyOTP/OtpVerificationPage';
+import OtpVerificationLayout from '~/components/Layouts/OtpVerificationLayout/OtpVerificationLayout';
 
 // nhung route KHONG can dang nhap van xem duoc
 const publicRoutes  = [
@@ -31,6 +33,7 @@ const publicRoutes  = [
     { path: '/cart', component: ProductCardsPage, layout: ProductCardsLayout },
     { path: '/register', component: RegisterPages, layout: RegisterLayout },
     { path: '/login', component: LoginPage, layout: LoginLayout },
+    { path: '/verify-code', component: OtpVerificationPage, layout: OtpVerificationLayout },
     { path: '/admin/employee', component: Employee, layout: AdminLayout },
     { path: '/admin/product', component: AdminProduct, layout: AdminLayout },
     { path: '/admin/dashboard', component: Dashboard, layout: AdminLayout },

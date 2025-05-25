@@ -17,6 +17,7 @@ public enum ErrorCode {
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
     INVALID_DOB(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
     EMAIL_EXISTED(1002, "Email đã được sử dụng", HttpStatus.BAD_REQUEST),
+    INVALID_VERIFY_CODE(1009, "Mã xác minh không hợp lệ hoặc đã hết hạn", HttpStatus.BAD_REQUEST),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

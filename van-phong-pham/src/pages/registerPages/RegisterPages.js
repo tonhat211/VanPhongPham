@@ -147,9 +147,10 @@ function RegisterPages({children}) {
 
 
             const response = await registerUser(payload);
-            console.log("Đăng ký thành công:", response);
-            toast.success("Đăng ký thành công");
-            setTimeout(() => navigate('/login'), 3500);
+            console.log("Đăng ký thành công, Xác minh Email:", response);
+            toast.success("Đăng ký thành công,mời xác minh Email");
+            setTimeout(() => navigate('/verify-code', { state: { email: formData.email } }), 2000);
+
         } catch (error) {
             toast.error(error.message || "Đăng ký thất bại");
         }
@@ -310,7 +311,7 @@ function RegisterPages({children}) {
 
                 <div className="account-login-container">
                     <p className="account-title">Bạn đã có tài khoản
-                        <a> Đăng nhập tại đây </a>
+                        <a href="/login"> Đăng nhập tại đây </a>
                     </p>
                     <div className="account-gg-fb">
                         <Button className="account-gg"> <GoogleIcon style={{ fontSize: 20 }} /> Google</Button>

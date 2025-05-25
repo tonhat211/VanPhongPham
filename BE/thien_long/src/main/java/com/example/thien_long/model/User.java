@@ -2,7 +2,6 @@ package com.example.thien_long.model;
 
 import com.example.thien_long.service.Constant;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
