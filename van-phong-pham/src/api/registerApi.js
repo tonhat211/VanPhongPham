@@ -2,7 +2,7 @@ import axiosInstance, { SERVER_URL_BASE } from './axiosInstance';
 import { toast } from 'react-toastify';
 export const registerUser = async (data) => {
     try {
-        let url =`auth/register`;
+        let url =`/register`;
         console.log('Đang gửi:', data);
         const response = await axiosInstance.post(url, data);
         toast.success('Đăng ký thành công!');
