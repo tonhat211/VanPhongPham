@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -16,6 +18,7 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults()) // kích hoạt CORS
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/v1/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/products/**").permitAll()
                         .requestMatchers("/api/v1/menu/**").permitAll()
@@ -30,6 +33,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()); // ← cách mới để disable CSRF
 
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
 

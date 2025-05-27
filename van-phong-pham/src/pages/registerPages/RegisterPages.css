@@ -88,6 +88,13 @@
 .register-page-container .register-section .register .form-row .form-group input::placeholder {
   color: #bbb;
 }
+.register-page-container .register-section .register .form-row .form-group .error-text {
+  font-size: smaller;
+  color: red;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 4px;
+}
 .register-page-container .register-section .register .form-row .full-width {
   flex: 1;
 }
