@@ -16,7 +16,11 @@ public enum ErrorCode {
     EMAIL_EXISTED(1002, "Email đã được sử dụng", HttpStatus.BAD_REQUEST),
     UNVERIFIED_EMAIL(1003, "Email chưa được xác minh", HttpStatus.BAD_REQUEST),
     INVALID_VERIFY_CODE(1009, "Mã xác minh không hợp lệ hoặc đã hết hạn", HttpStatus.BAD_REQUEST),
-    PWD_NOT_MATCHES(1009, "Mật khẩu không khớp", HttpStatus.BAD_REQUEST),
+    PWD_NOT_MATCHES(1008, "Mật khẩu không khớp", HttpStatus.BAD_REQUEST),
+    CART_NOT_FOUND(1004,"Giỏ hàng chưa được tạo cho người dùng này.", HttpStatus.BAD_REQUEST),
+    PRODUCT_DETAIL_NOT_FOUND(1010,"Chi tiết sản phẩm không tồn tại.", HttpStatus.BAD_REQUEST),
+    CART_ITEM_NOT_FOUND(1011,"Sản phẩm không tồn tại trong giỏ hàng.", HttpStatus.BAD_REQUEST),
+    INVALID_TOKEN(1012,"Token không hợp lệ.", HttpStatus.BAD_REQUEST),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

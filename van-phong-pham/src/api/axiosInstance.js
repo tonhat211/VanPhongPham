@@ -14,10 +14,22 @@ const axiosInstance = axios.create({
   },
 });
 
+// Thêm interceptor để tự động gắn JWT token vào header Authorization
+axiosInstance.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+);
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    // ✅ Bắt lỗi toàn cục
+    // Bắt lỗi toàn cục
     if (error.response) {
       const status = error.response.status;
 

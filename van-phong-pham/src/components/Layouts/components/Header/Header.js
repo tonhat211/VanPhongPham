@@ -17,6 +17,14 @@ const headerMenuList = [
         ndTitle: 'Hỗ trợ khách hàng',
         ndLink: null,
     },
+    user
+        ? {
+            icon: faUser,
+            stTitle: user.fullName || user.email || 'Tài khoản',
+            ndTitle: 'Đăng xuất',
+            onLogout: true,
+        }
+        :
     {
         icon: faUser,
         stTitle: 'Đăng nhập',

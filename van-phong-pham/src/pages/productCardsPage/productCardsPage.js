@@ -1,29 +1,77 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import cartItemsData from '~/data/cart';
 import './productCardsPage.scss';
 import { formatPrices, formatPercentage } from '~/utils/common';
 import LocalShippingRoundedIcon from '@mui/icons-material/LocalShippingRounded';
 import TickDiscount from '~/components/Layouts/components/ProductDetail/discountsticket/TickDiscount';
 import CarouselCards from '~/components/Layouts/components/ProductDetail/carouselCards/CarouselCards';
+import { getCart, updateCartItemQuantity, removeCartItem } from '~/api/cartApi.js';
+import { toast } from 'react-toastify';
 function ProductCardsPage() {
     const navigate = useNavigate();
-    const [cartItems, setCartItems] = useState(cartItemsData);
+    const [cartItems, setCartItems] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchCart = async () => {
+            try {
+                const response = await getCart();
+                setCartItems(response.items.map(item => ({
+                    sid: item.productDetailId,
+                    imageUrl: item.imageUrl,
+                    title: item.productName,
+                    brand: item.brandName,
+                    price: item.price,
+                    quantity: item.quantity,
+                })));
+                setTotal(response.totalPrice);
+                setLoading(false);
+            } catch (error) {
+                toast.error("Lỗi khi tải giỏ hàng.");
+                console.error(error);
+            }
+        };
+
+        fetchCart();
+    }, []);
 
     const handleCheckout = () => {
         navigate('/checkout');
     };
 
-    const handleRemove = (sid) => {
-        setCartItems(prev => prev.filter(item => item.sid !== sid));
+    const handleRemove = async (sid) => {
+        try {
+            const response = await removeCartItem(sid);
+            setCartItems(response.items.map(item => ({
+                sid: item.productDetailId,
+                imageUrl: item.imageUrl,
+                title: item.productName,
+                brand: item.brandName,
+                price: item.price,
+                quantity: item.quantity,
+            })));
+            setTotal(response.totalPrice);
+        } catch (error) {
+            toast.error("Không thể xoá sản phẩm.");
+        }
     };
 
-    const handleQuantityChange = (sid, newQuantity) => {
-        setCartItems(prev =>
-            prev.map(item =>
-                item.sid === sid ? { ...item, quantity: newQuantity } : item
-            )
-        );
+    const handleQuantityChange = async (sid, newQuantity) => {
+        try {
+            const response = await updateCartItemQuantity(sid, newQuantity);
+            setCartItems(response.items.map(item => ({
+                sid: item.productDetailId,
+                imageUrl: item.imageUrl,
+                title: item.productName,
+                brand: item.brandName,
+                price: item.price,
+                quantity: item.quantity,
+            })));
+            setTotal(response.totalPrice);
+        } catch (error) {
+            toast.error("Không thể cập nhật số lượng.");
+        }
     };
 
     const handleIncrement = (sid) => {
@@ -40,7 +88,9 @@ function ProductCardsPage() {
         }
     };
 
-    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    if (loading) {
+        return <div className="cart-loading">Đang tải giỏ hàng...</div>;
+    }
 
     return (
         <section className="cart-container">
@@ -52,7 +102,7 @@ function ProductCardsPage() {
                             {cartItems.length > 0 ? (
                                 cartItems.map(item => (
                                     <div className="cart-item" key={item.sid}>
-                                        <img className="item-image" src={item.images[0].url} alt={item.title} />
+                                        <img className="item-image" src={item.imageUrl} alt={item.title} />
                                         <div className="item-details">
                                             <p className="item-title">{item.title}</p>
                                             <p className="item-brand">{item.brand}</p>

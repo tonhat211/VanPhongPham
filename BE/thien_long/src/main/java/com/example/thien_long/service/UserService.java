@@ -5,6 +5,7 @@ import com.example.thien_long.dto.response.UserResponse;
 import com.example.thien_long.exception.exceptionCatch.AppException;
 import com.example.thien_long.exception.exceptionCatch.ErrorCode;
 import com.example.thien_long.mapper.UserMapper;
+import com.example.thien_long.model.Cart;
 import com.example.thien_long.model.User;
 import com.example.thien_long.model.VerifyCode;
 import com.example.thien_long.repository.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Random;
 import com.example.thien_long.repository.VerifyCodeRepository;
 

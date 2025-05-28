@@ -8,7 +8,9 @@ import com.example.thien_long.dto.response.AuthResponse;
 import com.example.thien_long.dto.response.TokenValidityResponse;
 import com.example.thien_long.exception.exceptionCatch.AppException;
 import com.example.thien_long.exception.exceptionCatch.ErrorCode;
+import com.example.thien_long.model.Cart;
 import com.example.thien_long.model.InvalidatedToken;
+import com.example.thien_long.repository.CartRepository;
 import com.example.thien_long.repository.InvalidatedTokenRepository;
 import com.example.thien_long.repository.UserRepository;
 import com.example.thien_long.repository.VerifyCodeRepository;
@@ -21,19 +23,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.StringJoiner;
 import java.util.UUID;
 
 import com.example.thien_long.model.User;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 @Service
 @Slf4j
@@ -43,6 +43,7 @@ public class AuthService {
     private final InvalidatedTokenRepository invalidatedTokenRepository;
     private final VerifyCodeRepository verifyCodeRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CartRepository cartRepository;
     @NonFinal
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY;
@@ -54,6 +55,8 @@ public class AuthService {
     @NonFinal
     @Value("${jwt.refreshable-duration}")
     protected long REFRESHABLE_DURATION;
+
+
 
     public TokenValidityResponse tokenValidity(TokenValidityRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
@@ -86,6 +89,14 @@ public class AuthService {
         boolean authenticated = passwordEncoder.matches(request.getPwd(), user.getPwd());
 
         if (!authenticated) throw new AppException(ErrorCode.PWD_NOT_MATCHES);
+
+        cartRepository.findByUser(user)
+                .orElseGet(() -> cartRepository.save(
+                        Cart.builder()
+                                .user(user)
+                                .cartItems(new ArrayList<>())
+                                .build()
+                ));
 
         var token = generateToken(user);
 
