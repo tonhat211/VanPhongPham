@@ -20,8 +20,9 @@ function ProductCardsPage() {
                 setCartItems(response.items.map(item => ({
                     sid: item.productDetailId,
                     imageUrl: item.imageUrl,
-                    title: item.productName,
-                    brand: item.brandName,
+                    productName: item.productName,
+                    brandName: item.brandName,
+                    initPrice: item.initPrice,
                     price: item.price,
                     quantity: item.quantity,
                 })));
@@ -46,8 +47,9 @@ function ProductCardsPage() {
             setCartItems(response.items.map(item => ({
                 sid: item.productDetailId,
                 imageUrl: item.imageUrl,
-                title: item.productName,
-                brand: item.brandName,
+                productName: item.productName,
+                brandName: item.brandName,
+                initPrice: item.initPrice,
                 price: item.price,
                 quantity: item.quantity,
             })));
@@ -63,8 +65,9 @@ function ProductCardsPage() {
             setCartItems(response.items.map(item => ({
                 sid: item.productDetailId,
                 imageUrl: item.imageUrl,
-                title: item.productName,
-                brand: item.brandName,
+                productName: item.productName,
+                brandName: item.brandName,
+                initPrice: item.initPrice,
                 price: item.price,
                 quantity: item.quantity,
             })));
@@ -104,15 +107,15 @@ function ProductCardsPage() {
                                     <div className="cart-item" key={item.sid}>
                                         <img className="item-image" src={item.imageUrl} alt={item.title} />
                                         <div className="item-details">
-                                            <p className="item-title">{item.title}</p>
-                                            <p className="item-brand">{item.brand}</p>
+                                            <p className="item-title">{item.productName}</p>
+                                            <p className="item-brand">{item.brandName}</p>
                                         </div>
 
                                         <div className="item-price">
                                             {formatPrices(item.price)}
-                                            {item.originalPrice && (
+                                            {item.initPrice && (
                                                 <>
-                                                    <del>{formatPrices(item.originalPrice)}</del>
+                                                    <del>{formatPrices(item.initPrice)}</del>
                                                     <span className="discount">
                 -{formatPercentage(item.discountPercent)}
               </span>
@@ -122,7 +125,12 @@ function ProductCardsPage() {
 
                                         <div className="item-quantity">
                                             <button onClick={() => handleDecrement(item.sid)}>-</button>
-                                            <input type="number" value={item.quantity} min="1" readOnly />
+                                            <input type="number" value={item.quantity} min="1"  onChange={(e) => {
+                                                const newQuantity = parseInt(e.target.value);
+                                                if (!isNaN(newQuantity) && newQuantity >= 1) {
+                                                    handleQuantityChange(item.sid, newQuantity);
+                                                }
+                                            }} />
                                             <button onClick={() => handleIncrement(item.sid)}>+</button>
                                         </div>
 
@@ -156,7 +164,7 @@ function ProductCardsPage() {
                     <div className="cart-right">
                         <div className="total-cart-container">
                             <p className="total-title">Tổng tiền</p>
-                            <spanp className="total-price">{formatPrices(total)}</spanp>
+                            <span className="total-price">{formatPrices(total)}</span>
                         </div>
                         <button className="checkout-button" onClick={handleCheckout}>
                             Tiến hành đặt hàng
@@ -168,7 +176,7 @@ function ProductCardsPage() {
             </div>
 
             <div className="carousel-section">
-                <CarouselCards />
+                {/*<CarouselCards />*/}
             </div>
         </section>
     );

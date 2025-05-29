@@ -5,6 +5,8 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { formatPrices, formatPercentage } from '~/utils/common';
 import productsData from '~/data/productData';
+import { addToCart } from '~/api/cartApi';
+import { toast } from 'react-toastify';
 
 const statuses = [
     {
@@ -34,6 +36,19 @@ function ProductInfoPanel({ product }) {
 
     const handleDecrement = () => setQuantity((prev) => Math.max(prev - 1, 1));
     const handleIncrement = () => setQuantity((prev) => prev + 1);
+
+    const handleAddToCart = async () => {
+        if (!detail) return;
+
+        try {
+            await addToCart(detail.id, quantity);
+            toast.success('Đã thêm vào giỏ hàng!');
+        } catch (error) {
+            console.error('Lỗi khi thêm giỏ hàng:', error);
+            toast.error('Thêm vào giỏ hàng thất bại');
+        }
+    };
+
 
     return (
         <div className="info_left">
@@ -110,7 +125,7 @@ function ProductInfoPanel({ product }) {
                         <div className="add_Cart">
                             <Button className="btn_cart">
                                 <ShoppingCartOutlinedIcon className="icart" />
-                                <span className="cart">Thêm vào giỏ hàng</span>
+                                <span className="cart"  onClick={handleAddToCart}>Thêm vào giỏ hàng</span>
                             </Button>
                         </div>
                         <div className="buy_now">

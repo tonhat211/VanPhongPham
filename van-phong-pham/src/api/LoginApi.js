@@ -7,9 +7,15 @@ export const loginUser = async (data) => {
         console.log('Đang gửi:', data);
         const response = await axiosInstance.post(url, data);
         toast.success('Đăng nhập thành công!');
-        return response.data;
+
+        const { token, user } = response.data.result;
+
+        // Lưu thông tin vào localStorage
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        return { token, user };
     } catch (error) {
         console.log('Lỗi đăng nhập:', error);
-        throw error.response?.data || { message: 'Đăng nhập thất bại' };
+        throw error.response?.data.result || { message: 'Đăng nhập thất bại' };
     }
 };

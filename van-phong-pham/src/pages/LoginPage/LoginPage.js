@@ -70,19 +70,13 @@ function LoginPage() {
             };
 
             const response = await loginUser(payload);
-            const { accessToken, refreshToken, user } = response;
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken);
-            localStorage.setItem('user', JSON.stringify(user));
             toast.success("Đăng nhập thành công");
-            setTimeout(() => navigate('/Home', { state: { email: formData.email } }), 2000);
+            setTimeout(() => navigate('/', { state: { email: formData.email } }), 2000);
 
         } catch (error) {
             toast.error(error.message || "Đăng nhập thất bại");
         }
     };
-
-
 
     const renderLoginForm = () => (
         <>
@@ -99,7 +93,7 @@ function LoginPage() {
                 </div>
                 <div className="form-group">
                     <label>Mật khẩu <span> *</span></label>
-                    <input type="password" name="password"
+                    <input type="password" name="pwd"
                            value={formData.pwd}
                            onBlur={handleBlur}
                            onChange={handleChange}

@@ -17,6 +17,7 @@ public class CartItemResponse {
      String imageUrl;
      String productName;
      String brandName;
+     double initPrice;
      double price;
      int quantity;
 }

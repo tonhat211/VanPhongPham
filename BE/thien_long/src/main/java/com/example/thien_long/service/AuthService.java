@@ -8,6 +8,7 @@ import com.example.thien_long.dto.response.AuthResponse;
 import com.example.thien_long.dto.response.TokenValidityResponse;
 import com.example.thien_long.exception.exceptionCatch.AppException;
 import com.example.thien_long.exception.exceptionCatch.ErrorCode;
+import com.example.thien_long.mapper.UserMapper;
 import com.example.thien_long.model.Cart;
 import com.example.thien_long.model.InvalidatedToken;
 import com.example.thien_long.repository.CartRepository;
@@ -44,6 +45,7 @@ public class AuthService {
     private final VerifyCodeRepository verifyCodeRepository;
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
+    private final UserMapper userMapper;
     @NonFinal
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY;
@@ -99,8 +101,9 @@ public class AuthService {
                 ));
 
         var token = generateToken(user);
+        var userResponse = userMapper.toUserResponse(user);
 
-        return AuthResponse.builder().token(token).authenticated(true).build();
+        return AuthResponse.builder().token(token).authenticated(true).user(userResponse).build();
     }
 
     public void logout(LogoutRequest request) throws ParseException, JOSEException {
@@ -132,8 +135,9 @@ public class AuthService {
                 userRepository.findByEmail(email).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         var token = generateToken(user);
+        var userResponse = userMapper.toUserResponse(user);
 
-        return AuthResponse.builder().token(token).authenticated(true).build();
+        return AuthResponse.builder().token(token).authenticated(true).user(userResponse).build();
     }
 
     private String generateToken(User user) {

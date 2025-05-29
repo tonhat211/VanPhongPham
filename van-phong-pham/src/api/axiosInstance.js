@@ -14,10 +14,10 @@ const axiosInstance = axios.create({
   },
 });
 
-// Thêm interceptor để tự động gắn JWT token vào header Authorization
+// gắn JWT token vào header Authorization
 axiosInstance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem('token');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -26,9 +26,63 @@ axiosInstance.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
+// Flag tránh lặp vô hạn nếu refresh thất bại
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+    failedQueue.forEach((prom) => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(token);
+        }
+    });
+    failedQueue = [];
+};
+
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => {
+    async (error) => {
+        const originalRequest = error.config;
+
+        // Token hết hạn và chưa thử refresh
+        if (error.response?.status === 401 && !originalRequest._retry) {
+            if (isRefreshing) {
+                // Nếu đang refresh thì xếp hàng đợi
+                return new Promise(function (resolve, reject) {
+                    failedQueue.push({ resolve, reject });
+                })
+                    .then((token) => {
+                        originalRequest.headers.Authorization = 'Bearer ' + token;
+                        return axiosInstance(originalRequest);
+                    })
+                    .catch((err) => Promise.reject(err));
+            }
+
+            originalRequest._retry = true;
+            isRefreshing = true;
+
+            try {
+                const refreshResponse = await axios.post(`${API_BASE}/auth/refresh`, {
+                    token: localStorage.getItem('token'),
+                });
+
+                const newToken = refreshResponse.data.data.token;
+                localStorage.setItem('token', newToken);
+                axiosInstance.defaults.headers.Authorization = `Bearer ${newToken}`;
+                processQueue(null, newToken);
+                return axiosInstance(originalRequest);
+            } catch (refreshError) {
+                processQueue(refreshError, null);
+                toast.warning('Phiên đăng nhập đã hết. Vui lòng đăng nhập lại.');
+                localStorage.removeItem('token');
+                window.location.href = '/login'; // hoặc navigate đến login
+                return Promise.reject(refreshError);
+            } finally {
+                isRefreshing = false;
+            }
+        }
     // Bắt lỗi toàn cục
     if (error.response) {
       const status = error.response.status;
