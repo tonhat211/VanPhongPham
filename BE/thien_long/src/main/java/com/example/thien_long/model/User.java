@@ -39,6 +39,10 @@ public class User {
     @Column(name="is_deleted", nullable = false)
     private int isDeleted = Constant.NOT_DELETED;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Cart cart;
+
+
     public User(long id, String name) {
         this.id = id;
         this.name = name;

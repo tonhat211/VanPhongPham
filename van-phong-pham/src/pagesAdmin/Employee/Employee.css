@@ -1,0 +1,145 @@
+.employee-container {
+  font-family: "Poppins", sans-serif;
+}
+.employee-container .MuiDataGrid-root {
+  border: none;
+  font-size: 12px;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-columnHeaderTitle {
+  color: var(--label-admin);
+  padding: 1rem;
+  font-weight: bold;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell {
+  display: block;
+  white-space: normal !important;
+  line-height: 1.5;
+  align-items: flex-start;
+  padding: 0.5rem 1rem;
+  word-break: break-word;
+  overflow: visible !important;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-row {
+  min-height: 80px;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-row:nth-of-type(odd) {
+  background-color: #fafafa;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-row:nth-of-type(even) {
+  background-color: #ffffff;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-row:hover {
+  background-color: #f0f8ff;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=stt] {
+  font-weight: bold;
+  color: var(--label-admin);
+  text-align: center;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=id] {
+  text-align: center;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=status] {
+  font-weight: bold;
+  color: #388e3c;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=role] {
+  font-weight: 500;
+  color: var(--header-color);
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=actions],
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=moreActions] {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=actions] .MuiSelect-select,
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=moreActions] .MuiSelect-select {
+  padding: 6px 16px;
+  font-size: 12px;
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=actions] .MuiButton-root,
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=moreActions] .MuiButton-root {
+  margin-left: 1rem;
+  font-size: 12px;
+  text-transform: none;
+  padding: 5px;
+  background-color: transparent;
+  color: var(--header-color);
+}
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=actions] .MuiButton-root:hover,
+.employee-container .MuiDataGrid-root .MuiDataGrid-cell[data-field=moreActions] .MuiButton-root:hover {
+  background-color: #2659f3;
+  color: white;
+}
+
+.title-dialog {
+  text-align: center;
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+}
+
+.employee-dialog-content {
+  font-size: 17px;
+  padding: 8px 16px;
+}
+.employee-dialog-content .info-row {
+  font-size: 17px;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.employee-dialog-content .MuiTypography-root {
+  font-size: inherit;
+  margin-bottom: 6px;
+  line-height: 1.5;
+  color: #333;
+}
+.employee-dialog-content b {
+  color: var(--label-admin);
+}
+.employee-dialog-content ul {
+  padding-left: 16px;
+  margin: 6px 0;
+}
+.employee-dialog-content ul li {
+  margin-bottom: 4px;
+}
+.employee-dialog-content .button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.employee-dialog-content .button-group .print-btn {
+  font-size: 14px;
+  padding: 6px 18px;
+  border-radius: 5px;
+  text-transform: none;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+}
+.employee-dialog-content .button-group .MuiButton-outlined {
+  border: 1px solid #2659f3;
+  color: #2659f3;
+}
+.employee-dialog-content .button-group .MuiButton-outlined:hover {
+  background-color: #2659f3;
+  color: white;
+}
+
+.css-1821gv5 {
+  flex-direction: row !important;
+  justify-content: center;
+}
+
+.css-1blvszr-MuiButtonBase-root-MuiButton-root {
+  font-weight: bold !important;
+  text-transform: capitalize !important;
+  font-size: 12px !important;
+}
+
+/*# sourceMappingURL=Employee.css.map */

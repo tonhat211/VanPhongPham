@@ -18,11 +18,11 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1")
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Slf4j
 public class UserController {
     @Autowired
-    private UserService userService;
+     UserService userService;
 
     @PostMapping("/register")
     ApiResponse<UserResponse> register(@Valid @RequestBody UserRegisterRequest request){

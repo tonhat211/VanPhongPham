@@ -1,29 +1,80 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import cartItemsData from '~/data/cart';
 import './productCardsPage.scss';
 import { formatPrices, formatPercentage } from '~/utils/common';
 import LocalShippingRoundedIcon from '@mui/icons-material/LocalShippingRounded';
 import TickDiscount from '~/components/Layouts/components/ProductDetail/discountsticket/TickDiscount';
 import CarouselCards from '~/components/Layouts/components/ProductDetail/carouselCards/CarouselCards';
+import { getCart, updateCartItemQuantity, removeCartItem } from '~/api/cartApi.js';
+import { toast } from 'react-toastify';
 function ProductCardsPage() {
     const navigate = useNavigate();
-    const [cartItems, setCartItems] = useState(cartItemsData);
+    const [cartItems, setCartItems] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchCart = async () => {
+            try {
+                const response = await getCart();
+                setCartItems(response.items.map(item => ({
+                    sid: item.productDetailId,
+                    imageUrl: item.imageUrl,
+                    productName: item.productName,
+                    brandName: item.brandName,
+                    initPrice: item.initPrice,
+                    price: item.price,
+                    quantity: item.quantity,
+                })));
+                setTotal(response.totalPrice);
+                setLoading(false);
+            } catch (error) {
+                toast.error("Lỗi khi tải giỏ hàng.");
+                console.error(error);
+            }
+        };
+
+        fetchCart();
+    }, []);
 
     const handleCheckout = () => {
         navigate('/checkout');
     };
 
-    const handleRemove = (sid) => {
-        setCartItems(prev => prev.filter(item => item.sid !== sid));
+    const handleRemove = async (sid) => {
+        try {
+            const response = await removeCartItem(sid);
+            setCartItems(response.items.map(item => ({
+                sid: item.productDetailId,
+                imageUrl: item.imageUrl,
+                productName: item.productName,
+                brandName: item.brandName,
+                initPrice: item.initPrice,
+                price: item.price,
+                quantity: item.quantity,
+            })));
+            setTotal(response.totalPrice);
+        } catch (error) {
+            toast.error("Không thể xoá sản phẩm.");
+        }
     };
 
-    const handleQuantityChange = (sid, newQuantity) => {
-        setCartItems(prev =>
-            prev.map(item =>
-                item.sid === sid ? { ...item, quantity: newQuantity } : item
-            )
-        );
+    const handleQuantityChange = async (sid, newQuantity) => {
+        try {
+            const response = await updateCartItemQuantity(sid, newQuantity);
+            setCartItems(response.items.map(item => ({
+                sid: item.productDetailId,
+                imageUrl: item.imageUrl,
+                productName: item.productName,
+                brandName: item.brandName,
+                initPrice: item.initPrice,
+                price: item.price,
+                quantity: item.quantity,
+            })));
+            setTotal(response.totalPrice);
+        } catch (error) {
+            toast.error("Không thể cập nhật số lượng.");
+        }
     };
 
     const handleIncrement = (sid) => {
@@ -40,7 +91,9 @@ function ProductCardsPage() {
         }
     };
 
-    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    if (loading) {
+        return <div className="cart-loading">Đang tải giỏ hàng...</div>;
+    }
 
     return (
         <section className="cart-container">
@@ -52,17 +105,17 @@ function ProductCardsPage() {
                             {cartItems.length > 0 ? (
                                 cartItems.map(item => (
                                     <div className="cart-item" key={item.sid}>
-                                        <img className="item-image" src={item.images[0].url} alt={item.title} />
+                                        <img className="item-image" src={item.imageUrl} alt={item.title} />
                                         <div className="item-details">
-                                            <p className="item-title">{item.title}</p>
-                                            <p className="item-brand">{item.brand}</p>
+                                            <p className="item-title">{item.productName}</p>
+                                            <p className="item-brand">{item.brandName}</p>
                                         </div>
 
                                         <div className="item-price">
                                             {formatPrices(item.price)}
-                                            {item.originalPrice && (
+                                            {item.initPrice && (
                                                 <>
-                                                    <del>{formatPrices(item.originalPrice)}</del>
+                                                    <del>{formatPrices(item.initPrice)}</del>
                                                     <span className="discount">
                 -{formatPercentage(item.discountPercent)}
               </span>
@@ -72,7 +125,12 @@ function ProductCardsPage() {
 
                                         <div className="item-quantity">
                                             <button onClick={() => handleDecrement(item.sid)}>-</button>
-                                            <input type="number" value={item.quantity} min="1" readOnly />
+                                            <input type="number" value={item.quantity} min="1"  onChange={(e) => {
+                                                const newQuantity = parseInt(e.target.value);
+                                                if (!isNaN(newQuantity) && newQuantity >= 1) {
+                                                    handleQuantityChange(item.sid, newQuantity);
+                                                }
+                                            }} />
                                             <button onClick={() => handleIncrement(item.sid)}>+</button>
                                         </div>
 
@@ -106,7 +164,7 @@ function ProductCardsPage() {
                     <div className="cart-right">
                         <div className="total-cart-container">
                             <p className="total-title">Tổng tiền</p>
-                            <spanp className="total-price">{formatPrices(total)}</spanp>
+                            <span className="total-price">{formatPrices(total)}</span>
                         </div>
                         <button className="checkout-button" onClick={handleCheckout}>
                             Tiến hành đặt hàng
@@ -118,7 +176,7 @@ function ProductCardsPage() {
             </div>
 
             <div className="carousel-section">
-                <CarouselCards />
+                {/*<CarouselCards />*/}
             </div>
         </section>
     );

@@ -59,6 +59,13 @@
 .login-container .login-section .form-group input::placeholder {
   color: #bbb;
 }
+.login-container .login-section .form-group .error-text {
+  font-size: smaller;
+  color: red;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 4px;
+}
 .login-container .login-section .submit-btn {
   font-weight: 400;
   width: 100%;
