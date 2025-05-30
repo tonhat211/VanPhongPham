@@ -3,6 +3,7 @@ package com.example.thien_long.controller;
 import com.example.thien_long.dto.BasicProductResponse;
 import com.example.thien_long.dto.ProductDetailResponse;
 import com.example.thien_long.exception.ProductNotFoundException;
+import com.example.thien_long.model.Image;
 import com.example.thien_long.model.Product;
 import com.example.thien_long.model.ProductDetail;
 import com.example.thien_long.model.Review;
@@ -10,6 +11,7 @@ import com.example.thien_long.repository.ImageRepository;
 import com.example.thien_long.repository.ProductDetailRepository;
 import com.example.thien_long.repository.ProductRepository;
 import com.example.thien_long.repository.ReviewRepository;
+import com.example.thien_long.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +40,9 @@ public class ProductController {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    @Autowired
+    private ProductService productService;
+
 
     @GetMapping()
     public ResponseEntity<Page<BasicProductResponse>> findAll(
@@ -44,7 +50,7 @@ public class ProductController {
             @RequestParam(required = false) List<String> brands,
             @RequestParam(required = false) String priceRange,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "1") int size,
+            @RequestParam(defaultValue = "6") int size,
             @RequestParam(defaultValue = "price") String sortBy,
             @RequestParam(defaultValue = "desc") String direction) {
 
@@ -77,11 +83,12 @@ public class ProductController {
             @RequestParam(required = false) List<String> brands,
             @RequestParam(required = false) String priceRange,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "1") int size,
+            @RequestParam(defaultValue = "6") int size,
             @RequestParam(defaultValue = "price") String sortBy,
             @RequestParam(defaultValue = "desc") String direction) {
 
         System.out.println("/products/"+categoryCode+"\tpage: " + page);
+        System.out.println("category");
         Sort sort = Sort.by(Sort.Direction.fromString(direction), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         if (sub == null || sub.isEmpty()) {
@@ -121,7 +128,52 @@ public class ProductController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<BasicProductResponse>> findByName(
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(required = false) String priceRange,
+
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size,
+            @RequestParam(defaultValue = "price") String sortBy,
+            @RequestParam(defaultValue = "desc") String direction) {
+
+        System.out.println("products/search?keyword="+keyword);
+        Sort sort = Sort.by(Sort.Direction.fromString(direction), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        String[] tokens = keyword.split(" ");
+
+        ArrayList<String> keywords = new ArrayList<>();
+        for (String token : tokens) {
+            keywords.add(token);
+        }
+        String bfPrice = null, afPrice=null;
+        if (priceRange != null) {
+            String[] priceTokens = priceRange.split("-");
+            bfPrice = priceTokens[0]+"000";
+            afPrice = priceTokens[1]+"000";
+        }
+        Page<Product> productPage = productService.searchByKeywords(keywords, bfPrice, afPrice, pageable);
+        Page<BasicProductResponse> result = productPage.map(product ->
+                new BasicProductResponse(
+                        product.getId(),
+                        product.getName(),
+                        product.getLabel(),
+                        product.getThumbnail(),
+                        product.getPrice(),
+                        product.getInitPrice(),
+                        product.getAvgRating(),
+                        product.getTotalReview(),
+                        product.getSoldQty()
+                )
+        );
+        return ResponseEntity.ok(result);
+    }
 
 
 }
+
+
+
 

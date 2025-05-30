@@ -11,24 +11,23 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { Range, getTrackBackground } from 'react-range';
 
-import styles from './Product.module.scss';
+import styles from './SearchProduct.module.scss';
 import images from '~/assets/images';
 import SubSidebar from '~/components/Layouts/components/SubSidebar';
 import { menus, brands, priceRanges, colors } from '~/data';
 import { ProductItem, Pagination } from '../components';
 import { Product as ProductModel, StarRating } from '~/models';
-import { getProductsByCategory } from '~/api/productApi';
+import { getProductsByCategory, getProductsByKeyword } from '~/api/productApi';
 import { useUpdateUrlParams } from '~/utils/url';
 
 const cx = classNames.bind(styles);
 
-function Product() {
+function SearchProduct() {
     console.log('product screen');
-    const { category } = useParams(); // lấy từ URL path
     const [searchParams, setSearchParams] = useSearchParams();
     const updateUrlParams = useUpdateUrlParams();
-    const location = useLocation(); // chứa path hiện tại
 
     const keyword = searchParams.get('keyword');
 
@@ -38,34 +37,23 @@ function Product() {
 
     const sortBy = searchParams.get('sortBy') || 'price';
     const direction = searchParams.get('direction') || 'asc';
-    const size = parseInt(searchParams.get('size') || '1');
-    const sub = searchParams.get('sub');
-    const brands = searchParams.get('brands');
+    const size = parseInt(searchParams.get('size') || '6');
     const priceRange = searchParams.get('priceRange');
     const [products, setProducts] = useState(null);
-    let recentlyViewedProducts = localStorage.getItem('recentlyViewedProducts');
-    if (recentlyViewedProducts) {
-        recentlyViewedProducts = JSON.parse(recentlyViewedProducts);
-    }
+    const [tempPriceRange, setTempPriceRange] = useState('');
+    const [totalResult,setTotalResult] = useState(0);
 
     useEffect(() => {
-        const fetchProductsByCategory = (category, sub, brands, priceRange, sortBy, direction, page, size) => {
-            setLoading(true);
-            getProductsByCategory({
-                category,
-                sub,
-                brands,
-                priceRange,
-                sortBy,
-                direction,
-                page,
-                size,
+         const fetchProductsByKeyword = (keyword, sortBy, direction, page, size, priceRange) => {
+               getProductsByKeyword({
+                keyword, sortBy, direction, page, size, priceRange
             })
                 .then((data) => {
                     setProducts(data.content);
                     const pageInfo = data.pageInfo;
 
                     setTotalPages(pageInfo.totalPages);
+                    setTotalResult(pageInfo.totalElements);
                 })
                 .catch((err) => {
                     console.error('Lỗi tải sản phẩm:', err);
@@ -74,12 +62,10 @@ function Product() {
                     setLoading(false);
                 });
         };
-     
-        fetchProductsByCategory(category, sub, brands, priceRange, sortBy, direction, page, size);
-    }, [category, sortBy, direction, page, size, sub, brands, priceRange]);
 
-    let parent = menus.find((m) => m.link === '/' + category);
-    if (!parent) parent = null;
+        fetchProductsByKeyword(keyword, sortBy, direction, page, size, priceRange);
+      
+    }, [keyword, sortBy, direction, page, size, priceRange]);
 
     const barRef = useRef(null);
 
@@ -91,11 +77,6 @@ function Product() {
     };
 
     const updateSort = (newSortBy, newDirection) => {
-        // updateUrlParams(searchParams, setSearchParams, {
-        //     sortBy: newSortBy,
-        //     direction: newDirection,
-        //     page: 0,
-        // });
         updateUrlParams({ sortBy: newSortBy, direction: newDirection, page: 0 });
     };
 
@@ -119,14 +100,94 @@ function Product() {
         };
     }, []);
 
+    const [sliderValues, setSliderValues] = useState([0, 1000000]);
+
+    const handlePriceRange = (newValues) => {
+        console.log('handlePageChange');
+        const minPrice = newValues[0] / 1000;
+        const maxPrice = newValues[1] / 1000;
+        setTempPriceRange(minPrice + '-' + maxPrice);
+        setSliderValues(newValues);
+    };
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if(tempPriceRange!=='') 
+                updateUrlParams({ priceRange: tempPriceRange });
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+    }, [tempPriceRange]);
+
+    const PriceRangeSlider = ({ min = 0, max = 1000000, step = 10000, onChange, values, onFinalChange }) => {
+        const [internalValues, setInternalValues] = useState(values);
+
+        useEffect(() => {
+            setInternalValues(values);
+        }, [values]);
+
+        const handleChange = (newValues) => {
+            setInternalValues(newValues);
+            if (onChange) onChange(newValues);
+        };
+
+        const handleFinalChange = () => {
+            if (onFinalChange) onFinalChange(internalValues);
+        };
+
+        return (
+            <div className={classNames(cx(), 'd-flex-al-center grid-col-12')} style={{ marginTop: '20px' }}>
+                <p className="d-flex-al-center">
+                    Khoảng giá:{' '}
+                    <span className={classNames(cx('price-range-item'))} style={{ marginLeft: '10px' }}>
+                        {internalValues[0].toLocaleString()}đ
+                    </span>
+                </p>
+                <Range
+                    values={internalValues}
+                    step={step}
+                    min={min}
+                    max={max}
+                    onChange={handleChange}
+                    onFinalChange={handleFinalChange} // giả sử thư viện có, hoặc dùng onMouseUp onTouchEnd ở wrapper
+                    renderTrack={({ props, children }) => (
+                        <div
+                            {...props}
+                            className={classNames(cx('my-slider-track'), 'grid-col-6')}
+                            style={{
+                                ...props.style,
+                                background: getTrackBackground({
+                                    values: internalValues,
+                                    colors: ['#ccc', '#0d6efd', '#ccc'],
+                                    min,
+                                    max,
+                                }),
+                                height: 10,
+                                margin: '0 10px',
+                            }}
+                        >
+                            {children}
+                        </div>
+                    )}
+                    renderThumb={({ props }) => <div {...props} className={cx('price-range-thumb')} />}
+                />
+                <p className={classNames(cx('price-range-item'))}>{internalValues[1].toLocaleString()}đ</p>
+            </div>
+        );
+    };
+
     return (
         <div className={classNames(cx('wrapper'))}>
             <div className={classNames(cx('content-container', 'product-show-container'), 'd-flex')}>
-                <div ref={barRef} className={classNames(cx('subsidebar-container'), 'grid-col-2')} style={{}}>
-                    <SubSidebar />
-                </div>
                 <div className={classNames(cx('content'))} style={{ flex: 1 }}>
-                    <p className={classNames(cx('title'), 'uppercase-text')}>{parent?.title || 'Tất cả'}</p>
+                    <p className={classNames(cx('title'), 'uppercase-text')}>Có tất cả {totalResult} kết quả phù hợp</p>
+                    <PriceRangeSlider
+                        onFinalChange={(range) => {
+                            handlePriceRange(range);
+                        }}
+                        values={sliderValues}
+                    />
+
                     <div className="d-flex" style={{ marginTop: '20px' }}>
                         <p>Sắp xếp:</p>
                         <ul className={classNames(cx('sort-option-list'))}>
@@ -152,16 +213,6 @@ function Product() {
                                     Giá giảm dần
                                 </a>
                             </li>
-                            {/* <li>
-                                <a
-                                    className={classNames(
-                                        cx({ active: sortBy === 'createdDate' && direction === 'desc' }),
-                                    )}
-                                    onClick={() => updateSort('createdDate', 'desc')}
-                                >
-                                    Hàng mới
-                                </a>
-                            </li> */}
                         </ul>
                     </div>
                     <div className={classNames(cx('divider'))} style={{ marginTop: '14px' }}></div>
@@ -171,12 +222,6 @@ function Product() {
                     </div>
                 </div>
             </div>
-            {recentlyViewedProducts && (
-                <div className={classNames(cx('content-container', 'recent-viewed-product'))}>
-                    <p className={classNames(cx('title'))}>Sản phẩm đã xem</p>
-                    <ProductList items={recentlyViewedProducts.slice(0, 4)} />
-                </div>
-            )}
         </div>
     );
 
@@ -185,7 +230,7 @@ function Product() {
             <div className={cx('product-list-container')}>
                 <div className="grid-row">
                     {items.map((item, index) => (
-                        <ProductItem key={index} item={item} />
+                        <ProductItem key={index} item={item} style={{width: '20%'}}/>
                     ))}
                 </div>
             </div>
@@ -193,4 +238,4 @@ function Product() {
     }
 }
 
-export default Product;
+export default SearchProduct;

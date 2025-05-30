@@ -14,10 +14,10 @@ export async function getProductsByCategory({
     sortBy = 'price',
     direction = 'asc',
     page = 0,
-    size = 1,
+    size = 5,
 }) {
     let url = `/products/${category}`;
-    if(!category) url = '/products';
+    if (!category) url = '/products';
     const params = { sub, brands, priceRange, sortBy, direction, page, size };
 
     const response = await axiosInstance.get(url, { params });
@@ -95,4 +95,49 @@ export async function getProductDetail({ id }) {
     // console.log(JSON.stringify(productDetail,null,2));
 
     return productDetail;
+}
+
+export async function getProductsByKeyword({
+    keyword,
+    sortBy = 'price',
+    direction = 'asc',
+    page = 0,
+    size = 5,
+    priceRange,
+}) {
+    console.log("getProductsByKeyword: " + keyword);
+    let url = `/products/search`;
+    const params = { keyword, priceRange, sortBy, direction, page, size };
+
+    const response = await axiosInstance.get(url, { params });
+
+    const data = response.data;
+
+    const products = data.content.map(
+        (item) =>
+            new ProductModel(
+                item.id,
+                item.name,
+                item.label,
+                `${SERVER_URL_BASE}/${item.thumbnail}`,
+                item.price,
+                item.initPrice,
+                item.avgRating,
+                item.totalReview,
+                item.discount,
+                item.soldQty,
+            ),
+    );
+
+    return {
+        content: products,
+        pageInfo: {
+            page: data.pageable.pageNumber,
+            size: data.pageable.pageSize,
+            totalPages: data.totalPages,
+            totalElements: data.totalElements,
+            first: data.first,
+            last: data.last,
+        },
+    };
 }

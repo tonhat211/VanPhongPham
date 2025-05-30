@@ -2,7 +2,7 @@ import Home from '~/pages/Home';
 // import ProductDetail from '~/pages/ProductDetail';
 import Category from '~/pages/Category';
 import { CategoryLayout, ProductDetailLayout, ProductLayout, NoneLayout, AdminLayout } from '~/components/Layouts';
-import {Product, Checkout, Account} from '~/pages';
+import {Product, Checkout, Account, SearchProduct} from '~/pages';
 import {Employee, Product as AdminProduct, Dashboard} from '~/pagesAdmin';
 import ProductDetailPage from '~/pages/ProductDetails/ProductDetailPage';
 
@@ -24,6 +24,7 @@ const publicRoutes  = [
     { path: '/Home', component: Home, layout: HomeLayout},
     { path: '/products', component: Product, layout: ProductLayout},
     { path: '/products/:category', component: Product, layout: ProductLayout},
+     { path: '/products/search', component: SearchProduct, layout: ProductLayout},
     // { path: '/product-detail', component: ProductDetail, layout: ProductDetailLayout},
     { path: '/category', component: Category, layout: CategoryLayout },
     { path: '/checkout', component: Checkout, layout: NoneLayout},
@@ -31,6 +32,7 @@ const publicRoutes  = [
     { path: '/products/detail/:id', component: ProductDetailPage, layout: ProductDetailLayout },
     { path: '/account', component: Account, layout: ProductLayout},
     { path: '/cart', component: ProductCardsPage, layout: ProductCardsLayout },
+    { path: '/checkout', component: Checkout},
     { path: '/register', component: RegisterPages, layout: RegisterLayout },
     { path: '/login', component: LoginPage, layout: LoginLayout },
     { path: '/verify-code', component: OtpVerificationPage, layout: OtpVerificationLayout },
