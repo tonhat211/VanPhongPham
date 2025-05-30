@@ -39,9 +39,9 @@ function ReviewAndRating({ product }) {
         <div className="review-rating-container">
             <h3>Đánh giá sản phẩm: {product?.name}</h3>
             <div className="rating-summary">
-                <div className="rating-total-star">
+                {/*<div className="rating-total-star">*/}
 
-                </div>
+                {/*</div>*/}
                 <div className="star-warpper-container">
                     <h3>Đánh giá sản phẩm</h3>
                     <div className="star-hover-wrapper">

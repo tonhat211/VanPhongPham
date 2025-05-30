@@ -1,6 +1,7 @@
 .product-detail-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .product-detail-container .product-detail-section1, .product-detail-container .discript-product-detail-section2, .product-detail-container .product-reviewAndRating-section3, .product-detail-container .carousel-section {
   height: fit-content;
@@ -10,7 +11,7 @@
   flex-direction: row;
   background-color: var(--header-background);
   border-radius: 1rem;
-  width: 1315px;
+  width: 100%;
 }
 .product-detail-container .product-detail-section1 .pdetails-info {
   margin-left: 2rem;

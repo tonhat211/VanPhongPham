@@ -89,6 +89,7 @@ function Header() {
             ? {
                 icon: faUser,
                 stTitle: userName,
+                stLink: null,
                 ndTitle: 'Đăng xuất',
                 onLogout: true,
             }
@@ -135,16 +136,19 @@ function Header() {
         return (
             <div className={cx('header-menu-item')}>
                 <div className="d-flex">
-                    <i>
-                        <FontAwesomeIcon icon={item.icon} />
-                    </i>
-                    <div>
+
+                        <Link className="link-icon" to={item.stLink}>
+                            <i> <FontAwesomeIcon icon={item.icon} /> </i>
+                </Link>
+
+                <div>
                         {item.stLink ? (
                             <Link to={item.stLink} style={{ fontWeight: '600', fontSize: '1rem' }}>
                                 {item.stTitle}
                             </Link>
                         ) : (
-                            <p style={{ fontWeight: '600', fontSize: '1rem' }}>{item.stTitle}</p>
+                            <p style={{ fontWeight: '600', fontSize: '1rem',
+                                marginLeft: '10px', marginBottom: '4px' }}>{item.stTitle}</p>
                         )}
                         {item.ndLink ? (
                             <Link to={item.ndLink} style={{ fontSize: '0.8rem' }}>{item.ndTitle}</Link>
@@ -153,6 +157,7 @@ function Header() {
                                 style={{
                                     fontSize: '0.8rem',
                                     cursor: item.onLogout ? 'pointer' : 'default',
+                                    marginLeft: '10px', marginBottom: '4px'
                                 }}
                                 onClick={item.onLogout ? handleLogout : undefined}
                             >

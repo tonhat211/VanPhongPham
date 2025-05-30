@@ -9,7 +9,6 @@ import 'swiper/css/thumbs';
 import './ProductImageGallery.scss';
 import productsData from '~/data/productData';
 
-// function ProductImageGallery({ productId }) {
 function ProductImageGallery({ images }) {
     // const product = productsData.find(item => item.id === productId);
     // const images = product.images;
