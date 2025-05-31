@@ -7,29 +7,35 @@ import TickDiscount from '~/components/Layouts/components/ProductDetail/discount
 import CarouselCards from '~/components/Layouts/components/ProductDetail/carouselCards/CarouselCards';
 import { getCart, updateCartItemQuantity, removeCartItem } from '~/api/cartApi.js';
 import { toast } from 'react-toastify';
+import { useStepContext } from '@mui/material';
+import { SERVER_URL_BASE } from '~/api/axiosInstance';
 function ProductCardsPage() {
     const navigate = useNavigate();
     const [cartItems, setCartItems] = useState([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [selectedItems, setSelectedItems] = useState([1,2]);
 
     useEffect(() => {
         const fetchCart = async () => {
             try {
                 const response = await getCart();
-                setCartItems(response.items.map(item => ({
-                    sid: item.productDetailId,
-                    imageUrl: item.imageUrl,
-                    productName: item.productName,
-                    brandName: item.brandName,
-                    initPrice: item.initPrice,
-                    price: item.price,
-                    quantity: item.quantity,
-                })));
+                setCartItems(
+                    response.items.map((item) => ({
+                        sid: item.productDetailId,
+                        imageUrl: SERVER_URL_BASE+"/"+ item.imageUrl,
+                        productName: item.productName,
+                        brandName: item.brandName,
+                        initPrice: item.initPrice,
+                        price: item.price,
+                        quantity: item.quantity,
+                        discount: item.discount,
+                    })),
+                );
                 setTotal(response.totalPrice);
                 setLoading(false);
             } catch (error) {
-                toast.error("Lỗi khi tải giỏ hàng.");
+                toast.error('Lỗi khi tải giỏ hàng.');
                 console.error(error);
             }
         };
@@ -38,54 +44,59 @@ function ProductCardsPage() {
     }, []);
 
     const handleCheckout = () => {
-        navigate('/checkout');
+        navigate('/checkout', { state: { selectedItems } });
     };
 
     const handleRemove = async (sid) => {
         try {
             const response = await removeCartItem(sid);
-            setCartItems(response.items.map(item => ({
-                sid: item.productDetailId,
-                imageUrl: item.imageUrl,
-                productName: item.productName,
-                brandName: item.brandName,
-                initPrice: item.initPrice,
-                price: item.price,
-                quantity: item.quantity,
-            })));
+            setCartItems(
+                response.items.map((item) => ({
+                    sid: item.productDetailId,
+                    imageUrl: item.imageUrl,
+                    productName: item.productName,
+                    brandName: item.brandName,
+                    initPrice: item.initPrice,
+                    price: item.price,
+                    quantity: item.quantity,
+                      discount: item.discount,
+                })),
+            );
             setTotal(response.totalPrice);
         } catch (error) {
-            toast.error("Không thể xoá sản phẩm.");
+            toast.error('Không thể xoá sản phẩm.');
         }
     };
 
     const handleQuantityChange = async (sid, newQuantity) => {
         try {
             const response = await updateCartItemQuantity(sid, newQuantity);
-            setCartItems(response.items.map(item => ({
-                sid: item.productDetailId,
-                imageUrl: item.imageUrl,
-                productName: item.productName,
-                brandName: item.brandName,
-                initPrice: item.initPrice,
-                price: item.price,
-                quantity: item.quantity,
-            })));
+            setCartItems(
+                response.items.map((item) => ({
+                    sid: item.productDetailId,
+                    imageUrl: item.imageUrl,
+                    productName: item.productName,
+                    brandName: item.brandName,
+                    initPrice: item.initPrice,
+                    price: item.price,
+                    quantity: item.quantity,
+                })),
+            );
             setTotal(response.totalPrice);
         } catch (error) {
-            toast.error("Không thể cập nhật số lượng.");
+            toast.error('Không thể cập nhật số lượng.');
         }
     };
 
     const handleIncrement = (sid) => {
-        const item = cartItems.find(item => item.sid === sid);
+        const item = cartItems.find((item) => item.sid === sid);
         if (item) {
             handleQuantityChange(sid, item.quantity + 1);
         }
     };
 
     const handleDecrement = (sid) => {
-        const item = cartItems.find(item => item.sid === sid);
+        const item = cartItems.find((item) => item.sid === sid);
         if (item && item.quantity > 1) {
             handleQuantityChange(sid, item.quantity - 1);
         }
@@ -103,7 +114,7 @@ function ProductCardsPage() {
                     <div className="cart-left">
                         <div className="cart-items">
                             {cartItems.length > 0 ? (
-                                cartItems.map(item => (
+                                cartItems.map((item) => (
                                     <div className="cart-item" key={item.sid}>
                                         <img className="item-image" src={item.imageUrl} alt={item.title} />
                                         <div className="item-details">
@@ -117,33 +128,43 @@ function ProductCardsPage() {
                                                 <>
                                                     <del>{formatPrices(item.initPrice)}</del>
                                                     <span className="discount">
-                -{formatPercentage(item.discountPercent)}
-              </span>
+                                                        -{item.discount}%
+                                                    </span>
                                                 </>
                                             )}
                                         </div>
 
                                         <div className="item-quantity">
                                             <button onClick={() => handleDecrement(item.sid)}>-</button>
-                                            <input type="number" value={item.quantity} min="1"  onChange={(e) => {
-                                                const newQuantity = parseInt(e.target.value);
-                                                if (!isNaN(newQuantity) && newQuantity >= 1) {
-                                                    handleQuantityChange(item.sid, newQuantity);
-                                                }
-                                            }} />
+                                            <input
+                                                type="number"
+                                                value={item.quantity}
+                                                min="1"
+                                                onChange={(e) => {
+                                                    const newQuantity = parseInt(e.target.value);
+                                                    if (!isNaN(newQuantity) && newQuantity >= 1) {
+                                                        handleQuantityChange(item.sid, newQuantity);
+                                                    }
+                                                }}
+                                            />
                                             <button onClick={() => handleIncrement(item.sid)}>+</button>
                                         </div>
 
-                                        <button className="item-remove" onClick={() => handleRemove(item.sid)}>×
+                                        <button className="item-remove" onClick={() => handleRemove(item.sid)}>
+                                            ×
                                         </button>
                                     </div>
                                 ))
                             ) : (
                                 <div className="cart-empty">
-                                    <p>Bạn chưa có sản phẩm nào trong giỏ hàng - quay về <a href="#" title="Trang Chủ"
-                                                                                            className="link-homepage"> Trang
-                                        Chủ</a> để
-                                        mua hàng</p>
+                                    <p>
+                                        Bạn chưa có sản phẩm nào trong giỏ hàng - quay về{' '}
+                                        <a href="#" title="Trang Chủ" className="link-homepage">
+                                            {' '}
+                                            Trang Chủ
+                                        </a>{' '}
+                                        để mua hàng
+                                    </p>
                                 </div>
                             )}
                         </div>
@@ -151,14 +172,14 @@ function ProductCardsPage() {
                         <div className="cart-note">
                             <p className="shipping-note">
                                 <LocalShippingRoundedIcon className="icon-shipping"></LocalShippingRoundedIcon>
-                                Miễn phí vận chuyển cho đơn hàng từ 100,000₫</p>
+                                Miễn phí vận chuyển cho đơn hàng từ 100,000₫
+                            </p>
                             <label className="company-invoice">
                                 <input type="checkbox" />
                                 Xuất hoá đơn công ty
                             </label>
                             <textarea placeholder="Ghi chú đơn hàng"></textarea>
                         </div>
-
                     </div>
 
                     <div className="cart-right">
@@ -171,13 +192,10 @@ function ProductCardsPage() {
                         </button>
                         <TickDiscount />
                     </div>
-
                 </div>
             </div>
 
-            <div className="carousel-section">
-                {/*<CarouselCards />*/}
-            </div>
+            <div className="carousel-section">{/*<CarouselCards />*/}</div>
         </section>
     );
 }

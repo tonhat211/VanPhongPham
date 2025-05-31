@@ -50,7 +50,7 @@ public class ProductController {
             @RequestParam(required = false) List<String> brands,
             @RequestParam(required = false) String priceRange,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size,
+            @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "price") String sortBy,
             @RequestParam(defaultValue = "desc") String direction) {
 
@@ -83,7 +83,7 @@ public class ProductController {
             @RequestParam(required = false) List<String> brands,
             @RequestParam(required = false) String priceRange,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size,
+            @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "price") String sortBy,
             @RequestParam(defaultValue = "desc") String direction) {
 
@@ -134,7 +134,7 @@ public class ProductController {
             @RequestParam(required = false) String priceRange,
 
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size,
+            @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "price") String sortBy,
             @RequestParam(defaultValue = "desc") String direction) {
 

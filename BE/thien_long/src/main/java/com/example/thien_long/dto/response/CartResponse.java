@@ -14,4 +14,13 @@ public class CartResponse {
     Long cartId;
     List<CartItemResponse> items;
     double totalPrice;
+
+    public CartResponse(List<CartItemResponse> items) {
+        this.items = items;
+        double totalPrice = 0;
+        for(CartItemResponse item : items) {
+            totalPrice += item.getPrice();
+        }
+        this.totalPrice = totalPrice;
+    }
 }

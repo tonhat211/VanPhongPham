@@ -14,11 +14,12 @@ export async function getProductsByCategory({
     sortBy = 'price',
     direction = 'asc',
     page = 0,
-    size = 5,
+    size = 20,
 }) {
     let url = `/products/${category}`;
     if (!category) url = '/products';
     const params = { sub, brands, priceRange, sortBy, direction, page, size };
+    console.log(JSON.stringify(params,null,2));
 
     const response = await axiosInstance.get(url, { params });
 
@@ -102,7 +103,7 @@ export async function getProductsByKeyword({
     sortBy = 'price',
     direction = 'asc',
     page = 0,
-    size = 5,
+    size = 20,
     priceRange,
 }) {
     console.log("getProductsByKeyword: " + keyword);

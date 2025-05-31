@@ -10,7 +10,7 @@ import {
     faArrowTrendUp,
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
-import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 
 import styles from './Product.module.scss';
 import images from '~/assets/images';
@@ -19,7 +19,7 @@ import { menus, brands, priceRanges, colors } from '~/data';
 import { ProductItem, Pagination } from '../components';
 import { Product as ProductModel, StarRating } from '~/models';
 import { getProductsByCategory } from '~/api/productApi';
-import { useUpdateUrlParams } from '~/utils/url';
+import { useUpdateUrlParams  } from '~/utils/url';
 
 const cx = classNames.bind(styles);
 
@@ -27,10 +27,7 @@ function Product() {
     console.log('product screen');
     const { category } = useParams(); // lấy từ URL path
     const [searchParams, setSearchParams] = useSearchParams();
-    const updateUrlParams = useUpdateUrlParams();
-    const location = useLocation(); // chứa path hiện tại
-
-    const keyword = searchParams.get('keyword');
+    const updateUrlParams = useUpdateUrlParams ();
 
     const page = parseInt(searchParams.get('page')) || 0;
     const [loading, setLoading] = useState(true);
@@ -38,45 +35,42 @@ function Product() {
 
     const sortBy = searchParams.get('sortBy') || 'price';
     const direction = searchParams.get('direction') || 'asc';
-    const size = parseInt(searchParams.get('size') || '1');
+    const size = parseInt(searchParams.get('size') || '20');
     const sub = searchParams.get('sub');
     const brands = searchParams.get('brands');
     const priceRange = searchParams.get('priceRange');
     const [products, setProducts] = useState(null);
     let recentlyViewedProducts = localStorage.getItem('recentlyViewedProducts');
-    if (recentlyViewedProducts) {
+    if(recentlyViewedProducts) {
         recentlyViewedProducts = JSON.parse(recentlyViewedProducts);
     }
+    // console.log('recentlyViewedProducts: ' + recentlyViewedProducts);
 
     useEffect(() => {
-        const fetchProductsByCategory = (category, sub, brands, priceRange, sortBy, direction, page, size) => {
-            setLoading(true);
-            getProductsByCategory({
-                category,
-                sub,
-                brands,
-                priceRange,
-                sortBy,
-                direction,
-                page,
-                size,
-            })
-                .then((data) => {
-                    setProducts(data.content);
-                    const pageInfo = data.pageInfo;
+        setLoading(true);
+        getProductsByCategory({
+            category,
+            sub,
+            brands,
+            priceRange,
+            sortBy,
+            direction,
+            page,
+            size,
+        })
+            .then((data) => {
+                setProducts(data.content);
+                const pageInfo = data.pageInfo;
 
-                    setTotalPages(pageInfo.totalPages);
-                })
-                .catch((err) => {
-                    console.error('Lỗi tải sản phẩm:', err);
-                })
-                .finally(() => {
-                    setLoading(false);
-                });
-        };
-     
-        fetchProductsByCategory(category, sub, brands, priceRange, sortBy, direction, page, size);
-    }, [category, sortBy, direction, page, size, sub, brands, priceRange]);
+                setTotalPages(pageInfo.totalPages);
+            })
+            .catch((err) => {
+                console.error('Lỗi tải sản phẩm:', err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [category, sortBy, direction, page, size, sub,brands,priceRange]);
 
     let parent = menus.find((m) => m.link === '/' + category);
     if (!parent) parent = null;
@@ -85,7 +79,7 @@ function Product() {
 
     const handlePageChange = (newPage) => {
         const actualPage = newPage - 1;
-        updateUrlParams({
+        updateUrlParams( {
             page: actualPage,
         });
     };
@@ -96,7 +90,7 @@ function Product() {
         //     direction: newDirection,
         //     page: 0,
         // });
-        updateUrlParams({ sortBy: newSortBy, direction: newDirection, page: 0 });
+        updateUrlParams({ sortBy: newSortBy, direction : newDirection, page: 0 });
     };
 
     useEffect(() => {

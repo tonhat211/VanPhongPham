@@ -21,8 +21,6 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, Lo
         pd.id, pd.title, pd.initPrice, pd.price, pd.qty) from ProductDetail pd where pd.product.id = :id and pd.isDeleted = 0
     """)
     Optional<List<ProductDetail>> findByProductIdForProductDetail(@Param("id") long id);
-
-
  }
 
 //
