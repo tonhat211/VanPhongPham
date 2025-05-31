@@ -1,8 +1,9 @@
 .cart-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
   .cart-info, .carousel-section {
-    width: 1315px;
+    width: 100%;
     margin-top: 24px;
     margin-bottom: 24px;
     padding-left: 20px;
@@ -232,7 +233,7 @@
 
   }
 
-  .cart-empty {
+  .cart-empty, .cart-loading {
     text-align: center;
     padding: 40px 0;
 

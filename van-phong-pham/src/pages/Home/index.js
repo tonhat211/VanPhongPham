@@ -5,11 +5,12 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import bannerTopHomePage from '~/data/bannerTopHomePage';
-import hotProductsHomePage from '~/data/hotProductsHomePage';
+import bannerTopHomePage from '~/assets/images/bannerTopHomeImgs/bannerTopHomePage';
+import hotProductsHomePage from '~/assets/images/imgsHotProductsHome/hotProductsHomePage';
 import ProductItemCategory from '~/components/Layouts/components/ProductItemCategory/ProductItemCategory';
 import Button from '@mui/material/Button';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import images from '~/assets/images';
 function Home() {
     return (
         <div className="home-container">
@@ -57,7 +58,7 @@ function Home() {
             <div className="section-product-itemsCategory">
                 <div className="banner-item">
                     <img className="banner-item-img"
-                         src="https://file.hstatic.net/1000230347/file/36-37_banner_1920x600.webp" alt="" />
+                         src={images.banneri1} alt="" />
                 </div>
                 <div className="product-itemsCategory">
                     <ProductItemCategory categoryID="1" />
@@ -74,8 +75,7 @@ function Home() {
             <div className="section-product-itemsCategory">
                 <div className="banner-item">
                     <img className="banner-item-img"
-                         src="https://file.hstatic.net/1000230347/file/17_banner_1920x600_96f19667be5e47ef896b34a5f59ece12.png"
-                         alt="" />
+                         src={images.banneri2} alt="" />
                 </div>
                 <div className="product-itemsCategory">
                     <ProductItemCategory categoryID="2" />
@@ -91,7 +91,7 @@ function Home() {
             <div className="section-product-itemsCategory">
                 <div className="banner-item">
                     <img className="banner-item-img"
-                         src="https://file.hstatic.net/1000230347/file/15-16_banner_1920x600.webp" alt="" />
+                         src={images.banneri3} alt="" />
                 </div>
 
                 <div className="title-product-container">
@@ -122,7 +122,7 @@ function Home() {
             <div className="section-product-itemsCategory">
                 <div className="banner-item">
                     <img className="banner-item-img"
-                         src="https://file.hstatic.net/1000230347/file/27_banner_1920x600.png" alt="" />
+                         src={images.banneri4} alt="" />
                 </div>
 
                 <div className="title-product-container">
@@ -149,7 +149,7 @@ function Home() {
             <div className="section-product-itemsCategory">
                 <div className="banner-item">
                     <img className="banner-item-img"
-                         src="https://file.hstatic.net/1000230347/file/37-40_banner_1920x600.webp" alt="" />
+                         src={images.banneri5} alt="" />
                 </div>
                 <div className="product-itemsCategory">
                     <ProductItemCategory categoryID="5" />
@@ -165,8 +165,7 @@ function Home() {
             <div className="section-product-itemsCategory">
                 <div className="banner-item">
                     <img className="banner-item-img"
-                         src="https://file.hstatic.net/1000230347/file/2afbf3b5-ae3e-44f0-a060-f13045be3255.png"
-                         alt="" />
+                         src={images.banneri6} alt="" />
                 </div>
 
                 <div className="title-product-container">
@@ -196,7 +195,7 @@ function Home() {
             <div className="section-product-itemsCategory">
                 <div className="banner-item">
                     <img className="banner-item-img"
-                         src="https://file.hstatic.net/1000230347/file/33-34_banner_1920x600.webp" alt="" />
+                         src={images.banneri7} alt="" />
                 </div>
                 <div className="product-itemsCategory">
                     <ProductItemCategory categoryID="7" />
@@ -212,7 +211,7 @@ function Home() {
             <div className="section-product-itemsCategory">
                 <div className="banner-item">
                     <img className="banner-item-img"
-                         src="https://file.hstatic.net/1000230347/file/36_banner_1920x600.webp" alt="" />
+                         src={images.banneri8} alt="" />
                 </div>
 
                 <div className="title-product-container">

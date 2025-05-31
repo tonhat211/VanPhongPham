@@ -1,6 +1,7 @@
 import footerStyles from "./Footer.scss"
-import brandsSliderImgs from "~/data/BrandsSliderImgs";
-import midFooterImgs from "~/data/midFooterImgs";
+import footer_bct from '~/assets/images/img/footer_bct.webp';
+import brandsSliderImgs from "~/assets/images/imgBrands/BrandsSliderImgs";
+import midFooterImgs from "~/assets/images/ImgsmidFooter/midFooterImgs";
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules';
@@ -59,7 +60,7 @@ function Footer() {
                     <div className="cert">
                         <p className="payment-title">Chứng nhận</p>
                         <a href="#">
-                            <img src="https://theme.hstatic.net/1000230347/1000782290/14/footer_bct.png?v=25344" />
+                            <img src={images.footer_bct} />
                         </a>
                     </div>
 

@@ -1,9 +1,10 @@
 .cart-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .cart-container .cart-info, .cart-container .carousel-section {
-  width: 1315px;
+  width: 100%;
   margin-top: 24px;
   margin-bottom: 24px;
   padding-left: 20px;
@@ -200,11 +201,11 @@
 .cart-container .cart-info .cart-right .checkout-button:hover, .cart-container .carousel-section .cart-right .checkout-button:hover {
   background-color: #0056b3;
 }
-.cart-container .cart-info .cart-empty, .cart-container .carousel-section .cart-empty {
+.cart-container .cart-info .cart-empty, .cart-container .cart-info .cart-loading, .cart-container .carousel-section .cart-empty, .cart-container .carousel-section .cart-loading {
   text-align: center;
   padding: 40px 0;
 }
-.cart-container .cart-info .cart-empty p, .cart-container .carousel-section .cart-empty p {
+.cart-container .cart-info .cart-empty p, .cart-container .cart-info .cart-loading p, .cart-container .carousel-section .cart-empty p, .cart-container .carousel-section .cart-loading p {
   font-size: 16px;
   color: #888;
 }

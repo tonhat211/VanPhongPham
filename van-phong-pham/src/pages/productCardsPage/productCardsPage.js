@@ -102,16 +102,18 @@ function ProductCardsPage() {
         }
     };
 
-    if (loading) {
-        return <div className="cart-loading">Đang tải giỏ hàng...</div>;
-    }
-
     return (
         <section className="cart-container">
             <div className="cart-info">
                 <h3 className="cart-title">Giỏ hàng</h3>
                 <div className="cart-wrapper">
                     <div className="cart-left">
+                        {loading ? (
+                            <div className="cart-loading">
+                                <p>Đang tải giỏ hàng...</p>
+                            </div>
+                        ) : (
+                            <>
                         <div className="cart-items">
                             {cartItems.length > 0 ? (
                                 cartItems.map((item) => (
@@ -180,6 +182,8 @@ function ProductCardsPage() {
                             </label>
                             <textarea placeholder="Ghi chú đơn hàng"></textarea>
                         </div>
+                        </>
+                            )}
                     </div>
 
                     <div className="cart-right">
