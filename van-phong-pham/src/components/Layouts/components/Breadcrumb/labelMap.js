@@ -3,6 +3,7 @@ export const getLabelKeyFromSlug = (slug) => {
       'products': 'products',
       'but-viet': 'pen',
       'giay': 'paper',
+      'search': 'search',
     };
   
     return map[slug] || slug; // fallback nếu không có key

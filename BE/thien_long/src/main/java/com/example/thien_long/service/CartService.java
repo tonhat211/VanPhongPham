@@ -43,10 +43,18 @@ public class CartService {
         Cart cart = cartRepository.findByUser(user)
                 .orElseThrow(() -> new AppException(ErrorCode.CART_NOT_FOUND));
 
-        List<CartItemResponse> items = cart.getCartItems().stream()
-                .map(cartItemMapper::toDto)
-                .collect(Collectors.toList());
+//        List<CartItemResponse> items = cart.getCartItems().stream()
+//                .map(cartItemMapper::toDto)
+//                .collect(Collectors.toList());
 
+        List<CartItemResponse> items = cart.getCartItems().stream()
+                .map(cartItem -> {
+                    CartItemResponse dto = cartItemMapper.toDto(cartItem);
+                    dto.setImageUrl(Constant.PRODUCT_IMG_DIR+"/"+ dto.getImageUrl());
+                    dto.setDiscount(100 - (int) (dto.getPrice()/dto.getInitPrice() * 100));
+                    return dto;
+                })
+                .collect(Collectors.toList());
         double totalPrice = items.stream()
                 .mapToDouble(item -> item.getPrice() * item.getQuantity())
                 .sum();
@@ -128,4 +136,6 @@ public class CartService {
 
         return getCartByUserId(userId);
     }
+
+
 }

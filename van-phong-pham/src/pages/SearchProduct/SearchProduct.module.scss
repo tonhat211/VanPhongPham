@@ -1,0 +1,114 @@
+.wrapper {
+   
+}
+
+.content-container {
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.product-show-container {
+
+}
+
+
+.subsidebar-container {
+    overflow: auto;
+    position: sticky;
+    top: 20px;
+    max-height: 100vh;
+    transition: top 0.3s ease;
+    scrollbar-width: none;
+     
+}
+
+.content {
+    padding: 20px 10px;
+    .title {
+        font-size: 2rem;
+        color: var(--text-secondary-color);
+    }
+
+    .sort-option-list {
+        display: flex;
+        list-style-type: none;
+        // margin-top: 20px;
+
+        li {
+            
+            a {
+                padding: 10px 10px;
+                color: var(--text-secondary-color);
+                text-decoration: none;
+                font-size: 1.4rem;
+
+                &:hover {
+                    border-bottom: 2px solid var(--primary-color);
+                    cursor: pointer;
+                    color: var(--primary-color);
+                }
+
+                &.active {
+                    border-bottom: 2px solid var(--primary-color);
+                    color: var(--primary-color);
+                }
+            }
+
+            
+        }
+    }
+
+    .pagination-container {
+        display: flex;
+        justify-content: right;
+        margin-top: 10px;
+    }
+}
+
+.recent-viewed-product {
+    .title {
+        padding: 20px;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+}
+
+.price-range-item {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1.2rem;
+    height: 30px;
+}
+
+.price-range-thumb {
+      height: 16px;            
+      width: 16px;               
+      border-radius: 50%;         
+      background-color: var(--topbar-bg);
+      box-shadow: '0 1px 2px rgba(0, 0, 0, 0.25)'; 
+      cursor: 'grab';             
+      display: 'flex';
+      align-items: 'center';
+      justify-content: 'center';
+      border: none;
+
+      &:focus-visible {
+        border: none;
+        outline: none;
+      }
+}
+
+.my-slider-track {
+  grid-column: span 6;     
+  height: 8px;         
+  border-radius: 4px;  
+  background-color: #e5e7eb;
+}
+

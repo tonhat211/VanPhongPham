@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
@@ -7,9 +7,9 @@ import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import styles from './Order.module.scss';
 import { Modal } from '~/pages/components';
 import { formatMoney } from '~/utils';
-import orders from '~/data/orders';
 import { default as StarRating } from '~/pages/components/StarRating';
 import useI18n from '~/hooks/useI18n'
+import { getOrder } from '~/api/orderApi';
 
 
 const cx = classNames.bind(styles);
@@ -57,6 +57,23 @@ function Order() {
         CONFIRM_COMPLETE: 'CONFIRM_COMPLETE',
         REVIEW: 'REVIEW',
     };
+
+    const [orders,setOrders] = useState([]);
+    const [isLoading,setLoading] = useState(false);
+
+     useEffect(() => {
+            setLoading(true);
+            getOrder()
+                .then((data) => {
+                    setOrders(data);
+                })
+                .catch((err) => {
+                    console.error('Lỗi tải don hang:', err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        }, []);
     return (
         <div className={cx('wrapper')}>
             <h1>{t('your-order')}</h1>
@@ -171,9 +188,9 @@ function Order() {
     }
 
     function OrderItem({ item }) {
-        const cartItems = item.cartItems;
+        const orderItems = item.orderItems;
         const [expanded, setExpanded] = useState(false);
-        let visibleItems = expanded ? cartItems : cartItems.slice(0, 1);
+        let visibleItems = expanded ? orderItems : orderItems.slice(0, 1);
         return (
             <div className={cx('order-item-container')}>
                 <div className="d-flex-space-between">
@@ -234,16 +251,16 @@ function Order() {
                 </div>
                 <div className="d-flex-space-between">
                     <div className="">
-                        <p className={cx('label')}>{t('order-on')}: {item.setDate}</p>
-                        {item.completeDate && (
+                        <p className={cx('label')}>{t('order-on')}: {item.createdAt}</p>
+                        {item.updatedAt && item.status===3 && (
                             <p className={cx('label')} style={{ marginTop: '15px' }}>
-                                {t('complete-on')}: {item.completeDate}
+                                {t('complete-on')}: {item.updatedAt}
                             </p>
                         )}
                     </div>
                     <div className="">
-                        <p className={classNames(cx('init-price'))}>{formatMoney(item.initPrice)}</p>
-                        <p className={classNames(cx('current-price'))}>{formatMoney(item.totalPrice)}</p>
+                        <p className={classNames(cx('init-price'))}>{formatMoney(item.initMoney)}</p>
+                        <p className={classNames(cx('current-price'))}>{formatMoney(item.payedMoney)}</p>
                     </div>
                 </div>
             </div>
@@ -257,8 +274,8 @@ function Order() {
                     <img src={item.thumbnail} alt="thumbnail" style={{ width: '100%' }} />
                 </div>
                 <div className={classNames(cx('product-info'), 'grid-col-10')}>
-                    <p className={classNames(cx('name'))}>{item.name}</p>
-                    <p className={cx('label')}>{t('classification')}: {item.classification}</p>
+                    <p className={classNames(cx('name'))}>{item.productName}</p>
+                    <p className={cx('label')}>{t('classification')}: {item.classificationName}</p>
                 </div>
             </div>
         );

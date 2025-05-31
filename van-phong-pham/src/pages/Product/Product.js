@@ -35,7 +35,7 @@ function Product() {
 
     const sortBy = searchParams.get('sortBy') || 'price';
     const direction = searchParams.get('direction') || 'asc';
-    const size = parseInt(searchParams.get('size') || '1');
+    const size = parseInt(searchParams.get('size') || '20');
     const sub = searchParams.get('sub');
     const brands = searchParams.get('brands');
     const priceRange = searchParams.get('priceRange');

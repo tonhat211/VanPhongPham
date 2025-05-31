@@ -10,7 +10,6 @@ import { getProductDetail } from '~/api/productApi';
 import { DatasetRounded } from '@mui/icons-material';
 
 function ProductDetailPage() {
-    const productId = '600022385';
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [isLoading, setLoading] = useState(false);

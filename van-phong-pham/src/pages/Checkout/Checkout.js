@@ -14,6 +14,7 @@ import {
     faAngleRight,
     faArrowTrendUp,
 } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './Checkout.module.scss';
 import images from '~/assets/images';
@@ -24,6 +25,8 @@ import Area from '~/models/Area';
 import icons from '~/assets/icons';
 import cartitems from '~/data/cartItems';
 import { formatMoney } from '~/utils';
+import { getCartByIds } from '~/api/cartApi';
+import { addOrder } from '~/api/orderApi';
 
 const cx = classNames.bind(styles);
 function Checkout() {
@@ -44,12 +47,16 @@ function Checkout() {
     ];
     const [note, setNote] = useState('');
 
-    const [cartItems, setCartItems] = useState(cartitems);
+    const [shippingFee, setShippingFee] = useState(0);
+    const [payingMoney, setPayingMoney] = useState(0);
+
+    const [cartItems, setCartItems] = useState([]);
     const totalPrice = useMemo(() => {
         return cartItems.reduce((total, item) => total + item.price * item.qty, 0);
     }, [cartItems]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [isLoading, setLoading] = useState(false);
+    const navigate = useNavigate();
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
@@ -77,6 +84,42 @@ function Checkout() {
     ];
 
     const wards = [new Area('Quận 1', 'q1'), new Area('Quận 2', 'q2'), new Area('Bình Thạnh', 'binh-thanh')];
+
+    const location = useLocation();
+    const selectedItems = location.state?.selectedItems || [];
+
+    useEffect(() => {
+        const fetchCartItem = (ids) => {
+            setLoading(true);
+            getCartByIds({
+                ids,
+            })
+                .then((data) => {
+                    setCartItems(data);
+                })
+                .catch((err) => {
+                    console.error('Lỗi tải sản phẩm:', err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        };
+
+        fetchCartItem(selectedItems);
+    }, []);
+
+    useEffect(() => {
+        setPayingMoney(totalPrice + shippingFee);
+    }, [totalPrice, shippingFee, cartItems]);
+
+    const handleOrder = async () => {
+        const cartIds = selectedItems;
+        const receiverInfo = name + ' (' + phone + ') Địa chỉ: ' + address + ' - ' + ward + ' - ' + province;
+        const addResult = await addOrder({ cartIds, receiverInfo, shippingFee, voucherCode: null, note });
+        if (addResult === true) {
+            navigate('/account?view=orders');
+        }
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -186,7 +229,7 @@ function Checkout() {
                 <div className="grid-col-5 p-20">
                     <div className={cx('content-container')}>
                         <p className={cx('title')}>{t('the-order')}</p>
-                        <CartList items={cartitems} onQtyChange={handleQtyChange} />
+                        <CartList items={cartItems} onQtyChange={handleQtyChange} />
                     </div>
                     <div className={cx('content-container', 'voucher-container')}>
                         <p className={cx('title')}>{t('voucher')}</p>
@@ -222,13 +265,15 @@ function Checkout() {
                         </div>
                         <div className="d-flex-space-between mb-10">
                             <p>{t('shipping-fee')}</p>
-                            <p> {formatMoney(totalPrice)}</p>
+                            <p> {formatMoney(shippingFee)}</p>
                         </div>
                         <div className="d-flex-space-between mb-10" style={{ fontWeight: '600' }}>
                             <p>{t('total-payment-money')}</p>
-                            <p> {formatMoney(totalPrice)}</p>
+                            <p> {formatMoney(payingMoney)}</p>
                         </div>
-                        <button className={classNames(cx('order-btn'))}>{t('let-order')}</button>
+                        <button className={classNames(cx('order-btn'))} onClick={handleOrder}>
+                            {t('let-order')}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -293,18 +338,18 @@ function Checkout() {
         return (
             <div className={classNames(cx('cart-item'), 'd-flex')}>
                 <div className="grid-col-1_5">
-                    <img src={item.thumbnail} alt="thumbnail" style={{ width: '100%' }} />
+                    <img src={item.imageUrl} alt="thumbnail" style={{ width: '100%' }} />
                 </div>
                 <div className={classNames(cx('product-info'), 'grid-col-10')}>
                     <div className="d-flex">
-                        <p className={classNames(cx('name'), 'grid-col-11')}>{item.name}</p>
+                        <p className={classNames(cx('name'), 'grid-col-11')}>{item.productName}</p>
                         <i>
                             <FontAwesomeIcon icon={faTrash} style={{ marginLeft: '5px' }} />
                         </i>
                     </div>
                     <button className="btn">
                         {' '}
-                        {item.classification}{' '}
+                        {item.productDetailTitle}{' '}
                         <span>
                             {' '}
                             <FontAwesomeIcon icon={faAngleRight} style={{ marginLeft: '5px' }} />
@@ -313,7 +358,7 @@ function Checkout() {
                     <div className="d-flex-space-between">
                         <div>
                             <p className={classNames(cx('init-price'))}>{formatMoney(item.initPrice)}</p>
-                            <p className={classNames(cx('current-price'))}>{formatMoney(item.currentPrice)}</p>
+                            <p className={classNames(cx('current-price'))}>{formatMoney(item.price)}</p>
                         </div>
                         <div className={classNames(cx('qty-control'))}>
                             <i onClick={handleMinus}>

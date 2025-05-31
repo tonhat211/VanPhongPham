@@ -2,32 +2,36 @@ import classNames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faCircleXmark, faXmark, faAngleRight, faArrowTrendUp } from '@fortawesome/free-solid-svg-icons';
+import {
+    faMagnifyingGlass,
+    faCircleXmark,
+    faXmark,
+    faAngleRight,
+    faArrowTrendUp,
+} from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './Search.module.scss';
 import images from '~/assets/images';
 import { productApi } from '~/api';
 import { getRecentSearches, addRecentSearch, removeRecentSearch } from '~/utils/recentSearch';
 import { formatMoney } from '~/utils';
+import { getProductsByKeyword } from '~/api/productApi';
 
 const cx = classNames.bind(styles);
 
 // du lieu de demo
-const recentSearchList = ['but bi', 'thuoc ke', 'tay'];
-const trendSearchList = ['Bút bi', 'Giấy A3', 'Tảy','Vở 200 trang',
-    'Bút bi', 'Giấy A3', 'Tảy','Vở 200 trang',
-    'Bút bi', 'Giấy A3', 'Tảy','Vở 200 trang',
-    'Bút bi', 'Giấy A3', 'Tảy','Vở 200 trang'
-];
+// const recentSearchList = ['but bi', 'thuoc ke', 'tay'];
+const trendSearchList = ['Bút bi', 'Giấy A3', 'Tảy', 'Vở 200 trang', 'Bút bi', 'Giấy A3', 'Tảy', 'Vở 200 trang'];
 
 function Search() {
     const [isVisible, setVisible] = useState(false);
-    const [searchRestults, setSearchRestults] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
     const { t, i18n } = useTranslation();
     const [searchInput, setSearchInput] = useState('');
-
+    const navigate = useNavigate();
+    const [recentSearchList, setRecentSearchList] = useState([]);
     //thay doi ngon ngu
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
@@ -40,15 +44,16 @@ function Search() {
         if (formRef.current) {
             setFormWidth(formRef.current.offsetWidth);
         }
+        setRecentSearchList(getRecentSearches());
     }, [isVisible]);
 
     const handleSearchSubmit = (e) => {
-        //cal API
-        console.log('search btn');
         e.preventDefault();
+        console.log('search btn');
         if (searchInput !== '') {
-            setSearchInput(searchInput);
-            addRecentSearch('bút bi');
+            addRecentSearch(searchInput);
+            navigate(`/products/search?keyword=${encodeURIComponent(searchInput)}`);
+            setVisible(false);
         }
         // chuyen den trang hien thi nhung san pham tim kiem
     };
@@ -59,33 +64,43 @@ function Search() {
 
     const handleTrendSearch = (item) => {
         setSearchInput(item);
-        addRecentSearch('bút bi');
+        addRecentSearch(item);
+        navigate(`/products/search?keyword=${encodeURIComponent(item)}`);
+        setVisible(false);
         // chuyen den trang hien thi nhung san pham tim kiem
-
-    } 
+    };
 
     useEffect(() => {
         if (searchInput !== '') {
-            const controller = new AbortController();
-            const fetchData = async () => {
+            const debounceTimeout = setTimeout(async () => {
                 try {
-                    const response = await productApi.searchFiveProducts(searchInput, controller.signal);
-                    setSearchRestults(response);
+                    getProductsByKeyword({
+                        keyword: searchInput,
+                        sortBy: 'price',
+                        direction: 'asc',
+                        page: 0,
+                        size: 5,
+                        priceRange: '0-1000',
+                    }).then((data) => {
+                        setSearchResults(data.content);
+                    });
                 } catch (error) {
                     if (error.name !== 'CanceledError') {
                         console.error('Fetch error:', error);
                     }
                 }
-            };
-            fetchData();
+            }, 1000);
 
-            return () => {
-                controller.abort(); // Huỷ API call nếu input thay đổi quá nhanh
-            };
+            return () => clearTimeout(debounceTimeout);
         } else {
-            setSearchRestults(null);
+            setSearchResults([]);
         }
     }, [searchInput]);
+
+    const handleRemoveSearchItem = (keyword) => {
+        removeRecentSearch(keyword);
+        setRecentSearchList(getRecentSearches());
+    };
 
     return (
         <div
@@ -105,20 +120,24 @@ function Search() {
                         {...attrs}
                         style={{ width: formWidth }}
                     >
-                        {searchRestults ? (
+                        {Array.isArray(searchResults) && searchResults.length > 0 ? (
                             <>
-                                <SearchResultList items={searchRestults} />
+                                <SearchResultList items={searchResults} />
                                 <div className="d-flex-center-cetner">
-                                    <Link to="/about" className={classNames(cx('title'),'btn')}>
-                                        {t('more-product')} 
-                                
-                                        <FontAwesomeIcon icon={faAngleRight} style={{marginLeft:'5px'}}/>
+                                    <Link onClick={handleSearchSubmit} className={classNames(cx('title'), 'btn')}>
+                                        {t('more-product')}
+
+                                        <FontAwesomeIcon icon={faAngleRight} style={{ marginLeft: '5px' }} />
                                     </Link>
                                 </div>
                             </>
                         ) : (
                             <>
-                                <RecentSearchList items={recentSearchList} />
+                                <RecentSearchList
+                                    items={recentSearchList}
+                                    onRemove={handleRemoveSearchItem}
+                                    onClick={handleTrendSearch}
+                                />
                                 <TrendSearchList items={trendSearchList} />
                             </>
                         )}
@@ -142,13 +161,11 @@ function Search() {
             </HeadlessTippy>
         </div>
     );
-    
+
     function TrendSearchItem({ item }) {
         return (
-            <div className={cx('trend-search-item')}
-                onClick={() => handleTrendSearch(item)}
-            >
-                <FontAwesomeIcon icon={faArrowTrendUp} style={{marginRight: '5px'}}/>
+            <div className={cx('trend-search-item')} onClick={() => handleTrendSearch(item)}>
+                <FontAwesomeIcon icon={faArrowTrendUp} style={{ marginRight: '5px' }} />
                 <p>{item}</p>
             </div>
         );
@@ -158,8 +175,8 @@ function Search() {
         return (
             <>
                 <p className={cx('title')}>{t('trend-search')}</p>
-                <div className='grid-row'>
-                    {items.map((item,index) => (
+                <div className="grid-row">
+                    {items.map((item, index) => (
                         <TrendSearchItem key={index} item={item} />
                     ))}
                 </div>
@@ -167,24 +184,24 @@ function Search() {
         );
     }
 
-    function RecentSearchItem({ item }) {
+    function RecentSearchItem({ item, onRemove, onClick }) {
         return (
-            <div className={cx('recent-search-item')}>
+            <div className={cx('recent-search-item')} onClick={() => onClick(item)}>
                 <p>{item}</p>
-                <i>
+                <i onClick={() => onRemove(item)}>
                     <FontAwesomeIcon icon={faXmark} />
                 </i>
             </div>
         );
     }
 
-    function RecentSearchList({ items }) {
+    function RecentSearchList({ items, onRemove, onClick }) {
         return (
             <>
                 <p className={cx('title')}>{t('recent-search')}</p>
                 <div>
-                    {items.map((item,index) => (
-                        <RecentSearchItem key={index} item={item} />
+                    {items.map((item) => (
+                        <RecentSearchItem key={item} item={item} onRemove={onRemove} onClick={onClick} />
                     ))}
                 </div>
             </>
@@ -193,7 +210,9 @@ function Search() {
 
     function SearchResultItem({ item }) {
         return (
-            <div className={classNames(cx('search-result-item'))}>
+            <div className={classNames(cx('search-result-item'))}
+                onClick={() =>  navigate(`/products/detail/${item.id}`)}
+            >
                 <div className="grid-col-1_5">
                     <img src={item.thumbnail} alt="But bi" />
                 </div>
@@ -212,7 +231,7 @@ function Search() {
                             marginTop: '10px',
                         }}
                     >
-                        <p className={cx('current-price')}>{formatMoney(item.currentPrice)}</p>
+                        <p className={cx('current-price')}>{formatMoney(item.price)}</p>
                         <p className={cx('init-price')}>{formatMoney(item.initPrice)}</p>
                     </div>
                 </div>
@@ -221,13 +240,14 @@ function Search() {
     }
 
     function SearchResultList({ items }) {
+        if (!Array.isArray(items)) return null;
         const itemsLen = items.length;
         return (
             <div>
                 {items.map((item) => (
                     <>
-                      <SearchResultItem key={item.id} item={item} />
-                      {itemsLen>1 && <div className='divider'></div>}
+                        <SearchResultItem key={item.id} item={item} />
+                        {itemsLen > 1 && <div className="divider"></div>}
                     </>
                 ))}
             </div>

@@ -1,4 +1,5 @@
-import axiosInstance from './axiosInstance';
+import CartItemModel from '~/models/CartItemModel';
+import axiosInstance, { SERVER_URL_BASE } from './axiosInstance';
 import { toast } from 'react-toastify';
 
 export const getCart = async () => {
@@ -46,3 +47,42 @@ export const removeCartItem = async (productDetailId) => {
         throw error.response?.data.result || { message: 'Lỗi xóa sản phẩm' };
     }
 };
+
+export async function getCartByIds({
+    ids,
+}) {
+    console.log("get cartitem by ids api ids: " +ids);
+    ids = ids.join(',');
+    let url = `/cart/checkout`;
+    const params = { ids };
+
+    console.log(JSON.stringify(params,null,2));
+
+    const response = await axiosInstance.get(url, { params });
+
+    const data = response.data;
+
+        console.log("response.data result" +JSON.stringify(data.result,null,2));
+
+
+
+    const cartItems = data.result.map(
+        (item) =>
+            new CartItemModel(
+                item.id,
+                item.productDetailId,
+                `${SERVER_URL_BASE}/${item.imageUrl}`,
+                item.productName,
+                item.brandName,
+                item.initPrice,
+                item.price,
+                item.quantity,
+                item.discount,
+            ),
+    );
+
+    console.log(JSON.stringify(cartItems,null,2));
+
+    return cartItems;
+}
+
