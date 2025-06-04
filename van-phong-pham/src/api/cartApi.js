@@ -27,7 +27,7 @@ export const updateCartItemQuantity = async (productDetailId, quantity) => {
             productDetailId,
             quantity,
         });
-        toast.success('Cập nhật số lượng thành công');
+        // toast.success('Cập nhật số lượng thành công');
         return response.data.result || null;
     } catch (error) {
         console.error('Lỗi cập nhật số lượng:', error);
@@ -39,7 +39,7 @@ export const updateCartItemQuantity = async (productDetailId, quantity) => {
 export const removeCartItem = async (productDetailId) => {
     try {
         const response = await axiosInstance.delete(`/cart/remove/${productDetailId}`);
-        toast.success('Đã xóa sản phẩm khỏi giỏ hàng');
+        // toast.success('Đã xóa sản phẩm khỏi giỏ hàng');
         return response.data.result || null;
     } catch (error) {
         console.error('Lỗi xóa sản phẩm:', error);

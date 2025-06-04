@@ -44,7 +44,12 @@
     padding: 16px;
     border-radius: 8px;
     position: relative;
-
+    .checkbox {
+      margin-right: 1rem;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      border-radius: 4px;
+    }
     .item-image {
       width: 100px;
       height: 100px;

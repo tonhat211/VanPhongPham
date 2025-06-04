@@ -43,6 +43,12 @@
   border-radius: 8px;
   position: relative;
 }
+.cart-container .cart-info .cart-item .checkbox, .cart-container .carousel-section .cart-item .checkbox {
+  margin-right: 1rem;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  border-radius: 4px;
+}
 .cart-container .cart-info .cart-item .item-image, .cart-container .carousel-section .cart-item .item-image {
   width: 100px;
   height: 100px;
