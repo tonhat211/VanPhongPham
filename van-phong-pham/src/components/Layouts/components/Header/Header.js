@@ -89,7 +89,7 @@ function Header() {
             ? {
                 icon: faUser,
                 stTitle: userName,
-                stLink: null,
+                stLink: '/account',
                 ndTitle: 'Đăng xuất',
                 onLogout: true,
             }
