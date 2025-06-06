@@ -12,13 +12,27 @@
         padding: 0;
         margin: 0;
         margin-bottom: 15px;
-
-        
     }
 
     form {
         .form-item {
             margin-bottom: 20px;
+            .update-button {
+                margin: 0 auto;
+                display: block;
+                background-color: #007bff;
+                color: white;
+                padding: 12px;
+                font-size: 16px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                text-align: center;
+                transition: background 0.2s;
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
         }
 
         .detail {

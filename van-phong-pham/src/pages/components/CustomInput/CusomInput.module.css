@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column-reverse;
   position: relative;
-  width: 90%;
+  width: 100%;
 }
 .input-custom .input-content input {
   width: 100%;
@@ -25,6 +25,7 @@
   font-size: 1.4rem;
   outline: none;
   border: none;
+  background-color: white;
 }
 .input-custom .input-content label {
   color: #999;
@@ -51,6 +52,7 @@
 }
 .input-custom .input-content.has-value input {
   padding-top: 4px;
+  padding-bottom: 1rem;
 }
 .input-custom .input-content.has-value label {
   display: block;
@@ -61,6 +63,9 @@
   left: 0;
   padding: 0 10px;
   padding-top: 4px;
+}
+.input-custom .input-content.not-border input {
+  border: none;
 }
 
 /*# sourceMappingURL=CusomInput.module.css.map */
