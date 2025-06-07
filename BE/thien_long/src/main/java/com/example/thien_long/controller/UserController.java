@@ -1,9 +1,11 @@
 package com.example.thien_long.controller;
 
 import com.example.thien_long.dto.request.UserRegisterRequest;
+import com.example.thien_long.dto.request.UserUpdateInfoRequest;
 import com.example.thien_long.dto.response.ApiResponse;
 import com.example.thien_long.dto.response.UserResponse;
 import com.example.thien_long.model.User;
+import com.example.thien_long.service.JwtService;
 import com.example.thien_long.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -23,6 +25,7 @@ import java.util.List;
 public class UserController {
     @Autowired
      UserService userService;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
     ApiResponse<UserResponse> register(@Valid @RequestBody UserRegisterRequest request){
@@ -30,17 +33,11 @@ public class UserController {
 
     }
 
-//    @GetMapping
-//    ApiResponse<List<UserResponse>> getUsers() {
-//        return ApiResponse.<List<UserResponse>>builder()
-//                .result(userService.getUsers())
-//                .build();
-//    }
-//
-//    @GetMapping("/{userId}")
-//    ApiResponse<UserResponse> getUser(@PathVariable("userId") String userId) {
-//        return ApiResponse.<UserResponse>builder()
-//                .result(userService.getUser(userId))
-//                .build();
-//    }
+    @PutMapping("/user/update")
+    public ApiResponse<UserResponse> updateUserInfo(@RequestHeader("Authorization") String authHeader, @RequestBody UserUpdateInfoRequest request
+    ) {
+        Long userId = jwtService.extractUserId(authHeader);
+        return  ApiResponse.success(userService.updateUserInfo(userId, request));
+    }
+
 }

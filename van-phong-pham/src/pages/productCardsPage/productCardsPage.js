@@ -14,7 +14,7 @@ function ProductCardsPage() {
     const [cartItems, setCartItems] = useState([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [selectedItems, setSelectedItems] = useState([1,2]);
+    const [selectedItems, setSelectedItems] = useState([]);
 
     useEffect(() => {
         const fetchCart = async () => {
@@ -32,16 +32,27 @@ function ProductCardsPage() {
                         discount: item.discount,
                     })),
                 );
-                setTotal(response.totalPrice);
                 setLoading(false);
             } catch (error) {
                 toast.error('Lỗi khi tải giỏ hàng.');
                 console.error(error);
             }
         };
-
         fetchCart();
     }, []);
+
+    useEffect(() => {
+        const selected = cartItems.filter(item => selectedItems.includes(item.sid));
+        const totalSelected = selected.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        setTotal(totalSelected);
+    }, [selectedItems, cartItems]);
+
+    const handleSelectItem = (sid) => {
+        setSelectedItems((prev) =>
+            prev.includes(sid) ? prev.filter((id) => id !== sid) : [...prev, sid]
+        );
+    };
+
 
     const handleCheckout = () => {
         navigate('/checkout', { state: { selectedItems } });
@@ -53,16 +64,16 @@ function ProductCardsPage() {
             setCartItems(
                 response.items.map((item) => ({
                     sid: item.productDetailId,
-                    imageUrl: item.imageUrl,
+                    imageUrl: SERVER_URL_BASE+"/"+ item.imageUrl,
                     productName: item.productName,
                     brandName: item.brandName,
                     initPrice: item.initPrice,
                     price: item.price,
                     quantity: item.quantity,
-                      discount: item.discount,
+                    discount: item.discount,
                 })),
             );
-            setTotal(response.totalPrice);
+            setSelectedItems((prev) => prev.filter((id) => id !== sid));
         } catch (error) {
             toast.error('Không thể xoá sản phẩm.');
         }
@@ -74,7 +85,7 @@ function ProductCardsPage() {
             setCartItems(
                 response.items.map((item) => ({
                     sid: item.productDetailId,
-                    imageUrl: item.imageUrl,
+                    imageUrl: SERVER_URL_BASE+"/"+ item.imageUrl,
                     productName: item.productName,
                     brandName: item.brandName,
                     initPrice: item.initPrice,
@@ -82,7 +93,6 @@ function ProductCardsPage() {
                     quantity: item.quantity,
                 })),
             );
-            setTotal(response.totalPrice);
         } catch (error) {
             toast.error('Không thể cập nhật số lượng.');
         }
@@ -118,6 +128,11 @@ function ProductCardsPage() {
                             {cartItems.length > 0 ? (
                                 cartItems.map((item) => (
                                     <div className="cart-item" key={item.sid}>
+                                        <input
+                                            type="checkbox" className="checkbox"
+                                            checked={selectedItems.includes(item.sid)}
+                                            onChange={() => handleSelectItem(item.sid)}
+                                        />
                                         <img className="item-image" src={item.imageUrl} alt={item.title} />
                                         <div className="item-details">
                                             <p className="item-title">{item.productName}</p>
@@ -129,9 +144,9 @@ function ProductCardsPage() {
                                             {item.initPrice && (
                                                 <>
                                                     <del>{formatPrices(item.initPrice)}</del>
-                                                    <span className="discount">
-                                                        -{item.discount}%
-                                                    </span>
+                                                    {/*<span className="discount">*/}
+                                                    {/*    -{item.discount}%*/}
+                                                    {/*</span>*/}
                                                 </>
                                             )}
                                         </div>
@@ -159,7 +174,7 @@ function ProductCardsPage() {
                                 ))
                             ) : (
                                 <div className="cart-empty">
-                                    <p>
+                                <p>
                                         Bạn chưa có sản phẩm nào trong giỏ hàng - quay về{' '}
                                         <a href="#" title="Trang Chủ" className="link-homepage">
                                             {' '}
@@ -199,7 +214,9 @@ function ProductCardsPage() {
                 </div>
             </div>
 
-            <div className="carousel-section">{/*<CarouselCards />*/}</div>
+            <div className="carousel-section">
+                {/*<CarouselCards />*/}
+            </div>
         </section>
     );
 }

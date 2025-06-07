@@ -21,7 +21,6 @@ import images from '~/assets/images';
 import { DeliveryInfo, OrderInfo } from './components';
 import CheckoutHeader from './components/CheckoutHeader';
 import { CustomInput, Modal } from '../components';
-import Area from '~/models/Area';
 import icons from '~/assets/icons';
 import cartitems from '~/data/cartItems';
 import { formatMoney } from '~/utils';
@@ -98,6 +97,8 @@ function Checkout() {
 
     useEffect(() => {
         const fetchCartItem = (ids) => {
+        console.log("selected item: " + JSON.stringify(ids,null,2))
+
             setLoading(true);
             getCartByIds({
                 ids,

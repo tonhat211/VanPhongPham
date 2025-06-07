@@ -129,10 +129,10 @@ public class AuthService {
         InvalidatedToken invalidatedToken = new InvalidatedToken(jit, new java.sql.Date(expiryTime.getTime()));
         invalidatedTokenRepository.save(invalidatedToken);
 
-        var email = signedJWT.getJWTClaimsSet().getSubject();
+        long userID = Long.parseLong(signedJWT.getJWTClaimsSet().getSubject());
 
         var user =
-                userRepository.findByEmail(email).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+                userRepository.findById(userID).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         var token = generateToken(user);
         var userResponse = userMapper.toUserResponse(user);
@@ -144,7 +144,7 @@ public class AuthService {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getEmail())
+                .subject(String.valueOf(user.getId()))
                 .issueTime(new Date())
                 .expirationTime(new Date(
                         Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
