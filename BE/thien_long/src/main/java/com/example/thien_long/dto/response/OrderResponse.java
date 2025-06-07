@@ -17,14 +17,16 @@ public class OrderResponse {
     LocalDateTime updatedAt;
     double initMoney;
     double payedMoney;
-    int status;
+    String status;
+    String receiverInfo;
 
-    public OrderResponse(long id, LocalDateTime createdAt, LocalDateTime updatedAt, double initMoney, double payedMoney, int status) {
+    public OrderResponse(long id, LocalDateTime createdAt, LocalDateTime updatedAt, double initMoney, double payedMoney, String status, String receiverInfo) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.initMoney = initMoney;
         this.payedMoney = payedMoney;
         this.status = status;
+        this.receiverInfo = receiverInfo;
     }
 }

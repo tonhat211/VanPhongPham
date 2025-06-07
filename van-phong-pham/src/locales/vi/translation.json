@@ -42,6 +42,9 @@
     "total-product-money": "Tổng tiền hàng",
     "shipping-fee": "Phí vận chuyển",
     "total-payment-money": "Tổng thanh toán",
+    "address-list": "Danh sách địa chỉ",
+    "change-address": "Thay đổi địa chỉ",
+    "choose-address-you-want-to-receive": "Chọn địa chỉ bạn muốn nhận hàng",
     "let-order": "Đặt hàng",
     "account-general": "Tổng quan tài khoản",
     "member-program": "Chương trình thành viên",
@@ -53,6 +56,7 @@
     "more": "Xem thêm",
     "less": "Thu gọn",
     "order-on": "Đặt vào",
+    "receiver-info": "Thông tin nhận hàng",
     "complete-on": "Hoàn thành vào",
     "your-order": "Đơn hàng của bạn",
     "confirm":"Xác nhận",
@@ -60,6 +64,7 @@
     "cancel": "Hủy",
     "complete": "Hoàn thành",
     "review": "Đánh giá",
+    "back": "Trả hàng",
     "note": "Lưu ý",
     "cannot-reverse": "Không thể hoàn tác",
     "received-and-payed-success": "Bạn đã nhận hàng và thanh toán thành công",
@@ -78,9 +83,16 @@
     "customer": "Khách hàng",
     "employee":"Nhân viên",
     "ui": "Giao diện",
-    "search": "Tìm kiếm"
-
-
-
+    "search": "Tìm kiếm",
+    "WAIT": "Chờ xác nhận",
+    "CONFIRM": "Đã xác nhận",
+    "DELIVERY": "Đang giao",
+    "COMPLETE": "Đã hoàn thành",
+    "CONFIRM_COMPLETE": "Đã hoàn thành",
+    "CANCEL": "Đã hủy",
+    "BACK": "Đã trả hàng",
+    "CONFIRM_BACK": "Đã trả hàng",
+    "REVIEW": "Đã đánh giá",
+    "SUCCESS": "Đã hoàn thành"
   
 }

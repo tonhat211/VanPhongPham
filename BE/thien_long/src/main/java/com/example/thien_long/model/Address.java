@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "addresses")
@@ -42,8 +45,24 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-//    @JsonBackReference
     private User user;
 
+    @UpdateTimestamp
+    @Column(name = "updated_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime updatedAt;
 
+    @PrePersist
+    protected void onCreate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public Address(long id, String name, String phone, String province, String ward, String detail, int isDefault) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.province = province;
+        this.ward = ward;
+        this.detail = detail;
+        this.isDefault = isDefault;
+    }
 }

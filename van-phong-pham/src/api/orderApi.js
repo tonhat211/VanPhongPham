@@ -36,16 +36,16 @@ export async function getOrder() {
     console.log('getOrder');
     const userStr = localStorage.getItem('user');
     const user = JSON.parse(userStr);
-    const id = user.id;
+    const userId = user.id;
     let url = `/orders/user`;
-    const params = id;
+    const params = {userId};
 
-    console.log(JSON.stringify(params, null, 2));
+    // console.log(JSON.stringify(params, null, 2));
 
     const response = await axiosInstance.post(url,  params );
 
     const data = response.data;
-    console.log('data:' +JSON.stringify(data,null,2));
+    // console.log('data:' +JSON.stringify(data,null,2));
 
     // constructor(id, orderItems, createdAt, updatedAt, initMoney, payedMoney, status)
     const orders = data.map(
@@ -57,7 +57,7 @@ export async function getOrder() {
                         new OrderItemModel(
                             orderItem.id,
                             orderItem.orderId,
-                            orderItem.productID,
+                            orderItem.productId,
                             orderItem.productName,
                             orderItem.classificationName,
                             orderItem.qty,
@@ -70,8 +70,25 @@ export async function getOrder() {
                 item.initMoney,
                 item.payedMoney,
                 item.status,
+                item.receiverInfo,
             ),
     );
-    console.log('orders: ' + orders);
+    console.log('orders: ' + JSON.stringify(orders,null,2));
     return orders;
+}
+
+export async function updateStatus({ id, status }) {
+    console.log('updateStatus order');
+    const userStr = localStorage.getItem('user'); // hoặc dữ liệu bạn đang dùng
+    const user = JSON.parse(userStr);
+    const userId = user.id;
+
+    let url = `/orders/update/status/user`;
+
+    const params = { id, status, userId };
+
+    const response = await axiosInstance.post(url, params);
+
+    const data = response.data;
+    return data;
 }

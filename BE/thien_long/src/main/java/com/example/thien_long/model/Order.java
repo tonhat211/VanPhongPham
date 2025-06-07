@@ -34,7 +34,7 @@ public class Order {
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "updated_at", columnDefinition = "DATETIME DEFAULT NULL")
     private LocalDateTime updatedAt;
 
     @ManyToOne
@@ -44,12 +44,11 @@ public class Order {
     @Column(name = "receiverInfo")
     private String receiverInfo;
 
-
     @Column(name = "note")
     private String note;
 
-    @Column(name = "status", columnDefinition = "INT DEFAULT 0")
-    private int status;
+    @Column(name = "status")
+    private String status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
@@ -57,7 +56,23 @@ public class Order {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = null;
+        this.status = WAIT_STATUS;
     }
+
+    public static final String WAIT_STATUS = "WAIT";  // trang thai cho xac nhan (default)
+    public static final String CONFIRM_STATUS = "CONFIRM"; // da xac nhan don hang (admin)
+    public static final String DELIVERY_STATUS = "DELIVERY"; // dang giao (admin)
+    public static final String COMPLETE_STATUS = "COMPLETE"; // hoan thanh (admin)
+    // xac nhan hoan thanh, neu nguoi dung khong xac nhan, sau 7 ngay he thong se tu cap nhat CONFIRM_COMPLETE
+    public static final String CONFIRM_COMPLETE_STATUS = "CONFIRM_COMPLETE"; // (user, admin)
+    public static final String CANCEL_STATUS = "CANCEL"; // huy  (user, admin)
+    public static final String BACK_STATUS = "BACK"; // tra hang (user)
+    public static final String CONFIRM_BACK_STATUS = "CONFIRM_BACK"; // xac nhan tra hang (admin)
+    public static final String REVIEW_STATUS = "REVIEW";  // da danh gia, sau khi nguoi dung danh gia thi he thong tu cap nhat thanh REVIEW
+    // sau khi CONFIRM_COMPLETE 7 ngay, he thong se cap nhat thanh SUCCESS, luc nay khong the tra hang hay danh gia nua
+    public static final String SUCCESS_STATUS = "SUCCESS"; // thanh cong (admin)
+
+
 
 }

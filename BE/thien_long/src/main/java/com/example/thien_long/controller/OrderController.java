@@ -1,16 +1,20 @@
 package com.example.thien_long.controller;
 
 import com.example.thien_long.dto.request.OrderRequest;
+import com.example.thien_long.dto.request.UpdateOrderStatusRequest;
 import com.example.thien_long.dto.response.CartItemResponse;
 import com.example.thien_long.dto.response.OrderItemResponse;
 import com.example.thien_long.dto.response.OrderResponse;
+import com.example.thien_long.exception.ValidException;
 import com.example.thien_long.model.*;
 import com.example.thien_long.repository.*;
 import com.example.thien_long.service.Constant;
+import com.example.thien_long.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,6 +39,9 @@ public class OrderController {
     private ProductDetailRepository productDetailRepository;
     @Autowired
     private VoucherRepository voucherRepository;
+
+    @Autowired
+    private OrderService orderService;
 
     @PostMapping("/add")
     public ResponseEntity<?> findAll(@RequestBody OrderRequest orderRequest) {
@@ -89,10 +96,9 @@ public class OrderController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<List<OrderResponse>> findByUser(@RequestBody String id) {
-        System.out.println("orders/user:" + id);
-        long idNum = Long.parseLong(id);
-        List<OrderResponse> orders = orderRepository.findByUserId(idNum);
+    public ResponseEntity<List<OrderResponse>> findByUser(@RequestBody OrderRequest orderRequest) {
+        System.out.println("orders/user:" + orderRequest.getUserId());
+        List<OrderResponse> orders = orderRepository.findByUserId(orderRequest.getUserId());
 
         List<Long> ids = new ArrayList<>();
         for (OrderResponse o : orders) {
@@ -124,6 +130,15 @@ public class OrderController {
         return ResponseEntity.ok(orderItems);
 
     }
+
+    @PostMapping("/update/status/user")
+    public ResponseEntity<?> updateStatus(@RequestBody UpdateOrderStatusRequest request) {
+        System.out.println("order/user/update:" + request.getId());
+        Map<String, Object> re = orderService.updateStatus(request.getId(), request.getStatus());
+        return ResponseEntity.ok(re);
+
+    }
+
 
 
 }

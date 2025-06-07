@@ -333,6 +333,47 @@
             text-align: center;
         }
 
+    }
+    
+    .confirm-container {
+        .label {
+            margin-bottom: 10px;
+        }
+    }
 
+     .address-list-container {
+        margin-top: 10px;
+    }
+
+    .address-item {
+        padding: 10px;
+        background-color: white;
+        margin-bottom: 10px;
+        border-radius: 10px;
+
+        .label {
+            font-size: 1.3rem;
+            color: var(--text-secondary-color);
+
+        } 
+    
+        .value {
+            font-size: 1.3rem;
+            color: var(--header-color);
+            font-weight: 600;
+        }
+
+        .default-label {
+            font-size: 1rem;
+            color: green;
+            margin-left: 20px;
+            
+        }
+      
+        &:hover {
+            cursor: pointer;
+            background-color: var(--primary-hover-color);
+        }
+      
     }
 }

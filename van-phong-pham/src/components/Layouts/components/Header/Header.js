@@ -75,7 +75,6 @@ function Header() {
         fetchCartCount();
     }, [user]);
 
-
     // du lieu header menu list
     const headerMenuList = [
         {
@@ -87,20 +86,19 @@ function Header() {
         },
         user
             ? {
-                icon: faUser,
-                stTitle: userName,
-                stLink: null,
-                ndTitle: 'Đăng xuất',
-                onLogout: true,
-            }
-            :
-            {
-                icon: faUser,
-                stTitle: 'Đăng nhập',
-                stLink: '/login',
-                ndTitle: 'Đăng ký',
-                ndLink: '/register',
-            },
+                  icon: faUser,
+                  stTitle: userName,
+                  stLink: '/account',
+                  ndTitle: 'Đăng xuất',
+                  onLogout: true,
+              }
+            : {
+                  icon: faUser,
+                  stTitle: 'Đăng nhập',
+                  stLink: '/login',
+                  ndTitle: 'Đăng ký',
+                  ndLink: '/register',
+              },
     ];
 
     return (
@@ -110,11 +108,10 @@ function Header() {
                     <img src={images.logo} alt="Thien Long" className={classNames(cx('logo'))} />
                 </div>
                 <Search />
-                <div className='d-flex-al-center' style={{marginLeft:'auto'}}>
-                    <HeaderMenuList items={headerMenuList}/>
+                <div className="d-flex-al-center" style={{ marginLeft: 'auto' }}>
+                    <HeaderMenuList items={headerMenuList} />
                     <Cart />
                 </div>
-                
             </div>
         </header>
     );
@@ -136,28 +133,34 @@ function Header() {
         return (
             <div className={cx('header-menu-item')}>
                 <div className="d-flex">
+                    <Link className="link-icon" to={item.stLink}>
+                        <i>
+                            {' '}
+                            <FontAwesomeIcon icon={item.icon} />{' '}
+                        </i>
+                    </Link>
 
-                        <Link className="link-icon" to={item.stLink}>
-                            <i> <FontAwesomeIcon icon={item.icon} /> </i>
-                </Link>
-
-                <div>
+                    <div>
                         {item.stLink ? (
                             <Link to={item.stLink} style={{ fontWeight: '600', fontSize: '1rem' }}>
                                 {item.stTitle}
                             </Link>
                         ) : (
-                            <p style={{ fontWeight: '600', fontSize: '1rem',
-                                marginLeft: '10px', marginBottom: '4px' }}>{item.stTitle}</p>
+                            <p style={{ fontWeight: '600', fontSize: '1rem', marginLeft: '10px', marginBottom: '4px' }}>
+                                {item.stTitle}
+                            </p>
                         )}
                         {item.ndLink ? (
-                            <Link to={item.ndLink} style={{ fontSize: '0.8rem' }}>{item.ndTitle}</Link>
+                            <Link to={item.ndLink} style={{ fontSize: '0.8rem' }}>
+                                {item.ndTitle}
+                            </Link>
                         ) : (
                             <p
                                 style={{
                                     fontSize: '0.8rem',
                                     cursor: item.onLogout ? 'pointer' : 'default',
-                                    marginLeft: '10px', marginBottom: '4px'
+                                    marginLeft: '10px',
+                                    marginBottom: '4px',
                                 }}
                                 onClick={item.onLogout ? handleLogout : undefined}
                             >
