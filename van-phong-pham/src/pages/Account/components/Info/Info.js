@@ -65,9 +65,47 @@ function Info() {
         return () => window.removeEventListener('storage', loadUserFromStorage);
     }, []);
 
+    const validateInput = () => {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            toast.error('Email không hợp lệ');
+            return false;
+        }
+
+        if (!/^\d{9,11}$/.test(phone)) {
+            toast.error('Số điện thoại không hợp lệ');
+            return false;
+        }
+
+        if (!birthday || isNaN(birthday.getTime())) {
+            toast.error('Ngày sinh không hợp lệ');
+            return false;
+        }
+
+        const today = new Date();
+        let age = today.getFullYear() - birthday.getFullYear();
+        const m = today.getMonth() - birthday.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
+            age--;
+        }
+
+        if (age < 16 || age > 85) {
+            toast.error('Tuổi phải từ 16 đến 85');
+            return false;
+        }
+
+        const parts = address.split(',').map((p) => p.trim());
+        if (parts.length < 3) {
+            toast.error('Địa chỉ phải bao gồm: số nhà/đường, phường/xã, tỉnh/thành');
+            return false;
+        }
+
+        return true;
+    };
+
     //Xử lý cập nhật thông tin người dùng
     const handleUpdate = async () => {
         if (!user) return;
+        if (!validateInput()) return;
 
         // Tách address thành detail, ward, province
         const addressParts = address.split(',').map(part => part.trim());

@@ -22,6 +22,7 @@ function ProductCardsPage() {
                 const response = await getCart();
                 setCartItems(
                     response.items.map((item) => ({
+                        id: item.id, // Cart item ID
                         sid: item.productDetailId,
                         imageUrl: SERVER_URL_BASE+"/"+ item.imageUrl,
                         productName: item.productName,
@@ -42,16 +43,24 @@ function ProductCardsPage() {
     }, []);
 
     useEffect(() => {
-        const selected = cartItems.filter(item => selectedItems.includes(item.sid));
+        const selected = cartItems.filter(item => selectedItems.includes(item.id));
         const totalSelected = selected.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        console.log('🟩 Recalculating total for selected items:', selected);
+        console.log('🟩 New total:', totalSelected);
         setTotal(totalSelected);
     }, [selectedItems, cartItems]);
 
-    const handleSelectItem = (sid) => {
-        setSelectedItems((prev) =>
-            prev.includes(sid) ? prev.filter((id) => id !== sid) : [...prev, sid]
-        );
+    const handleSelectItem = (id) => {
+        setSelectedItems((prev) => {
+            const isSelected = prev.includes(id);
+            const newSelected = isSelected
+                ? prev.filter((i) => i !== id)
+                : [...prev, id];
+            console.log('🟨 Selected items:', newSelected);
+            return newSelected;
+        });
     };
+
 
 
     const handleCheckout = () => {
@@ -63,6 +72,7 @@ function ProductCardsPage() {
             const response = await removeCartItem(sid);
             setCartItems(
                 response.items.map((item) => ({
+                    id: item.id, // Cart item ID
                     sid: item.productDetailId,
                     imageUrl: SERVER_URL_BASE+"/"+ item.imageUrl,
                     productName: item.productName,
@@ -84,6 +94,7 @@ function ProductCardsPage() {
             const response = await updateCartItemQuantity(sid, newQuantity);
             setCartItems(
                 response.items.map((item) => ({
+                    id: item.id, // Cart item ID
                     sid: item.productDetailId,
                     imageUrl: SERVER_URL_BASE+"/"+ item.imageUrl,
                     productName: item.productName,
@@ -127,11 +138,11 @@ function ProductCardsPage() {
                         <div className="cart-items">
                             {cartItems.length > 0 ? (
                                 cartItems.map((item) => (
-                                    <div className="cart-item" key={item.sid}>
+                                    <div className="cart-item" key={item.id}>
                                         <input
                                             type="checkbox" className="checkbox"
-                                            checked={selectedItems.includes(item.sid)}
-                                            onChange={() => handleSelectItem(item.sid)}
+                                            checked={selectedItems.includes(item.id)}
+                                            onChange={() => handleSelectItem(item.id)}
                                         />
                                         <img className="item-image" src={item.imageUrl} alt={item.title} />
                                         <div className="item-details">
