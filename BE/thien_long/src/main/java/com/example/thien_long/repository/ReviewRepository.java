@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("""
     SELECT new com.example.thien_long.model.Review(
-        r.id, r.product.id, r.user.id, r.user.name, r.rating, r.content, r.productDetail) FROM Review r where r.product.id = :id and r.isDeleted = 0
+        r.id, r.product.id, r.user.id, r.user.name, r.rating, r.content, r.classificationName,r.createdAt) FROM Review r where r.product.id = :id and r.isDeleted = 0
     """)
     Optional<List<Review>> findByProductId(@Param("id") long id);
 }

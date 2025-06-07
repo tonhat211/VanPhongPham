@@ -8,6 +8,8 @@ public class Constant {
     public static final String THUMBNAIL_IMG_DIR = "images/thumbnails";
     public static final String ICON_IMG_DIR = "images/icons";
 
+
+
     // hash password
     public static String hashPassword(String password) {
         HashAlgorism hashAlgorism = new HashAlgorism();

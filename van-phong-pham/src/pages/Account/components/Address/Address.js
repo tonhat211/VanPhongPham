@@ -2,12 +2,14 @@ import classNames from 'classnames/bind';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './Address.module.scss';
 import { CustomInput, Modal } from '~/pages/components';
-import addresses from '~/data/addresses';
 import Area from '~/models/Area';
-import useI18n from '~/hooks/useI18n'
+import useI18n from '~/hooks/useI18n';
+import { addAddress, addAdress, deleteAddress, editAddress, getAddress, getProvince, getWard } from '~/api/addressApi';
 
 const cx = classNames.bind(styles);
 
@@ -26,15 +28,21 @@ function Address() {
         setSelectedItem(null);
     };
     const [selectedItem, setSelectedItem] = useState(null);
+    const [addresses, setAddresses] = useState([]);
 
-    const provinces = [
-        new Area('HCM', 'hcm'),
-        new Area('Hà Nội', 'ha-noi'),
-        new Area('Đồng Nai', 'dong-nai'),
-        new Area('Vũng Tàu', 'vung-tau'),
-    ];
-
-    const wards = [new Area('Quận 1', 'q1'), new Area('Quận 2', 'q2'), new Area('Bình Thạnh', 'binh-thanh')];
+    const [provinces, setProvinces] = useState([]);
+    const fetchProvinces = () => {
+        getProvince()
+            .then((data) => {
+                setProvinces(data);
+            })
+            .catch((err) => {
+                console.error('Lỗi tải dia chi:', err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
 
     // Các loại modal
     const MODAL_TYPES = {
@@ -42,6 +50,45 @@ function Address() {
         EDIT_ADDRESS: 'EDIT_ADDRESS',
         CONFIRM_DELETE: 'CONFIRM_DELETE',
     };
+
+    const [isLoading, setLoading] = useState(false);
+
+    const provinceMap = useMemo(() => {
+        const map = new Map();
+        provinces.forEach((item) => map.set(item.code, item.name));
+        return map;
+    }, [provinces]);
+
+    const [areaMap, setAreaMap] = useState(new Map());
+
+    const updateAreaMap = (areas) => {
+        const map = new Map();
+        areas.forEach((area) => {
+            map.set(area.code, area.name);
+        });
+        setAreaMap(map);
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        getAddress()
+            .then((data) => {
+                setAddresses(data.addresses);
+                const map = new Map();
+                data.areas.forEach((area) => {
+                    map.set(area.code, area.name);
+                });
+                setAreaMap(map);
+            })
+            .catch((err) => {
+                console.error('Lỗi tải dia chi:', err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+        fetchProvinces();
+    }, []);
+
     return (
         <div className={cx('wrapper')}>
             <h1 className={cx('wrapper')}>{t('your-address')}</h1>
@@ -50,20 +97,31 @@ function Address() {
             </button>
             <AddressList items={addresses} />
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                {modalType === MODAL_TYPES.ADD_ADDRESS && <AddAdress />}
-                {modalType === MODAL_TYPES.EDIT_ADDRESS && <EditAdress item={selectedItem} />}
+                {modalType === MODAL_TYPES.ADD_ADDRESS && (
+                    <AddAddress provinceMap={provinceMap} updateAreaMap={updateAreaMap} />
+                )}
+                {modalType === MODAL_TYPES.EDIT_ADDRESS && (
+                    <EditAddress
+                        item={selectedItem}
+                        areaMap={areaMap}
+                        updateAreaMap={updateAreaMap}
+                        provinceMap={provinceMap}
+                    />
+                )}
                 {modalType === MODAL_TYPES.CONFIRM_DELETE && <ConfirmDelete item={selectedItem} />}
             </Modal>
         </div>
     );
 
-    function AddAdress() {
+    function AddAddress({ provinceMap, updateAreaMap }) {
         const [name, setName] = useState('');
         const [phone, setPhone] = useState('');
-        const [address, setAddress] = useState('');
+        const [detail, setDetail] = useState('');
         const [ward, setWard] = useState('');
         const [province, setProvince] = useState('');
         const [checkedDefault, setCheckedDefault] = useState(false);
+
+        const [wardMap, setWardMap] = useState(new Map());
 
         const handleChange = (e) => {
             setCheckedDefault(e.target.checked);
@@ -72,8 +130,42 @@ function Address() {
         const handleProvinceChange = (e) => {
             setProvince(e.target.value);
         };
+
+        const fetchWards = (provinceCode) => {
+            getWard({ provinceCode })
+                .then((data) => {
+                    const map = new Map();
+                    data.forEach((area) => {
+                        map.set(area.code, area.name);
+                    });
+                    setWardMap(map);
+                })
+                .catch((err) => {
+                    console.error('Lỗi tải dia chi:', err);
+                })
+                .finally(() => {});
+        };
+
+        useEffect(() => {
+            fetchWards(province);
+        }, [province]);
+
         const handleWardChange = (e) => {
             setWard(e.target.value);
+        };
+
+        const handleAdd = async () => {
+            const isDefault = checkedDefault ? 1 : 0;
+            const re = await addAddress({ name, phone, province, ward, detail, isDefault });
+            if (re.success === true) {
+                setAddresses(re.addresses);
+
+                updateAreaMap(re.areas);
+                closeModal();
+                toast.success(re.message);
+            } else {
+                toast.error(re.message);
+            }
         };
 
         return (
@@ -93,8 +185,8 @@ function Address() {
                         className="mb-10"
                     />
                     <CustomInput
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        value={detail}
+                        onChange={(e) => setDetail(e.target.value)}
                         label={t('address')}
                         className="mb-10"
                     />
@@ -102,10 +194,10 @@ function Address() {
                         <div className="grid-col-5">
                             <select value={province} onChange={handleProvinceChange}>
                                 <option value="">{t('choose-province')}</option>
-                                {provinces &&
-                                    provinces.map((item) => (
-                                        <option value={item.value} key={item.value}>
-                                            {item.title}
+                                {provinceMap &&
+                                    Array.from(provinceMap.entries()).map(([code, name]) => (
+                                        <option value={code} key={code}>
+                                            {name}
                                         </option>
                                     ))}
                             </select>
@@ -113,10 +205,10 @@ function Address() {
                         <div className="grid-col-5">
                             <select value={ward} onChange={handleWardChange}>
                                 <option value="">{t('choose-ward')}</option>
-                                {province & wards &&
-                                    wards.map((item) => (
-                                        <option value={item.value} key={item.value}>
-                                            {item.title}
+                                {wardMap &&
+                                    Array.from(wardMap.entries()).map(([code, name]) => (
+                                        <option value={code} key={code}>
+                                            {name}
                                         </option>
                                     ))}
                             </select>
@@ -128,20 +220,42 @@ function Address() {
                     </label>
                 </form>
                 <div className="d-flex-space-around" style={{ marginTop: '10px' }}>
-                    <button className="btn cancel-btn">{t('cancel')}</button>
-                    <button className="btn confirm-btn">{t('confirm')}</button>
+                    <button className="btn cancel-btn" onClick={closeModal}>
+                        {t('cancel')}
+                    </button>
+                    <button className="btn confirm-btn" onClick={handleAdd}>
+                        {t('confirm')}
+                    </button>
                 </div>
             </div>
         );
     }
 
-    function EditAdress({ item }) {
+    function EditAddress({ item, updateAreaMap, provinceMap }) {
         const [name, setName] = useState(item.name);
         const [phone, setPhone] = useState(item.phone);
-        const [address, setAddress] = useState(item.detail);
+        const [detail, setDetail] = useState(item.detail);
         const [ward, setWard] = useState(item.ward);
         const [province, setProvince] = useState(item.province);
         const [checkedDefault, setCheckedDefault] = useState(item.isDefault);
+
+        const [provinces, setProvinces] = useState([]);
+        const [wardMap, setWardMap] = useState(new Map());
+
+        const fetchWards = (provinceCode) => {
+            getWard({ provinceCode })
+                .then((data) => {
+                    const map = new Map();
+                    data.forEach((area) => {
+                        map.set(area.code, area.name);
+                    });
+                    setWardMap(map);
+                })
+                .catch((err) => {
+                    console.error('Lỗi tải dia chi:', err);
+                })
+                .finally(() => {});
+        };
 
         const handleChange = (e) => {
             setCheckedDefault(e.target.checked);
@@ -150,8 +264,31 @@ function Address() {
         const handleProvinceChange = (e) => {
             setProvince(e.target.value);
         };
+
+        useEffect(() => {
+            fetchWards(province);
+        }, [province]);
+
+        useEffect(() => {
+            fetchWards(item.province);
+        }, []);
+
         const handleWardChange = (e) => {
             setWard(e.target.value);
+        };
+
+        const handleEdit = async () => {
+            const isDefault = checkedDefault ? 1 : 0;
+            const id = item.id;
+            const re = await editAddress({ id, name, phone, province, ward, detail, isDefault });
+            if (re.success === true) {
+                setAddresses(re.addresses);
+                updateAreaMap(re.areas);
+                closeModal();
+                toast.success(re.message);
+            } else {
+                toast.error(re.message);
+            }
         };
 
         return (
@@ -171,8 +308,8 @@ function Address() {
                         className="mb-10"
                     />
                     <CustomInput
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        value={detail}
+                        onChange={(e) => setDetail(e.target.value)}
                         label={t('address')}
                         className="mb-10"
                     />
@@ -180,10 +317,10 @@ function Address() {
                         <div className="grid-col-5">
                             <select value={province} onChange={handleProvinceChange}>
                                 <option value="">{t('choose-province')}</option>
-                                {provinces &&
-                                    provinces.map((item) => (
-                                        <option value={item.value} key={item.value}>
-                                            {item.title}
+                                {provinceMap &&
+                                    Array.from(provinceMap.entries()).map(([code, name]) => (
+                                        <option value={code} key={code}>
+                                            {name}
                                         </option>
                                     ))}
                             </select>
@@ -191,10 +328,10 @@ function Address() {
                         <div className="grid-col-5">
                             <select value={ward} onChange={handleWardChange}>
                                 <option value="">{t('choose-ward')}</option>
-                                {province & wards &&
-                                    wards.map((item) => (
-                                        <option value={item.value} key={item.value}>
-                                            {item.title}
+                                {wardMap &&
+                                    Array.from(wardMap.entries()).map(([code, name]) => (
+                                        <option value={code} key={code}>
+                                            {name}
                                         </option>
                                     ))}
                             </select>
@@ -206,37 +343,60 @@ function Address() {
                     </label>
                 </form>
                 <div className="d-flex-space-around" style={{ marginTop: '10px' }}>
-                    <button className="btn cancel-btn">{t('cancel')}</button>
-                    <button className="btn confirm-btn">{t('confirm')}</button>
+                    <button className="btn cancel-btn" onClick={closeModal}>
+                        {t('cancel')}
+                    </button>
+                    <button className="btn confirm-btn" onClick={handleEdit}>
+                        {t('confirm')}
+                    </button>
                 </div>
             </div>
         );
     }
 
     function ConfirmDelete({ item }) {
+        const handleDelete = async () => {
+            const id = item.id;
+            const re = await deleteAddress({ id });
+            if (re.success === true) {
+                setAddresses(re.addresses);
+                closeModal();
+                toast.success(re.message);
+            } else {
+                toast.error(re.message);
+            }
+        };
+
         return (
             <div className={cx('confirm-container')} style={{ padding: '10px' }}>
-                <p style={{ textAlign: 'center' }}>{t('confirm')} {lower('delete')} {lower('address')}</p>
+                <p style={{ textAlign: 'center' }}>
+                    {t('confirm')} {lower('delete')} {lower('address')}
+                </p>
                 <p className="note" style={{ textAlign: 'center', marginBottom: '20px' }}>
                     {t('note')}: {t('cannot-reverse')}
                 </p>
                 <div className={cx('address-item')}>
                     <p className={cx('label')}>
-                    {t('fullname')}: <span className={cx('value')}>{item.name}</span>
+                        {t('fullname')}: <span className={cx('value')}>{item.name}</span>
                     </p>
                     <p className={cx('label')}>
-                    {t('phone-number')} <span className={cx('value')}>{item.phone}</span>
+                        {t('phone-number')} <span className={cx('value')}>{item.phone}</span>
                     </p>
                     <p className={cx('label')}>
-                    {t('address')}{' '}
+                        {t('address')}{' '}
                         <span className={cx('value')}>
-                            {item.detail} | {item.ward} | {item.province}
+                            {item.detail} | {areaMap.get(item.ward) || item.ward} |{' '}
+                            {areaMap.get(item.province) || item.province}
                         </span>
                     </p>
                 </div>
                 <div className="d-flex-space-around">
-                    <button className="btn cancel-btn">{t('cancel')}</button>
-                    <button className="btn confirm-btn">{t('confirm')}</button>
+                    <button className="btn cancel-btn" onClick={closeModal}>
+                        {t('cancel')}
+                    </button>
+                    <button className="btn confirm-btn" onClick={handleDelete}>
+                        {t('confirm')}
+                    </button>
                 </div>
             </div>
         );
@@ -258,25 +418,26 @@ function Address() {
         return (
             <div className={classNames(cx('address-item'), 'd-flex')}>
                 <div className="grid-col-10">
-                    <div className="d-flex-space-between grid-col-6 mb-10">
+                    <div className="d-flex-space-between mb-10 grid-col-10">
                         <p className={cx('label')}>
-                        {t('fullname')}: <span className={cx('value')}>{item.name}</span>
+                            {t('fullname')}: <span className={cx('value')}>{item.name}</span>
                         </p>
                         <p className={cx('label')}>
-                        {t('phone-number')} <span className={cx('value')}>{item.phone}</span>
+                            {t('phone-number')} <span className={cx('value')}>{item.phone}</span>
+                            {item.isDefault === 1 && <span className={cx('default-label')}>{t('default')}</span>}
                         </p>
-                        {item.isDefault && <p className={cx('default-label')}>{t('default')}</p>}
                     </div>
                     <p className={cx('label')}>
-                    {t('address')}{' '}
+                        {t('address')}{' '}
                         <span className={cx('value')}>
-                            {item.detail} | {item.ward} | {item.province}
+                            {item.detail} | {areaMap.get(item.ward) || item.ward} |{' '}
+                            {areaMap.get(item.province) || item.province}
                         </span>
                     </p>
                 </div>
                 <div className="d-flex">
                     <p className={cx('edit-address-btn')} onClick={() => openModal(MODAL_TYPES.EDIT_ADDRESS, item)}>
-                    {t('edit-address')}
+                        {t('edit-address')}
                     </p>
                     {!item.isDefault && (
                         <p

@@ -17,7 +17,7 @@
     .label {
         font-size: 1.4rem;
         color: var(--text-secondary-color);
-    } 
+    }
 
     .value {
         font-size: 1.6rem;
@@ -29,29 +29,32 @@
         font-size: 1.4rem;
     }
 
-    .status-0 {
+    .status.WAIT {
         color: var(--text-secondary-color);
     }
 
-    .status-1 {
+    .status.CONFIRM {
         color: var(--label-background);
     }
 
-    .status-2 {
+    .status.DELIVERY {
         color: var(--primary-color);
     }
 
-    .status-3 {
+    .status.COMPLETE,
+    .status.CONFIRM_COMPLETE,
+    .status.REVIEW,
+    .status.SUCCESS {
         color: green;
     }
 
-    .status-4 {
-        color: green;
-    }
-
-    .status--1 {
+    .status.CANCEL,
+    .status.CONFIRM_CANCEL,
+    .status.BACK,
+    .status.CONFIRM_BACK {
         color: var(--price-color);
     }
+
 
     .more-btn {
         font-size: 1.2rem;
@@ -88,6 +91,16 @@
             margin-left: 10px;
         }
 
+        .back-btn {
+             color: white;
+            border: 1px solid var(--price-color);
+            padding: 7px;
+            border-radius: 4px;
+            margin-left: 10px;
+            background-color:  var(--price-color);
+            font-size: 1.2rem;
+        }
+
         .current-price {
             font-size: 1.5rem;
             color: var(--price-color);
@@ -101,13 +114,10 @@
             text-decoration: line-through;
             display: block;
         }
-
     }
 
     .cart-list-container {
         margin-top: 10px;
-
-   
     }
 
     .cart-item {
@@ -122,8 +132,6 @@
             border: 1px solid var(--border-color);
             border-radius: 4px;
         }
-
-       
 
         .product-info {
             padding: 0 10px;
@@ -142,10 +150,6 @@
                     opacity: 0.3;
                 }
             }
-
-    
-
-          
 
             .qty-control {
                 display: flex;
@@ -191,5 +195,12 @@
         max-height: 400px;
         overflow-y: auto;
         max-width: 600px;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE và Edge */
+
+    }
+
+    .review-list-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
     }
 }

@@ -21,16 +21,19 @@ import images from '~/assets/images';
 import { DeliveryInfo, OrderInfo } from './components';
 import CheckoutHeader from './components/CheckoutHeader';
 import { CustomInput, Modal } from '../components';
-import Area from '~/models/Area';
 import icons from '~/assets/icons';
 import cartitems from '~/data/cartItems';
 import { formatMoney } from '~/utils';
 import { getCartByIds } from '~/api/cartApi';
 import { addOrder } from '~/api/orderApi';
+import { getAddress } from '~/api/addressApi';
+import useI18n from '~/hooks/useI18n';
 
 const cx = classNames.bind(styles);
 function Checkout() {
-    const { t, i18n } = useTranslation();
+    const { t, lower } = useI18n();
+
+    // const { t, i18n } = useTranslation();
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
@@ -54,11 +57,11 @@ function Checkout() {
     const totalPrice = useMemo(() => {
         return cartItems.reduce((total, item) => total + item.price * item.qty, 0);
     }, [cartItems]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalType, setModalType] = useState(null);
+
+    const isModalOpen = modalType !== null;
     const [isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
 
     const handleQtyChange = (id, newQty) => {
         const updatedItems = cartItems.map((item) => (item.id === id ? { ...item, qty: newQty } : item));
@@ -69,27 +72,33 @@ function Checkout() {
         setFreeship(e.target.checked);
     };
 
-    const handleProvinceChange = (e) => {
-        setProvince(e.target.value);
-    };
-    const handleWardChange = (e) => {
-        setWard(e.target.value);
-    };
+    const [addresses, setAddresses] = useState([]);
 
-    const provinces = [
-        new Area('HCM', 'hcm'),
-        new Area('Hà Nội', 'ha-noi'),
-        new Area('Đồng Nai', 'dong-nai'),
-        new Area('Vũng Tàu', 'vung-tau'),
-    ];
+    const [areaMap, setAreaMap] = useState(new Map());
 
-    const wards = [new Area('Quận 1', 'q1'), new Area('Quận 2', 'q2'), new Area('Bình Thạnh', 'binh-thanh')];
+    const fetchAddresses = () => {
+        getAddress()
+            .then((data) => {
+                setAddresses(data.addresses);
+                const map = new Map();
+                data.areas.forEach((area) => {
+                    map.set(area.code, area.name);
+                });
+                setAreaMap(map);
+            })
+            .catch((err) => {
+                console.error('Lỗi tải dia chi:', err);
+            })
+            .finally(() => {});
+    };
 
     const location = useLocation();
     const selectedItems = location.state?.selectedItems || [];
 
     useEffect(() => {
         const fetchCartItem = (ids) => {
+        console.log("selected item: " + JSON.stringify(ids,null,2))
+
             setLoading(true);
             getCartByIds({
                 ids,
@@ -106,7 +115,23 @@ function Checkout() {
         };
 
         fetchCartItem(selectedItems);
+        fetchAddresses();
     }, []);
+
+    useEffect(() => {
+        if (Array.isArray(addresses) && addresses.length > 0) {
+            const first = addresses[0];
+            setAddress(
+                first.detail +
+                    ', ' +
+                    (areaMap.get(first.ward) || first.ward) +
+                    ', ' +
+                    (areaMap.get(first.province) || first.province),
+            );
+            setName(first.name);
+            setPhone(first.phone);
+        }
+    }, [addresses]);
 
     useEffect(() => {
         setPayingMoney(totalPrice + shippingFee);
@@ -114,11 +139,41 @@ function Checkout() {
 
     const handleOrder = async () => {
         const cartIds = selectedItems;
-        const receiverInfo = name + ' (' + phone + ') Địa chỉ: ' + address + ' - ' + ward + ' - ' + province;
+        const receiverInfo = name + ' (' + phone + ') Địa chỉ: ' + address;
         const addResult = await addOrder({ cartIds, receiverInfo, shippingFee, voucherCode: null, note });
         if (addResult === true) {
             navigate('/account?view=orders');
         }
+    };
+
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const openModal = (type, item) => {
+        console.log('open modal');
+        setModalType(type);
+        // setSelectedItem(item);
+    };
+
+    const closeModal = () => {
+        setModalType(null);
+        setSelectedItem(null);
+    };
+
+    // Các loại modal
+    const MODAL_TYPES = {
+        CHANGE_ADDRESS: 'CHANGE_ADDRESS',
+    };
+
+    const updateAddress = (address) => {
+          setAddress(
+                address.detail +
+                    ', ' +
+                    (areaMap.get(address.ward) || address.ward) +
+                    ', ' +
+                    (areaMap.get(address.province) || address.province),
+            );
+            setName(address.name);
+            setPhone(address.phone);
     };
 
     return (
@@ -144,27 +199,35 @@ function Checkout() {
                         </div>
                     </div>
                     <div className={cx('content-container')}>
-                        <p className={cx('title')}>{t('delivery-info')}</p>
+                        <div className="d-flex-space-between">
+                            <p className={cx('title')}>{t('delivery-info')}</p>
+                            <p className="fake-a" style={{fontSize: '1.4rem'}} onClick={() => openModal(MODAL_TYPES.CHANGE_ADDRESS)}>
+                                {t('change-address')}
+                            </p>
+                        </div>
                         <form>
                             <CustomInput
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 label={t('fullname')}
                                 className="mb-10"
+                                disabled={true}
                             />
                             <CustomInput
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 label={t('phone-number')}
                                 className="mb-10"
+                                disabled={true}
                             />
                             <CustomInput
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
                                 label={t('address')}
                                 className="mb-10"
+                                disabled={true}
                             />
-                            <div className="d-flex" style={{ justifyContent: 'space-between' }}>
+                            {/* <div className="d-flex" style={{ justifyContent: 'space-between' }}>
                                 <div className="grid-col-5">
                                     <select value={province} onChange={handleProvinceChange}>
                                         <option value="">{t('choose-province')}</option>
@@ -187,7 +250,7 @@ function Checkout() {
                                             ))}
                                     </select>
                                 </div>
-                            </div>
+                            </div> */}
                         </form>
                     </div>
                     <div className={cx('content-container')}>
@@ -277,14 +340,65 @@ function Checkout() {
                     </div>
                 </div>
             </div>
-
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <div className={cx('voucher-list-container')}>
-                    <p className={cx('title')}>{t('choose-voucher')}</p>
-                </div>
+                {modalType === MODAL_TYPES.CHANGE_ADDRESS && (
+                    <ChangeAddress addresses={addresses} updateAddress={updateAddress} />
+                )}
             </Modal>
         </div>
     );
+
+    function ChangeAddress({ addresses, updateAddress }) {
+        function AddressList({ items }) {
+            return (
+                <div className={cx('address-list-container')}>
+                    {items.map((item) => (
+                        <>
+                            <AddressItem key={item.id} item={item} />
+                        </>
+                    ))}
+                </div>
+            );
+        }
+
+        function AddressItem({ item }) {
+            return (
+                <div className={cx('address-item')} onClick={() => handleChosen(item)}>
+                    <p className={cx('label')}>
+                        {t('fullname')}: <span className={cx('value')}>{item.name}</span>
+                    </p>
+                    <p className={cx('label')}>
+                        {t('phone-number')} <span className={cx('value')}>{item.phone}</span>
+                    </p>
+                    <p className={cx('label')}>
+                        {t('address')}{' '}
+                        <span className={cx('value')}>
+                            {item.detail} | {areaMap.get(item.ward) || item.ward} |{' '}
+                            {areaMap.get(item.province) || item.province}
+                        </span>
+                    </p>
+                </div>
+            );
+        }
+
+        const handleChosen = (item) => {
+            updateAddress(item);
+            closeModal();
+        }
+
+        return (
+            <div className={cx('confirm-container')} style={{ padding: '10px' }}>
+                <p style={{ textAlign: 'center' }}>
+                    {t('address-list')}
+                </p>
+                <p className="note" style={{ textAlign: 'center', marginBottom: '20px' }}>
+                    {t('choose-address-you-want-to-receive')}
+                </p>
+                <AddressList items={addresses} />
+               
+            </div>
+        );
+    }
 
     function RadioItem({ item, selectedValue, onChange, name }) {
         return (
