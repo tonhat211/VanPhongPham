@@ -45,21 +45,13 @@ function ProductCardsPage() {
     useEffect(() => {
         const selected = cartItems.filter(item => selectedItems.includes(item.id));
         const totalSelected = selected.reduce((acc, item) => acc + item.price * item.quantity, 0);
-        console.log('🟩 Recalculating total for selected items:', selected);
-        console.log('🟩 New total:', totalSelected);
         setTotal(totalSelected);
     }, [selectedItems, cartItems]);
 
     const handleSelectItem = (id) => {
-        setSelectedItems((prev) => {
-            const isSelected = prev.includes(id);
-            const newSelected = isSelected
-                ? prev.filter((i) => i !== id)
-                : [...prev, id];
-            console.log('🟨 Selected items:', newSelected);
-            return newSelected;
-        });
-    };
+        setSelectedItems((prev) =>
+            prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    )};
 
 
 
