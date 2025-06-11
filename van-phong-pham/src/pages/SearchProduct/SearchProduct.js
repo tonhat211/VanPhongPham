@@ -8,6 +8,7 @@ import {
     faXmark,
     faAngleRight,
     faArrowTrendUp,
+    faFilter,
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
@@ -21,11 +22,11 @@ import { ProductItem, Pagination } from '../components';
 import { Product as ProductModel, StarRating } from '~/models';
 import { getProductsByCategory, getProductsByKeyword } from '~/api/productApi';
 import { useUpdateUrlParams } from '~/utils/url';
+import { useSidebar } from '~/context/FEProvider';
 
 const cx = classNames.bind(styles);
 
 function SearchProduct() {
-    console.log('product screen');
     const [searchParams, setSearchParams] = useSearchParams();
     const updateUrlParams = useUpdateUrlParams();
 
@@ -41,12 +42,17 @@ function SearchProduct() {
     const priceRange = searchParams.get('priceRange');
     const [products, setProducts] = useState(null);
     const [tempPriceRange, setTempPriceRange] = useState('');
-    const [totalResult,setTotalResult] = useState(0);
+    const [totalResult, setTotalResult] = useState(0);
 
     useEffect(() => {
-         const fetchProductsByKeyword = (keyword, sortBy, direction, page, size, priceRange) => {
-               getProductsByKeyword({
-                keyword, sortBy, direction, page, size, priceRange
+        const fetchProductsByKeyword = (keyword, sortBy, direction, page, size, priceRange) => {
+            getProductsByKeyword({
+                keyword,
+                sortBy,
+                direction,
+                page,
+                size,
+                priceRange,
             })
                 .then((data) => {
                     setProducts(data.content);
@@ -64,7 +70,6 @@ function SearchProduct() {
         };
 
         fetchProductsByKeyword(keyword, sortBy, direction, page, size, priceRange);
-      
     }, [keyword, sortBy, direction, page, size, priceRange]);
 
     const barRef = useRef(null);
@@ -112,8 +117,7 @@ function SearchProduct() {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            if(tempPriceRange!=='') 
-                updateUrlParams({ priceRange: tempPriceRange });
+            if (tempPriceRange !== '') updateUrlParams({ priceRange: tempPriceRange });
         }, 1000);
 
         return () => clearTimeout(timeout);
@@ -175,51 +179,78 @@ function SearchProduct() {
             </div>
         );
     };
+    useEffect(() => {
+        scrollHeader();
+    }, [page]);
+    const contentRef = useRef(null);
+    const scrollHeader = () => {
+        contentRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+    };
 
     return (
         <div className={classNames(cx('wrapper'))}>
             <div className={classNames(cx('content-container', 'product-show-container'), 'd-flex')}>
-                <div className={classNames(cx('content'))} style={{ flex: 1 }}>
-                    <p className={classNames(cx('title'), 'uppercase-text')}>Có tất cả {totalResult} kết quả phù hợp</p>
-                    <PriceRangeSlider
-                        onFinalChange={(range) => {
-                            handlePriceRange(range);
-                        }}
-                        values={sliderValues}
-                    />
-
-                    <div className="d-flex" style={{ marginTop: '20px' }}>
-                        <p>Sắp xếp:</p>
-                        <ul className={classNames(cx('sort-option-list'))}>
-                            <li>
-                                <a
-                                    className={classNames(cx({ active: sortBy === 'price' && direction === 'asc' }))}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        updateSort('price', 'asc');
-                                    }}
-                                >
-                                    Giá tăng dần
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    className={classNames(cx({ active: sortBy === 'price' && direction === 'desc' }))}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        updateSort('price', 'desc');
-                                    }}
-                                >
-                                    Giá giảm dần
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className={classNames(cx('divider'))} style={{ marginTop: '14px' }}></div>
-                    {products && <ProductList items={products} />}
-                    <div className={classNames(cx('pagination-container'))}>
-                        <Pagination totalPages={totalPages} currentPage={page + 1} onPageChange={handlePageChange} />
-                    </div>
+                <div ref={contentRef} className={classNames(cx('content'))} style={{ flex: 1 }}>
+                    {Array.isArray(products) && products.length > 0 ? (
+                        <>
+                            <p className={classNames(cx('title'), 'uppercase-text')}>
+                                Có tất cả {totalResult} kết quả phù hợp
+                            </p>
+                            <PriceRangeSlider
+                                onFinalChange={(range) => {
+                                    handlePriceRange(range);
+                                }}
+                                values={sliderValues}
+                            />
+                            <div className="d-flex" style={{ marginTop: '20px' }}>
+                                <p>Sắp xếp:</p>
+                                <ul className={classNames(cx('sort-option-list'))}>
+                                    <li>
+                                        <a
+                                            className={classNames(
+                                                cx({ active: sortBy === 'price' && direction === 'asc' }),
+                                            )}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                updateSort('price', 'asc');
+                                            }}
+                                        >
+                                            Giá tăng dần
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            className={classNames(
+                                                cx({ active: sortBy === 'price' && direction === 'desc' }),
+                                            )}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                updateSort('price', 'desc');
+                                            }}
+                                        >
+                                            Giá giảm dần
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className={classNames(cx(''), 'divider mt-14')}></div>
+                            <ProductList items={products} />
+                            <div className={classNames(cx('pagination-container'))}>
+                                <Pagination
+                                    totalPages={totalPages}
+                                    currentPage={page + 1}
+                                    onPageChange={handlePageChange}
+                                />
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <p>Không có kết quả phù hợp</p>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
@@ -230,7 +261,7 @@ function SearchProduct() {
             <div className={cx('product-list-container')}>
                 <div className="grid-row">
                     {items.map((item, index) => (
-                        <ProductItem key={index} item={item} style={{width: '20%'}}/>
+                        <ProductItem key={index} item={item} className="grid-col-2_4" />
                     ))}
                 </div>
             </div>

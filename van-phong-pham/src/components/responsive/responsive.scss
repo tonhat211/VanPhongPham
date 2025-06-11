@@ -1,0 +1,24 @@
+// Các breakpoint
+$min_mobile: 0px;
+$max_mobile: 719px;
+$min_tablet: 720px;
+$max_tablet: 1024px;
+$min_desktop: 1025px;
+// $max_desktop: 1024px;
+
+// Mixin tiện dụng
+@mixin respond-to($breakpoint) {
+    @if $breakpoint == mobile {
+        @media (min-width: $min_mobile) and (max-width: $max_mobile) {
+            @content;
+        }
+    } @else if $breakpoint == tablet {
+        @media (min-width: $min_tablet) and (max-width: $max_tablet) {
+            @content;
+        }
+    } @else if $breakpoint == desktop {
+        @media (min-width: $min_desktop) {
+            @content;
+        }
+    }
+}

@@ -14,9 +14,9 @@ import { formatMoney, addToRecentlyViewed } from '~/utils';
 
 const cx = classNames.bind(styles);
 
-function ProductItem({ item,style }) {
+function ProductItem({ item,style, className}) {
     return (
-        <div className="grid-col-3" style={{ padding: '10px',...style }}>
+        <div className={`${className || 'grid-col-3'} grid-col-4-tab`} style={{ padding: '10px',...style }}>
             <div className={cx('product-item')}>
                 <Link to={`/products/detail/${item.id}`}
                   onClick={() => addToRecentlyViewed(item)}

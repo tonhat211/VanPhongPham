@@ -1,5 +1,6 @@
+@import '../../components/responsive/responsive.scss';
+
 .wrapper {
-   
 }
 
 .content-container {
@@ -10,9 +11,7 @@
 }
 
 .product-show-container {
-
 }
-
 
 .subsidebar-container {
     overflow: auto;
@@ -21,7 +20,6 @@
     max-height: 100vh;
     transition: top 0.3s ease;
     scrollbar-width: none;
-     
 }
 
 .content {
@@ -38,7 +36,6 @@
         // margin-top: 20px;
 
         li {
-            
             a {
                 padding: 10px 10px;
                 color: var(--text-secondary-color);
@@ -56,8 +53,17 @@
                     color: var(--primary-color);
                 }
             }
+        }
+    }
 
-            
+    .filter-icon {
+        border-radius: 4px;
+        color: var(--text-secondary-color);
+        margin-left: auto;
+        padding: 6px;
+        &:hover {
+            cursor: pointer;
+            background-color: var(--primary-hover-color);
         }
     }
 
@@ -74,4 +80,62 @@
         font-size: 2rem;
         font-weight: 600;
     }
+}
+
+.overlay {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--primary-hover-color);
+}
+
+@keyframes leftIn {
+    from {
+        opacity: 0;
+        transform: translateX(-140px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+@include respond-to(tablet) {
+  .subsidebar-container {
+    position: fixed;
+    background-color: white;
+    z-index: 101;
+    top: 137px;
+    overflow-y: scroll;
+    max-height: 90%;
+    width: 30%;
+     animation: leftIn ease 0.49s;
+  }
+
+   .overlay {
+        animation: fadeIn ease 0.49s;
+    }
+
+    .divider {
+        margin-top: 0px;
+    }
+}
+
+@include respond-to(mobile) {
+ 
 }
