@@ -1,13 +1,22 @@
+@import '../../../responsive/responsive.scss';
+
 .wrapper {
     display: flex;
-    // justify-content: space-between;
     align-items: center;
     padding: 10px;
     position: fixed;
     z-index: 10;
     background-color: white;
     height: 80px;
+}
 
+.menu-btn {
+    padding: 7px;
+    border-radius: 10px;
+    &:hover {
+        cursor: pointer;
+        background-color: var(--primary-hover-color);
+    }
 }
 
 .logo {
@@ -16,7 +25,7 @@
 
 .header-menu-item {
     padding: 7px;
-    border-radius: 10px;
+    border-radius: 10px;  color: var(--text-secondary-color);
     &:hover {
         cursor: pointer;
         background-color: var(--primary-hover-color);
@@ -31,7 +40,7 @@
         background-color: var(--header-color);
         border-radius: 50%;
         color: white;
-        font-size: 1.0rem;
+        font-size: 1rem;
     }
 
     a {
@@ -72,16 +81,24 @@
             align-items: center;
             top: 0;
             right: -50%;
-            transform: translate(-50%, -50%); 
-    
-    
+            transform: translate(-50%, -50%);
+
             span {
                 font-size: 1.2rem;
                 font-weight: 600;
             }
         }
-    } 
-        
+    }
+}
 
-  
+@include respond-to(tablet) {
+    .wrapper {
+        height: fit-content;
+    }
+    .logo {
+        // width: 30%;
+    }
+}
+
+@include respond-to(mobile) {
 }

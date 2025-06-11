@@ -8,6 +8,7 @@ import {
     faXmark,
     faAngleRight,
     faArrowTrendUp,
+    
 } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { Link, useNavigate } from 'react-router-dom';
@@ -104,7 +105,7 @@ function Search() {
 
     return (
         <div
-            className="grid-col-5"
+            className=""
             style={{
                 margin: '0 20px',
             }}

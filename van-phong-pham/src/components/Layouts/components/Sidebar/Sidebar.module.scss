@@ -1,7 +1,38 @@
+@import '../../../responsive/responsive.scss';
+
 .wrapper {
-    // position: sticky;
-    // top: 0; 
-    // max-height: 100vh;
+}
+
+.overlay {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--primary-hover-color);
+}
+
+@keyframes leftIn {
+    from {
+        opacity: 0;
+        transform: translateX(-140px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .menu-container {
@@ -42,7 +73,6 @@
             background-color: var(--primary-hover-color);
             color: var(--header-color);
         }
-        
     }
 
     img {
@@ -63,6 +93,40 @@
     }
 }
 
+.header-menu-item {
+    padding: 7px;
+    border-radius: 10px;
+    color: var(--text-secondary-color);
+    &:hover {
+        cursor: pointer;
+        background-color: var(--primary-hover-color);
+    }
+
+    .user-icon {
+        height: 30px;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--header-color);
+        border-radius: 50%;
+        color: white;
+        font-size: 1rem;
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--text-secondary-color);
+        display: block;
+        margin-left: 10px;
+        margin-bottom: 4px;
+
+        &:hover {
+            color: var(--header-color);
+        }
+    }
+}
+
 .sub-menu {
     display: none;
     position: absolute;
@@ -77,5 +141,20 @@
     li a {
         border-radius: 0 !important;
     }
+}
 
+@include respond-to(tablet) {
+    .menu-container {
+        position: fixed;
+        z-index: 101;
+        top: 65px;
+        animation: leftIn ease 0.49s;
+    }
+
+    .overlay {
+        animation: fadeIn ease 0.49s;
+    }
+}
+
+@include respond-to(mobile) {
 }

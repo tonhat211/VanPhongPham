@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faUser, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faUser, faCartShopping, faBars } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './Header.module.scss';
@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { registerUser } from '~/api/registerApi';
 import { logoutUser } from '~/api/logoutApi';
 import { toast } from 'react-toastify';
+import { useSidebar } from '~/context/FEProvider';
 const cx = classNames.bind(styles);
 
 function Header() {
@@ -101,14 +102,24 @@ function Header() {
               },
     ];
 
+    const { toggleSidebar } = useSidebar();
+
     return (
         <header className={classNames(cx('wrapper'), 'grid')}>
             <div className={classNames('grid-row')} style={{ alignItems: 'center' }}>
-                <div className="grid-col-2">
-                    <img src={images.logo} alt="Thien Long" className={classNames(cx('logo'))} />
+                <div className="grid-col-2 w-100-tab d-flex-ctr-btw-tab mb-10-tab">
+                    <i className={classNames(cx('menu-btn'), 'hide show-tab')} onClick={toggleSidebar}>
+                        <FontAwesomeIcon icon={faBars} />
+                    </i>
+                    <img src={images.logo} alt="Thien Long" className={classNames(cx('logo'), 'w-30-tab')} />
+                    <div className="hide show-tab">
+                        <Cart />
+                    </div>
                 </div>
-                <Search />
-                <div className="d-flex-al-center" style={{ marginLeft: 'auto' }}>
+                <div className="grid-col-5 w-100-tab">
+                    <Search />
+                </div>
+                <div className="d-flex-al-center hide-tab" style={{ marginLeft: 'auto' }}>
                     <HeaderMenuList items={headerMenuList} />
                     <Cart />
                 </div>

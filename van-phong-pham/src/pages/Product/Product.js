@@ -2,32 +2,23 @@ import classNames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faMagnifyingGlass,
-    faCircleXmark,
-    faXmark,
-    faAngleRight,
-    faArrowTrendUp,
-} from '@fortawesome/free-solid-svg-icons';
-import HeadlessTippy from '@tippyjs/react/headless';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import styles from './Product.module.scss';
-import images from '~/assets/images';
 import SubSidebar from '~/components/Layouts/components/SubSidebar';
-import { menus, brands, priceRanges, colors } from '~/data';
+import { menus } from '~/data';
 import { ProductItem, Pagination } from '../components';
-import { Product as ProductModel, StarRating } from '~/models';
 import { getProductsByCategory } from '~/api/productApi';
-import { useUpdateUrlParams  } from '~/utils/url';
+import { useUpdateUrlParams } from '~/utils/url';
+import { useSidebar } from '~/context/FEProvider';
 
 const cx = classNames.bind(styles);
 
 function Product() {
-    console.log('product screen');
     const { category } = useParams(); // lấy từ URL path
     const [searchParams, setSearchParams] = useSearchParams();
-    const updateUrlParams = useUpdateUrlParams ();
+    const updateUrlParams = useUpdateUrlParams();
 
     const page = parseInt(searchParams.get('page')) || 0;
     const [loading, setLoading] = useState(true);
@@ -41,10 +32,9 @@ function Product() {
     const priceRange = searchParams.get('priceRange');
     const [products, setProducts] = useState(null);
     let recentlyViewedProducts = localStorage.getItem('recentlyViewedProducts');
-    if(recentlyViewedProducts) {
+    if (recentlyViewedProducts) {
         recentlyViewedProducts = JSON.parse(recentlyViewedProducts);
     }
-    // console.log('recentlyViewedProducts: ' + recentlyViewedProducts);
 
     useEffect(() => {
         setLoading(true);
@@ -70,16 +60,20 @@ function Product() {
             .finally(() => {
                 setLoading(false);
             });
-    }, [category, sortBy, direction, page, size, sub,brands,priceRange]);
+    }, [category, sortBy, direction, page, size, sub, brands, priceRange]);
 
-    let parent = menus.find((m) => m.link === '/' + category);
+    useEffect(() => {
+        scrollHeader();
+    }, [page]);
+
+    let parent = menus.find((m) => m.link === category);
     if (!parent) parent = null;
 
     const barRef = useRef(null);
 
     const handlePageChange = (newPage) => {
         const actualPage = newPage - 1;
-        updateUrlParams( {
+        updateUrlParams({
             page: actualPage,
         });
     };
@@ -90,7 +84,7 @@ function Product() {
         //     direction: newDirection,
         //     page: 0,
         // });
-        updateUrlParams({ sortBy: newSortBy, direction : newDirection, page: 0 });
+        updateUrlParams({ sortBy: newSortBy, direction: newDirection, page: 0 });
     };
 
     useEffect(() => {
@@ -113,56 +107,92 @@ function Product() {
         };
     }, []);
 
+    const { isSubSidebarOpen, toggleSubSidebar } = useSidebar();
+    const contentRef = useRef(null);
+
+    const scrollHeader = () => {
+        contentRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+    };
+    
     return (
         <div className={classNames(cx('wrapper'))}>
             <div className={classNames(cx('content-container', 'product-show-container'), 'd-flex')}>
-                <div ref={barRef} className={classNames(cx('subsidebar-container'), 'grid-col-2')} style={{}}>
+                <div
+                    ref={barRef}
+                    className={classNames(cx('subsidebar-container'), 'grid-col-2 w-30-tab', {
+                        'hide-tab': !isSubSidebarOpen,
+                    })}
+                    style={{}}
+                >
                     <SubSidebar />
                 </div>
-                <div className={classNames(cx('content'))} style={{ flex: 1 }}>
+
+                {isSubSidebarOpen && (
+                    <div
+                        className={classNames(cx('overlay'), 'hide', { show: isSubSidebarOpen })}
+                        onClick={toggleSubSidebar}
+                    ></div>
+                )}
+
+                <div ref={contentRef} className={classNames(cx('content'))} style={{ flex: 1 }}>
                     <p className={classNames(cx('title'), 'uppercase-text')}>{parent?.title || 'Tất cả'}</p>
-                    <div className="d-flex" style={{ marginTop: '20px' }}>
-                        <p>Sắp xếp:</p>
-                        <ul className={classNames(cx('sort-option-list'))}>
-                            <li>
-                                <a
-                                    className={classNames(cx({ active: sortBy === 'price' && direction === 'asc' }))}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        updateSort('price', 'asc');
-                                    }}
+                    {Array.isArray(products) && products.length > 0 ? (
+                        <>
+                            <div className="d-flex" style={{ marginTop: '20px' }}>
+                                <p>Sắp xếp:</p>
+                                <ul className={classNames(cx('sort-option-list'))}>
+                                    <li>
+                                        <a
+                                            className={classNames(
+                                                cx({ active: sortBy === 'price' && direction === 'asc' }),
+                                            )}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                updateSort('price', 'asc');
+                                            }}
+                                        >
+                                            Giá tăng dần
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            className={classNames(
+                                                cx({ active: sortBy === 'price' && direction === 'desc' }),
+                                            )}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                updateSort('price', 'desc');
+                                            }}
+                                        >
+                                            Giá giảm dần
+                                        </a>
+                                    </li>
+                                </ul>
+                                <i
+                                    className={classNames(cx('filter-icon'), 'hide show-tab')}
+                                    onClick={toggleSubSidebar}
                                 >
-                                    Giá tăng dần
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    className={classNames(cx({ active: sortBy === 'price' && direction === 'desc' }))}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        updateSort('price', 'desc');
-                                    }}
-                                >
-                                    Giá giảm dần
-                                </a>
-                            </li>
-                            {/* <li>
-                                <a
-                                    className={classNames(
-                                        cx({ active: sortBy === 'createdDate' && direction === 'desc' }),
-                                    )}
-                                    onClick={() => updateSort('createdDate', 'desc')}
-                                >
-                                    Hàng mới
-                                </a>
-                            </li> */}
-                        </ul>
-                    </div>
-                    <div className={classNames(cx('divider'))} style={{ marginTop: '14px' }}></div>
-                    {products && <ProductList items={products} />}
-                    <div className={classNames(cx('pagination-container'))}>
-                        <Pagination totalPages={totalPages} currentPage={page + 1} onPageChange={handlePageChange} />
-                    </div>
+                                    <FontAwesomeIcon icon={faFilter} />
+                                </i>
+                            </div>
+                            <div className={classNames(cx(''), 'divider mt-14 mt-0-tab')}></div>
+                            <ProductList items={products} />
+                            <div className={classNames(cx('pagination-container'))}>
+                                <Pagination
+                                    totalPages={totalPages}
+                                    currentPage={page + 1}
+                                    onPageChange={handlePageChange}
+                                />
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <p>Không có kết quả phù hợp</p>
+                        </>
+                    )}
                 </div>
             </div>
             {recentlyViewedProducts && (

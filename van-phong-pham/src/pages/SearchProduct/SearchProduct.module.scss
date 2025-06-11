@@ -1,3 +1,5 @@
+@import '../../components/responsive/responsive.scss';
+
 .wrapper {
    
 }
@@ -110,5 +112,16 @@
   height: 8px;         
   border-radius: 4px;  
   background-color: #e5e7eb;
+}
+
+
+
+
+@include respond-to(tablet) {
+
+}
+
+@include respond-to(mobile) {
+ 
 }
 

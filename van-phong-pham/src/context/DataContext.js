@@ -21,7 +21,7 @@ export const DataProvider = ({ children }) => {
             .catch(() => console.log('Không thể tải feature menu'));
     }, []);
 
-    return <DataContext.Provider value={{ menus, featureMenus,brands }}>{children}</DataContext.Provider>;
+    return <DataContext.Provider value={{ menus, featureMenus, brands }}>{children}</DataContext.Provider>;
 };
 
 // Hook dùng để gọi nhanh
