@@ -274,5 +274,35 @@
   margin-bottom: 20px;
   text-align: center;
 }
+.wrapper .confirm-container .label {
+  margin-bottom: 10px;
+}
+.wrapper .address-list-container {
+  margin-top: 10px;
+}
+.wrapper .address-item {
+  padding: 10px;
+  background-color: white;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+.wrapper .address-item .label {
+  font-size: 1.3rem;
+  color: var(--text-secondary-color);
+}
+.wrapper .address-item .value {
+  font-size: 1.3rem;
+  color: var(--header-color);
+  font-weight: 600;
+}
+.wrapper .address-item .default-label {
+  font-size: 1rem;
+  color: green;
+  margin-left: 20px;
+}
+.wrapper .address-item:hover {
+  cursor: pointer;
+  background-color: var(--primary-hover-color);
+}
 
 /*# sourceMappingURL=Checkout.module.css.map */

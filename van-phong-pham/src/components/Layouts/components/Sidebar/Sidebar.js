@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
-function Sidebar() {
+function Sidebar({ className }) {
     const { t, i18n } = useTranslation();
     const { menus, featureMenus } = useData();
 

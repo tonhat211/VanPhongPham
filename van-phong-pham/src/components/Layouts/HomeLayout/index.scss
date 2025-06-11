@@ -1,7 +1,24 @@
+@import 'src/assets/responsive/breakpoints.scss';
 .homepage-layout-container {
   padding-top: 95px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 2rem;
+  padding-right: 2rem;
   background-color: var(--primary-backround-color);
   display: flex;
+  .sidebar-layout {
+    display: block;
+
+    @include respond-max(lg) {
+      .sidebar-layout {
+        display: none !important;
+      }
+    }
+  }
+  @include respond-max(lg) {
+    width: 100%
+  }
+  @include respond-max(sm) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }

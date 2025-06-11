@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .wrapper {
   border-radius: 10px;
   background-color: var(--primary-backround-color);
@@ -25,22 +26,25 @@
 .wrapper .status {
   font-size: 1.4rem;
 }
-.wrapper .status-0 {
+.wrapper .status.WAIT {
   color: var(--text-secondary-color);
 }
-.wrapper .status-1 {
+.wrapper .status.CONFIRM {
   color: var(--label-background);
 }
-.wrapper .status-2 {
+.wrapper .status.DELIVERY {
   color: var(--primary-color);
 }
-.wrapper .status-3 {
+.wrapper .status.COMPLETE,
+.wrapper .status.CONFIRM_COMPLETE,
+.wrapper .status.REVIEW,
+.wrapper .status.SUCCESS {
   color: green;
 }
-.wrapper .status-4 {
-  color: green;
-}
-.wrapper .status--1 {
+.wrapper .status.CANCEL,
+.wrapper .status.CONFIRM_CANCEL,
+.wrapper .status.BACK,
+.wrapper .status.CONFIRM_BACK {
   color: var(--price-color);
 }
 .wrapper .more-btn {
@@ -73,6 +77,15 @@
   background-color: orange;
   border: 1px solid orange;
   margin-left: 10px;
+}
+.wrapper .order-item-container .back-btn {
+  color: white;
+  border: 1px solid var(--price-color);
+  padding: 7px;
+  border-radius: 4px;
+  margin-left: 10px;
+  background-color: var(--price-color);
+  font-size: 1.2rem;
 }
 .wrapper .order-item-container .current-price {
   font-size: 1.5rem;
@@ -154,6 +167,11 @@
   max-height: 400px;
   overflow-y: auto;
   max-width: 600px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE và Edge */
+}
+.wrapper .review-list-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 /*# sourceMappingURL=Order.module.css.map */
