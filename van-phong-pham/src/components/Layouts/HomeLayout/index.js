@@ -9,12 +9,12 @@ function HomeLayout({children}) {
             <Header />
 
             <div className='homepage-layout-container'>
-                <Sidebar/>
+                <Sidebar className='sidebar-layout'/>
                 {/*<div className='breadcrumb'>breadcrumb</div>*/}
                 {/*<div className='content'>  */}
                 {/*    {children}*/}
                 {/*</div>*/}
-                <Home/>
+                <Home />
             </div>
             <Footer />
         </div>

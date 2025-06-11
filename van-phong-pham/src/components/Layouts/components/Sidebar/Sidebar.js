@@ -15,7 +15,7 @@ import { useData } from '~/context/DataContext';
 
 const cx = classNames.bind(styles);
 
-function Sidebar() {
+function Sidebar({ className }) {
     const { t, i18n } = useTranslation();
     const { menus, featureMenus } = useData();
 
@@ -26,7 +26,7 @@ function Sidebar() {
     };
 
     return (
-        <div className={classNames(cx('wrapper'), 'grid-col-2')}>
+        <div className={classNames(cx('wrapper'), className, 'grid-col-2')}>
             <div className={classNames(cx('menu-container'))}>
                 <MenuList items={menus} />
             </div>
