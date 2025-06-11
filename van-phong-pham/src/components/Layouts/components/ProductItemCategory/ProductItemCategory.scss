@@ -1,9 +1,18 @@
+@import 'src/assets/responsive/breakpoints.scss';
+
 .product-list {
   width: 100%;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
     padding: 1rem;
+  @include respond-max(lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @include respond-max(sm) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
   .grid-col-3 {
     width: 100% !important;
   }

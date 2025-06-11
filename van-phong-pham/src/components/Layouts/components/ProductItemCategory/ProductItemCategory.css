@@ -1,12 +1,17 @@
-.product-list {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
-  padding: 1rem;
-}
-.product-list .grid-col-3 {
-  width: 100% !important;
-}
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 1 | @import 'src/assets/responsive/breakpoints.scss';
+ *   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *   '
+ *   ProductItemCategory.scss 1:9  root stylesheet */
 
-/*# sourceMappingURL=ProductItemCategory.css.map */
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @import 'src/assets/responsive/breakpoints.scss';\a   \2502          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   ProductItemCategory.scss 1:9  root stylesheet";
+}
