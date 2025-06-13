@@ -8,6 +8,15 @@
   height: 80px;
 }
 
+.menu-btn {
+  padding: 7px;
+  border-radius: 10px;
+}
+.menu-btn:hover {
+  cursor: pointer;
+  background-color: var(--primary-hover-color);
+}
+
 .logo {
   width: 100%;
 }
@@ -15,6 +24,7 @@
 .header-menu-item {
   padding: 7px;
   border-radius: 10px;
+  color: var(--text-secondary-color);
 }
 .header-menu-item:hover {
   cursor: pointer;
@@ -72,6 +82,12 @@
 .cart-item .cart-item-icon .cart-amount-item span {
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+@media (min-width: 720px) and (max-width: 1024px) {
+  .wrapper {
+    height: fit-content;
+  }
 }
 
 /*# sourceMappingURL=Header.module.css.map */
