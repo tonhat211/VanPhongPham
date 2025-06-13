@@ -1,3 +1,4 @@
+@import 'src/assets/responsive/breakpoints.scss';
 .container-footer {
   .brand-swiper {
     padding: 2rem 1rem;
@@ -17,8 +18,8 @@
     .swiper-button-prev,
     .swiper-button-next {
       color: #333;
-      width: 30px;
-      height: 30px;
+      width: 3rem;
+      height: 3rem;
       background-color: var(--primary-backround-color);
       border-radius: 50%;
       box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
@@ -31,7 +32,7 @@
     .swiper-button-prev:hover,
     .swiper-button-next:hover {
       background-color: white;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 1rem rgba(0, 0, 0, 0.15);
       transform: translateY(-1px);
     }
 
@@ -209,6 +210,79 @@
         background-color: #e8efff;
         color: #3b71ca;
       }
+    }
+  }
+  p, h6 {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+@include respond-max(md) {
+  .middle-footer-wrapper {
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    .payment-med-wrap {
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .form-res .contact-form .input-group {
+      flex-direction: column;
+      max-width: 100%;
+
+      .form-control {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+
+      .sub-action {
+        width: 100%;
+      }
+    }
+
+    .payment-med-pic {
+      justify-content: center;
+    }
+  }
+}
+
+@include respond-max(lg) {
+  .custom-footer .footer-container {
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin: 0.5rem 0.5rem;
+    .footer-col {
+      max-width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+}
+@include respond-max(sm) {
+  .payment-med-wrap {
+    flex-direction: column!important;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .custom-footer {
+    font-size: 13px;
+    .footer-title {
+      font-size: 1.2rem;
+    }
+    .company-info {
+      font-size: 1.2rem;
+    }
+  }
+
+  .payment-title {
+    font-size: 14px;
+  }
+  .input-group {
+    .form-control,
+    .sub-action {
+      padding: 0.4rem 0.8rem;
     }
   }
 }

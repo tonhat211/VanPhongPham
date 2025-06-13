@@ -6,14 +6,20 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
     padding: 1rem;
-  @include respond-max(lg) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  @include respond-max(sm) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0;
-  }
   .grid-col-3 {
     width: 100% !important;
+  }
+}
+
+@include respond-max(xl) {
+  .product-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@include respond-max(sm) {
+  .product-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    padding: 0rem;
   }
 }

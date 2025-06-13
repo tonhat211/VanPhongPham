@@ -5,7 +5,6 @@ display: flex;
   width: 82%;
   overflow-x: hidden;
   .banner-top-container, .section-product-itemsCategory {
-    width: 100%;
     height: fit-content;
     margin-left: 2rem;
     margin-bottom: 24px;
@@ -30,7 +29,7 @@ display: flex;
       .banner-img {
         border-radius: 12px;
         object-fit: cover;
-        width: 520px;
+        width: 100%;
         height: auto;
         margin-bottom: 2rem;
         img {
@@ -100,7 +99,6 @@ display: flex;
   }
 
   .hotProducts-homePage-container {
-    width: 100%;
     height: fit-content;
     margin-left: 2rem;
     margin-bottom: 24px;
@@ -113,7 +111,6 @@ display: flex;
     padding-top: 16px;
   }
   .hotProducts-homePage-container {
-    max-width: 100%;
     display: flex;
     justify-content: space-between;
     //padding: 16px 0;

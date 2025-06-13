@@ -1,6 +1,6 @@
 @charset "UTF-8";
 .product-item {
-  height: 447px;
+  height: fit-content;
   overflow: hidden;
   border-radius: 10px;
   border: 1px solid white;
@@ -103,10 +103,11 @@
   color: var(--price-color);
 }
 .product-item .btn-container {
-  margin-top: 10px;
+  margin-top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
 /*# sourceMappingURL=ProductItem.module.css.map */
