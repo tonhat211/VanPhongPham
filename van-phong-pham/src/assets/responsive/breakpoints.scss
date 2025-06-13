@@ -1,5 +1,5 @@
 // Extra small devices (phones, <576px)
-$breakpoint-xs: 0;
+$breakpoint-xs: 540;
 
 // Small devices (phones ≥576px)
 $breakpoint-sm: 576px;
@@ -18,6 +18,9 @@ $breakpoint-xxl: 1400px;
 
 // Optional: tạo mixin cho tiện
 @mixin respond-max($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: $breakpoint-xs) { @content; }
+  }
   @if $breakpoint == sm {
     @media (max-width: $breakpoint-sm) { @content; }
   } @else if $breakpoint == md {

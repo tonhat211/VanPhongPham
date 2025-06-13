@@ -1,9 +1,10 @@
 @charset "UTF-8";
 .product-item {
-  height: 447px;
+  height: fit-content;
   overflow: hidden;
   border-radius: 10px;
   border: 1px solid white;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
 }
 .product-item:hover {
   border: 1px solid var(--primary-color);
@@ -69,7 +70,7 @@
 .product-item .rate-container {
   margin-top: 10px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 .product-item .rate-container p {
   margin-left: 10px;
@@ -102,10 +103,11 @@
   color: var(--price-color);
 }
 .product-item .btn-container {
-  margin-top: 10px;
+  margin-top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
 /*# sourceMappingURL=ProductItem.module.css.map */

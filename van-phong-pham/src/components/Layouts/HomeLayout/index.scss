@@ -5,20 +5,24 @@
   padding-right: 2rem;
   background-color: var(--primary-backround-color);
   display: flex;
-  .sidebar-layout {
-    display: block;
-
-    @include respond-max(lg) {
-      .sidebar-layout {
-        display: none !important;
-      }
-    }
-  }
   @include respond-max(lg) {
     width: 100%
   }
   @include respond-max(sm) {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+}
+.sidebar-layout {
+  //display: block;
+  @include respond-max(lg) {
+    display: none !important;
+
+  }
+}
+@media (max-width: 344px) {
+  .homepage-layout-container {
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
   }
 }
