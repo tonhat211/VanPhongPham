@@ -26,4 +26,14 @@
   color: var(--header-color);
 }
 
+@media (min-width: 540px) and (max-width: 912px) {
+  .info_right {
+    gap: 3rem;
+    display: flex;
+  }
+  .info_right .right_1 {
+    width: fit-content;
+  }
+}
+
 /*# sourceMappingURL=ProductPromoPanel.css.map */

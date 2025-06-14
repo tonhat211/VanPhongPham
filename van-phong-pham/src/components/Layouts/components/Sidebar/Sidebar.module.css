@@ -1,3 +1,31 @@
+.overlay {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--primary-hover-color);
+}
+
+@keyframes leftIn {
+  from {
+    opacity: 0;
+    transform: translateX(-140px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .menu-container {
   background-color: white;
   border-radius: 10px;
@@ -48,6 +76,37 @@
   display: block;
 }
 
+.header-menu-item {
+  padding: 7px;
+  border-radius: 10px;
+  color: var(--text-secondary-color);
+}
+.header-menu-item:hover {
+  cursor: pointer;
+  background-color: var(--primary-hover-color);
+}
+.header-menu-item .user-icon {
+  height: 30px;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--header-color);
+  border-radius: 50%;
+  color: white;
+  font-size: 1rem;
+}
+.header-menu-item a {
+  text-decoration: none;
+  color: var(--text-secondary-color);
+  display: block;
+  margin-left: 10px;
+  margin-bottom: 4px;
+}
+.header-menu-item a:hover {
+  color: var(--header-color);
+}
+
 .sub-menu {
   display: none;
   position: absolute;
@@ -61,6 +120,18 @@
 }
 .sub-menu li a {
   border-radius: 0 !important;
+}
+
+@media (min-width: 720px) and (max-width: 1024px) {
+  .menu-container {
+    position: fixed;
+    z-index: 101;
+    top: 65px;
+    animation: leftIn ease 0.49s;
+  }
+  .overlay {
+    animation: fadeIn ease 0.49s;
+  }
 }
 
 /*# sourceMappingURL=Sidebar.module.css.map */

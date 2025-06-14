@@ -1,3 +1,4 @@
+@import 'src/assets/responsive/breakpoints.scss';
 .info_left {
   .left_1 {
     .left1_container {
@@ -40,24 +41,21 @@
       display: flex;
       align-items: center;
       gap: 10px;
-
+      font-size: 2rem;
       .prices {
-        font-size: 30px;
+        font-size: 3rem;
         color: #2659f3;
         font-weight: 500;
       }
 
       .sale_price {
         text-decoration: line-through;
-        font-size: 20px;
       }
 
       .discounts_price {
         margin-left: auto;
-        font-size: 20px;
 
         .idiscount {
-          font-size: 20px;
           color: #f32c3d;
         }
       }
@@ -182,9 +180,10 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin: 20px 0px;
+    margin: 2rem 0px;
     gap: 1rem;
     .add_Cart, .buy_now {
+      min-width: fit-content;
       width: 50%;
     }
 
@@ -240,3 +239,114 @@
     }
   }
 }
+@include respond-max(lg) {
+  .info_left .left_4 {
+    margin: 1rem 0px;
+  }
+}
+@include respond-max(sm) {
+  .info_left {
+    .left_4 {
+      flex-direction: column;
+      align-items: stretch;
+
+      .add_Cart,
+      .buy_now {
+        width: 100%;
+      }
+
+      .btn_cart,
+      .btn_buy {
+        font-size: 1rem;
+        padding: 1rem;
+        line-height: normal;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        white-space: normal;
+        text-align: center;
+
+        span {
+          display: inline-block;
+        }
+
+        .icart {
+          font-size: 20px;
+        }
+      }
+    }
+    .price_container {
+      .prices {
+        font-size: 20px!important;
+      }
+      .sale_price {
+        font-size: 15px!important;
+      }
+
+    }
+  }
+  .discounts_price, .idiscount {
+  font-size: 15px!important;
+  }
+}
+@include respond-max(nesthub){
+  .info_left {
+    .left_4 {
+      flex-direction: column;
+      align-items: stretch;
+
+      .add_Cart,
+      .buy_now {
+        width: 100%;
+      }
+
+      .btn_cart,
+      .btn_buy {
+        font-size: 1rem;
+        padding: 1rem;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.4;
+
+        span {
+          display: inline-block;
+        }
+
+        .icart {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+  .discounts_price, .idiscount {
+    font-size: 15px!important;
+  }
+}
+@media (max-width: 830px) and (min-width: 810px) {
+  .info_left {
+    .left_2 {
+      .price_container {
+        .prices {
+          font-size: 20px !important;
+        }
+
+        .sale_price {
+          font-size: 15px !important;
+        }
+
+        .discounts_price,
+        .idiscount {
+          font-size: 15px !important;
+        }
+      }
+    }
+  }
+}
+

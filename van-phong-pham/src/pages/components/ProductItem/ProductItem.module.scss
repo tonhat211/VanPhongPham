@@ -2,7 +2,7 @@
 
 .product-item {
     // padding: 10px;
-    height: 447px;
+    height: fit-content;
     overflow: hidden;
     border-radius: 10px;
     border: 1px solid white;
@@ -121,10 +121,11 @@
     }
 
     .btn-container {
-        margin-top: 10px;
+        margin-top: 1rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-bottom: 1rem;
     }
 }
 @include respond-to(mobile) {

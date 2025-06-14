@@ -47,7 +47,7 @@ function ProductDetailPage() {
                     </div>
                     <div className="product-reviewAndRating-section3">
                         <ReviewAndRating product={product} />
-                    </div>{' '}
+                    </div>
                     <div className="carousel-section">
                         <CarouselCards />
                     </div>

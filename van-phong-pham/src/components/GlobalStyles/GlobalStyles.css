@@ -21,7 +21,7 @@
   --breadcrumb-backround-color: #dbe8ff;
   --red-light-a: #ffe0e2;
   --border-color: rgba(23, 23, 23, 0.14);
-  --label-admin:#007aff;
+  --label-admin: #007aff;
   --background-admin: linear-gradient(90deg, #09bce4 0%, #2659f3 100%);
 }
 
@@ -271,6 +271,14 @@ body {
   margin-bottom: 10px;
 }
 
+.mt-0 {
+  margin-top: 0;
+}
+
+.mt-14 {
+  margin-top: 14px;
+}
+
 .note {
   color: var(--primary-color);
   font-style: italic;
@@ -314,6 +322,96 @@ body {
   cursor: pointer;
   text-decoration: underline;
   filter: brightness(1.5);
+}
+
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 30px;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: var(--header-color);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.scroll-to-top-btn:hover {
+  filter: brightness(1.5);
+}
+
+.scroll-to-top-btn.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.grid {
+  min-width: 1200px;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+@media (min-width: 720px) and (max-width: 1024px) {
+  .grid {
+    min-width: 720px;
+  }
+  .d-flex-ctr-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .d-flex-ctr-btw-tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .show-tab {
+    display: block;
+  }
+  .hide-tab {
+    display: none;
+  }
+  .p-20-tab {
+    padding: 20px;
+  }
+  .pt-137-tab {
+    padding-top: 137px;
+  }
+  .pt-160-tab {
+    padding-top: 160px;
+  }
+  .mt-0-tab {
+    margin-top: 0;
+  }
+  .mb-10-tab {
+    margin-bottom: 10px;
+  }
+  .w-30-tab {
+    width: 30%;
+  }
+  .w-100-tab {
+    width: 100%;
+  }
+  .grid-col-4-tab {
+    width: 33.33%;
+  }
+}
+@media (min-width: 0px) and (max-width: 719px) {
+  .grid {
+    min-width: 0px;
+  }
 }
 
 /*# sourceMappingURL=GlobalStyles.css.map */

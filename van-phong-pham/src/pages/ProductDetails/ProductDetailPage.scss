@@ -1,3 +1,4 @@
+@import 'src/assets/responsive/breakpoints.scss';
 .product-detail-container {
 display: flex;
   flex-direction: column;
@@ -24,4 +25,13 @@ display: flex;
  .product-reviewAndRating-section3 {
 
  }
+}
+
+@include respond-max(lg) {
+  .product-detail-section1 {
+    flex-direction: column!important;
+    .pdetails-info {
+      margin-left: 0rem!important;
+    }
+  }
 }

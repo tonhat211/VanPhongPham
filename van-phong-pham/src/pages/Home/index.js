@@ -30,10 +30,10 @@ function Home() {
                         0: {
                             slidesPerView: 1,
                         },
-                        768: {
+                        992: {
                             slidesPerView: 1,
                         },
-                        992: {
+                        1200: {
                             slidesPerView: 2,
                         },
                     }}

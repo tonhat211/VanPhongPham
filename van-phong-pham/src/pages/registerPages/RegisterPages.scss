@@ -1,3 +1,4 @@
+@import 'src/assets/responsive/breakpoints.scss';
 .register-page-container {
   min-height: 100vh;
   display: flex;
@@ -7,6 +8,7 @@
   justify-content: center;
   align-items: center;
   padding: 80px 20px;
+  overflow: hidden;
   .register-section {
     background: rgba(0, 0, 0, 0.4);
     //background: #0f3f8e;
@@ -14,7 +16,7 @@
     border-radius: 12px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 600px;
+    max-width: 90rem;
     z-index: 2;
     color: white;
 
@@ -37,7 +39,7 @@
       justify-content: space-between;
       margin-bottom: 25px;
       background: #fff;
-      border-radius: 30px;
+      border-radius: 3rem;
       overflow: hidden;
 
       button {
@@ -136,6 +138,7 @@
       .account-title {
         color: #dadada;
         a {
+          line-height: 1.5;
           color: #ffc107;
           font-weight: 700 !important;
           cursor: pointer;
@@ -293,6 +296,134 @@
       }
       100% {
         transform: translateY(-700px) rotate(600deg);
+      }
+    }
+  }
+}
+@include respond-max(xs) {
+  .bg-bubbles li {
+    width: 2rem !important;
+    height: 2rem !important;
+
+    &:nth-child(1),
+    &:nth-child(6),
+    &:nth-child(7),
+    &:nth-child(10) {
+      width: 3rem !important;
+      height: 3rem !important;
+    }
+  }
+}
+@include respond-max(xs) {
+  .bg-bubbles li:nth-child(n+6) {
+    display: none;
+  }
+}
+
+@include respond-max(xs) {
+  .register-section {
+    padding: 20px;
+    h4 {
+      font-size: 18px;
+    }
+    p {
+      font-size: 14px;
+    }
+
+    .register-tabs {
+      flex-direction: column;
+
+      button {
+        font-size: 13px;
+        padding: 10px;
+      }
+    }
+
+    .register {
+      .form-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
+    .submit-btn {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .account-login-container {
+      .account-gg-fb {
+        flex-direction: column;
+        .account-gg,
+        .account-fb {
+          width: 59%!important;
+          font-size: 14px;
+          padding: 8px;
+        }
+      }
+    }
+  }
+}
+
+@include respond-max(sm) {
+  .register-section {
+    padding: 25px;
+
+    .register-tabs {
+      button {
+        font-size: 14px;
+      }
+    }
+
+    .register {
+      .form-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
+    .account-login-container {
+      .account-gg-fb {
+        flex-direction: column;
+        .account-gg,
+        .account-fb {
+          width: 59%!important;
+        }
+      }
+    }
+  }
+}
+
+@include respond-max(md) {
+  .register-section {
+    max-width: 90%;
+  }
+}
+@include respond-max(lg) {
+  .register-section {
+    max-width: 85rem;
+  }
+}
+@include respond-max(ipadAir) {
+  .register-section {
+    .register-tabs {
+      flex-direction: row;
+      button {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+
+    .register .form-row {
+      flex-direction: column;
+    }
+
+    .account-login-container .account-gg-fb {
+      flex-direction: column;
+      .account-gg,
+      .account-fb {
+        width: 60%;
+        font-size: 15px;
       }
     }
   }

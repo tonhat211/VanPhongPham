@@ -84,7 +84,7 @@ function ProductInfoPanel({ product }) {
                                 <>
                                     <span className="sale_price">{formatMoney(detail.initPrice)}</span>
                                     <span className="discounts_price">
-                                        -{detail.discount}%
+                                           -{detail.discount}%
                                         <LocalOfferIcon className="idiscount" />
                                     </span>
                                 </>

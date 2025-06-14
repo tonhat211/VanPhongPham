@@ -1,20 +1,17 @@
-.product-detail-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.product-detail-container .product-detail-section1, .product-detail-container .discript-product-detail-section2, .product-detail-container .product-reviewAndRating-section3, .product-detail-container .carousel-section {
-  height: fit-content;
-  padding: 1rem;
-  margin: 1.5rem 0rem;
-  display: flex;
-  flex-direction: row;
-  background-color: var(--header-background);
-  border-radius: 1rem;
-  width: 100%;
-}
-.product-detail-container .product-detail-section1 .pdetails-info {
-  margin-left: 2rem;
-}
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 1 | @import 'src/assets/responsive/breakpoints.scss';
+ *   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *   '
+ *   ProductDetailPage.scss 1:9  root stylesheet */
 
-/*# sourceMappingURL=ProductDetailPage.css.map */
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @import 'src/assets/responsive/breakpoints.scss';\a   \2502          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   ProductDetailPage.scss 1:9  root stylesheet";
+}

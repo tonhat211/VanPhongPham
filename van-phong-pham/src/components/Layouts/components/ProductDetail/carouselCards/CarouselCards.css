@@ -1,5 +1,6 @@
 .carousel-wrapper {
   padding: 20px;
+  max-width: 100%;
   overflow: hidden;
 }
 .carousel-wrapper .carousel-title {
@@ -9,7 +10,6 @@
 }
 .carousel-wrapper .swiper {
   width: 100%;
-  overflow: hidden;
 }
 .carousel-wrapper .swiper-wrapper {
   display: flex;
@@ -19,8 +19,7 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  width: auto !important;
-  max-width: 250px;
+  max-width: 100%;
   padding: 10px;
   box-sizing: border-box;
 }

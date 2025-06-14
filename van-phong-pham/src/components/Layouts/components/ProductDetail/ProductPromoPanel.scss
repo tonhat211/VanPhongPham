@@ -1,7 +1,6 @@
 .info_right {
   width: 100%;
   height: fit-content;
-
   .right_1 {
     gap: 10px;
     align-content: center;
@@ -24,6 +23,16 @@
         font-size: 2.5rem;
         color: var(--header-color);
       }
+    }
+  }
+}
+
+@media (min-width: 540px) and (max-width: 912px) {
+  .info_right {
+    gap: 3rem;
+    display: flex;
+    .right_1 {
+      width: fit-content;
     }
   }
 }

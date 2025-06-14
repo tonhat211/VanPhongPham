@@ -1,5 +1,4 @@
 import footerStyles from "./Footer.scss"
-import footer_bct from '~/assets/images/img/footer_bct.webp';
 import brandsSliderImgs from "~/assets/images/imgBrands/BrandsSliderImgs";
 import midFooterImgs from "~/assets/images/ImgsmidFooter/midFooterImgs";
 import React, { useState } from 'react';

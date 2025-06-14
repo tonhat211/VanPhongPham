@@ -7,16 +7,20 @@ import styles from './ProductItem.module.scss';
 import { default as StarRating } from '../StarRating';
 import { default as CustomButton } from '../CustomButton';
 import { formatMoney, addToRecentlyViewed } from '~/utils';
+import useI18n from '~/hooks/useI18n';
 
 const cx = classNames.bind(styles);
 
-function ProductItem({ item,style, className}) {
+function ProductItem({ item, style, className }) {
+    const { t, lower } = useI18n();
+
     return (
-        <div className={`${className || 'grid-col-3'} grid-col-4-tab grid-col-6-mob p-4-mob`} style={{ padding: '10px',...style }}>
+        <div
+            className={`${className || 'grid-col-3'} grid-col-4-tab grid-col-6-mob p-4-mob`}
+            style={{ padding: '10px', ...style }}
+        >
             <div className={cx('product-item')}>
-                <Link to={`/products/detail/${item.id}`}
-                  onClick={() => addToRecentlyViewed(item)}
->
+                <Link to={`/products/detail/${item.id}`} onClick={() => addToRecentlyViewed(item)}>
                     <div className={cx('img-container')}>
                         <img src={item.thumbnail} alt="" />
                     </div>
@@ -35,7 +39,7 @@ function ProductItem({ item,style, className}) {
                                     <i>
                                         <FontAwesomeIcon icon={faArrowTrendUp} />
                                     </i>
-                                    Đã bán {item.soldQty}
+                                    {t('sold')} {item.soldQty}
                                 </p>
                             )}
                         </div>
@@ -44,7 +48,7 @@ function ProductItem({ item,style, className}) {
                         </div>
                         <div className={cx('rate-container')}>
                             <StarRating rate={item.avgRating} />
-                            <p style={{alignItems:'center'}}> 
+                            <p style={{ alignItems: 'center' }}>
                                 (<span>{item.totalReview}</span>)
                             </p>
                         </div>
@@ -53,14 +57,14 @@ function ProductItem({ item,style, className}) {
                             <div className="d-flex" style={{ alignItems: 'center' }}>
                                 <p className={cx('init-price')}>{formatMoney(item.initPrice)}</p>
                                 <p className={cx('discount-label')}>
-                                    - <span>{item.discount}</span>%
+                                    -<span>{item.discount}</span>%
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div className="divider" style={{ margin: '0 10px' }}></div>
                     <div className={cx('btn-container')}>
-                        <CustomButton title='XEM NHANH' defaultICon={faAngleRight} afterIcon={faArrowRight}/>
+                        <CustomButton title={t('quick-view')} defaultICon={faAngleRight} afterIcon={faArrowRight} pStyle={{ textTransform: 'uppercase' }} />
                     </div>
                 </Link>
             </div>

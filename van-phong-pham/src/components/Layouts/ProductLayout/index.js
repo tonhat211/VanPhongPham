@@ -18,7 +18,7 @@ function ProductLayout({children}) {
                 </div>
             
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </div>
     );
 }

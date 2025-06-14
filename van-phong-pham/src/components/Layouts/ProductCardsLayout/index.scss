@@ -1,7 +1,15 @@
+@import 'src/assets/responsive/breakpoints.scss';
 .product-cart-layout-container {
-  padding-top: 80px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-top: 8rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   background-color: var(--primary-backround-color);
   display: flex;
+  @include respond-max(lg) {
+    width: 100%
+  }
+  @include respond-max(sm) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
