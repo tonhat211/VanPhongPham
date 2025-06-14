@@ -1,3 +1,4 @@
+@import 'src/assets/responsive/breakpoints.scss';
 .otp-verification-container {
   min-height: 100vh;
   display: flex;
@@ -7,7 +8,7 @@
   justify-content: center;
   align-items: center;
   padding: 80px 20px;
-
+  overflow: hidden;
   .otp-box {
     background: rgba(0, 0, 0, 0.4);
     //background: #0f3f8e;
@@ -204,5 +205,25 @@
         transform: translateY(-700px) rotate(600deg);
       }
     }
+  }
+}
+
+@include respond-max(xs) {
+  .bg-bubbles li {
+    width: 2rem !important;
+    height: 2rem !important;
+
+    &:nth-child(1),
+    &:nth-child(6),
+    &:nth-child(7),
+    &:nth-child(10) {
+      width: 3rem !important;
+      height: 3rem !important;
+    }
+  }
+}
+@include respond-max(xs) {
+  .bg-bubbles li:nth-child(n+6) {
+    display: none;
   }
 }

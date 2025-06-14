@@ -22,20 +22,28 @@ function CarouselCards() {
                         modules={[Navigation, Autoplay]}
                         navigation
                         // spaceBetween={10}
-                        slidesPerView={5}
+                        slidesPerView={6}
                         loop={true}
                         autoplay={false}
+                        spaceBetween={16}
                         breakpoints={{
                             0: {
                                 slidesPerView: 1,
                             },
-                            992: {
-                                slidesPerView: 1,
-                            },
-                            1200: {
+                            576: {
                                 slidesPerView: 2,
                             },
+                            768: {
+                                slidesPerView: 3,
+                            },
+                            992: {
+                                slidesPerView: 4,
+                            },
+                            1024: {
+                                slidesPerView: 6,
+                            },
                         }}
+
                         onSwiper={(swiper) => swiper.update()}
                     >
                         {recentlyViewedProducts.map((item, index) => (
