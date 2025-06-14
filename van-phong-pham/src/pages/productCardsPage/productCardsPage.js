@@ -131,19 +131,21 @@ function ProductCardsPage() {
                             {cartItems.length > 0 ? (
                                 cartItems.map((item) => (
                                     <div className="cart-item" key={item.id}>
-                                        <input
-                                            type="checkbox" className="checkbox"
-                                            checked={selectedItems.includes(item.id)}
-                                            onChange={() => handleSelectItem(item.id)}
-                                        />
-                                        <img className="item-image" src={item.imageUrl} alt={item.title} />
+                                        <div className="warp-item">
+                                            <input
+                                                type="checkbox" className="checkbox"
+                                                checked={selectedItems.includes(item.id)}
+                                                onChange={() => handleSelectItem(item.id)}
+                                            />
+                                            <img className="item-image" src={item.imageUrl} alt={item.title} />
+                                        </div>
                                         <div className="item-details">
                                             <p className="item-title">{item.productName}</p>
                                             <p className="item-brand">{item.brandName}</p>
                                         </div>
 
                                         <div className="item-price">
-                                            {formatPrices(item.price)}
+                                        {formatPrices(item.price)}
                                             {item.initPrice && (
                                                 <>
                                                     <del>{formatPrices(item.initPrice)}</del>
