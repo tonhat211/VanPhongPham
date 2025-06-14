@@ -215,9 +215,6 @@ function SubSidebar() {
         </div>
     );
 
-    // const MenuList = React.memo(function MenuList({ items, title, filterType, selectedSubs, onChange }) {
-
-    // function MenuList({ items, title, filterType }) {
 }
 
 export default SubSidebar;

@@ -1,13 +1,9 @@
 import classNames from 'classnames/bind';
-import { useTranslation } from 'react-i18next';
-import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faArrowTrendUp, faAngleRight, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import HeadlessTippy from '@tippyjs/react/headless';
 import { Link } from 'react-router-dom';
 
 import styles from './ProductItem.module.scss';
-import images from '~/assets/images';
 import { default as StarRating } from '../StarRating';
 import { default as CustomButton } from '../CustomButton';
 import { formatMoney, addToRecentlyViewed } from '~/utils';
@@ -16,7 +12,7 @@ const cx = classNames.bind(styles);
 
 function ProductItem({ item,style, className}) {
     return (
-        <div className={`${className || 'grid-col-3'} grid-col-4-tab`} style={{ padding: '10px',...style }}>
+        <div className={`${className || 'grid-col-3'} grid-col-4-tab grid-col-6-mob p-4-mob`} style={{ padding: '10px',...style }}>
             <div className={cx('product-item')}>
                 <Link to={`/products/detail/${item.id}`}
                   onClick={() => addToRecentlyViewed(item)}

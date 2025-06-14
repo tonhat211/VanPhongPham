@@ -1,39 +1,28 @@
 import classNames from 'classnames/bind';
-import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faMagnifyingGlass,
-    faCircleXmark,
-    faXmark,
-    faAngleRight,
-    faArrowTrendUp,
-    faFilter,
-} from '@fortawesome/free-solid-svg-icons';
-import HeadlessTippy from '@tippyjs/react/headless';
-import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { useSearchParams } from 'react-router-dom';
 import { Range, getTrackBackground } from 'react-range';
 
 import styles from './SearchProduct.module.scss';
-import images from '~/assets/images';
-import SubSidebar from '~/components/Layouts/components/SubSidebar';
-import { menus, brands, priceRanges, colors } from '~/data';
 import { ProductItem, Pagination } from '../components';
-import { Product as ProductModel, StarRating } from '~/models';
-import { getProductsByCategory, getProductsByKeyword } from '~/api/productApi';
 import { useUpdateUrlParams } from '~/utils/url';
-import { useSidebar } from '~/context/FEProvider';
+import { getProductsByKeyword } from '~/api/productApi';
+import useI18n from '~/hooks/useI18n';
+import { formatMoney } from '~/utils';
 
 const cx = classNames.bind(styles);
 
 function SearchProduct() {
+    const { t, lower } = useI18n();
+
     const [searchParams, setSearchParams] = useSearchParams();
     const updateUrlParams = useUpdateUrlParams();
 
     const keyword = searchParams.get('keyword');
 
     const page = parseInt(searchParams.get('page')) || 0;
-    const [loading, setLoading] = useState(true);
     const [totalPages, setTotalPages] = useState(1);
 
     const sortBy = searchParams.get('sortBy') || 'price';
@@ -62,11 +51,9 @@ function SearchProduct() {
                     setTotalResult(pageInfo.totalElements);
                 })
                 .catch((err) => {
-                    console.error('Lỗi tải sản phẩm:', err);
+                  
                 })
-                .finally(() => {
-                    setLoading(false);
-                });
+               
         };
 
         fetchProductsByKeyword(keyword, sortBy, direction, page, size, priceRange);
@@ -108,7 +95,6 @@ function SearchProduct() {
     const [sliderValues, setSliderValues] = useState([0, 1000000]);
 
     const handlePriceRange = (newValues) => {
-        console.log('handlePageChange');
         const minPrice = newValues[0] / 1000;
         const maxPrice = newValues[1] / 1000;
         setTempPriceRange(minPrice + '-' + maxPrice);
@@ -142,7 +128,7 @@ function SearchProduct() {
         return (
             <div className={classNames(cx(), 'd-flex-al-center grid-col-12')} style={{ marginTop: '20px' }}>
                 <p className="d-flex-al-center">
-                    Khoảng giá:{' '}
+                    <span className="hide-mob">{t('price-range')}:</span>
                     <span className={classNames(cx('price-range-item'))} style={{ marginLeft: '10px' }}>
                         {internalValues[0].toLocaleString()}đ
                     </span>
@@ -196,8 +182,8 @@ function SearchProduct() {
                 <div ref={contentRef} className={classNames(cx('content'))} style={{ flex: 1 }}>
                     {Array.isArray(products) && products.length > 0 ? (
                         <>
-                            <p className={classNames(cx('title'), 'uppercase-text')}>
-                                Có tất cả {totalResult} kết quả phù hợp
+                            <p className={classNames(cx('title'), 'uppercase-text p-header-size-mob')}>
+                                {t('there-are')} {totalResult} {t('matching-results')}
                             </p>
                             <PriceRangeSlider
                                 onFinalChange={(range) => {
@@ -205,33 +191,35 @@ function SearchProduct() {
                                 }}
                                 values={sliderValues}
                             />
-                            <div className="d-flex" style={{ marginTop: '20px' }}>
-                                <p>Sắp xếp:</p>
+                            <div className="d-flex-al-center" style={{ marginTop: '20px' }}>
+                                <p className="p-content-size-mob">{t('sort')}:</p>
                                 <ul className={classNames(cx('sort-option-list'))}>
                                     <li>
                                         <a
                                             className={classNames(
                                                 cx({ active: sortBy === 'price' && direction === 'asc' }),
+                                                'p-content-size-mob',
                                             )}
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 updateSort('price', 'asc');
                                             }}
                                         >
-                                            Giá tăng dần
+                                            {t('upper-price')}
                                         </a>
                                     </li>
                                     <li>
                                         <a
                                             className={classNames(
                                                 cx({ active: sortBy === 'price' && direction === 'desc' }),
+                                                'p-content-size-mob',
                                             )}
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 updateSort('price', 'desc');
                                             }}
                                         >
-                                            Giá giảm dần
+                                            {t('downer-price')}
                                         </a>
                                     </li>
                                 </ul>

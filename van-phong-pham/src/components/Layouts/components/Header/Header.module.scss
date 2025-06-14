@@ -19,6 +19,16 @@
     }
 }
 
+.lang-btn {
+     padding: 7px;
+    border-radius: 10px;
+    color: var(--header-color);
+    &:hover {
+        cursor: pointer;
+        background-color: var(--primary-hover-color);
+    }
+}
+
 .logo {
     width: 100%;
 }
@@ -101,4 +111,7 @@
 }
 
 @include respond-to(mobile) {
+     .wrapper {
+        height: fit-content;
+    }
 }

@@ -122,6 +122,26 @@
 }
 
 @include respond-to(mobile) {
- 
+ .sort-option-list {
+    li {
+        a {
+            padding: 4px 10px;
+        }
+    }
+ }
+
+ .price-range-item {
+    // min-width: 60px;
+    // padding: 10px;
+
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // border-radius: 4px;
+    // background-color: var(--primary-color);
+    // color: white;
+    // font-size: 1.2rem;
+    // height: 30px;
+}
 }
 

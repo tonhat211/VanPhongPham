@@ -1,5 +1,6 @@
 {
     "welcome": "Chào mừng bạn đến với website!",
+    "home-page": "Trang chủ",
     "language": "Ngôn ngữ",
     "search-product": "Tìm kiếm sản phẩm...",
     "more-product": "Xem thêm sản phẩm",
@@ -9,7 +10,7 @@
     "home": "Trang chủ",
     "product-type": "Loại sản phẩm",
     "brand": "Thương hiệu",
-    "price-range": "Mức giá",
+    "price-range": "Khoảng giá",
     "color": "Màu sắc",
     "product": "Sản phẩm",
     "products": "Sản phẩm",
@@ -93,6 +94,13 @@
     "BACK": "Đã trả hàng",
     "CONFIRM_BACK": "Đã trả hàng",
     "REVIEW": "Đã đánh giá",
-    "SUCCESS": "Đã hoàn thành"
-  
+    "SUCCESS": "Đã hoàn thành",
+    "sort": "Sắp xếp",
+    "upper-price": "Giá tăng dần",
+    "downer-price": "Giá giảm dần",
+    "there-are-not": "Không có kết quả phù hợp",
+    "recent-viewed-products": "Sản phẩm đã xem",
+    "all": "Tất cả",
+    "there-are": "Có",
+    "matching-results": "Kết quả phù hợp"
 }

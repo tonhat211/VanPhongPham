@@ -1,10 +1,7 @@
 import OrderItemModel from '~/models/OrderItemModel';
 import axiosInstance, { SERVER_URL_BASE } from './axiosInstance';
 
-import images from '~/assets/images';
 import OrderModel from '~/models/OrderModel';
-import ProductDetailModel from '~/models/ProductDetailModel';
-import ProductModel from '~/models/ProductModel';
 
 // {
 //   "userId": 1,

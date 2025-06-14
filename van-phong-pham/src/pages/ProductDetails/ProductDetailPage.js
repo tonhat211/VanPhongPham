@@ -12,10 +12,8 @@ import { DatasetRounded } from '@mui/icons-material';
 function ProductDetailPage() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
-        setLoading(true);
         getProductDetail({
             id,
         })
@@ -24,11 +22,8 @@ function ProductDetailPage() {
                 //    console.log("setProduct:" +JSON.stringify(data,null,2));
             })
             .catch((err) => {
-                console.error('Lỗi tải sản phẩm:', err);
+               
             })
-            .finally(() => {
-                setLoading(false);
-            });
     }, [id]);
 
     useEffect(() => {

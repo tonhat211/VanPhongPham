@@ -16,7 +16,7 @@ function Breadcrumb() {
        <div className={cx('wrapper')}>
             <ul>
                 <li>
-                    <Link to="/">Trang chủ</Link>
+                    <Link to="/">{t('home-page')}</Link>
                 </li>
                 {pathnames.map((value, index) => {
                     const to = `/${pathnames.slice(0, index + 1).join('/')}`;

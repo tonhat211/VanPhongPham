@@ -8,6 +8,7 @@ import com.example.thien_long.service.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ProductDetailResponse {
     private long id;
@@ -38,6 +39,24 @@ public class ProductDetailResponse {
 
        this.reviews = reviews;
        this.productDetails = productDetails;
+
+    }
+
+    public void translate(String content) {
+        this.name = content;
+    }
+
+    public void translateAndConvertCurrency(String nameTranslation,Map<Long,String> detailTranslationMap,double rate,
+                                            String descriptionTranslation) {
+        this.name = nameTranslation;
+        if(this.productDetails != null) {
+            for(ProductDetail productDetail : this.productDetails) {
+                productDetail.convertCurrency(rate);
+                if(detailTranslationMap.containsKey(productDetail.getId()))
+                    productDetail.translate(detailTranslationMap.get(productDetail.getId()));
+            }
+        }
+        this.description = descriptionTranslation;
 
     }
 

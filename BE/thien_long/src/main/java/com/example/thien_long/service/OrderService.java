@@ -1,13 +1,6 @@
 package com.example.thien_long.service;
-import com.example.thien_long.dto.request.CartItemRequest;
-import com.example.thien_long.dto.request.UpdateOrderStatusRequest;
-import com.example.thien_long.dto.response.CartItemResponse;
-import com.example.thien_long.dto.response.CartResponse;
 import com.example.thien_long.dto.response.OrderResponse;
 import com.example.thien_long.exception.ValidException;
-import com.example.thien_long.exception.exceptionCatch.AppException;
-import com.example.thien_long.exception.exceptionCatch.ErrorCode;
-import com.example.thien_long.mapper.CartItemMapper;
 import com.example.thien_long.model.*;
 import com.example.thien_long.repository.*;
 import jakarta.transaction.Transactional;
@@ -15,13 +8,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

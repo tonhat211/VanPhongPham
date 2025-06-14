@@ -29,12 +29,6 @@ public class ProductDetail {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-//    @Transient
-//    @JsonProperty("discount")
-//    public int getDiscount() {
-//        return 100 - (int) ((price/initPrice) * 100);
-//    }
-
     @Transient
     private int discount;
 
@@ -48,6 +42,15 @@ public class ProductDetail {
         this.price = price;
         this.qty = qty;
         this.discount = 100 - (int) ((price/initPrice) * 100);
+    }
+
+    public void convertCurrency(double rate) {
+        price      = Math.round(price      * rate * 100) / 100.0;
+        initPrice  = Math.round(initPrice  * rate * 100) / 100.0;
+    }
+
+    public void translate(String content) {
+        this.title = content;
     }
 
     public int getDiscount() {
