@@ -3,7 +3,7 @@ import Footer from '../components/Footer/Footer'
 import './index.scss'
 import Home from '~/pages/Home';
 import Sidebar from '~/components/Layouts/components/Sidebar';
-import { useSidebar } from '~/context/FEProvider';
+import { useFEContext } from '~/context/FEProvider';
 function HomeLayout({children}) {
     return (
         <div>

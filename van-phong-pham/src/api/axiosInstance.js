@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import i18n from '../i18n';      
 
 
 const API_BASE = 'http://localhost:8080/api/v1';
@@ -21,13 +22,15 @@ axiosInstance.interceptors.request.use(
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
-        console.log('Request:', {
-      url: config.url,
-      method: config.method,
-      headers: config.headers,
-      params: config.params,
-      data: config.data,
-    });
+      config.headers['Accept-Language'] = i18n.language || 'vi';
+
+    //     console.log('Request:', {
+    //   url: config.url,
+    //   method: config.method,
+    //   headers: config.headers,
+    //   params: config.params,
+    //   data: config.data,
+    // });
       return config;
     },
     (error) => Promise.reject(error)
@@ -71,7 +74,9 @@ axiosInstance.interceptors.response.use(
             isRefreshing = true;
 
             try {
-                const refreshResponse = await axios.post(`${API_BASE}/auth/refresh`, {
+                // const refreshResponse = await axios.post(`${API_BASE}/auth/refresh`, {
+                const refreshResponse = await axiosInstance.post('/auth/refresh', {
+
                     token: localStorage.getItem('token'),
                 });
 
@@ -109,7 +114,7 @@ axiosInstance.interceptors.response.use(
       toast.error('Không thể kết nối đến máy chủ');
     }
 
-    return Promise.reject(error); // Đừng quên reject
+    return Promise.reject(error);
   }
 );
 

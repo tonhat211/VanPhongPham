@@ -6,9 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 
 import styles from './Sidebar.module.scss';
-import featuredCategories from '~/data/featuredCategories';
 import { useData } from '~/context/DataContext';
-import { useSidebar } from '~/context/FEProvider';
+import { useFEContext } from '~/context/FEProvider';
 import { logoutUser } from '~/api/logoutApi';
 import { toast } from 'react-toastify';
 
@@ -20,12 +19,12 @@ function Sidebar({ className }) {
     const { t, i18n } = useTranslation();
     const { menus, featureMenus } = useData();
 
-      const { closeSidebar } = useSidebar(); 
-       const handleCloseSidebar = () => {
+    const { closeSidebar } = useFEContext();
+    const handleCloseSidebar = () => {
         closeSidebar(); // 🟢 Gọi đóng sidebar khi click
     };
 
-    const { isSidebarOpen, toggleSidebar } = useSidebar();
+    const { isSidebarOpen, toggleSidebar } = useFEContext();
 
     //thay doi ngon ngu
     const changeLanguage = (lang) => {
@@ -94,13 +93,13 @@ function Sidebar({ className }) {
     return (
         <div
             className={classNames(cx('wrapper'), 'grid-col-2', {
-                'hide-tab': !isSidebarOpen, // ẩn khi chưa mở
+                'hide-tab hide-mob': !isSidebarOpen, // ẩn khi chưa mở
             })}
         >
-            <div className={classNames(cx('overlay'), 'hide',{ 'show': isSidebarOpen })} onClick={toggleSidebar}></div>
+            <div className={classNames(cx('overlay'), 'hide', { show: isSidebarOpen })} onClick={toggleSidebar}></div>
 
-            <div className={classNames(cx('menu-container'), 'w-30-tab')}>
-                <div className={classNames('hide show-tab')}>
+            <div className={classNames(cx('menu-container'), 'w-30-tab w-50-mob')}>
+                <div className={classNames('hide show-tab show-mob')}>
                     <HeaderMenuItem item={account} />
                 </div>
                 <MenuList items={menus} />
@@ -119,11 +118,13 @@ function Sidebar({ className }) {
                         </i>
                     </Link>
 
-                    <div className="d-flex-space-between" style={{flex:1, alignItems:'center'}}>
+                    <div className="d-flex-space-between" style={{ flex: 1, alignItems: 'center' }}>
                         {item.stLink ? (
-                            <Link to={item.stLink} style={{ fontWeight: '600', fontSize: '1rem' }}
-                             onClick={handleCloseSidebar}
-                             >
+                            <Link
+                                to={item.stLink}
+                                style={{ fontWeight: '600', fontSize: '1rem' }}
+                                onClick={handleCloseSidebar}
+                            >
                                 {item.stTitle}
                             </Link>
                         ) : (
@@ -132,16 +133,16 @@ function Sidebar({ className }) {
                             </p>
                         )}
                         {item.ndLink ? (
-                            <Link to={item.ndLink} style={{ fontSize: '0.8rem' }}
-                             onClick={handleCloseSidebar}>
+                            <Link to={item.ndLink} style={{ fontSize: '0.8rem' }} onClick={handleCloseSidebar}>
                                 {item.ndTitle}
                             </Link>
                         ) : (
                             <i className={cx('logout-icon')}>
                                 {' '}
-                                <FontAwesomeIcon icon={faRightFromBracket} 
-                                onClick={item.onLogout ? handleLogout : undefined}/>
-                          
+                                <FontAwesomeIcon
+                                    icon={faRightFromBracket}
+                                    onClick={item.onLogout ? handleLogout : undefined}
+                                />
                             </i>
                         )}
                     </div>
@@ -153,12 +154,13 @@ function Sidebar({ className }) {
     function MenuItem({ item }) {
         const pageUrl = '/products';
         const fullUrl = `${pageUrl}/${item.link}`;
-    const { closeSidebar } = useSidebar(); 
-       const handleClick = () => {
-        closeSidebar(); // 🟢 Gọi đóng sidebar khi click
-    };
+        const { closeSidebar } = useFEContext();
+        const handleClick = (e) => {
+            console.log(e.currentTarget.href);
+            closeSidebar(); 
+        };
         return (
-            <li className={cx('menu-item')} >
+            <li className={cx('menu-item')}>
                 <Link {...(item.link && { to: fullUrl })} onClick={handleClick}>
                     {item.icon && (
                         <div className="grid-col-1_5">

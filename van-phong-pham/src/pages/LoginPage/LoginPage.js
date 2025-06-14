@@ -70,11 +70,11 @@ function LoginPage() {
             };
 
             const response = await loginUser(payload);
-            toast.success("Đăng nhập thành công");
+            // toast.success("Đăng nhập thành công");
             setTimeout(() => navigate('/', { state: { email: formData.email } }), 2000);
 
         } catch (error) {
-            toast.error(error.message || "Đăng nhập thất bại");
+            // toast.error(error.message || "Đăng nhập thất bại");
         }
     };
 

@@ -137,5 +137,22 @@
 }
 
 @include respond-to(mobile) {
- 
+  .subsidebar-container {
+    position: fixed;
+    background-color: white;
+    z-index: 101;
+    top: 137px;
+    overflow-y: scroll;
+    max-height: 90%;
+    width: 40%;
+     animation: leftIn ease 0.49s;
+  }
+
+   .overlay {
+        animation: fadeIn ease 0.49s;
+    }
+
+    .divider {
+        margin-top: 0px;
+    }
 }

@@ -1,5 +1,4 @@
 import classNames from 'classnames/bind';
-import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -7,21 +6,23 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import styles from './Product.module.scss';
 import SubSidebar from '~/components/Layouts/components/SubSidebar';
-import { menus } from '~/data';
 import { ProductItem, Pagination } from '../components';
 import { getProductsByCategory } from '~/api/productApi';
 import { useUpdateUrlParams } from '~/utils/url';
-import { useSidebar } from '~/context/FEProvider';
+import { useFEContext } from '~/context/FEProvider';
+import { useData } from '~/context/DataContext';
+import useI18n from '~/hooks/useI18n';
 
 const cx = classNames.bind(styles);
 
 function Product() {
+    const { t, lower } = useI18n();
+    const { menus } = useData();
     const { category } = useParams(); // lấy từ URL path
     const [searchParams, setSearchParams] = useSearchParams();
     const updateUrlParams = useUpdateUrlParams();
 
     const page = parseInt(searchParams.get('page')) || 0;
-    const [loading, setLoading] = useState(true);
     const [totalPages, setTotalPages] = useState(1);
 
     const sortBy = searchParams.get('sortBy') || 'price';
@@ -37,7 +38,6 @@ function Product() {
     }
 
     useEffect(() => {
-        setLoading(true);
         getProductsByCategory({
             category,
             sub,
@@ -56,14 +56,12 @@ function Product() {
             })
             .catch((err) => {
                 console.error('Lỗi tải sản phẩm:', err);
-            })
-            .finally(() => {
-                setLoading(false);
             });
     }, [category, sortBy, direction, page, size, sub, brands, priceRange]);
 
     useEffect(() => {
-        scrollHeader();
+        // if(page!==0)
+        // scrollHeader();
     }, [page]);
 
     let parent = menus.find((m) => m.link === category);
@@ -107,7 +105,7 @@ function Product() {
         };
     }, []);
 
-    const { isSubSidebarOpen, toggleSubSidebar } = useSidebar();
+    const { isSubSidebarOpen, toggleSubSidebar } = useFEContext();
     const contentRef = useRef(null);
 
     const scrollHeader = () => {
@@ -116,14 +114,15 @@ function Product() {
             block: 'start',
         });
     };
-    
+
     return (
         <div className={classNames(cx('wrapper'))}>
             <div className={classNames(cx('content-container', 'product-show-container'), 'd-flex')}>
                 <div
                     ref={barRef}
-                    className={classNames(cx('subsidebar-container'), 'grid-col-2 w-30-tab', {
+                    className={classNames(cx('subsidebar-container'), 'grid-col-2 w-30-tab w-50-mob', {
                         'hide-tab': !isSubSidebarOpen,
+                        'hide-mob': !isSubSidebarOpen,
                     })}
                     style={{}}
                 >
@@ -138,47 +137,51 @@ function Product() {
                 )}
 
                 <div ref={contentRef} className={classNames(cx('content'))} style={{ flex: 1 }}>
-                    <p className={classNames(cx('title'), 'uppercase-text')}>{parent?.title || 'Tất cả'}</p>
+                    <p className={classNames(cx('title'), 'uppercase-text p-header-size-mob')}>
+                        {parent?.title || t('all')}
+                    </p>
                     {Array.isArray(products) && products.length > 0 ? (
                         <>
                             <div className="d-flex" style={{ marginTop: '20px' }}>
-                                <p>Sắp xếp:</p>
+                                <p className="p-content-size-mob">{t('sort')}:</p>
                                 <ul className={classNames(cx('sort-option-list'))}>
                                     <li>
                                         <a
                                             className={classNames(
                                                 cx({ active: sortBy === 'price' && direction === 'asc' }),
+                                                'p-content-size-mob',
                                             )}
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 updateSort('price', 'asc');
                                             }}
                                         >
-                                            Giá tăng dần
+                                            {t('upper-price')}
                                         </a>
                                     </li>
                                     <li>
                                         <a
                                             className={classNames(
                                                 cx({ active: sortBy === 'price' && direction === 'desc' }),
+                                                'p-content-size-mob',
                                             )}
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 updateSort('price', 'desc');
                                             }}
                                         >
-                                            Giá giảm dần
+                                            {t('downer-price')}
                                         </a>
                                     </li>
                                 </ul>
                                 <i
-                                    className={classNames(cx('filter-icon'), 'hide show-tab')}
+                                    className={classNames(cx('filter-icon'), 'hide show-tab show-mob')}
                                     onClick={toggleSubSidebar}
                                 >
                                     <FontAwesomeIcon icon={faFilter} />
                                 </i>
                             </div>
-                            <div className={classNames(cx(''), 'divider mt-14 mt-0-tab')}></div>
+                            <div className={classNames(cx(''), 'divider mt-14 mt-0-tab mt-0-mob')}></div>
                             <ProductList items={products} />
                             <div className={classNames(cx('pagination-container'))}>
                                 <Pagination
@@ -190,14 +193,14 @@ function Product() {
                         </>
                     ) : (
                         <>
-                            <p>Không có kết quả phù hợp</p>
+                            <p>{t('there-are-no')} {lower('matching-results')}</p>
                         </>
                     )}
                 </div>
             </div>
             {recentlyViewedProducts && (
                 <div className={classNames(cx('content-container', 'recent-viewed-product'))}>
-                    <p className={classNames(cx('title'))}>Sản phẩm đã xem</p>
+                    <p className={classNames(cx('title'))}>{t('recent-viewed-products')}</p>
                     <ProductList items={recentlyViewedProducts.slice(0, 4)} />
                 </div>
             )}

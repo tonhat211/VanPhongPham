@@ -3,9 +3,11 @@ package com.example.thien_long.dto;
 import com.example.thien_long.model.Image;
 import com.example.thien_long.model.Product;
 import com.example.thien_long.model.Review;
+import com.example.thien_long.model.SubCategory;
 import com.example.thien_long.service.Constant;
 
 import java.util.List;
+import java.util.Map;
 
 public class BasicProductResponse {
     private long id;
@@ -31,6 +33,16 @@ public class BasicProductResponse {
         this.soldQty = soldQty;
         if(thumbnailImg!=null) this.thumbnail = Constant.THUMBNAIL_IMG_DIR+"/" +thumbnailImg.getUrl();
         this.discount = 100 - (int) ((price/initPrice) * 100);
+    }
+
+    public void translate(Map<Long, String> translationMap) {
+       if(translationMap.containsKey(this.id)) {}
+            this.name = translationMap.get(this.id);
+    }
+
+    public void convertCurrency(double rate) {
+        price      = Math.round(price      * rate * 100) / 100.0;
+        initPrice  = Math.round(initPrice  * rate * 100) / 100.0;
     }
 
     public int getSoldQty() {

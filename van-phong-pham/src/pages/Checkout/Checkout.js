@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import { Link, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -8,21 +7,14 @@ import {
     faMinus,
     faPlus,
     faTicket,
-    faMagnifyingGlass,
-    faCircleXmark,
-    faXmark,
     faAngleRight,
-    faArrowTrendUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './Checkout.module.scss';
-import images from '~/assets/images';
-import { DeliveryInfo, OrderInfo } from './components';
 import CheckoutHeader from './components/CheckoutHeader';
 import { CustomInput, Modal } from '../components';
 import icons from '~/assets/icons';
-import cartitems from '~/data/cartItems';
 import { formatMoney } from '~/utils';
 import { getCartByIds } from '~/api/cartApi';
 import { addOrder } from '~/api/orderApi';

@@ -26,7 +26,6 @@ const publicRoutes  = [
     { path: '/products/:category', component: Product, layout: ProductLayout},
      { path: '/products/search', component: SearchProduct, layout: ProductLayout},
     // { path: '/product-detail', component: ProductDetail, layout: ProductDetailLayout},
-    { path: '/category', component: Category, layout: CategoryLayout },
     { path: '/checkout', component: Checkout, layout: NoneLayout},
     // { path: '/products/:id', component: ProductDetailPage, layout: ProductDetailLayout },
     { path: '/products/detail/:id', component: ProductDetailPage, layout: ProductDetailLayout },

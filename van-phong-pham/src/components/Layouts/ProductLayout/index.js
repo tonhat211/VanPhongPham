@@ -1,11 +1,11 @@
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Breadcrumb from '../components/Breadcrumb';
-import { useSidebar } from '~/context/FEProvider';
+import { useFEContext } from '~/context/FEProvider';
 import Sidebar from '../components/Sidebar';
 
 function ProductLayout({children}) {
-        const { isSidebarOpen, toggleSidebar } = useSidebar();
+        const { isSidebarOpen } = useFEContext();
     
     return (
         <div>

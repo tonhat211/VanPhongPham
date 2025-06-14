@@ -6,7 +6,9 @@ import com.example.thien_long.model.Image;
 import com.example.thien_long.model.SubCategory;
 import com.example.thien_long.service.Constant;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MenuResponse {
     private long id;
@@ -23,6 +25,18 @@ public class MenuResponse {
         this.level = category.getLevel();
         this.icon = Constant.ICON_IMG_DIR+"/"+ category.getIcon().getUrl();
         this.subs = subs;
+    }
+
+    public void translate(Map<String, String> translationMap) {
+        this.title = translationMap.get(this.link);
+        if(this.subs != null) {
+            for(SubCategory subCategory : this.subs) {
+                if(translationMap.containsKey(subCategory.getCode())) {
+                    subCategory.setTitle(translationMap.get(subCategory.getCode()));
+                }
+
+            }
+        }
     }
 
     public List<SubCategory> getSubs() {

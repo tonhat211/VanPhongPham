@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faUser, faCartShopping, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faUser, faCartShopping, faBars, faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './Header.module.scss';
@@ -8,10 +8,11 @@ import images from '~/assets/images';
 import Search from '../Search';
 import { getCart } from '~/api/cartApi';
 import { useEffect, useState } from 'react';
-import { registerUser } from '~/api/registerApi';
 import { logoutUser } from '~/api/logoutApi';
 import { toast } from 'react-toastify';
-import { useSidebar } from '~/context/FEProvider';
+import { useFEContext } from '~/context/FEProvider';
+import { useTranslation } from 'react-i18next';
+import axiosInstance from '~/api/axiosInstance';
 const cx = classNames.bind(styles);
 
 function Header() {
@@ -19,6 +20,20 @@ function Header() {
     const navigate = useNavigate();
     const [cartCount, setCartCount] = useState(0);
     const userName = user?.name || 'Guest';
+    const { t, i18n } = useTranslation();
+
+    const toggleLanguage = () => {
+        const newLang = i18n.language === 'vi' ? 'en' : 'vi';
+        localStorage.setItem('lang', newLang);
+        axiosInstance.defaults.headers['Accept-Language'] = newLang;
+
+        const scrollY = window.scrollY;
+        localStorage.setItem('scrollY', scrollY);
+        i18n.changeLanguage(newLang).then(() => {
+            // 3. Reload toàn trang – lấy dữ liệu đã dịch từ Spring Boot
+            window.location.reload(); // hoặc navigate(0) với React‑Router v6
+        });
+    };
 
     // Tải user từ localStorage và theo dõi thay đổi
     useEffect(() => {
@@ -102,25 +117,35 @@ function Header() {
               },
     ];
 
-    const { toggleSidebar } = useSidebar();
+    const { toggleSidebar } = useFEContext();
 
     return (
         <header className={classNames(cx('wrapper'), 'grid')}>
             <div className={classNames('grid-row')} style={{ alignItems: 'center' }}>
-                <div className="grid-col-2 w-100-tab d-flex-ctr-btw-tab mb-10-tab">
-                    <i className={classNames(cx('menu-btn'), 'hide show-tab')} onClick={toggleSidebar}>
+                <div className="grid-col-2 w-100-tab d-flex-ctr-btw-tab mb-10-tab w-100-mob d-flex-ctr-btw-mob">
+                    <i className={classNames(cx('menu-btn'), 'hide show-tab show-mob')} onClick={toggleSidebar}>
                         <FontAwesomeIcon icon={faBars} />
                     </i>
-                    <img src={images.logo} alt="Thien Long" className={classNames(cx('logo'), 'w-30-tab')} />
-                    <div className="hide show-tab">
+                    <Link to="/" className='w-30-tab w-30-mob'>
+                        <img
+                            src={images.logo}
+                            alt="Thien Long"
+                            className={classNames(cx('logo'))}
+                        />
+                    </Link>
+                    <div className="hide show-tab show-mob">
                         <Cart />
                     </div>
                 </div>
-                <div className="grid-col-5 w-100-tab">
+                <div className="grid-col-5 w-100-tab w-100-mob">
                     <Search />
                 </div>
-                <div className="d-flex-al-center hide-tab" style={{ marginLeft: 'auto' }}>
+                <div className="d-flex-al-center hide-tab hide-mob" style={{ marginLeft: 'auto' }}>
+                    <i className={classNames(cx('lang-btn'))} onClick={toggleLanguage}>
+                        <FontAwesomeIcon icon={faLanguage} />
+                    </i>
                     <HeaderMenuList items={headerMenuList} />
+
                     <Cart />
                 </div>
             </div>

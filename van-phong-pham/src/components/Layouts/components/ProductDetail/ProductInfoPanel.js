@@ -7,6 +7,7 @@ import { formatPrices, formatPercentage } from '~/utils/common';
 import productsData from '~/data/productData';
 import { addToCart } from '~/api/cartApi';
 import { toast } from 'react-toastify';
+import { formatMoney } from '~/utils';
 
 const statuses = [
     {
@@ -78,12 +79,12 @@ function ProductInfoPanel({ product }) {
 
                     <div className="left_2">
                         <div className="price_container">
-                            <span className="prices">{formatPrices(detail.price)}</span>
-                            {detail.initPrice > detail.price && (
+                            <span className="prices">{formatMoney(detail.price)}</span>
+                            {detail.discount > 0 && (
                                 <>
-                                    <span className="sale_price">{formatPrices(detail.initPrice)}</span>
+                                    <span className="sale_price">{formatMoney(detail.initPrice)}</span>
                                     <span className="discounts_price">
-                                           -{formatPercentage((detail.initPrice - detail.price) / detail.initPrice)}
+                                           -{detail.discount}%
                                         <LocalOfferIcon className="idiscount" />
                                     </span>
                                 </>

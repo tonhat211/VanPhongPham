@@ -11,6 +11,7 @@ function StarRating({ rate, onChange, isRateNumShow = false }) {
                 icon={rate >= i ? faStar : faStarHalfAlt}
                 style={{ color: rate >= i ? '#facc15' : '#d1d5db', cursor: onChange ? 'pointer' : 'default' }}
                 onClick={() => onChange && onChange(i)}
+                className='p-content-size-mob'
             />
         );
     }

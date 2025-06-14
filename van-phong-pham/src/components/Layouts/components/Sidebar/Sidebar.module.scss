@@ -157,4 +157,14 @@
 }
 
 @include respond-to(mobile) {
+.menu-container {
+        position: fixed;
+        z-index: 101;
+        top: 65px;
+        animation: leftIn ease 0.49s;
+    }
+
+    .overlay {
+        animation: fadeIn ease 0.49s;
+    }
 }
