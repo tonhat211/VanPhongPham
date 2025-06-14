@@ -41,6 +41,16 @@
   border-bottom: 2px solid var(--primary-color);
   color: var(--primary-color);
 }
+.content .filter-icon {
+  border-radius: 4px;
+  color: var(--text-secondary-color);
+  margin-left: auto;
+  padding: 6px;
+}
+.content .filter-icon:hover {
+  cursor: pointer;
+  background-color: var(--primary-hover-color);
+}
 .content .pagination-container {
   display: flex;
   justify-content: right;
@@ -51,6 +61,53 @@
   padding: 20px;
   font-size: 2rem;
   font-weight: 600;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--primary-hover-color);
+}
+
+@keyframes leftIn {
+  from {
+    opacity: 0;
+    transform: translateX(-140px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (min-width: 720px) and (max-width: 1024px) {
+  .subsidebar-container {
+    position: fixed;
+    background-color: white;
+    z-index: 101;
+    top: 137px;
+    overflow-y: scroll;
+    max-height: 90%;
+    width: 30%;
+    animation: leftIn ease 0.49s;
+  }
+  .overlay {
+    animation: fadeIn ease 0.49s;
+  }
+  .divider {
+    margin-top: 0px;
+  }
 }
 
 /*# sourceMappingURL=Product.module.css.map */
