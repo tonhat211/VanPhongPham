@@ -1,8 +1,12 @@
+@import 'src/assets/responsive/breakpoints.scss';
 .info_container {
-
   .info_row {
     gap: 2rem;
     grid-template-columns: 2fr 1.25fr;
     display: grid;
+    @include respond-max(lg) {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
   }
 }

@@ -25,6 +25,17 @@ function CarouselCards() {
                         slidesPerView={5}
                         loop={true}
                         autoplay={false}
+                        breakpoints={{
+                            0: {
+                                slidesPerView: 1,
+                            },
+                            992: {
+                                slidesPerView: 1,
+                            },
+                            1200: {
+                                slidesPerView: 2,
+                            },
+                        }}
                         onSwiper={(swiper) => swiper.update()}
                     >
                         {recentlyViewedProducts.map((item, index) => (

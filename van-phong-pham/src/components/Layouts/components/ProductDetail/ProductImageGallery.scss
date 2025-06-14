@@ -1,9 +1,9 @@
+@import 'src/assets/responsive/breakpoints.scss';
 .product-gallery {
   .mainSwiper {
     width: 360px;
     height: 360px;
     overflow: hidden;
-
     .swiper-slide {
       overflow: hidden;
 
@@ -73,6 +73,69 @@
 
       &.swiper-slide-thumb-active {
         border-color: #1d4ed8;
+      }
+    }
+  }
+}
+@include respond-max(ipadAir) {
+  .product-gallery {
+    .mainSwiper {
+      width: 100%;
+      height: auto;
+
+      .swiper-slide {
+        img {
+          height: auto;
+          max-height: 300px;
+        }
+      }
+    }
+
+    .thumbSwiper {
+      width: 100%;
+
+      .swiper-slide {
+        height: 60px;
+
+        img {
+          object-fit: contain;
+        }
+      }
+    }
+  }
+}
+
+@include respond-max(md) {
+  .product-gallery {
+    .mainSwiper {
+      width: 100%;
+      height: auto;
+
+      .swiper-slide img {
+        height: auto;
+        max-height: 250px;
+      }
+    }
+
+    .thumbSwiper {
+      .swiper-slide {
+        height: 50px;
+      }
+    }
+  }
+}
+
+@include respond-max(xs) {
+  .product-gallery {
+    .mainSwiper {
+      .swiper-slide img {
+        max-height: 200px;
+      }
+    }
+
+    .thumbSwiper {
+      .swiper-slide {
+        height: 40px;
       }
     }
   }

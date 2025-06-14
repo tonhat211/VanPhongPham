@@ -79,11 +79,11 @@ function ProductInfoPanel({ product }) {
                     <div className="left_2">
                         <div className="price_container">
                             <span className="prices">{formatPrices(detail.price)}</span>
-                            {detail.discount > 0 && (
+                            {detail.initPrice > detail.price && (
                                 <>
                                     <span className="sale_price">{formatPrices(detail.initPrice)}</span>
                                     <span className="discounts_price">
-                                        -{detail.discount}%
+                                           -{formatPercentage((detail.initPrice - detail.price) / detail.initPrice)}
                                         <LocalOfferIcon className="idiscount" />
                                     </span>
                                 </>

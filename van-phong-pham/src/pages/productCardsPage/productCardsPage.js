@@ -220,7 +220,7 @@ function ProductCardsPage() {
             </div>
 
             <div className="carousel-section">
-                {/*<CarouselCards />*/}
+                <CarouselCards />
             </div>
         </section>
     );

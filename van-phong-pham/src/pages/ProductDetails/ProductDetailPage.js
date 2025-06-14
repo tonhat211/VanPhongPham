@@ -53,9 +53,9 @@ function ProductDetailPage() {
                     <div className="product-reviewAndRating-section3">
                         <ReviewAndRating product={product} />
                     </div>{' '}
-                    <div className="carousel-section">
-                        <CarouselCards />
-                    </div>
+                    {/*<div className="carousel-section">*/}
+                    {/*    <CarouselCards />*/}
+                    {/*</div>*/}
                 </>
             ) : (
                 <p>Đang tai san pham</p>

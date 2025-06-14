@@ -1,4 +1,6 @@
 .right_2 {
+  margin: 15px 0px;
+  padding: 15px;
   border-radius: 6px;
   justify-content: center;
   align-items: center;
@@ -7,8 +9,6 @@
 }
 
 .right2_container {
-  margin: 15px 0px;
-  width: 90%;
   align-items: flex-start;
   flex-direction: column;
   display: flex;
@@ -58,5 +58,11 @@
         border-radius: 15px;
       }
     }
+  }
+}
+
+@media (min-width: 540px) and (max-width: 912px) {
+  .right_2 {
+    width: fit-content;
   }
 }
