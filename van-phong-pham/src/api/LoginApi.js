@@ -19,3 +19,14 @@ export const loginUser = async (data) => {
         throw error.response?.data.result || { message: 'Đăng nhập thất bại' };
     }
 };
+
+export const forgotPassword = async (email) => {
+    try {
+        const response = await axiosInstance.post('/forgot-password', { email });
+        toast.success("Email đặt lại mật khẩu đã được gửi!");
+        return response.data;
+    } catch (error) {
+        toast.error(error.response?.data?.message || "Gửi email thất bại");
+        throw error;
+    }
+};
