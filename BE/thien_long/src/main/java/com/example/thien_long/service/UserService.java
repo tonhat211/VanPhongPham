@@ -1,4 +1,5 @@
 package com.example.thien_long.service;
+import com.example.thien_long.dto.request.ForgotPasswordRequest;
 import com.example.thien_long.dto.request.UserRegisterRequest;
 import com.example.thien_long.dto.request.UserUpdateInfoRequest;
 import com.example.thien_long.dto.response.UserResponse;
@@ -20,6 +21,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
+
 import com.example.thien_long.repository.VerifyCodeRepository;
 
 @Service
@@ -88,6 +91,38 @@ public class UserService {
             code.append(random.nextInt(10)); // từ 0 đến 9
         }
         return code.toString();
+    }
+
+    public void handleForgotPassword(ForgotPasswordRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        // Kiểm tra email đã được verify chưa
+        var verifyCode = verifyCodeRepository
+                .findTopByEmailOrderByCreatedAtDesc(user.getEmail())
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        if (!verifyCode.isVerify()) {
+            throw new AppException(ErrorCode.UNVERIFIED_EMAIL);
+        }
+        // Tạo mật khẩu ngẫu nhiên
+        String newPassword = generateRandomPassword(10);
+        // Mã hóa và lưu vào DB
+        user.setPwd(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        // Gửi email
+        emailService.sendNewPasswordEmail(user.getEmail(), newPassword);
+        System.out.println(" Mật khẩu mới của " + user.getEmail() + " là: " + newPassword);
+    }
+    private String generateRandomPassword(int length) {
+        String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
+        }
+
+        return password.toString();
     }
     @Transactional
     public UserResponse updateUserInfo(Long userId, UserUpdateInfoRequest request) {

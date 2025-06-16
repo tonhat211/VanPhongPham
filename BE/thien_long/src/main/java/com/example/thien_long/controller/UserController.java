@@ -1,8 +1,10 @@
 package com.example.thien_long.controller;
 
+import com.example.thien_long.dto.request.ForgotPasswordRequest;
 import com.example.thien_long.dto.request.UserRegisterRequest;
 import com.example.thien_long.dto.request.UserUpdateInfoRequest;
 import com.example.thien_long.dto.response.ApiResponse;
+import com.example.thien_long.dto.response.AuthResponse;
 import com.example.thien_long.dto.response.UserResponse;
 import com.example.thien_long.model.User;
 import com.example.thien_long.service.JwtService;
@@ -39,5 +41,9 @@ public class UserController {
         Long userId = jwtService.extractUserId(authHeader);
         return  ApiResponse.success(userService.updateUserInfo(userId, request));
     }
-
+    @PostMapping("/forgot-password")
+    ApiResponse<Void> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        userService.handleForgotPassword(request);
+        return ApiResponse.success(null);
+    }
 }

@@ -5,7 +5,7 @@ import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import './LoginPage.scss'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { loginUser } from '~/api/LoginApi';
+import { forgotPassword, loginUser } from '~/api/LoginApi';
 function LoginPage() {
     const [mode, setMode] = useState('login');
     const [formData, setFormData] = useState({
@@ -71,10 +71,38 @@ function LoginPage() {
 
             const response = await loginUser(payload);
             toast.success("Đăng nhập thành công");
-            setTimeout(() => navigate('/', { state: { email: formData.email } }), 2000);
+            setTimeout(() => navigate('/', { state: { email: formData.email } }), 1000);
 
         } catch (error) {
             toast.error(error.message || "Đăng nhập thất bại");
+        }
+    };
+
+    const [resetEmail, setResetEmail] = useState('');
+
+    const validateResetEmail = () => {
+        if (!resetEmail.trim()) return 'Trường này là bắt buộc';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(resetEmail)) return 'Email không hợp lệ';
+        return '';
+    };
+
+    const handleforgotPassword = async (e) => {
+        e.preventDefault();
+
+        const error = validateResetEmail();
+        if (error) {
+            setErrors((prev) => ({ ...prev, email: error }));
+            toast.error("Vui lòng kiểm tra lại email");
+            return;
+        }
+
+        try {
+            await forgotPassword(resetEmail);
+            toast.success("Đã gửi email đặt lại mật khẩu!");
+            setResetEmail('');
+            setMode('login');
+        } catch (err) {
+            toast.error(err.message || "Gửi email thất bại");
         }
     };
 
@@ -125,10 +153,13 @@ function LoginPage() {
         <>
             <h4>ĐẶT LẠI MẬT KHẨU</h4>
             <p className="reset-text">Chúng tôi sẽ gửi cho bạn một email để kích hoạt việc đặt lại mật khẩu.</p>
-            <form className="reset-form">
+            <form className="reset-form" onSubmit={handleforgotPassword}>
                 <div className="form-group">
                     <label>Email <span> *</span> </label>
-                    <input type="email" placeholder="Email" />
+                    <input type="email" placeholder="Email" name="email"
+                           onBlur={handleBlur} value={resetEmail}
+                           onChange={(e) => setResetEmail(e.target.value)}/>
+                    {errors.email && <p className="error-text">{errors.email}</p>}
                 </div>
                 <button type="submit" className="submit-btn yellow-btn">Lấy lại mật khẩu</button>
             </form>
