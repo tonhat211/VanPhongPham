@@ -1,0 +1,40 @@
+.wrapper {
+  border-radius: 10px;
+  background-color: var(--primary-backround-color);
+  border: none;
+  padding: 15px;
+  margin-left: 15px;
+}
+.wrapper h1 {
+  color: orange;
+  font-size: 2rem;
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 15px;
+}
+.wrapper form .form-item {
+  margin-bottom: 20px;
+}
+.wrapper form .form-item .update-button {
+  margin: 0 auto;
+  display: block;
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s;
+}
+.wrapper form .form-item .update-button:hover {
+  background-color: #0056b3;
+}
+.wrapper form .detail {
+  color: var(--price-color);
+  font-weight: 600;
+}
+
+/*# sourceMappingURL=ChangePass.css.map */

@@ -110,4 +110,48 @@
   margin-bottom: 1rem;
 }
 
+@media (min-width: 0px) and (max-width: 719px) {
+  .product-item {
+    height: 310px !important;
+  }
+  .label-container {
+    display: flex;
+    align-items: center;
+  }
+  .label-container .label {
+    font-size: 0.8rem !important;
+    padding: 4px 4px !important;
+    border-radius: 10px !important;
+    margin-right: 2px !important;
+  }
+  .label-container .label i {
+    margin-right: 1px !important;
+    font-size: 0.7rem !important;
+  }
+  .name-container {
+    margin-top: 4px !important;
+  }
+  .name-container p {
+    font-size: 1rem !important;
+    line-height: 1rem !important;
+  }
+  .rate-container {
+    margin-top: 4px !important;
+  }
+  .rate-container p {
+    margin-left: 2px !important;
+    font-size: 0.7rem !important;
+  }
+  .price-container {
+    margin-top: 4px !important;
+  }
+  .price-container .current-price {
+    font-size: 1.4rem !important;
+  }
+  .price-container .init-price {
+    margin-top: 4px !important;
+    font-size: 1rem !important;
+  }
+}
+
 /*# sourceMappingURL=ProductItem.module.css.map */

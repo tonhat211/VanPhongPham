@@ -4,6 +4,7 @@ import { ReactComponent as IconDangXuat } from './icon_dang_xuat.svg';
 import { ReactComponent as IconDanhSachDonHang } from './icon_danh_sach_don_hang.svg';
 import { ReactComponent as IconSoDiaChi } from './icon_so_dia_chi.svg';
 import { ReactComponent as IconTongQuanTaiKhoan } from './icon_tong_quan_tai_khoan.svg';
+import { ReactComponent as IconchangPass } from './icon_changePass.svg';
 
 const SVGIcons = {
     Account: IconAccount,
@@ -12,6 +13,7 @@ const SVGIcons = {
     DanhSachDonHang: IconDanhSachDonHang,
     SoDiaChi: IconSoDiaChi,
     TongQuanTaiKhoan: IconTongQuanTaiKhoan,
+    ChangePass: IconchangPass
 
 };
 

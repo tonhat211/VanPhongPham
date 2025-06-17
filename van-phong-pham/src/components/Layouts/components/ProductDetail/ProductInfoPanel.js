@@ -8,6 +8,8 @@ import productsData from '~/data/productData';
 import { addToCart } from '~/api/cartApi';
 import { toast } from 'react-toastify';
 import { formatMoney } from '~/utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCartItem, fetchCart } from '~/pages/productCardsPage/cartSlice';
 
 const statuses = [
     {
@@ -22,18 +24,12 @@ const statuses = [
 
 // function ProductInfoPanel({productId}) {
 function ProductInfoPanel({ product }) {
-    // const product = productsData.find(item => item.id === productId);
-    // const title = product.title;
-    // const brand = product.brand;
-    // const status = product.status;
-    // const price = product.price;
-    // const salePrices = product.salePrice;
-    // const discount = product.discount;
     const [detail, setDetail] = useState(product.details ? product.details[0] : null);
     useEffect(() => {
      
     }, [detail]);
     const [quantity, setQuantity] = useState(1);
+    const dispatch = useDispatch();
 
     const handleDecrement = () => setQuantity((prev) => Math.max(prev - 1, 1));
     const handleIncrement = () => setQuantity((prev) => prev + 1);
@@ -42,7 +38,8 @@ function ProductInfoPanel({ product }) {
         if (!detail) return;
 
         try {
-            await addToCart(detail.id, quantity);
+            await dispatch(addCartItem({ productDetailId: detail.id, quantity }));
+            dispatch(fetchCart());
             toast.success('Đã thêm vào giỏ hàng!');
         } catch (error) {
             console.error('Lỗi khi thêm giỏ hàng:', error);

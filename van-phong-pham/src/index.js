@@ -6,9 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles';
 import { FEProvider } from './context/FEProvider';
 import { DataProvider } from './context/DataContext';
+import { Provider } from 'react-redux';
+import { store } from '~/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
+        <Provider store={store}>
         <GlobalStyles>
             <FEProvider>
                 <DataProvider>
@@ -16,7 +19,8 @@ root.render(
                 </DataProvider>
             </FEProvider>
         </GlobalStyles>
-    </React.StrictMode>,
+        </Provider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

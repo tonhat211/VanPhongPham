@@ -133,5 +133,16 @@
     animation: fadeIn ease 0.49s;
   }
 }
+@media (min-width: 0px) and (max-width: 719px) {
+  .menu-container {
+    position: fixed;
+    z-index: 101;
+    top: 65px;
+    animation: leftIn ease 0.49s;
+  }
+  .overlay {
+    animation: fadeIn ease 0.49s;
+  }
+}
 
 /*# sourceMappingURL=Sidebar.module.css.map */

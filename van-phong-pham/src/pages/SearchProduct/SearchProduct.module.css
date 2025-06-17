@@ -88,4 +88,10 @@
   background-color: #e5e7eb;
 }
 
+@media (min-width: 0px) and (max-width: 719px) {
+  .sort-option-list li a {
+    padding: 4px 10px;
+  }
+}
+
 /*# sourceMappingURL=SearchProduct.module.css.map */
