@@ -10,5 +10,278 @@
     "product-type": "Types of Products",
     "brand": "Brands",
     "price-range": "Price Ranges",
-    "color": "Colors"
+    "color": "Colors",
+
+    "detail": {
+        "product-detail": "Product Details",
+        "brand": "Brand",
+        "status": "Status",
+        "status-instock": "In stock",
+        "status-outstock": "Out of stock",
+        "status-instock-description": "The product is currently available in stock.",
+        "status-outstock-description": "The product is out of stock.",
+        "code": "Product Code",
+        "price": "Price",
+        "original-price": "Original Price",
+        "discount": "Discount",
+        "discount-percent": "Save %{percent}%",
+        "classification": "Classification",
+        "quantity": "Quantity",
+        "add-to-cart": "Add to cart",
+        "buy-now": "Buy now",
+        "loading": "Loading product information...",
+        "toast-add-success": "Added to cart!",
+        "toast-add-failed": "Failed to add to cart"
+    },
+
+    "productPromo": {
+        "nationwide-shipping": "Nationwide delivery",
+        "authentic-product": "Authentic products",
+        "point-reward": "Earn points and redeem gifts",
+        "many-discounts": "Lots of promotions and offers"
+    },
+
+    "tickDiscount": {
+        "discount1Title": "Discount 50,000₫",
+        "discount1Condition": "Orders from 300,000₫",
+        "discount1Code": "0425SALE50",
+
+        "discount2Title": "Discount 100,000₫",
+        "discount2Condition": "Orders from 700,000₫",
+        "discount2Code": "0724SALE50",
+
+        "discount3Title": "Discount 300,000₫",
+        "discount3Condition": "Orders from 1,300,000₫",
+        "discount3Code": "0425SALE200",
+
+        "expiration": "30/04/2025",
+        "conditions": "Conditions",
+        "copy": "Copy code",
+        "copied": "Copied",
+        "alert": "Code has been copied"
+    },
+
+    "productDiscript": {
+        "title": "Product Description",
+        "expand": "Show more",
+        "collapse": "Show less"
+    },
+
+    "review": {
+        "title": "Product Reviews",
+        "filterLabel": "Filter reviews:",
+        "sortNewest": "Newest to oldest",
+        "sortOldest": "Oldest to newest",
+        "popupTitle": "PRODUCT REVIEW",
+        "popupPlaceholder": "Share your thoughts about the product",
+        "popupImageLabel": "Review images",
+        "popupCancel": "Cancel",
+        "popupSubmit": "Submit review",
+        "prev": "Prev",
+        "next": "Next"
+    },
+
+    "carousel": {
+        "recentlyViewed": "Recently Viewed"
+    },
+
+    "cart": {
+        "title": "Shopping Cart",
+        "loading": "Loading cart...",
+        "empty": "Your cart is empty – go back to",
+        "homepage": "Home Page",
+        "freeShippingNote": "Free shipping on orders over 100,000₫",
+        "invoice": "Request company invoice",
+        "notePlaceholder": "Order note",
+        "totalTitle": "Total",
+        "checkout": "Proceed to Checkout"
+    },
+
+    "changePass": {
+        "title": "Do you want to change your password?",
+        "oldPassword": "Old Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm New Password",
+        "showPassword": "Show Password",
+        "hidePassword": "Hide Password",
+        "updateButton": "Update Password",
+        "toast-fillAll": "Please fill in all fields.",
+        "toast-noWhitespace": "Password must not contain spaces.",
+        "toast-minLength": "Password must be at least 8 characters.",
+        "toast-passwordMismatch": "New password and confirm password do not match.",
+        "toast-failed": "Failed to update password!",
+        "toast-success": "Password updated successfully!"
+    },
+
+    "infoUser": {
+        "title": "Account Information",
+        "email": "Email",
+        "name": "Full Name",
+        "birthday": "Birthday",
+        "phone": "Phone Number",
+        "address": "Default Address",
+        "addressHint": "Example: 222 Linh Trung, Thu Duc, Ho Chi Minh City",
+        "updateBtn": "Update Information",
+        "errEmail": "Invalid email",
+        "errPhone": "Invalid phone number",
+        "errBirthday": "Invalid birthday",
+        "errAge": "Age must be between 16 and 85",
+        "errAddress": "Address must include: street number/street, ward/commune, city/province",
+        "noChange": "You haven't changed any information.",
+        "updateSuccess": "Information has been updated!",
+        "updateFail": "Update failed!"
+    },
+
+    "login": {
+        "title": "Login",
+        "email-label": "Email",
+        "password-label": "Password",
+        "placeholder-email": "Enter your email",
+        "placeholder-password": "Enter your password",
+        "required-field": "This field is required",
+        "invalid-email": "Invalid email address",
+        "password-minlength": "Password must be at least 8 characters",
+        "password-no-whitespace": "Password cannot contain spaces",
+        "submit": "Log in",
+        "forgot-password": "Forgot your password? Click",
+        "here": "here",
+        "with": "Or login with",
+        "register-prompt": "Don't have an account?",
+        "register-link": "Register here",
+
+        "reset-title": "RESET PASSWORD",
+        "reset-desc": "We will send you an email to reset your password.",
+        "reset-submit": "Reset password",
+        "reset-back": "Back to login",
+
+        "error-toast": "Please check your input",
+        "reset-error-toast": "Please check your email",
+        "reset-success-toast": "Password reset email sent!",
+        "success-toast": "Login successful",
+        "fail-toast": "Login failed"
+    },
+
+    "register": {
+        "title": "Register",
+        "type-label": "You are a customer:",
+        "type-personal": "Personal and Internal Customer",
+        "type-business": "Priority Customer (With Invoice)",
+
+        "label-firstname": "First Name",
+        "label-lastname": "Last Name",
+        "label-company-name": "Company Name",
+        "label-tax-code": "Tax Code",
+        "label-company-address": "Company Address",
+        "label-company-email": "Company Email",
+        "label-personal-email": "Personal Email",
+        "label-phone": "Phone Number",
+        "label-birthday": "Date of Birth",
+        "label-province": "Province/City",
+        "label-ward": "Ward/Commune",
+        "label-detail": "Address",
+        "label-password": "Password",
+
+        "placeholder-firstname": "First Name",
+        "placeholder-lastname": "Last Name",
+        "placeholder-company-name": "Company Name",
+        "placeholder-tax-code": "Tax Code",
+        "placeholder-company-address": "Company Address",
+        "placeholder-company-email": "Company Email",
+        "placeholder-personal-email": "Email",
+        "placeholder-phone": "Phone Number",
+        "placeholder-birthday": "Date of Birth",
+        "placeholder-province": "Province/City",
+        "placeholder-ward": "Ward/Commune",
+        "placeholder-detail": "Address",
+        "placeholder-password": "Password",
+
+        "submit-button": "Register",
+        "login-question": "Already have an account",
+        "login-link": "Login here",
+
+        "toast-success": "Registration successful, please verify your email",
+        "toast-error": "Please check your information"
+    },
+
+    "otp": {
+        "title": "Verify Email",
+        "desc": "Enter the OTP sent to your email.",
+        "placeholder": "Enter OTP",
+        "verify": "Verify",
+        "note": "OTP expires in 30 minutes.",
+        "back": "Back",
+        "noEmail": "No email provided.",
+        "invalidCode": "Invalid or expired OTP code",
+        "success": "Email verification successful"
+    },
+
+    "adCustomer": {
+        "title": "Customer Management",
+        "stt": "No.",
+        "name": "Name",
+        "fullname": "Full Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "gender": "Gender",
+        "address": "Address",
+        "joinDate": "Join Date",
+        "status": "Status",
+        "orders": "Orders",
+        "actions": "Actions",
+        "details": "Details",
+        "dialogTitle": "Customer Information",
+
+        "status_active": "Active",
+        "status_locked": "Locked",
+        "status_deleted": "Deleted",
+        "status_flagged": "Flagged as Deleted",
+        "status_restore": "Restore",
+
+        "action_lock": "Lock",
+        "action_unlock": "Unlock",
+        "action_delete": "Delete",
+        "action_flag": "Flag",
+        "action_restore": "Restore"
+    },
+
+    "adEmployee": {
+        "title": "Employee Management",
+        "allDepartments": "All Departments",
+        "allPositions": "All Positions",
+        "allStatuses": "All Statuses",
+        "searchPlaceholder": "Search by name or email",
+        "clearFilter": "Clear Filters",
+        "columns": {
+            "name": "Name",
+            "email": "Email",
+            "department": "Department",
+            "position": "Position",
+            "status": "Status",
+            "actions": "Change Actions",
+            "moreActions": "Other Actions"
+        },
+        "actions": {
+            "transferDepartment": "Transfer Department",
+            "changePosition": "Change Position",
+            "markResigned": "Mark as Resigned",
+            "restore": "Restore",
+            "details": "Details"
+        },
+        "dialog": {
+            "title": "Employee Details",
+            "fields": {
+                "status": "Status",
+                "name": "Name",
+                "gender": "Gender",
+                "email": "Email",
+                "phone": "Phone",
+                "address": "Address",
+                "department": "Department",
+                "position": "Position",
+                "startDate": "Start Date",
+                "endDate": "End Date"
+            }
+        }
+    }
+
 }

@@ -104,5 +104,277 @@
     "there-are": "Có",
     "matching-results": "Kết quả phù hợp",
     "sold": "Đã bán",
-    "quick-view": "Xem nhanh"
+    "quick-view": "Xem nhanh",
+
+    "detail": {
+        "product-detail": "Chi tiết sản phẩm",
+        "brand": "Thương hiệu",
+        "status": "Trạng thái",
+        "status-instock": "Còn hàng",
+        "status-outstock": "Hết hàng",
+        "status-instock-description": "Sản phẩm hiện có sẵn trong kho.",
+        "status-outstock-description": "Sản phẩm đã hết hàng.",
+        "code": "Mã sản phẩm",
+        "price": "Giá bán",
+        "original-price": "Giá gốc",
+        "discount": "Giảm giá",
+        "discount-percent": "Giảm %{percent}%",
+        "classification": "Phân loại",
+        "quantity": "Số lượng",
+        "add-to-cart": "Thêm vào giỏ hàng",
+        "buy-now": "Mua ngay",
+        "loading": "Đang tải thông tin sản phẩm...",
+        "toast-add-success": "Đã thêm vào giỏ hàng!",
+        "toast-add-failed": "Thêm vào giỏ hàng thất bại"
+    },
+
+    "productPromo": {
+        "nationwide-shipping": "Giao hàng toàn quốc",
+        "authentic-product": "Sản phẩm chính hãng",
+        "point-reward": "Tích điểm đổi quà",
+        "many-discounts": "Nhiều khuyến mãi, ưu đãi"
+    },
+
+    "tickDiscount": {
+        "discount1Title": "Giảm 50.000đ",
+        "discount1Condition": "Đơn hàng từ 300.000đ",
+        "discount1Code": "0425SALE50",
+
+        "discount2Title": "Giảm 100.000đ",
+        "discount2Condition": "Đơn hàng từ 700.000đ",
+        "discount2Code": "0724SALE50",
+
+        "discount3Title": "Giảm 300.000đ",
+        "discount3Condition": "Đơn hàng từ 1.300.000đ",
+        "discount3Code": "0425SALE200",
+
+        "expiration": "30/04/2025",
+        "conditions": "Điều kiện",
+        "copy": "Sao chép mã",
+        "copied": "Đã sao chép",
+        "alert": "Mã đã được sao chép"
+    },
+
+    "productDiscript": {
+        "title": "Mô tả sản phẩm",
+        "expand": "Xem thêm",
+        "collapse": "Thu gọn"
+    },
+    "review": {
+        "title": "Đánh giá sản phẩm",
+        "filterLabel": "Lọc đánh giá:",
+        "sortNewest": "Từ mới đến cũ",
+        "sortOldest": "Từ cũ đến mới",
+        "popupTitle": "ĐÁNH GIÁ SẢN PHẨM",
+        "popupPlaceholder": "Hãy chia sẻ đánh giá của bạn về sản phẩm",
+        "popupImageLabel": "Hình ảnh đánh giá",
+        "popupCancel": "Hủy",
+        "popupSubmit": "Gửi đánh giá",
+        "prev": "Trước",
+        "next": "Tiếp"
+    },
+
+    "carousel": {
+        "recentlyViewed": "Đã xem gần đây"
+    },
+
+    "cart": {
+        "title": "Giỏ hàng",
+        "loading": "Đang tải giỏ hàng...",
+        "empty": "Bạn chưa có sản phẩm nào trong giỏ hàng - quay về",
+        "homepage": "Trang Chủ",
+        "freeShippingNote": "Miễn phí vận chuyển cho đơn hàng từ 100,000₫",
+        "invoice": "Xuất hoá đơn công ty",
+        "notePlaceholder": "Ghi chú đơn hàng",
+        "totalTitle": "Tổng tiền",
+        "checkout": "Tiến hành đặt hàng"
+    },
+
+    "changePass": {
+        "title": "Bạn muốn đổi mật khẩu?",
+        "oldPassword": "Mật khẩu cũ",
+        "newPassword": "Mật khẩu mới",
+        "confirmPassword": "Nhập lại mật khẩu mới",
+        "showPassword": "Hiện mật khẩu",
+        "hidePassword": "Ẩn mật khẩu",
+        "updateButton": "Cập nhật mật khẩu",
+        "toast-fillAll": "Vui lòng điền đầy đủ tất cả các trường.",
+        "toast-noWhitespace": "Mật khẩu không được chứa khoảng trắng.",
+        "toast-minLength": "Mật khẩu phải có ít nhất 8 ký tự.",
+        "toast-passwordMismatch": "Mật khẩu mới và xác nhận mật khẩu không khớp.",
+        "toast-failed": "Cập nhật thất bại!",
+        "toast-success": "Cập nhật mật khẩu thành công!"
+    },
+
+    "infoUser": {
+        "title": "Thông tin tài khoản",
+        "email": "Email",
+        "name": "Họ và tên",
+        "birthday": "Ngày sinh",
+        "phone": "Số điện thoại",
+        "address": "Địa chỉ mặc định",
+        "addressHint": "Ví dụ: 222 Linh Trung, Thủ Đức, Hồ Chí Minh",
+        "updateBtn": "Cập nhật thông tin",
+        "errEmail": "Email không hợp lệ",
+        "errPhone": "Số điện thoại không hợp lệ",
+        "errBirthday": "Ngày sinh không hợp lệ",
+        "errAge": "Tuổi phải từ 16 đến 85",
+        "errAddress": "Địa chỉ phải bao gồm: số nhà/đường, phường/xã, tỉnh/thành",
+        "noChange": "Bạn chưa thay đổi thông tin nào.",
+        "updateSuccess": "Thông tin đã được cập nhật!",
+        "updateFail": "Cập nhật thất bại!"
+    },
+
+    "login": {
+        "title": "Đăng nhập",
+        "email-label": "Email",
+        "password-label": "Mật khẩu",
+        "placeholder-email": "Nhập Email",
+        "placeholder-password": "Nhập Mật khẩu",
+        "required-field": "Trường này là bắt buộc",
+        "invalid-email": "Email không hợp lệ",
+        "password-minlength": "Mật khẩu phải có ít nhất 8 ký tự",
+        "password-no-whitespace": "Mật khẩu không được chứa khoảng trắng",
+        "submit": "Đăng nhập",
+        "forgot-password": "Quên mật khẩu? Nhấn vào",
+        "here": "đây",
+        "with": "Hoặc đăng nhập bằng",
+        "register-prompt": "Bạn chưa có tài khoản?",
+        "register-link": "Đăng ký tại đây",
+
+        "reset-title": "ĐẶT LẠI MẬT KHẨU",
+        "reset-desc": "Chúng tôi sẽ gửi cho bạn một email để kích hoạt việc đặt lại mật khẩu.",
+        "reset-submit": "Lấy lại mật khẩu",
+        "reset-back": "Quay lại",
+
+        "error-toast": "Vui lòng kiểm tra lại thông tin",
+        "reset-error-toast": "Vui lòng kiểm tra lại email",
+        "reset-success-toast": "Đã gửi email đặt lại mật khẩu!",
+        "success-toast": "Đăng nhập thành công",
+        "fail-toast": "Đăng nhập thất bại"
+    },
+
+    "register": {
+        "title": "Đăng ký",
+        "type-label": "Bạn là khách hàng:",
+        "type-personal": "Khách hàng Cá nhân và Nội bộ Thiên Long",
+        "type-business": "Khách hàng Ưu tiên (Xuất hóa đơn)",
+
+        "label-firstname": "Họ",
+        "label-lastname": "Tên",
+        "label-company-name": "Tên công ty",
+        "label-tax-code": "Mã số thuế",
+        "label-company-address": "Địa chỉ công ty",
+        "label-company-email": "Email công ty",
+        "label-personal-email": "Email cá nhân",
+        "label-phone": "Số điện thoại",
+        "label-birthday": "Ngày sinh",
+        "label-province": "Tỉnh/Thành phố",
+        "label-ward": "Phường/Xã",
+        "label-detail": "Địa chỉ",
+        "label-password": "Mật khẩu",
+
+        "placeholder-firstname": "Họ",
+        "placeholder-lastname": "Tên",
+        "placeholder-company-name": "Tên công ty",
+        "placeholder-tax-code": "Mã số thuế",
+        "placeholder-company-address": "Địa chỉ công ty",
+        "placeholder-company-email": "Email công ty",
+        "placeholder-personal-email": "Email",
+        "placeholder-phone": "Số điện thoại",
+        "placeholder-birthday": "Ngày sinh",
+        "placeholder-province": "Tỉnh/Thành phố",
+        "placeholder-ward": "Phường/Xã",
+        "placeholder-detail": "Địa chỉ",
+        "placeholder-password": "Mật khẩu",
+
+        "submit-button": "Đăng ký",
+        "login-question": "Bạn đã có tài khoản",
+        "login-link": "Đăng nhập tại đây",
+
+        "toast-success": "Đăng ký thành công, mời xác minh Email",
+        "toast-error": "Vui lòng kiểm tra lại thông tin"
+    },
+
+    "otp": {
+        "title": "Xác minh Email",
+        "desc": "Nhập mã OTP đã được gửi đến email của bạn.",
+        "placeholder": "Nhập mã OTP",
+        "verify": "Xác minh",
+        "note": "Mã OTP sẽ hết hạn sau 30 phút.",
+        "back": "Quay lại",
+        "noEmail": "Không có email xác định.",
+        "invalidCode": "Mã OTP không hợp lệ hoặc đã hết hạn",
+        "success": "Xác minh Email thành công"
+    },
+
+    "adCustomer": {
+        "title": "Quản lý khách hàng",
+        "stt": "STT",
+        "name": "Tên",
+        "fullname": "Họ tên",
+        "email": "Email",
+        "phone": "Số điện thoại",
+        "gender": "Giới tính",
+        "address": "Địa chỉ",
+        "joinDate": "Ngày tham gia",
+        "status": "Trạng thái",
+        "orders": "Đơn hàng",
+        "actions": "Thao tác",
+        "details": "Chi tiết",
+        "dialogTitle": "Thông tin khách hàng",
+
+        "status_active": "Đang hoạt động",
+        "status_locked": "Đã bị khóa",
+        "status_deleted": "Đã bị xóa",
+        "status_flagged": "Đánh dấu đã xóa",
+        "status_restore": "Khôi phục",
+
+        "action_lock": "Khóa",
+        "action_unlock": "Mở khóa",
+        "action_delete": "Xóa",
+        "action_flag": "Đánh dấu",
+        "action_restore": "Khôi phục"
+    },
+
+    "adEmployee": {
+        "title": "Quản lý nhân viên",
+        "allDepartments": "Tất cả phòng ban",
+        "allPositions": "Tất cả chức vụ",
+        "allStatuses": "Tất cả trạng thái",
+        "searchPlaceholder": "Tìm kiếm tên hoặc email",
+        "clearFilter": "Xóa lọc",
+        "columns": {
+            "name": "Họ tên",
+            "email": "Email",
+            "department": "Phòng ban",
+            "position": "Chức vụ",
+            "status": "Trạng thái",
+            "actions": "Thao tác thay đổi",
+            "moreActions": "Thao tác khác"
+        },
+        "actions": {
+            "transferDepartment": "Chuyển phòng",
+            "changePosition": "Đổi chức vụ",
+            "markResigned": "Nghỉ việc",
+            "restore": "Khôi phục",
+            "details": "Chi tiết"
+        },
+        "dialog": {
+            "title": "Thông tin nhân viên",
+            "fields": {
+                "status": "Trạng thái",
+                "name": "Họ tên",
+                "gender": "Giới tính",
+                "email": "Email",
+                "phone": "SĐT",
+                "address": "Địa chỉ",
+                "department": "Phòng ban",
+                "position": "Chức vụ",
+                "startDate": "Ngày bắt đầu",
+                "endDate": "Ngày nghỉ việc"
+            }
+        }
+    }
+
 }
