@@ -11,11 +11,15 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("SELECT c FROM Category c WHERE c.isDeleted = 0 and c.level=:level ORDER BY c.id asc")
     List<Category> findAllByLevel(@Param("level") int level);
+
+    @Query("SELECT c FROM Category c WHERE c.isDeleted = 0 and c.code=:code")
+    Optional<Category> findByCode(@Param("code") String code);
 
  }
 

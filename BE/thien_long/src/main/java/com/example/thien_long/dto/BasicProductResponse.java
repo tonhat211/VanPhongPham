@@ -1,12 +1,8 @@
 package com.example.thien_long.dto;
 
 import com.example.thien_long.model.Image;
-import com.example.thien_long.model.Product;
-import com.example.thien_long.model.Review;
-import com.example.thien_long.model.SubCategory;
 import com.example.thien_long.service.Constant;
 
-import java.util.List;
 import java.util.Map;
 
 public class BasicProductResponse {
@@ -31,7 +27,7 @@ public class BasicProductResponse {
         this.avgRating = avgRating;
         this.totalReview = totalReview;
         this.soldQty = soldQty;
-        if(thumbnailImg!=null) this.thumbnail = Constant.THUMBNAIL_IMG_DIR+"/" +thumbnailImg.getUrl();
+        if(thumbnailImg!=null) this.thumbnail = Constant.THUMBNAIL_IMG_DIR+"/" +thumbnailImg.getName();
         this.discount = 100 - (int) ((price/initPrice) * 100);
     }
 

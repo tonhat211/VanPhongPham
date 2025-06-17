@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,28 +18,43 @@ import {
 
 import styles from './Product.module.scss';
 import images from '~/assets/images';
-import { CustomInput, Modal, ImageUpload, EditorWithUseQuill as Editor, StarRating } from '~/pages/components';
+import { CustomInput, Modal, EditorWithUseQuill as Editor, StarRating } from '~/pages/components';
+import { ImageUpload, MultiImageUpload } from '~/pages/components/InputFile';
+
 import { formatMoney } from '~/utils';
 import useI18n from '~/hooks/useI18n';
 import { productApi } from '~/api';
+import { useData } from '~/context/DataContext';
+import { getProductsByCategory } from '~/api/productApi';
+import {
+    getAdminProductDetails,
+    getAdminProductsAllCategory,
+    getAdminProductsByCategory,
+    updateBaseProduct,
+    updateClassification,
+} from '~/api/adminProductApi';
+import { useUpdateUrlParams } from '~/utils/url';
+import { set } from 'date-fns';
+import { uploadThumbnail } from '~/api/uploadApi';
+import { toast } from 'react-toastify';
 
 // import {Editor as Editor1} from '~/pages/components/EditorWithUseQuill/Editor'
 
 const cx = classNames.bind(styles);
-const viewTypes = [
-    {
-        value: 'all',
-        title: 'Tất cả',
-    },
-    {
-        value: 'pen',
-        title: 'Bút',
-    },
-    {
-        value: 'book',
-        title: 'sách',
-    },
-];
+// const viewTypes = [
+//     {
+//         value: 'all',
+//         title: 'Tất cả',
+//     },
+//     {
+//         value: 'pen',
+//         title: 'Bút',
+//     },
+//     {
+//         value: 'book',
+//         title: 'sách',
+//     },
+// ];
 
 const actions = [
     {
@@ -64,24 +79,25 @@ const actions = [
     },
 ];
 
-const categories = [
-    {
-        value: 'but',
-        title: 'but',
-    },
-    {
-        value: 'vo',
-        title: 'vo',
-    },
-    {
-        value: 'sach',
-        title: 'sach',
-    },
-    {
-        value: 'dung cu hoc tap',
-        title: 'dung cu hoc tap',
-    },
-];
+// const categories = [
+//     {
+//         value: 'but',
+//         title: 'but',
+//     },
+//     {
+//         value: 'vo',
+//         title: 'vo',
+//     },
+//     {
+//         value: 'sach',
+//         title: 'sach',
+//     },
+//     {
+//         value: 'dung cu hoc tap',
+//         title: 'dung cu hoc tap',
+//     },
+// ];
+
 function Product() {
     const { t, lower } = useI18n();
     const [searchInput, setSearchInput] = useState('');
@@ -91,6 +107,52 @@ function Product() {
     const [searchRestults, setSearchRestults] = useState([]);
     const [modalType, setModalType] = useState(null);
     const isModalOpen = modalType !== null;
+    const { menus, featureMenus } = useData();
+
+    const { category } = useParams(); // lấy từ URL path
+    const [searchParams, setSearchParams] = useSearchParams();
+    const updateUrlParams = useUpdateUrlParams();
+
+    const page = parseInt(searchParams.get('page')) || 0;
+    const [totalPages, setTotalPages] = useState(1);
+
+    const sortBy = searchParams.get('sortBy') || 'price';
+    const direction = searchParams.get('direction') || 'asc';
+    const size = parseInt(searchParams.get('size') || '20');
+    const [products, setProducts] = useState([]);
+    const [productDetails, setProductDetails] = useState(null);
+
+    const viewTypes = [
+        { link: 'all', title: 'Tất cả' },
+        ...menus.map((menu) => ({
+            link: menu.link,
+            title: menu.title,
+        })),
+    ];
+
+    const categories = [
+        {
+            link: 'none',
+            title: 'Không xác định',
+        },
+        ...menus.map((menu) => ({
+            link: menu.link,
+            title: menu.title,
+        })),
+    ];
+
+    const subCategories = [
+        {
+            link: 'none',
+            title: 'Không xác định',
+        },
+        ...menus.flatMap((menu) =>
+            (menu.subs || []).map((sub) => ({
+                link: sub.link,
+                title: sub.title,
+            })),
+        ),
+    ];
 
     const openModal = (type, item) => {
         setModalType(type);
@@ -155,54 +217,85 @@ function Product() {
         }
     }, [searchInput]);
 
-    const [viewType, setViewType] = useState(viewTypes[0].value);
+    const [viewType, setViewType] = useState(viewTypes[0].link);
     const [selectedItem, setSelectedItem] = useState(null);
 
     const handleViewTypeChange = (e) => {
         setViewType(e.target.value);
     };
 
-    const data = [
-        {
-            id: 1,
-            thumbnail: images.product1,
-            name: 'but bi van phong',
-            category: 'but viet',
-            saledQty: 1,
-            visit: 100,
-            classifications: [
-                {
-                    title: '10 cay',
-                    id: 1,
-                    qty: 10,
-                    saledQty: 100,
-                    initPrice: 3000000,
-                    price: 1000000,
-                },
-                {
-                    title: '20 cay',
-                    id: 2,
-                    qty: 20,
-                    saledQty: 200,
-                    initPrice: 3000000,
-                    price: 1000000,
-                },
-            ],
-            imgs: [
-                images.product1,
-                images.product2,
-                images.product3,
-                images.product1,
-                images.product2,
-                images.product3,
-            ],
-            rateAvg: 4.6,
-            rateNum: 100,
-            label: 'new',
-        },
+    useEffect(() => {
+        getAdminProductsAllCategory({
+            sortBy,
+            direction,
+            page,
+            size,
+        })
+            .then((data) => {
+                setProducts(data.content);
+                const pageInfo = data.pageInfo;
+                setTotalPages(pageInfo.totalPages);
+            })
+            .catch((err) => {
+                console.error('Lỗi tải sản phẩm:', err);
+            });
+    }, []);
 
-        { id: 2, thumbnail: images.product1, name: 'but bi van phong', category: 'but viet', saledQty: 1, visit: 100 },
-    ];
+    const [tempModalType, setTempModalType] = useState(null);
+    useEffect(() => {
+        getAdminProductsByCategory({
+            category,
+            sortBy,
+            direction,
+            page,
+            size,
+        })
+            .then((data) => {
+                setProducts(data.content);
+                const pageInfo = data.pageInfo;
+
+                setTotalPages(pageInfo.totalPages);
+            })
+            .catch((err) => {
+                console.error('Lỗi tải sản phẩm:', err);
+            });
+    }, [category, sortBy, direction, page, size]);
+
+    // useEffect(() => {
+    //     if (selectedItem) fetchProductDetails(selectedItem.id);
+    //     setSelectedItem(null);
+    // }, [selectedItem]);
+
+    useEffect(
+        () => {
+            if (productDetails && tempModalType) openModal(tempModalType, productDetails);
+            setTempModalType(null);
+        },
+        [productDetails],
+        tempModalType,
+    );
+
+    const fetchProductDetails = (id) => {
+        getAdminProductDetails({
+            id,
+        })
+            .then((data) => {
+                setProductDetails(data);
+            })
+            .catch((err) => {
+                console.error('Lỗi tải chi tiết sản phẩm:', err);
+            });
+    };
+
+    const handleClickItem = (item) => {
+        fetchProductDetails(item.id);
+        setTempModalType(MODAL_TYPES.DETAIL);
+    };
+
+    const handleEditAction = (item) => {
+        fetchProductDetails(item.id);
+        setTempModalType(MODAL_TYPES.EDIT);
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -238,14 +331,14 @@ function Product() {
                 <select style={{ marginLeft: '10px' }} value={viewType} onChange={handleViewTypeChange}>
                     {viewTypes &&
                         viewTypes.map((item) => (
-                            <option value={item.value} key={item.value}>
+                            <option value={item.link} key={item.link}>
                                 {item.title}
                             </option>
                         ))}
                 </select>
             </div>
             <div className={cx('content')}>
-                <ProductTable items={data}></ProductTable>
+                <ProductTable items={products}></ProductTable>
             </div>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 {modalType === MODAL_TYPES.DETAIL && <EditorProduct item={selectedItem} />}
@@ -286,29 +379,38 @@ function Product() {
     }
 
     function EditorProduct({ item }) {
+        console.log('Edit procduct');
+        console.log(item);
         const [name, setName] = useState(item?.name || '');
         const [id, setId] = useState(item?.id || null);
-        const [category, setCategory] = useState(item?.category || null);
-        const [saledQty, setSaledQty] = useState(item?.saledQty || 0);
-        const [visit, setVisit] = useState(item?.visit || 0);
         const [label, setLabel] = useState(item?.label || null);
-        const [classifications, setClassifications] = useState(item?.classifications || []);
-        const [thumbnail, setThumbnail] = useState(item?.thumbnail || null);
-        const [imgs, setImgs] = useState(item?.imgs || []);
         const [totalQty, setTotalQty] = useState();
-        const [totalSaledQty, setTotalSaledQty] = useState();
+        const [avgRating, setAvgRating] = useState(item?.avgRating || 0);
+        const [totalReview, setTotalReview] = useState(item?.totalReview || 0);
+        const [totalRemainQty, setTotalRemainQty] = useState(item?.totalRemainQty || 0);
+        const [totalSoldQty, setTotalSoldQty] = useState(item?.totalSoldQty || 0);
+        const [thumbnailUrl, setThumbnailUrl] = useState(item?.thumbnailUrl || '');
+        const [thumbnailId, setThumbnailId] = useState(item?.thumbnailId || 0);
+        const [description, setDescription] = useState(item?.description || '');
+        const [categoryCode, setCategoryCode] = useState(item?.categoryCode || '');
+        const [subCategoryCode, setSubCategoryCode] = useState(item?.subCategoryCode || '');
+        const [brandCode, setBrandCode] = useState(item?.brandCode || '');
+        const [status, setStatus] = useState(item?.status || '');
+        const [classifications, setClassifications] = useState(item?.classifications || []);
+        const [images, setImages] = useState(item?.images || []);
 
         useEffect(() => {
             // Tính tổng qty
             const total = classifications.reduce((sum, c) => sum + (Number(c.qty) || 0), 0);
-            const totalSaled = classifications.reduce((sum, c) => sum + (Number(c.saledQty) || 0), 0);
+            // const totalSaled = classifications.reduce((sum, c) => sum + (Number(c.saledQty) || 0), 0);
             setTotalQty(total);
-            setTotalSaledQty(totalSaled);
+            // setTotalSaledQty(totalSaled);
         }, [classifications]);
 
         const handleCategoryChange = (e) => {
-            setCategory(e.target.value);
+            setCategoryCode(e.target.value);
         };
+
         const handleAddClassification = () => {
             const newClassification = {
                 id: classifications.length + 1, // id tang tu dong de khong trung key, nhung khi add vao db thi de db tu tang
@@ -317,9 +419,84 @@ function Product() {
 
             setClassifications([...classifications, newClassification]);
         };
-        const handleUpload = (file) => {
-            console.log('File được chọn:', file);
-            // Gửi file lên server ở đây nếu cần
+
+        const [tempThumbnailUrl, setTempThumbnailUrl] = useState(null);
+        const [thumbnailFile, setThumbnailFile] = useState(null);
+
+        const handleThumb = (file) => {
+            if (file) {
+                // Chọn ảnh mới
+                const objUrl = URL.createObjectURL(file);
+                setTempThumbnailUrl(objUrl); // hiển thị trước
+                setThumbnailFile(file); // lưu để upload khi nhấn Save
+            } else {
+                // Đã bấm nút xoá ⇒ quay về ảnh gốc
+                setTempThumbnailUrl(thumbnailUrl);
+                setThumbnailFile(null);
+            }
+        };
+
+        const [addedImgs, setAddedImgs] = useState([]);
+        const [keptImgs, setKeptImgs] = useState([]);
+        const [removedImgs, setRemovedImgs] = useState([]);
+
+        const handleImagesChange = ({ added, kept, removed }) => {
+            console.log('🟢 Thêm:', added);
+            console.log('🟡 Giữ lại:', kept);
+            console.log('🔴 Bị xoá:', removed);
+            setAddedImgs(added);
+            setKeptImgs(kept);
+            setRemovedImgs(removed);
+        };
+
+        const handleSubmit = async () => {
+            let newThumbnailId = thumbnailId; // giữ ảnh cũ mặc định
+
+            if (thumbnailFile != null) {
+                const response = await uploadThumbnail({ thumbnail: thumbnailFile });
+                if (response?.id) {
+                    newThumbnailId = response.id;
+                    console.log('new thumb id: ' + newThumbnailId);
+                }
+            }
+
+            const updateBase = await updateBaseProduct({
+                id,
+                name,
+                label,
+                description,
+                categoryCode,
+                subCategoryCode,
+                brandCode,
+                status,
+                thumbnailId: newThumbnailId, // dùng ảnh mới nếu có
+            });
+        };
+
+        const handleupdateDetail = async (id, initPrice, price, title, qty) => {
+            const updateDetail = await updateClassification({
+                id,
+                initPrice,
+                price,
+                title,
+                qty,
+            });
+            if (updateDetail.success) {
+                toast.success('Cap nhat thanh cong');
+                const classification = updateDetail.classification;
+                console.log(" new classification: " + JSON.stringify(classification,null,2))
+                const updatedClassifications = classifications.map((c) =>
+                    c.id === classification.id
+                        ? {
+                              ...c,
+                              ...classification, 
+                          }
+                        : c,
+                );
+                console.log("update classification: " + JSON.stringify(updatedClassifications,null,2))
+                setClassifications(updatedClassifications);
+
+            } else toast.error('Cap nhat that bai');
         };
 
         const isDisabled = modalType === MODAL_TYPES.DETAIL;
@@ -340,7 +517,7 @@ function Product() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             label={t('name')}
-                            className="mb-10"
+                            className="mb-10 grid-col-9"
                             disabled={isDisabled}
                         />
                         <CustomInput
@@ -355,29 +532,47 @@ function Product() {
                         <div>
                             <p className={cx('heading')}>Rating</p>
                             <div className={cx('rate-container')}>
-                                <StarRating rate={item.rateAvg} />
+                                <StarRating rate={avgRating} />
                                 <p>
-                                    (<span>{item.rateNum}</span>)
+                                    (<span>{totalReview}</span>)
                                 </p>
                             </div>
                         </div>
                     )}
 
                     <div className="d-flex-al-center" style={{ marginTop: '10px' }}>
-                        <p className={cx('heading')}>Phân loại</p>
-                        <select
-                            style={{ marginLeft: '10px' }}
-                            value={category}
-                            onChange={handleCategoryChange}
-                            disabled={isDisabled}
-                        >
-                            {categories &&
-                                categories.map((item) => (
-                                    <option value={item.value} key={item.value}>
-                                        {item.title}
-                                    </option>
-                                ))}
-                        </select>
+                        <div className="grid-col-6">
+                            <p className={cx('heading')}>Phân loại</p>
+                            <select
+                                style={{ marginLeft: '10px' }}
+                                value={categoryCode}
+                                onChange={handleCategoryChange}
+                                disabled={isDisabled}
+                            >
+                                {categories &&
+                                    categories.map((item) => (
+                                        <option value={item.link} key={item.link}>
+                                            {item.title}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+                        <div className="grid-col-6">
+                            <p className={cx('heading')}>Phân loại phụ</p>
+                            <select
+                                style={{ marginLeft: '10px' }}
+                                value={subCategoryCode}
+                                onChange={handleCategoryChange}
+                                disabled={isDisabled}
+                            >
+                                {subCategories &&
+                                    subCategories.map((item) => (
+                                        <option value={item.link} key={item.link}>
+                                            {item.title}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
                     </div>
                     <div style={{ margin: '20px 0' }}>
                         <div className="d-flex-space-between">
@@ -396,22 +591,24 @@ function Product() {
                             )}
                         </div>
                         {classifications ? (
-                            classifications.map((item) => <Classification item={item} key={item.id} />)
+                            classifications.map((item) => (
+                                <Classification item={item} key={item.id} onUpdate={handleupdateDetail} />
+                            ))
                         ) : (
                             <p className="note">Không có phân loại</p>
                         )}
                     </div>
                     <div className="d-flex-space-between">
                         <CustomInput
-                            value={totalQty}
-                            onChange={(e) => setSaledQty(e.target.value)}
+                            value={totalRemainQty}
+                            onChange={(e) => setTotalRemainQty(e.target.value)}
                             label={t('tong con lai')}
                             className="mb-10 grid-col-5"
                             disabled={true}
                         />
                         <CustomInput
-                            value={totalSaledQty}
-                            onChange={(e) => setSaledQty(e.target.value)}
+                            value={totalSoldQty}
+                            onChange={(e) => setTotalSoldQty(e.target.value)}
                             label={t('da ban')}
                             className="mb-10 grid-col-5"
                             disabled={true}
@@ -419,13 +616,6 @@ function Product() {
                     </div>
                     <div className="d-flex-space-between">
                         <CustomInput
-                            value={visit}
-                            onChange={(e) => setVisit(e.target.value)}
-                            label={t('Luot truy cap')}
-                            className="mb-10 grid-col-5"
-                            disabled={isDisabled}
-                        />
-                          <CustomInput
                             value={label}
                             onChange={(e) => setLabel(e.target.value)}
                             label={t('Nhan')}
@@ -435,51 +625,46 @@ function Product() {
                     </div>
                     <div>
                         <p className={cx('heading')}>Anh dai dien</p>
-                        <div className={classNames(cx('img-container'), 'grid-col-3')}>
-                            <img src={thumbnail} />
-                        </div>
+                        <ImageUpload img={thumbnailUrl} isDisabled={isDisabled} onImageChange={handleThumb} />
                     </div>
                     <div style={{ marginTop: '20px' }}>
                         <p className={cx('heading')}>Anh mo ta</p>
-                        <div className={classNames(cx('imgs-container'), 'grid-row')}>
-                            {imgs ? (
-                                imgs.map((img) => (
-                                    <div className={classNames(cx('img-container'), 'grid-col-3')}>
-                                        <img src={img} />
-                                    </div>
-                                ))
-                            ) : (
-                                <p className="note">Không có imgs</p>
-                            )}
-                        </div>
+                        <MultiImageUpload initialImages={images} onImagesChange={handleImagesChange} />
                     </div>
                     <div style={{ margin: '20px 0' }}>
                         <p className={cx('heading')}>Mo ta</p>
-                        <Editor placeholder={'Write something...'} />
+                        {isDisabled ? (
+                            <Editor placeholder={'Write something...'} value={description} />
+                        ) : (
+                            <Editor placeholder={'Write something...'} value={description} onChange={setDescription} />
+                        )}
                     </div>
+                    {!isDisabled && (
+                        <div className="d-flex-space-around" style={{ marginTop: '20px' }}>
+                            <button className="btn cancel-btn">{t('cancel')}</button>
+                            <button className="btn confirm-btn" onClick={handleSubmit}>
+                                {t('confirm')}
+                            </button>
+                        </div>
+                    )}
                 </form>
             </div>
         );
     }
 
-    function Classification({ item, onChange, onRemove }) {
+    function Classification({ item, onUpdate, onRemove }) {
+        const [id, setId] = useState(item.id || 0);
         const [title, setTitle] = useState(item.title || '');
-        const [qty, setQty] = useState(item.qty || 0);
         const [price, setPrice] = useState(item.price || 0);
         const [initPrice, setInitPrice] = useState(item.initPrice || 0);
-
-        const saledQty = item.saledQty;
+        const [isDeleted, setIsDeleted] = useState(item.isDeleted || 0);
+        const [qty, setQty] = useState(item.qty || 0);
+        const [soldQty, setSoldQty] = useState(item.soldQty || 0);
+        const [discount, setDiscount] = useState(item.discount || 0);
 
         // Gọi hàm onChange mỗi khi có thay đổi
         const handleUpdate = () => {
-            onChange?.({
-                ...item,
-                title,
-                initPrice,
-                price,
-                qty,
-                saledQty,
-            });
+            onUpdate?.(id, initPrice, price, title, qty);
         };
 
         const isDisabled = modalType === MODAL_TYPES.DETAIL;
@@ -495,7 +680,6 @@ function Product() {
                             value={title}
                             onChange={(e) => {
                                 setTitle(e.target.value);
-                                handleUpdate();
                             }}
                         />
                     )}
@@ -510,7 +694,6 @@ function Product() {
                                 value={initPrice}
                                 onChange={(e) => {
                                     setInitPrice(e.target.value);
-                                    handleUpdate();
                                 }}
                             />
                         )}
@@ -524,7 +707,6 @@ function Product() {
                                 value={price}
                                 onChange={(e) => {
                                     setPrice(e.target.value);
-                                    handleUpdate();
                                 }}
                             />
                         )}
@@ -541,20 +723,19 @@ function Product() {
                                 value={qty}
                                 onChange={(e) => {
                                     setQty(Number(e.target.value));
-                                    handleUpdate();
                                 }}
                             />
                         )}
                     </p>
                     <p>
-                        Đã bán: <span>{saledQty}</span>
+                        Đã bán: <span>{soldQty}</span>
                     </p>
                 </div>
 
                 {isDisabled || (
                     <>
-                        <button style={{ color: 'blue' }}>
-                            <FontAwesomeIcon icon={faFloppyDisk} />
+                        <button style={{ color: 'blue' }} type="button" onClick={handleUpdate}>
+                            <FontAwesomeIcon icon={faFloppyDisk}  />
                         </button>
                         <button>
                             <FontAwesomeIcon icon={faTrash} />
@@ -585,9 +766,9 @@ function Product() {
                         <th>ID</th>
                         <th>Ảnh</th>
                         <th>Tên sản phẩm</th>
-                        <th>Phân loại</th>
-                        <th>Đã bán</th>
-                        <th>Lượng truy cập</th>
+                        <th>Thuong hieu</th>
+                        <th>Phan loai</th>
+                        <th>Da ban</th>
                         {/* <th>Feedback</th> */}
                         <th>Thao tác</th>
                     </tr>
@@ -609,7 +790,7 @@ function Product() {
             setAction(selectedAction);
             switch (selectedAction) {
                 case 'EDIT':
-                    openModal(MODAL_TYPES.EDIT, item);
+                    handleEditAction(item);
                     break;
                 case 'DELETE':
                     openModal(MODAL_TYPES.DELETE, item);
@@ -631,14 +812,13 @@ function Product() {
                     <img src={item.thumbnail} />
                 </td>
                 <td>{item.name}</td>
-                <td className="center">{item.category}</td>
-                <td className="center">{item.saledQty}</td>
-                <td className="center">{item.visit}</td>
-                {/* <td className="center">
-                    <Link className="fake-a" style={{ fontSize: '1.3rem', marginTop: '20px' }}>
-                        Feedback
-                    </Link>
-                </td> */}
+                <td className="center">
+                    <Link to={item.brandCode}>{item.brandName}</Link>
+                </td>
+                <td className="center">
+                    <Link to={item.categoryCode}>{item.categoryTitle}</Link>
+                </td>
+                <td className="center">{item.soldQty}</td>
                 <td className="center">
                     <div className="d-flex-col">
                         <select
@@ -658,7 +838,7 @@ function Product() {
                             style={{ fontSize: '1.3rem', marginTop: '15px' }}
                             onClick={(e) => {
                                 e.preventDefault();
-                                openModal(MODAL_TYPES.DETAIL, item);
+                                handleClickItem(item);
                             }}
                         >
                             Chi tiết
