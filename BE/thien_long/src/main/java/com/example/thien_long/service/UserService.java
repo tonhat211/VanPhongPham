@@ -1,4 +1,5 @@
 package com.example.thien_long.service;
+import com.example.thien_long.dto.request.ChangePasswordRequest;
 import com.example.thien_long.dto.request.ForgotPasswordRequest;
 import com.example.thien_long.dto.request.UserRegisterRequest;
 import com.example.thien_long.dto.request.UserUpdateInfoRequest;
@@ -168,5 +169,21 @@ public class UserService {
         return userUpdateMapper.toUserResponse(userRepository.save(user));
     }
 
+    @Transactional
+    public void handleChangePassword(Long userId, ChangePasswordRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPwd())) {
+            throw new AppException(ErrorCode.PWDOLD_NOT_MATCHES);
+        }
+
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            throw new AppException(ErrorCode.PWDNEW_AND_CONFIRM_NOT_MATCHES);
+        }
+
+        user.setPwd(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+    }
 }

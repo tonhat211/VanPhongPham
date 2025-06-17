@@ -21,6 +21,8 @@ public enum ErrorCode {
     PRODUCT_DETAIL_NOT_FOUND(1010,"Chi tiết sản phẩm không tồn tại.", HttpStatus.BAD_REQUEST),
     CART_ITEM_NOT_FOUND(1011,"Sản phẩm không tồn tại trong giỏ hàng.", HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(1012,"Token không hợp lệ.", HttpStatus.BAD_REQUEST),
+    PWDOLD_NOT_MATCHES(1014, "Mật khẩu cũ không khớp", HttpStatus.BAD_REQUEST),
+    PWDNEW_AND_CONFIRM_NOT_MATCHES(1015, "Mật khẩu mới và mật khẩu xác nhận không khớp", HttpStatus.BAD_REQUEST),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

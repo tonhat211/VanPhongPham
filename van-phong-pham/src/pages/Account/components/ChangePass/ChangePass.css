@@ -32,6 +32,17 @@
 .wrapper form .form-item .update-button:hover {
   background-color: #0056b3;
 }
+.wrapper form .form-item .toggle-text {
+  color: orange;
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin-top: 0.6rem;
+  user-select: none;
+  font-weight: bold;
+}
+.wrapper form .form-item .toggle-text:hover {
+  text-decoration: underline;
+}
 .wrapper form .detail {
   color: var(--price-color);
   font-weight: 600;

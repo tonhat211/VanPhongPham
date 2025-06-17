@@ -14,7 +14,19 @@ function ChangePass() {
             newPassword: '',
             confirmPassword: ''
         });
-        const handleChange = (field) => (e) => {
+    const [showPassword, setShowPassword] = useState({
+        oldPassword: false,
+        newPassword: false,
+        confirmPassword: false
+    });
+    const togglePasswordVisibility = (field) => {
+        setShowPassword((prev) => ({
+            ...prev,
+            [field]: !prev[field]
+        }));
+    };
+
+    const handleChange = (field) => (e) => {
             setFormData((prev) => ({
                 ...prev,
                 [field]: e.target.value
@@ -66,29 +78,38 @@ function ChangePass() {
                 <div className={cx('form-item')}>
                     <CustomInput
                         label="Mật khẩu cũ"
-                        type="password"
+                        type={showPassword.oldPassword ? 'text' : 'password'}
                         value={formData.oldPassword}
                         onChange={handleChange('oldPassword')}
                         required
                     />
+                    <p className={cx('toggle-text')} onClick={() => togglePasswordVisibility('oldPassword')}>
+                        {showPassword.oldPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                    </p>
                 </div>
                 <div className={cx('form-item')}>
                     <CustomInput
                         label="Mật khẩu mới"
-                        type="password"
+                        type={showPassword.newPassword ? 'text' : 'password'}
                         value={formData.newPassword}
                         onChange={handleChange('newPassword')}
                         required
                     />
+                    <p className={cx('toggle-text')} onClick={() => togglePasswordVisibility('newPassword')}>
+                        {showPassword.newPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                    </p>
                 </div>
                 <div className={cx('form-item')}>
                     <CustomInput
                         label="Nhập lại mật khẩu mới"
-                        type="password"
+                        type={showPassword.confirmPassword ? 'text' : 'password'}
                         value={formData.confirmPassword}
                         onChange={handleChange('confirmPassword')}
                         required
                     />
+                    <p className={cx('toggle-text')} onClick={() => togglePasswordVisibility('confirmPassword')}>
+                        {showPassword.confirmPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                    </p>
                 </div>
                 {/* Nút cập nhật */}
                 <div className={cx('form-item')}>

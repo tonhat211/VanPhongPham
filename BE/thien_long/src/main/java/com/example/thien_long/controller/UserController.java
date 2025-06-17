@@ -1,5 +1,6 @@
 package com.example.thien_long.controller;
 
+import com.example.thien_long.dto.request.ChangePasswordRequest;
 import com.example.thien_long.dto.request.ForgotPasswordRequest;
 import com.example.thien_long.dto.request.UserRegisterRequest;
 import com.example.thien_long.dto.request.UserUpdateInfoRequest;
@@ -44,6 +45,12 @@ public class UserController {
     @PostMapping("/forgot-password")
     ApiResponse<Void> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         userService.handleForgotPassword(request);
+        return ApiResponse.success(null);
+    }
+    @PutMapping("/user/change-pass")
+    ApiResponse<Void> handleChangePassword(@RequestHeader("Authorization")String authHeader, @Valid @RequestBody ChangePasswordRequest request) {
+        Long userId = jwtService.extractUserId(authHeader);
+        userService.handleChangePassword(userId, request);
         return ApiResponse.success(null);
     }
 }
