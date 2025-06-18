@@ -26,6 +26,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ← GẮN RÕ
                 .cors(Customizer.withDefaults()) // kích hoạt CORS
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/**").permitAll()
@@ -33,11 +34,15 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/products/**").permitAll()
                         .requestMatchers("/api/v1/orders/**").permitAll()
                         .requestMatchers("/api/v1/menu/**").permitAll()
+                        .requestMatchers("/api/v1/files/**").permitAll()
+                        .requestMatchers("/admin/**").permitAll()
                         .requestMatchers(
                                 "/images/**",  // cho phép truy cập ảnh
                                 "/css/**",
                                 "/js/**"
                         ).permitAll()
+                        .requestMatchers("/uploads/**").permitAll()
+
 
                         .anyRequest().authenticated()
                 )
@@ -79,5 +84,7 @@ public class SecurityConfig {
         ms.setDefaultEncoding("UTF-8");
         return ms;
     }
+
+
 }
 

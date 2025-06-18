@@ -1,7 +1,9 @@
-package com.example.thien_long.dto;
+package com.example.thien_long.dto.response;
 
 import com.example.thien_long.model.Image;
 import com.example.thien_long.service.Constant;
+
+import java.util.Map;
 
 public class BasicAdminProductResponse {
     private long id;
@@ -22,8 +24,13 @@ public class BasicAdminProductResponse {
         this.brandCode = brandCode;
         this.brandName = brandName;
         this.soldQty = soldQty;
-        if(thumbnailImg!=null) this.thumbnail = Constant.THUMBNAIL_IMG_DIR+"/" +thumbnailImg.getUrl();
+        if(thumbnailImg!=null) this.thumbnail = Constant.THUMBNAIL_IMG_DIR+"/" +thumbnailImg.getName();
 
+    }
+
+    public void translate(Map<Long, String> translationMap) {
+        if(translationMap.containsKey(this.id)) {}
+        this.name = translationMap.get(this.id);
     }
 
     public int getSoldQty() {

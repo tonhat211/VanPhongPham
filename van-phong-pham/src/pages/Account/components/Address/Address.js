@@ -15,7 +15,6 @@ const cx = classNames.bind(styles);
 
 function Address() {
     const { t, lower } = useI18n();
-    const [birthday, setBirthday] = useState(new Date());
     const [modalType, setModalType] = useState(null);
     const isModalOpen = modalType !== null;
     const openModal = (type, item) => {
@@ -38,9 +37,6 @@ function Address() {
             })
             .catch((err) => {
                 console.error('Lỗi tải dia chi:', err);
-            })
-            .finally(() => {
-                setLoading(false);
             });
     };
 
@@ -50,8 +46,6 @@ function Address() {
         EDIT_ADDRESS: 'EDIT_ADDRESS',
         CONFIRM_DELETE: 'CONFIRM_DELETE',
     };
-
-    const [isLoading, setLoading] = useState(false);
 
     const provinceMap = useMemo(() => {
         const map = new Map();
@@ -70,7 +64,6 @@ function Address() {
     };
 
     useEffect(() => {
-        setLoading(true);
         getAddress()
             .then((data) => {
                 setAddresses(data.addresses);
@@ -82,10 +75,8 @@ function Address() {
             })
             .catch((err) => {
                 console.error('Lỗi tải dia chi:', err);
-            })
-            .finally(() => {
-                setLoading(false);
             });
+
         fetchProvinces();
     }, []);
 
@@ -128,7 +119,14 @@ function Address() {
         };
 
         const handleProvinceChange = (e) => {
-            setProvince(e.target.value);
+            // setProvince(e.target.value);
+            const code = e.target.value; // luôn là string
+            if (code !== province) {
+                // tránh set trùng
+                setProvince(code);
+                setWard(''); // reset ward khi đổi tỉnh
+                setWardMap(new Map()); // xoá danh sách xã/phường cũ
+            }
         };
 
         const fetchWards = (provinceCode) => {
@@ -142,11 +140,11 @@ function Address() {
                 })
                 .catch((err) => {
                     console.error('Lỗi tải dia chi:', err);
-                })
-                .finally(() => {});
+                });
         };
 
         useEffect(() => {
+            if (!province) return;
             fetchWards(province);
         }, [province]);
 
@@ -238,8 +236,6 @@ function Address() {
         const [ward, setWard] = useState(item.ward);
         const [province, setProvince] = useState(item.province);
         const [checkedDefault, setCheckedDefault] = useState(item.isDefault);
-
-        const [provinces, setProvinces] = useState([]);
         const [wardMap, setWardMap] = useState(new Map());
 
         const fetchWards = (provinceCode) => {
@@ -253,8 +249,7 @@ function Address() {
                 })
                 .catch((err) => {
                     console.error('Lỗi tải dia chi:', err);
-                })
-                .finally(() => {});
+                });
         };
 
         const handleChange = (e) => {
@@ -262,16 +257,18 @@ function Address() {
         };
 
         const handleProvinceChange = (e) => {
-            setProvince(e.target.value);
+            // setProvince(e.target.value);
+            const code = e.target.value;
+            if (code !== province) setProvince(code);
         };
 
         useEffect(() => {
             fetchWards(province);
         }, [province]);
 
-        useEffect(() => {
-            fetchWards(item.province);
-        }, []);
+        // useEffect(() => {
+        //     fetchWards(item.province);
+        // }, []);
 
         const handleWardChange = (e) => {
             setWard(e.target.value);

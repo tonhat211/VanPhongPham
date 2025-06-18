@@ -22,7 +22,7 @@ public interface CartItemMapper {
                 .getImages()
                 .stream()
                 .findFirst()
-                .map(image -> image.getUrl())
+                .map(image -> image.getName())
                 .orElse(null);
     }
 }

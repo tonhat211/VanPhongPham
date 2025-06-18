@@ -275,13 +275,13 @@ body {
     margin-bottom: 10px;
 }
 
-  .mt-0 {
-        margin-top: 0;
-    }
+.mt-0 {
+    margin-top: 0;
+}
 
-     .mt-14 {
-        margin-top: 14px;
-    }
+.mt-14 {
+    margin-top: 14px;
+}
 
 .note {
     color: var(--primary-color);
@@ -334,34 +334,33 @@ body {
 }
 
 .scroll-to-top-btn {
-  position: fixed;
-  bottom: 40px;
-  right: 30px;
-  padding: 10px 15px;
-  font-size: 16px;
-  background-color: var(--header-color);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  z-index: 1000;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: var(--header-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1000;
 
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 
-  &:hover {
-     filter: brightness(1.5);
-  }
+    &:hover {
+        filter: brightness(1.5);
+    }
 }
 
 .scroll-to-top-btn.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
-
 
 .grid {
     min-width: 1200px;
@@ -375,6 +374,10 @@ body {
     display: block;
 }
 
+.max-w-60 {
+    max-width: 60%;
+}
+
 @include respond-to(tablet) {
     .grid {
         min-width: 720px;
@@ -386,7 +389,7 @@ body {
         justify-content: center;
     }
 
-      .d-flex-ctr-btw-tab {
+    .d-flex-ctr-btw-tab {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -404,7 +407,7 @@ body {
         padding: 20px;
     }
 
-     .pt-137-tab {
+    .pt-137-tab {
         padding-top: 137px;
     }
 
@@ -431,6 +434,10 @@ body {
     .grid-col-4-tab {
         width: 33.33%;
     }
+
+    .max-w-80-tab {
+        max-width: 80%;
+    }
 }
 
 @include respond-to(mobile) {
@@ -438,7 +445,7 @@ body {
         min-width: 0px;
     }
 
-     .d-flex-col-mob {
+    .d-flex-col-mob {
         display: flex;
         // align-items: center;
         // justify-content: center;
@@ -451,7 +458,7 @@ body {
         justify-content: center;
     }
 
-      .d-flex-ctr-btw-mob {
+    .d-flex-ctr-btw-mob {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -469,7 +476,7 @@ body {
         padding: 20px;
     }
 
-     .pt-137-mob {
+    .pt-137-mob {
         padding-top: 137px;
     }
 
@@ -493,14 +500,13 @@ body {
         width: 30%;
     }
 
-     .w-40-mob {
+    .w-40-mob {
         width: 40%;
     }
 
-       .w-50-mob {
+    .w-50-mob {
         width: 50%;
     }
-
 
     .w-100-mob {
         width: 100%;
@@ -518,7 +524,11 @@ body {
         font-size: 1.7rem !important;
     }
 
-     .p-content-size-mob {
+    .p-content-size-mob {
         font-size: 1.2rem !important;
+    }
+
+    .max-w-80-mob {
+        max-width: 80%;
     }
 }

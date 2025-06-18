@@ -50,7 +50,7 @@ function Header() {
                     setUser(null);
                 }
             } catch (error) {
-                console.error('Lỗi khi parse user từ localStorage:', error);
+                // console.error('Lỗi khi parse user từ localStorage:', error);
                 setUser(null);
             }
         };
@@ -74,7 +74,7 @@ function Header() {
             toast.success('Đăng xuất thành công!');
             navigate('/login');
         } catch (error) {
-            console.error('Lỗi khi đăng xuất:', error);
+            // console.error('Lỗi khi đăng xuất:', error);
         }
     };
 
