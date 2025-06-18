@@ -6,6 +6,8 @@ import './LoginPage.scss'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { forgotPassword, loginUser } from '~/api/LoginApi';
+import { useDispatch } from 'react-redux';
+import { fetchCart} from '~/pages/productCardsPage/cartSlice';
 function LoginPage() {
     const [mode, setMode] = useState('login');
     const [formData, setFormData] = useState({
@@ -14,6 +16,7 @@ function LoginPage() {
     });
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const validateField = (name, value) => {
         if (!value.trim()) {
@@ -70,6 +73,7 @@ function LoginPage() {
             };
 
             const response = await loginUser(payload);
+            dispatch(fetchCart());
             // toast.success("Đăng nhập thành công");
             setTimeout(() => navigate('/', { state: { email: formData.email } }), 2000);
 

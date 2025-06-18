@@ -9,7 +9,9 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import images from '~/assets/images';
+import useI18n from '~/hooks/useI18n';
 function Footer() {
+    const { t } = useI18n();
     return  (
         <div className="container-footer">
             {/* Slider*/}
@@ -44,20 +46,20 @@ function Footer() {
             <div className="middle-footer-wrapper">
                 <div className="payment-med-wrap">
                     <div className="mail-register">
-                        <p className="payment-title">Đăng kí nhận bản tin</p>
+                        <p className="payment-title">{t('footer.subscribeTitle')}</p>
                         <div className="form-res">
                             <form acceptCharset="UTF-8" action="/account/contact" className="contact-form"
                                   method="post">
                                 <div className="input-group">
                                     <input className="form-control" type="email" placeholder="Nhập địa chỉ email" />
-                                    <button className="sub-action">Đăng kí</button>
+                                    <button className="sub-action">{t('footer.subscribeButton')}</button>
                                 </div>
                             </form>
                         </div>
                     </div>
 
                     <div className="cert">
-                        <p className="payment-title">Chứng nhận</p>
+                        <p className="payment-title">{t('footer.certificate')}</p>
                         <a href="#">
                             <img src={images.footer_bct} />
                         </a>
@@ -65,7 +67,7 @@ function Footer() {
 
                     <div className="payment-med">
                         <p className="payment-title">
-                            phương thức thanh toán
+                            {t('footer.paymentMethods')}
                         </p>
                         <div className="payment-med-pic">
                             {midFooterImgs.map((item) =>
@@ -95,51 +97,47 @@ function Footer() {
                                     <img className="img-fluid" src={images.logo} alt="Thiên Long" />
                                 </div>
                                 <p className="company-info ">
-                                    <strong>Thienlong.vn - Website thương mại điện tử thuộc Tập đoàn Thiên Long</strong>
+                                    <strong>{t('footer.companyInfoTitle')}</strong>
                                     <br />
-                                    Công ty Cổ Phần Tập Đoàn Thiên Long
-
-                                    GPĐKKD số 0301464830 do Sở KHĐT TP. Hồ Chí Minh cấp ngày 14/03/2005.
+                                    {t('footer.companyName')}<br />
+                                    {t('footer.businessLicense')}
                                 </p>
                             </div>
 
                             <div className="footer-col">
-                                <h6 className="footer-title">ĐỊA CHỈ CÔNG TY</h6>
+                                <h6 className="footer-title">{t('footer.addressTitle')}</h6>
                                 <p>
-                                    <strong>Head Office:</strong> Tầng 10, Sofic Tower, Số 10 Đường Mai Chí Thọ,
-                                    Phường Thủ Thiêm, Thành Phố Thủ Đức, Thành Phố Hồ Chí Minh, Việt Nam
+                                    <strong>Head Office:</strong>  {t('footer.addressHeadOffice')}
                                 </p>
                                 <p>
-                                    <strong>Miền Bắc:</strong>  Số 38, đường Gamuda Gardens 2-5, Khu đô thị mới C2
-                                    - Gamuda Gardens, Phường Trần Phú, Quận Hoàng Mai,
-                                    Thành phố Hà Nội, Việt Nam.
+                                    <strong>{t('footer.north')}:</strong> {t('footer.addressNorth')}
                                 </p>
                             </div>
 
                             <div className="footer-col">
-                                <h6 className="footer-title">HỖ TRỢ KHÁCH HÀNG</h6>
-                                <p><strong style={{ color: 'black' }}>Hotline: 1900 866 819</strong></p>
-                                <p><strong style={{ color: 'black' }}>Thứ 2 - Thứ 6 (8h - 17h)</strong></p>
-                                <p><strong style={{ color: 'black' }}>salesonline@thienlongvn.com</strong></p>
-                                <p>Hướng dẫn mua hàng</p>
-                                <p>Hướng dẫn thanh toán</p>
-                                <p>Chính sách giao hàng</p>
-                                <p>Chính sách đổi trả & hoàn tiền</p>
+                                <h6 className="footer-title">{t('footer.supportTitle')}</h6>
+                                <p><strong style={{ color: 'black' }}>{t('footer.hotline')}</strong></p>
+                                <p><strong style={{ color: 'black' }}>{t('footer.workingTime')}</strong></p>
+                                <p><strong style={{ color: 'black' }}>{t('footer.email')}</strong></p>
+                                <p>{t('footer.guidePurchase')}</p>
+                                <p>{t('footer.guidePayment')}</p>
+                                <p>{t('footer.shippingPolicy')}</p>
+                                <p>{t('footer.refundPolicy')}</p>
                             </div>
 
                             <div className="footer-col">
-                                <h6 className="footer-title">VỀ THIENLONG.VN</h6>
-                                <p>Giới thiệu</p>
-                                <p>Dịch vụ in ấn quảng cáo</p>
-                                <p>Chính sách bảo mật chung</p>
-                                <p>Chính sách bảo mật thông tin cá nhân</p>
-                                <p>Thông tin liên hệ</p>
+                                <h6 className="footer-title">{t('footer.aboutTitle')}</h6>
+                                <p>{t('footer.aboutUs')}</p>
+                                <p>{t('footer.printingService')}</p>
+                                <p>{t('footer.privacyPolicy')}</p>
+                                <p>{t('footer.personalDataPolicy')}</p>
+                                <p>{t('footer.contactInfo')}</p>
                             </div>
                         </div>
                     </section>
 
                     <div className="footer-bottom">
-                        © 2021 Copyright - Bản quyền thuộc Tập đoàn Thiên Long
+                        {t('footer.copyright')}
                     </div>
                 </footer>
             </div>

@@ -3,9 +3,9 @@ import { toast } from 'react-toastify';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomInput, Modal } from '~/pages/components';
-import styles from './ChangePass.scss';
+import styles from './ChangePass.module.scss';
 import classNames from 'classnames/bind';
-import { changePasswordUser, updateUserInfo } from '~/api/updateUserInfoApi';
+import { changePasswordUser} from '~/api/updateUserInfoApi';
 const cx = classNames.bind(styles);
 function ChangePass() {
         const { t } = useTranslation();

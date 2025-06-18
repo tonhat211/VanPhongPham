@@ -1,68 +1,65 @@
 import React, { useState } from 'react';
 import './TickDiscount.scss'
-function TickDiscount() {
+import useI18n from '~/hooks/useI18n';
+
+function DiscountItem({ title, condition, code, expiration, t }) {
     const [isCopied, setIsCopied] = useState(false);
 
     const handleCopyClick = () => {
-        const codeElement = document.querySelector('.tickDiscount_left strong');
-        const code = codeElement ? codeElement.innerText : '';
-
         if (isCopied) {
-            alert('Mã đã được sao chép');
+            alert(t('tickDiscount.alert'));
         } else {
             navigator.clipboard.writeText(code)
                 .then(() => setIsCopied(true))
-                .catch(err => console.error('Lỗi copy: ', err));
+                .catch(err => console.error(t('tickDiscount.err') + ': ', err));
         }
     };
+
+    return (
+        <div className="tickDiscount1">
+            <div className="tickDiscount_left">
+                <h4>{t(title)}</h4>
+                <p>{t(condition)}</p>
+                <p>{t('tickDiscount.code')}: <strong>{t(code)}</strong></p>
+                <p>{t(expiration)}</p>
+            </div>
+            <div className="tickDiscount_right">
+                <div className="tickDiscount_right1">{t('tickDiscount.conditions')}</div>
+                <div className="tickDiscount_right2" onClick={handleCopyClick}>
+                    {isCopied ? t('tickDiscount.copied') : t('tickDiscount.copy')}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function TickDiscount() {
+    const { t, lower } = useI18n();
+
     return (
         <div className="right_2">
             <div className="right2_container">
-                <div className="tickDiscount1">
-                    <div className="tickDiscount_left">
-                        <h4>Giảm 50.000đ</h4>
-                        <p>Đơn hàng từ 300.000đ</p>
-                        <p>Mã: <strong>0425SALE50</strong></p>
-                        <p>30/04/2025</p>
-                    </div>
-                    <div className="tickDiscount_right">
-                        <div className="tickDiscount_right1">Điều kiện</div>
-                        <div className="tickDiscount_right2" onClick={handleCopyClick}>
-                            {isCopied ? 'Đã sao chép' : 'Sao chép mã'}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="tickDiscount1">
-                    <div className="tickDiscount_left">
-                        <h4>Giảm 100.000đ</h4>
-                        <p>Đơn hàng từ 700.000đ</p>
-                        <p>Mã: <strong>0724SALE50</strong></p>
-                        <p>30/04/2025</p>
-                    </div>
-                    <div className="tickDiscount_right">
-                        <div className="tickDiscount_right1">Điều kiện</div>
-                        <div className="tickDiscount_right2" onClick={handleCopyClick}>
-                            {isCopied ? 'Đã sao chép' : 'Sao chép mã'}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="tickDiscount1">
-                    <div className="tickDiscount_left">
-                        <h4>Giảm 300.000đ</h4>
-                        <p>Đơn hàng từ 1.300.000đ</p>
-                        <p>Mã: <strong>0425SALE200</strong></p>
-                        <p>30/04/2025</p>
-                    </div>
-                    <div className="tickDiscount_right">
-                        <div className="tickDiscount_right1">Điều kiện</div>
-                        <div className="tickDiscount_right2" onClick={handleCopyClick}>
-                            {isCopied ? 'Đã sao chép' : 'Sao chép mã'}
-                        </div>
-                    </div>
-                </div>
-
+                <DiscountItem
+                    title="tickDiscount.discount1Title"
+                    condition="tickDiscount.discount1Condition"
+                    code="tickDiscount.discount1Code"
+                    expiration="tickDiscount.expiration"
+                    t={t}
+                />
+                <DiscountItem
+                    title="tickDiscount.discount2Title"
+                    condition="tickDiscount.discount2Condition"
+                    code="tickDiscount.discount2Code"
+                    expiration="tickDiscount.expiration"
+                    t={t}
+                />
+                <DiscountItem
+                    title="tickDiscount.discount3Title"
+                    condition="tickDiscount.discount3Condition"
+                    code="tickDiscount.discount3Code"
+                    expiration="tickDiscount.expiration"
+                    t={t}
+                />
             </div>
         </div>
     );
