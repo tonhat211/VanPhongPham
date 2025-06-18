@@ -17,6 +17,16 @@
   background-color: var(--primary-hover-color);
 }
 
+.lang-btn {
+  padding: 7px;
+  border-radius: 10px;
+  color: var(--header-color);
+}
+.lang-btn:hover {
+  cursor: pointer;
+  background-color: var(--primary-hover-color);
+}
+
 .logo {
   width: 100%;
 }
@@ -85,6 +95,11 @@
 }
 
 @media (min-width: 720px) and (max-width: 1024px) {
+  .wrapper {
+    height: fit-content;
+  }
+}
+@media (min-width: 0px) and (max-width: 719px) {
   .wrapper {
     height: fit-content;
   }

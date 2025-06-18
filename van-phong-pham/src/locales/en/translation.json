@@ -97,11 +97,13 @@
   "sort": "Sort",
   "upper-price": "Price Ascending",
   "downer-price": "Price Descending",
-  "there-are-not": "No matching results",
+  "there-are-no": "No",
   "recent-viewed-products": "Recently Viewed Products",
   "all": "All",
   "there-are": "There are",
   "matching-results": "Matching Results",
   "sold": "Sold",
-  "quick-view": "Quick View"
+  "quick-view": "Quick View",
+  "change-password": "Change Password"
+
 }

@@ -9,38 +9,29 @@ import { getCart, updateCartItemQuantity, removeCartItem } from '~/api/cartApi.j
 import { toast } from 'react-toastify';
 import { useStepContext } from '@mui/material';
 import { SERVER_URL_BASE } from '~/api/axiosInstance';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart, updateCartItem, removeCartItemById } from '~/pages/productCardsPage/cartSlice';
 function ProductCardsPage() {
     const navigate = useNavigate();
-    const [cartItems, setCartItems] = useState([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
     const [selectedItems, setSelectedItems] = useState([]);
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.cart.items);
 
     useEffect(() => {
-        const fetchCart = async () => {
+        const fetchData = async () => {
             try {
-                const response = await getCart();
-                setCartItems(
-                    response.items.map((item) => ({
-                        id: item.id, // Cart item ID
-                        sid: item.productDetailId,
-                        imageUrl: SERVER_URL_BASE+"/"+ item.imageUrl,
-                        productName: item.productName,
-                        brandName: item.brandName,
-                        initPrice: item.initPrice,
-                        price: item.price,
-                        quantity: item.quantity,
-                        discount: item.discount,
-                    })),
-                );
-                setLoading(false);
+                await dispatch(fetchCart()).unwrap();
             } catch (error) {
-                toast.error('Lỗi khi tải giỏ hàng.');
-                console.error(error);
+                toast.error('Không thể tải giỏ hàng!');
+            } finally {
+                setLoading(false);
             }
         };
-        fetchCart();
-    }, []);
+        fetchData();
+    }, [dispatch]);
+
 
     useEffect(() => {
         const selected = cartItems.filter(item => selectedItems.includes(item.id));
@@ -50,7 +41,7 @@ function ProductCardsPage() {
 
     const handleSelectItem = (id) => {
         setSelectedItems((prev) =>
-            prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+            prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
     )};
 
 
@@ -59,59 +50,26 @@ function ProductCardsPage() {
         navigate('/checkout', { state: { selectedItems } });
     };
 
-    const handleRemove = async (sid) => {
-        try {
-            const response = await removeCartItem(sid);
-            setCartItems(
-                response.items.map((item) => ({
-                    id: item.id, // Cart item ID
-                    sid: item.productDetailId,
-                    imageUrl: SERVER_URL_BASE+"/"+ item.imageUrl,
-                    productName: item.productName,
-                    brandName: item.brandName,
-                    initPrice: item.initPrice,
-                    price: item.price,
-                    quantity: item.quantity,
-                    discount: item.discount,
-                })),
-            );
-            setSelectedItems((prev) => prev.filter((id) => id !== sid));
-        } catch (error) {
-            toast.error('Không thể xoá sản phẩm.');
-        }
+    const handleRemove = async (productDetailId) => {
+        await dispatch(removeCartItemById(productDetailId))
+        setSelectedItems((prev) => prev.filter((id) => id !== productDetailId));
     };
 
-    const handleQuantityChange = async (sid, newQuantity) => {
-        try {
-            const response = await updateCartItemQuantity(sid, newQuantity);
-            setCartItems(
-                response.items.map((item) => ({
-                    id: item.id, // Cart item ID
-                    sid: item.productDetailId,
-                    imageUrl: SERVER_URL_BASE+"/"+ item.imageUrl,
-                    productName: item.productName,
-                    brandName: item.brandName,
-                    initPrice: item.initPrice,
-                    price: item.price,
-                    quantity: item.quantity,
-                })),
-            );
-        } catch (error) {
-            toast.error('Không thể cập nhật số lượng.');
-        }
+    const handleQuantityChange = async (productDetailId, newQuantity) => {
+        dispatch(updateCartItem({ productDetailId, quantity: newQuantity }));
     };
 
-    const handleIncrement = (sid) => {
-        const item = cartItems.find((item) => item.sid === sid);
+    const handleIncrement = (productDetailId) => {
+        const item = cartItems.find((item) => item.productDetailId === productDetailId);
         if (item) {
-            handleQuantityChange(sid, item.quantity + 1);
+            handleQuantityChange(productDetailId, item.quantity + 1);
         }
     };
 
-    const handleDecrement = (sid) => {
-        const item = cartItems.find((item) => item.sid === sid);
+    const handleDecrement = (productDetailId) => {
+        const item = cartItems.find((item) => item.productDetailId === productDetailId);
         if (item && item.quantity > 1) {
-            handleQuantityChange(sid, item.quantity - 1);
+            handleQuantityChange(productDetailId, item.quantity - 1);
         }
     };
 
@@ -137,7 +95,7 @@ function ProductCardsPage() {
                                                 checked={selectedItems.includes(item.id)}
                                                 onChange={() => handleSelectItem(item.id)}
                                             />
-                                            <img className="item-image" src={item.imageUrl} alt={item.title} />
+                                            <img className="item-image" src={item.imageUrl} alt={item.productName} />
                                         </div>
                                         <div className="item-details">
                                             <p className="item-title">{item.productName}</p>
@@ -157,7 +115,7 @@ function ProductCardsPage() {
                                         </div>
 
                                         <div className="item-quantity">
-                                            <button onClick={() => handleDecrement(item.sid)}>-</button>
+                                            <button onClick={() => handleDecrement(item.productDetailId)}>-</button>
                                             <input
                                                 type="number"
                                                 value={item.quantity}
@@ -165,14 +123,14 @@ function ProductCardsPage() {
                                                 onChange={(e) => {
                                                     const newQuantity = parseInt(e.target.value);
                                                     if (!isNaN(newQuantity) && newQuantity >= 1) {
-                                                        handleQuantityChange(item.sid, newQuantity);
+                                                        handleQuantityChange(item.productDetailId, newQuantity);
                                                     }
                                                 }}
                                             />
-                                            <button onClick={() => handleIncrement(item.sid)}>+</button>
+                                            <button onClick={() => handleIncrement(item.productDetailId)}>+</button>
                                         </div>
 
-                                        <button className="item-remove" onClick={() => handleRemove(item.sid)}>
+                                        <button className="item-remove" onClick={() => handleRemove(item.productDetailId)}>
                                             ×
                                         </button>
                                     </div>

@@ -3,6 +3,7 @@ import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import LockResetIcon from '@mui/icons-material/LockReset';
 import {
     faCube,
     faUser,
@@ -24,7 +25,7 @@ import cartitems from '~/data/cartItems';
 import { formatMoney } from '~/utils';
 
 import { default as MenuItemModel } from '~/models/MenuItem';
-import { Info, Order, Address } from './components';
+import { Info, Order, Address, ChangePass } from './components';
 
 const cx = classNames.bind(styles);
 
@@ -42,6 +43,11 @@ function Account() {
             t('member-program'),
             '/contact',
             <SVGIcons.ChuongTrinhThanhVien style={{ marginRight: '4px' }} />,
+        ),
+        new MenuItemModel(
+            t('change-password'),
+            '?view=change-password',
+            <SVGIcons.ChangePass style={{ marginRight: '4px' }} />,
         ),
         new MenuItemModel(
             t('order-list'),
@@ -62,8 +68,10 @@ function Account() {
             </div>
             <div style={{ flex: '1' }}>
                 {view === 'info' && <Info />}
+                {view === 'change-password' && <ChangePass />}
                 {view === 'orders' && <Order />}
                 {view === 'addresses' && <Address />}
+
                 </div>
         </div>
     );
@@ -78,7 +86,7 @@ function Account() {
                 </div>
                 <div className="d-flex-center">
                     <p style={{ fontSize: '1.4rem' }}>
-                        {t('hello')}, <span className={cx('name')}>Tô Minh Nhật</span>
+                        {t('hello')}, <span className={cx('name')}>To nhat</span>
                     </p>
                 </div>
                 <div className={cx('menu-container')}>

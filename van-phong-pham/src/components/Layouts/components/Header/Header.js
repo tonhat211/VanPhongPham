@@ -13,14 +13,18 @@ import { toast } from 'react-toastify';
 import { useFEContext } from '~/context/FEProvider';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from '~/api/axiosInstance';
+import { useSelector } from 'react-redux';
+
 const cx = classNames.bind(styles);
 
 function Header() {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
-    const [cartCount, setCartCount] = useState(0);
+    // const [cartCount, setCartCount] = useState(0);
     const userName = user?.name || 'Guest';
     const { t, i18n } = useTranslation();
+    const cartItems = useSelector((state) => state.cart.items);
+    const cartCount = cartItems.length;
 
     const toggleLanguage = () => {
         const newLang = i18n.language === 'vi' ? 'en' : 'vi';
@@ -73,23 +77,6 @@ function Header() {
             // console.error('Lỗi khi đăng xuất:', error);
         }
     };
-
-    // Lấy số lượng giỏ hàng khi có user
-    useEffect(() => {
-        const fetchCartCount = async () => {
-            const token = localStorage.getItem('token');
-            if (!token) return;
-
-            try {
-                const response = await getCart();
-                setCartCount(response.items?.length || 0);
-            } catch (error) {
-                // console.error('Lỗi khi lấy giỏ hàng:', error);
-            }
-        };
-
-        fetchCartCount();
-    }, [user]);
 
     // du lieu header menu list
     const headerMenuList = [

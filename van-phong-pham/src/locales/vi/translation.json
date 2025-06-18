@@ -98,11 +98,12 @@
     "sort": "Sắp xếp",
     "upper-price": "Giá tăng dần",
     "downer-price": "Giá giảm dần",
-    "there-are-not": "Không có kết quả phù hợp",
+    "there-are-no": "Không có",
     "recent-viewed-products": "Sản phẩm đã xem",
     "all": "Tất cả",
     "there-are": "Có",
     "matching-results": "Kết quả phù hợp",
     "sold": "Đã bán",
-    "quick-view": "Xem nhanh"
+    "quick-view": "Xem nhanh",
+    "change-password": "Đổi mật khẩu"
 }
