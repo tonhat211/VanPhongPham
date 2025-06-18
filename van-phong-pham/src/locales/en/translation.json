@@ -42,6 +42,7 @@
     },
 
     "tickDiscount": {
+        "code": "Code",
         "discount1Title": "Discount 50,000₫",
         "discount1Condition": "Orders from 300,000₫",
         "discount1Code": "0425SALE50",
@@ -58,7 +59,8 @@
         "conditions": "Conditions",
         "copy": "Copy code",
         "copied": "Copied",
-        "alert": "Code has been copied"
+        "alert": "Code has been copied",
+        "err": "Erro copy"
     },
 
     "productDiscript": {
@@ -94,7 +96,15 @@
         "invoice": "Request company invoice",
         "notePlaceholder": "Order note",
         "totalTitle": "Total",
-        "checkout": "Proceed to Checkout"
+        "checkout": "Proceed to Checkout",
+        "order": "to order",
+
+        "addSuccess": "Product added to cart",
+        "addError": "Product added failed",
+        "loadError": "Can not load cart",
+        "updateError": "Quantity update failed",
+        "removeError": "Product deleted failed",
+        "removeSuccess": "Product deleted"
     },
 
     "changePass": {
@@ -282,6 +292,36 @@
                 "endDate": "End Date"
             }
         }
+    },
+
+    "footer": {
+        "subscribeTitle": "Subscribe to newsletter",
+        "subscribePlaceholder": "Enter your email address",
+        "subscribeButton": "Subscribe",
+        "certificate": "Certification",
+        "paymentMethods": "Payment Methods",
+        "companyInfoTitle": "Thienlong.vn - E-commerce site of Thien Long Group",
+        "companyName": "Thien Long Group Joint Stock Company",
+        "businessLicense": "Business license No. 0301464830 issued by HCMC Department of Planning and Investment on 14/03/2005.",
+        "addressTitle": "COMPANY ADDRESS",
+        "addressHeadOffice": "10th Floor, Sofic Tower, 10 Mai Chi Tho St., Thu Thiem Ward, Thu Duc City, HCMC, Vietnam",
+        "north": "North",
+        "addressNorth": "No. 38, Gamuda Gardens 2-5, New Urban Area C2 - Gamuda Gardens, Tran Phu Ward, Hoang Mai District, Hanoi, Vietnam.",
+        "supportTitle": "CUSTOMER SUPPORT",
+        "hotline": "Hotline: 1900 866 819",
+        "workingTime": "Mon - Fri (8AM - 5PM)",
+        "email": "salesonline@thienlongvn.com",
+        "guidePurchase": "Purchase Guide",
+        "guidePayment": "Payment Guide",
+        "shippingPolicy": "Shipping Policy",
+        "refundPolicy": "Return & Refund Policy",
+        "aboutTitle": "ABOUT THIENLONG.VN",
+        "aboutUs": "About Us",
+        "printingService": "Advertising Printing Service",
+        "privacyPolicy": "General Privacy Policy",
+        "personalDataPolicy": "Personal Data Protection Policy",
+        "contactInfo": "Contact Information",
+        "copyright": "© 2021 Copyright - All rights reserved by Thien Long Group"
     }
 
 }

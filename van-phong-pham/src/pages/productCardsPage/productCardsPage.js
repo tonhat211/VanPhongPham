@@ -11,7 +11,9 @@ import { useStepContext } from '@mui/material';
 import { SERVER_URL_BASE } from '~/api/axiosInstance';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCart, updateCartItem, removeCartItemById } from '~/pages/productCardsPage/cartSlice';
+import useI18n from '~/hooks/useI18n';
 function ProductCardsPage() {
+    const { t, lower } = useI18n();
     const navigate = useNavigate();
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -24,7 +26,7 @@ function ProductCardsPage() {
             try {
                 await dispatch(fetchCart()).unwrap();
             } catch (error) {
-                toast.error('Không thể tải giỏ hàng!');
+                toast.error(t('cart.loadError'));
             } finally {
                 setLoading(false);
             }
@@ -51,12 +53,21 @@ function ProductCardsPage() {
     };
 
     const handleRemove = async (productDetailId) => {
-        await dispatch(removeCartItemById(productDetailId))
-        setSelectedItems((prev) => prev.filter((id) => id !== productDetailId));
+        try {
+            await dispatch(removeCartItemById(productDetailId)).unwrap();
+            toast.success(t('cart.removeSuccess'));
+            setSelectedItems((prev) => prev.filter((id) => id !== productDetailId));
+        } catch (error) {
+            toast.error(t('cart.removeError'));
+        }
     };
 
     const handleQuantityChange = async (productDetailId, newQuantity) => {
-        dispatch(updateCartItem({ productDetailId, quantity: newQuantity }));
+        try {
+            await dispatch(updateCartItem({ productDetailId, quantity: newQuantity })).unwrap();
+        } catch (error) {
+            toast.error(t('cart.updateError'));
+        }
     };
 
     const handleIncrement = (productDetailId) => {
@@ -76,12 +87,12 @@ function ProductCardsPage() {
     return (
         <section className="cart-container">
             <div className="cart-info">
-                <h3 className="cart-title">Giỏ hàng</h3>
+                <h3 className="cart-title">{t('cart.title')}</h3>
                 <div className="cart-wrapper">
                     <div className="cart-left">
                         {loading ? (
                             <div className="cart-loading">
-                                <p>Đang tải giỏ hàng...</p>
+                                <p>{t('cart.loading')}</p>
                             </div>
                         ) : (
                             <>
@@ -138,12 +149,12 @@ function ProductCardsPage() {
                             ) : (
                                 <div className="cart-empty">
                                 <p>
-                                        Bạn chưa có sản phẩm nào trong giỏ hàng - quay về{' '}
+                                    {t('cart.empty')}{' '}
                                         <a href="#" title="Trang Chủ" className="link-homepage">
                                             {' '}
-                                            Trang Chủ
+                                            {t('cart.homepage')}
                                         </a>{' '}
-                                        để mua hàng
+                                    {t('cart.order')}
                                     </p>
                                 </div>
                             )}
@@ -152,13 +163,13 @@ function ProductCardsPage() {
                         <div className="cart-note">
                             <p className="shipping-note">
                                 <LocalShippingRoundedIcon className="icon-shipping"></LocalShippingRoundedIcon>
-                                Miễn phí vận chuyển cho đơn hàng từ 100,000₫
+                                {t('cart.freeShippingNote')}
                             </p>
                             <label className="company-invoice">
                                 <input type="checkbox" />
-                                Xuất hoá đơn công ty
+                                {t('cart.invoice')}
                             </label>
-                            <textarea placeholder="Ghi chú đơn hàng"></textarea>
+                            <textarea placeholder={t('cart.notePlaceholder')}></textarea>
                         </div>
                         </>
                             )}
@@ -166,11 +177,11 @@ function ProductCardsPage() {
 
                     <div className="cart-right">
                         <div className="total-cart-container">
-                            <p className="total-title">Tổng tiền</p>
+                            <p className="total-title"> {t('cart.totalTitle')} </p>
                             <span className="total-price">{formatPrices(total)}</span>
                         </div>
                         <button className="checkout-button" onClick={handleCheckout}>
-                            Tiến hành đặt hàng
+                      {t('cart.checkout')}
                         </button>
                         <TickDiscount />
                     </div>

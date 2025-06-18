@@ -7,7 +7,9 @@ import { Product as ProductModel } from '~/models';
 import images from '~/assets/images';
 import './CarouselCards.scss';
 import { ProductItem } from '~/pages/components';
+import useI18n from '~/hooks/useI18n';
 function CarouselCards() {
+    const { t, lower } = useI18n();
     // du lieu demo
     let recentlyViewedProducts = localStorage.getItem('recentlyViewedProducts') || [];
     if (recentlyViewedProducts) {
@@ -17,7 +19,7 @@ function CarouselCards() {
         <>
             {recentlyViewedProducts && (
                 <div className="carousel-wrapper">
-                    <h2 className="carousel-title">Đã xem gần đây</h2>
+                    <h2 className="carousel-title">{t('carousel.recentlyViewed')}</h2>
                     <Swiper
                         modules={[Navigation, Autoplay]}
                         navigation

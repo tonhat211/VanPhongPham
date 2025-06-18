@@ -136,6 +136,7 @@
     },
 
     "tickDiscount": {
+        "code": "Mã",
         "discount1Title": "Giảm 50.000đ",
         "discount1Condition": "Đơn hàng từ 300.000đ",
         "discount1Code": "0425SALE50",
@@ -152,7 +153,14 @@
         "conditions": "Điều kiện",
         "copy": "Sao chép mã",
         "copied": "Đã sao chép",
-        "alert": "Mã đã được sao chép"
+        "alert": "Mã đã được sao chép",
+
+        "addSuccess": "Đã thêm sản phẩm vào giỏ hàng",
+        "addError": "Thêm sản phẩm thất bại",
+        "loadError": "Không thể tải giỏ hàng",
+        "updateError": "Cập nhật số lượng thất bại",
+        "removeError": "Xóa sản phẩm thất bại",
+        "removeSuccess": "Đã xóa sản phẩm"
     },
 
     "productDiscript": {
@@ -160,6 +168,7 @@
         "expand": "Xem thêm",
         "collapse": "Thu gọn"
     },
+
     "review": {
         "title": "Đánh giá sản phẩm",
         "filterLabel": "Lọc đánh giá:",
@@ -187,7 +196,8 @@
         "invoice": "Xuất hoá đơn công ty",
         "notePlaceholder": "Ghi chú đơn hàng",
         "totalTitle": "Tổng tiền",
-        "checkout": "Tiến hành đặt hàng"
+        "checkout": "Tiến hành đặt hàng",
+        "order": "để mua hàng"
     },
 
     "changePass": {
@@ -375,6 +385,36 @@
                 "endDate": "Ngày nghỉ việc"
             }
         }
+    },
+
+    "footer": {
+        "subscribeTitle": "Đăng kí nhận bản tin",
+        "subscribePlaceholder": "Nhập địa chỉ email",
+        "subscribeButton": "Đăng kí",
+        "certificate": "Chứng nhận",
+        "paymentMethods": "phương thức thanh toán",
+        "companyInfoTitle": "Thienlong.vn - Website thương mại điện tử thuộc Tập đoàn Thiên Long",
+        "companyName": "Công ty Cổ Phần Tập Đoàn Thiên Long",
+        "businessLicense": "GPĐKKD số 0301464830 do Sở KHĐT TP. Hồ Chí Minh cấp ngày 14/03/2005.",
+        "addressTitle": "ĐỊA CHỈ CÔNG TY",
+        "addressHeadOffice": "Tầng 10, Sofic Tower, Số 10 Đường Mai Chí Thọ, Phường Thủ Thiêm, Thành Phố Thủ Đức, Thành Phố Hồ Chí Minh, Việt Nam",
+        "north": "Miền Bắc",
+        "addressNorth": "Số 38, đường Gamuda Gardens 2-5, Khu đô thị mới C2 - Gamuda Gardens, Phường Trần Phú, Quận Hoàng Mai, Thành phố Hà Nội, Việt Nam.",
+        "supportTitle": "HỖ TRỢ KHÁCH HÀNG",
+        "hotline": "Hotline: 1900 866 819",
+        "workingTime": "Thứ 2 - Thứ 6 (8h - 17h)",
+        "email": "salesonline@thienlongvn.com",
+        "guidePurchase": "Hướng dẫn mua hàng",
+        "guidePayment": "Hướng dẫn thanh toán",
+        "shippingPolicy": "Chính sách giao hàng",
+        "refundPolicy": "Chính sách đổi trả & hoàn tiền",
+        "aboutTitle": "VỀ THIENLONG.VN",
+        "aboutUs": "Giới thiệu",
+        "printingService": "Dịch vụ in ấn quảng cáo",
+        "privacyPolicy": "Chính sách bảo mật chung",
+        "personalDataPolicy": "Chính sách bảo mật thông tin cá nhân",
+        "contactInfo": "Thông tin liên hệ",
+        "copyright": "© 2021 Copyright - Bản quyền thuộc Tập đoàn Thiên Long"
     }
 
 }
