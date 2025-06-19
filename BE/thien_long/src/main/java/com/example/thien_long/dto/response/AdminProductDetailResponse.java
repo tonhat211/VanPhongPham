@@ -42,7 +42,7 @@ public class AdminProductDetailResponse {
         this.label = product.getLabel();
         this.avgRating = product.getAvgRating();
         this.totalReview = product.getTotalReview();
-        this.totalRemainQty = product.getSoldQty();
+
         this.totalSoldQty = product.getSoldQty();
         this.thumbnailId = product.getThumbnail().getId();
         this.thumbnailUrl =  Constant.THUMBNAIL_IMG_DIR+"/" +product.getThumbnail().getName();
@@ -51,12 +51,21 @@ public class AdminProductDetailResponse {
         this.subCategoryCode = product.getSubCategory().getCode();
         this.brandCode = product.getBrand().getCode();
         this.productDetails = productDetails;
-        this.images = images.stream()
-                .map(img -> {
-                    img.setName(Constant.PRODUCT_IMG_DIR+"/"+img.getName());
-                    return img;
-                })
-                .collect(Collectors.toList());
+
+        if (productDetails != null) {
+            this.totalRemainQty += productDetails.stream()
+                    .mapToInt(ProductDetail::getQty)
+                    .sum();
+        }
+        if(images != null) {
+            this.images = images.stream()
+                    .map(img -> {
+                        img.setName(Constant.PRODUCT_IMG_DIR+"/"+img.getName());
+                        return img;
+                    })
+                    .collect(Collectors.toList());
+        }
+
 
 
     }

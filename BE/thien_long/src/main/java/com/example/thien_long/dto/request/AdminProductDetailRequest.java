@@ -36,6 +36,9 @@ public class AdminProductDetailRequest {
     private double price;
     private String title;
     private int qty;
+    private int imgId;
+    private int detailId;
+
 
 //    private List<ProductDetail> productDetails = new ArrayList<>();
 //    private List<Image> images = new ArrayList<>();

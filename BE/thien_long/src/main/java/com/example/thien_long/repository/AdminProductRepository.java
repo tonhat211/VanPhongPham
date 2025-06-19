@@ -20,7 +20,7 @@ public interface AdminProductRepository extends JpaRepository<Product, Long> {
    @Query("""
     SELECT new com.example.thien_long.dto.response.BasicAdminProductResponse(
         p.id, p.name, p.thumbnail, p.category.code, p.category.title,
-        p.brand.code, p.brand.name, p.soldQty)
+        p.brand.code, p.brand.name, p.soldQty, p.status)
     FROM Product p
     WHERE p.isDeleted = 0 
     AND (:categoryCode IS NULL OR p.category.code = :categoryCode)

@@ -1,5 +1,5 @@
 class AdminProductModel {
-    constructor(id, name, categoryCode, categoryTitle, brandCode, brandName, soldQty, thumbnail) {
+    constructor(id, name, categoryCode, categoryTitle, brandCode, brandName, soldQty, thumbnail,status) {
         this.id = id;
         this.name = name;
         this.categoryCode = categoryCode;
@@ -8,6 +8,7 @@ class AdminProductModel {
         this.brandName = brandName;
         this.soldQty = soldQty;
         this.thumbnail = thumbnail;
+        this.status = status;
     }
 
     //   {

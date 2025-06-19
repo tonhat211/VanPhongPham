@@ -4,6 +4,9 @@ import com.example.thien_long.service.Constant;
 import com.example.thien_long.utils.VietnameseUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +14,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,6 +79,9 @@ public class Product {
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "status", columnDefinition = "VARCHAR(10) DEFAULT 'ACTIVE'")
+    private String status;
+
     @Column(name = "unsigned_name", nullable = true)
     private String unsignedName;
 
@@ -82,157 +91,7 @@ public class Product {
         this.unsignedName = VietnameseUtils.removeVietnameseDiacritics(this.name).toLowerCase();
     }
 
-
-    public String getUnsignedName() {
-        return unsignedName;
-    }
-
-    public void setUnsignedName(String unsignedName) {
-        this.unsignedName = unsignedName;
-    }
-
-
-    public Product() {
-    }
-
     public Product(long id) {
         this.id = id;
     }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
-    public SubCategory getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(SubCategory subCategory) {
-        this.subCategory = subCategory;
-    }
-
-    public int getSoldQty() {
-        return soldQty;
-    }
-
-    public void setSoldQty(int saledQty) {
-        this.soldQty = saledQty;
-    }
-
-    public int getTotalReview() {
-        return totalReview;
-    }
-
-    public void setTotalReview(int totalReview) {
-        this.totalReview = totalReview;
-    }
-
-    public double getAvgRating() {
-        return avgRating;
-    }
-
-    public void setAvgRating(double avgRating) {
-        this.avgRating = avgRating;
-    }
-
-    public int getInitPrice() {
-        return initPrice;
-    }
-
-    public void setInitPrice(int init_price) {
-        this.initPrice = init_price;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Image getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(Image thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public List<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(int isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
 }

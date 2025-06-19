@@ -4,7 +4,6 @@ export async function uploadThumbnail({ thumbnail }) {
     console.log('upload');
     let url = `/files/upload/thumbnail`;
     const formData = new FormData();
-    // formData.append('type', 'thumnail');
     formData.append('file', thumbnail);
     const response = await axiosInstance.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
     const data = response.data;
@@ -13,22 +12,51 @@ export async function uploadThumbnail({ thumbnail }) {
         id: data.id,
         name: data.name,
     };
-    console.log(JSON.stringify(image, null, 2));
+    // console.log(JSON.stringify(image, null, 2));
     return image;
 }
 
-export async function uploadImageList({ imgs }) {
-    console.log('upload');
-    let url = `/files/upload/thumbnail`;
+export async function uploadImageList({ id, files }) {
+    console.log('uploadImageList:');
+    let url = `/admin/products/edit/image/insert`;
     const formData = new FormData();
-    imgs.forEach((f) => formData.append('files', f));
+    files.forEach((f) => formData.append('files', f.file));
+    formData.append('id', id);
     const response = await axiosInstance.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
     const data = response.data;
+    const success = data.success;
 
-    const images = data.map((item) => ({
-        id: item.id,
-        name: item.name,
-    }));
-    console.log(JSON.stringify(images, null, 2));
-    return images;
+    if (success) {
+        const images = Array.isArray(data.images)
+            ? data.images.map((img) => ({
+                  ...img,
+                  url: `${SERVER_URL_BASE}/${img.name}`, 
+              }))
+            : [];
+
+        return { success, images };
+    } else return success;
+}
+
+export async function uploadImage({ id, file }) {
+    console.log('uploadImage:');
+    let url = `/admin/products/edit/thumbnail/insert`;
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('file', file.file)
+
+    const response = await axiosInstance.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+    const data = response.data;
+    const success = data.success;
+    console.log(JSON.stringify(data.images, null, 2));
+
+    if (success) {
+       const image = data.image
+            ? {
+                  ...data.image,
+                  url: `${SERVER_URL_BASE}/${data.image.name}`,
+              }
+            : null;
+        return { success, image };
+    } else return success;
 }

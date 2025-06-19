@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,19 @@ public class FileController {
             result.add(resp);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
+    public static void delete(String fileName, String dir) {
+        Path filePath = Paths.get(dir).resolve(fileName).normalize();
+        if (!filePath.startsWith(Paths.get(dir))) {
+            System.out.println("Invalid file path");
+        }
+        try {
+            Files.deleteIfExists(filePath);
+        } catch (IOException e) {
+            System.out.println("file " +fileName +" khong ton tai");
+        }
+
     }
 
 

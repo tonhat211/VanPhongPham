@@ -26,6 +26,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
         WHERE p.id = :id
     """)
  List<Image> findByProductId(@Param("id") long id);
+
  }
 
 //
