@@ -344,7 +344,9 @@
         "action_unlock": "Mở khóa",
         "action_delete": "Xóa",
         "action_flag": "Đánh dấu",
-        "action_restore": "Khôi phục"
+        "action_restore": "Khôi phục",
+        "loadError": "Lỗi khi tải danh sách khách hàng",
+        "updateError": "Lỗi khi cập nhật trạng thái"
     },
 
     "adEmployee": {

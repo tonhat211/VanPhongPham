@@ -1,91 +1,74 @@
 import './Customer.scss'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Dialog, DialogContent, DialogTitle, MenuItem, Select, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import { formatPrices } from '~/utils/common';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCustomers, changeCustomerStatus } from '~/pagesAdmin/Customer/customerSlice';
+import { toast } from 'react-toastify';
+import useI18n from '~/hooks/useI18n';
 
 function Customer() {
-
-    const mockCustomer = [
-        {
-            id: 2,
-            name: 'Phan Van V',
-            email: 'khachhang@gmail.com',
-            status: 'Đang hoạt động',
-            createdAt: '1-01-2-19',
-            fullname: 'Nguyen Thi B',
-            number: '0359542457',
-            address: '1.drgaq.qafdgba',
-            gender: 'male',
-        },
-        {
-            id: 3,
-            name: 'Nguyen Van A',
-            email: 'a@gmail.com',
-            status: 'Đã bị khóa',
-            createdAt: '1-01-2-19',
-            fullname: 'Nguyen Thi B',
-            number: '0359542457',
-            address: '1.drgaq.qafdgba',
-            gender: 'male',
-        },
-        {
-            id: 4,
-            name: 'Tran Thi B',
-            email: 'b@gmail.com',
-            status: 'Đã bị xóa',
-            createdAt: '1-01-2-19',
-            fullname: 'Nguyen Thi B',
-            number: '0359542457',
-            address: '1.drgaq.qafdgba',
-            gender: 'female',
-        },
-    ];
-
-
-    const [customers, setCustomers] = useState(mockCustomer);
-
+    const { t, lower } = useI18n();
     const navigate = useNavigate();
 
     const [selectedCustomers, setSelectedCustomers] = useState(null);
 
+    const dispatch = useDispatch();
+    const customers = useSelector((state) => state.customer.list);
+
+    const statusDisplayMap = {
+        ACTIVE: 'Đang hoạt động',
+        LOCKED: 'Đã bị khóa',
+        UNLOCK: 'Mở khóa',
+        FLAG: 'Đánh dấu đã xóa',
+        FLAGGED: 'Đánh dấu đã xóa',
+        RESTORE: 'Khôi phục',
+    };
+
     const rowsWithSTT = customers.map((customer, index) => ({
         ...customer,
         stt: index + 1,
+        status: statusDisplayMap[customer.status] || customer.status,
     }));
 
-    const statuses = [
-        'Đang hoạt động',         // Bình thường
-        'Đã bị khóa',             // Admin khóa
-        'Đã bị xóa',              // Bị xóa khỏi hệ thống (DB)
-        'Đánh dấu đã xóa',        // Người dùng xóa (flag)
-        'Khôi phục'            // Phục hồi từ đánh dấu
-    ];
-
-    const statusChangeMap = {
-        'Khóa': 'Đã bị khóa',
-        'Mở khóa': 'Đang hoạt động',
-        'Xóa': 'Đã bị xóa',
-        'Đánh dấu': 'Đánh dấu đã xóa',
-        'Khôi phục': 'Đang hoạt động'
-    };
-
-
     const allowedNextStatuses = {
-        'Đang hoạt động': ['Khóa', 'Đánh dấu'],
-        'Đã bị khóa': ['Mở khóa', 'Đánh dấu', 'Xóa'],
-        'Đánh dấu đã xóa': ['Xóa', 'Khôi phục'],
-        'Đã bị xóa': []
+        'Đang hoạt động': [
+            { label: 'Khóa', action: 'LOCK' },
+            { label: 'Đánh dấu đã xóa', action: 'FLAG' }
+        ],
+        'Đã bị khóa': [
+            { label: 'Mở khóa', action: 'UNLOCK' },
+            { label: 'Đánh dấu đã xóa', action: 'FLAG' }
+        ],
+        'Đánh dấu đã xóa': [
+            { label: 'Khôi phục', action: 'RESTORE' }
+        ],
+        // 'Đã bị xóa': []
     };
 
-    const handleChangeStatus = (id, newStatus) => {
-        setCustomers(prev =>
-            prev.map(cus =>
-                cus.id === id ? { ...cus, status: newStatus } : cus
-            )
-        );
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await dispatch(fetchCustomers()).unwrap();
+            } catch (error) {
+                toast.error(t('adCustomer.loadError'));
+            }
+        };
+        fetchData();
+    }, [dispatch]);
+
+
+    const handleChangeStatus = async (id, newStatus) => {
+        try {
+            await dispatch(changeCustomerStatus({ id, status: newStatus })).unwrap();
+
+            await dispatch(fetchCustomers()).unwrap();
+        } catch (error) {
+            toast.error(t('adCustomer.updateError'));
+        }
     };
 
     const columns = [
@@ -96,26 +79,25 @@ function Customer() {
             sortable: false,
             filterable: false,
         },
-        { field: 'id', headerName: 'ID', width: 100 },
-        { field: 'name', headerName: 'Tên', flex: 1 },
+        { field: 'name', headerName: 'Họ tên', flex: 1 },
         { field: 'email', headerName: 'Email', flex: 1 },
         {
             field: 'status',
             headerName: 'Trạng thái',
             width: 150,
-        },
-        {
-            field: 'orders',
-            headerName: 'Đơn hàng',
-            width: 150,
-            renderCell: () => (
-                <span
-                    onClick={() => navigate(`/admin/order`)}
-                    style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
-                >
-                    Đơn hàng
-                </span>
-            ),
+            renderCell: (params) => {
+                const colorMap = {
+                    'Đang hoạt động': 'green',
+                    'Đã bị khóa': 'orange',
+                    // 'Đã bị xóa': 'red',
+                    'Đánh dấu đã xóa': 'red',
+                };
+                return (
+                    <span style={{ color: colorMap[params.value] || 'black', fontWeight: 500 }}>
+        {params.value}
+      </span>
+                );
+            },
         },
         {
             field: 'actions',
@@ -124,47 +106,81 @@ function Customer() {
             sortable: false,
             filterable: false,
             renderCell: (params) => {
-            const currentStatus = params.row.status;
-            const availableStatuses = allowedNextStatuses[currentStatus] || [];
+                const currentStatus = params.row.status;
+                const availableStatuses = allowedNextStatuses[currentStatus] || [];
+
                 return (
-                <div>
-                    <Select   value=""
-                              displayEmpty
-                              MenuProps={{
-                                  disableScrollLock: true,
-                                  PaperProps: {
-                                      style: {
-                                          maxHeight: 200,
-                                          zIndex: 9999,
-                                      },
-                                  },
-                                  anchorOrigin: {
-                                      vertical: 'bottom',
-                                      horizontal: 'left',
-                                  },
-                                  transformOrigin: {
-                                      vertical: 'top',
-                                      horizontal: 'left',
-                                  },
-                              }}
-                              sx={{ minWidth: 130, fontSize: 14 }}
-                              onChange={(e) => {
-                                  const selectedAction = e.target.value;
-                                  const newStatus = statusChangeMap[selectedAction] || selectedAction;
-                                  handleChangeStatus(params.row.id, newStatus);
-                              }}
-                    >
-                        <MenuItem value="" disabled>    </MenuItem>
-                        {availableStatuses.map((status, i) => (
-                            <MenuItem key={i} value={status}>{status}</MenuItem>
-                        ))}
-                    </Select>
-                    <Button onClick={() => setSelectedCustomers(params.row)}>
-                        Chi tiết
-                    </Button>
-                </div>
-            );
-            },
+                    <Box sx={{ position: 'relative', display: 'flex', gap: 1 }}>
+                        <Select
+                            value=""
+                            displayEmpty
+                            onChange={(e) => {
+                                const selectedAction = e.target.value;
+                                handleChangeStatus(params.row.id, selectedAction);
+                            }}
+                            renderValue={() => (
+                                <span style={{ color: '#aaa' }}>
+                        {availableStatuses.length === 0 ? 'Không có thao tác' : 'Chọn thao tác'}
+                    </span>
+                            )}
+                            disabled={availableStatuses.length === 0}
+                            MenuProps={{
+                                disableScrollLock: true,
+                                PaperProps: {
+                                    style: {
+                                        maxHeight: 200,
+                                        zIndex: 9999,
+                                    },
+                                },
+                                PopperProps: {
+                                    disablePortal: true,
+                                    modifiers: [
+                                        {
+                                            name: 'offset',
+                                            options: {
+                                                offset: [0, 6],
+                                            },
+                                        },
+                                        {
+                                            name: 'preventOverflow',
+                                            options: {
+                                                boundary: 'viewport',
+                                            },
+                                        },
+                                    ],
+                                },
+                            }}
+                            sx={{ minWidth: 130, fontSize: 14 }}
+                        >
+                            <MenuItem value="" disabled>
+                                Chọn thao tác
+                            </MenuItem>
+                            {availableStatuses.map((option, i) => (
+                                <MenuItem key={i} value={option.action}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+
+                        <Button onClick={() => setSelectedCustomers(params.row)}>
+                            Chi tiết
+                        </Button>
+                    </Box>
+                );
+            }
+        },
+        {
+            field: 'orders',
+            headerName: 'Đơn hàng',
+            width: 250,
+            renderCell: () => (
+                <span
+                    onClick={() => navigate(`/admin/order`)}
+                    style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
+                >
+                    Đơn hàng
+                </span>
+            ),
         },
     ];
 
@@ -198,18 +214,17 @@ function Customer() {
                         <>
                             <Box className="info-row">
                                 <Typography><b>ID:</b> {selectedCustomers.id}</Typography>
-                                <Typography><b>Ngày tham gia:</b> {selectedCustomers.createdAt}</Typography>
+                                <Typography><b>Ngày sinh:</b> {selectedCustomers.birthday}</Typography>
                             </Box>
 
                             <Box className="info-row">
-                            <Typography><b>Họ tên:</b> {selectedCustomers.fullname}</Typography>
-                            <Typography><b>Giới tính:</b> {selectedCustomers.gender}</Typography>
+                            <Typography><b>Họ tên:</b> {selectedCustomers.name}</Typography>
                             </Box>
 
-                            <Typography><b>Số điện thoại:</b> {selectedCustomers.number}</Typography>
+                            <Typography><b>Số điện thoại:</b> {selectedCustomers.phone}</Typography>
                             <Typography><b>Email:</b> {selectedCustomers.email}</Typography>
 
-                            <Typography><b>Địa chỉ:</b> {selectedCustomers.address}</Typography>
+                            <Typography><b>Địa chỉ:</b> {selectedCustomers.fullAddress}</Typography>
 
                         </>
                     )}

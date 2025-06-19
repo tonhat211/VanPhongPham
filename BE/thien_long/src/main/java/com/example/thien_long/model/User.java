@@ -38,6 +38,9 @@ public class User {
     @Column(name="is_deleted", nullable = false)
     private int isDeleted = Constant.NOT_DELETED;
 
+    @Column(name = "is_locked", nullable = false)
+    private boolean isLocked = false;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 

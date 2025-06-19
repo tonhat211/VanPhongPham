@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import {
     Button,
@@ -12,49 +11,13 @@ import {
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import './Employee.scss';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchEmployees, updateEmployeeAction } from '~/pagesAdmin/Employee/employeeSlice';
+import { fetchCustomers } from '~/pagesAdmin/Customer/customerSlice';
+import { toast } from 'react-toastify';
 
 function Employee() {
-    const mockEmployees = [
-        {
-            id: 1,
-            name: 'Nguyen Van A',
-            email: 'a@company.com',
-            department: 'Kế toán',
-            position: 'Nhân viên kế toán',
-            gender: 'Nam',
-            startDate: '2022-01-10',
-            endDate: '',
-            status: 'Đang làm việc',
-            phone: '0909123456',
-            address: '123 Lê Lợi, Q.1, TP.HCM',
-        },
-        {
-            id: 2,
-            name: 'Tran Thi B',
-            email: 'b@company.com',
-            department: 'Kỹ thuật',
-            position: 'Trưởng phòng kỹ thuật',
-            gender: 'Nữ',
-            startDate: '2020-06-01',
-            endDate: '',
-            status: 'Đang làm việc',
-            phone: '0987654321',
-            address: '456 Hai Bà Trưng, Q.3, TP.HCM',
-        },
-        {
-            id: 3,
-            name: 'Le Van C',
-            email: 'c@company.com',
-            department: 'Hành chính',
-            position: 'Nhân viên hành chính',
-            gender: 'Nam',
-            startDate: '2019-09-15',
-            endDate: '2024-01-01',
-            status: 'Đã nghỉ việc',
-            phone: '0932123456',
-            address: '789 Điện Biên Phủ, Q.Bình Thạnh, TP.HCM',
-        },
-    ];
 
     const departments = ['Kế toán', 'Kỹ thuật', 'Hành chính', 'Marketing', 'Nhân sự'];
 
@@ -73,32 +36,43 @@ function Employee() {
         'Đã nghỉ việc': ['Khôi phục'],
     };
 
-    const [employees, setEmployees] = useState(mockEmployees);
+
+    const dispatch = useDispatch();
+    const { list: employees, loading } = useSelector((state) => state.employees);
+
+    const statusDisplayMap = {
+        ACTIVE: 'Đang hoạt động',
+        FLAG: 'Đã nghỉ việc',
+        FLAGGED: 'Đã nghỉ việc',
+        RESTORE: 'Khôi phục',
+    };
+
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [filters, setFilters] = useState({ department: '', position: '', status: '', search: '' });
 
-    const handleAction = (id, action, value) => {
-        setEmployees(prev =>
-            prev.map(emp => {
-                if (emp.id !== id) return emp;
-                switch (action) {
-                    case 'Chuyển phòng':
-                        return {
-                            ...emp,
-                            department: value,
-                            position: positionsByDepartment[value][0],
-                        };
-                    case 'Đổi chức vụ':
-                        return { ...emp, position: value };
-                    case 'Đánh dấu nghỉ việc':
-                        return { ...emp, status: 'Đã nghỉ việc', endDate: new Date().toISOString().split('T')[0] };
-                    case 'Khôi phục':
-                        return { ...emp, status: 'Đang làm việc', endDate: '' };
-                    default:
-                        return emp;
-                }
-            })
-        );
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await dispatch(fetchEmployees()).unwrap();
+            } catch (error) {
+                // toast.error(t('adCustomer.loadError'));
+            }
+        };
+        fetchData();
+    }, [dispatch]);
+
+    const action_map = {
+        'Chuyển phòng': 'CHUYEN_PHONG',
+        'Đổi chức vụ': 'DOI_CHUC_VU',
+        'Đánh dấu nghỉ việc': 'FLAG',
+        'Khôi phục': 'RESTORE',
+    };
+
+    const handleAction = (id, actionLabel, value= '') => {
+        const action = action_map[actionLabel];
+        if (!action) return;
+        dispatch(updateEmployeeAction({ id, action, value }))
+            .then(() => dispatch(fetchEmployees()));
     };
 
     const filteredEmployees = employees.filter(emp => {
@@ -114,6 +88,8 @@ function Employee() {
     const rowsWithSTT = filteredEmployees.map((emp, index) => ({
         ...emp,
         stt: index + 1,
+        key: emp.id,
+        status: statusDisplayMap[emp.status] || emp.status,
     }));
 
     const columns = [
@@ -125,40 +101,37 @@ function Employee() {
         { field: 'status', headerName: 'Trạng thái', width: 130 },
         {
             field: 'actions',
-            headerName: 'Thao tác thay đổi',
-            width: 250,
+            headerName: 'Thao tác',
+            width: 320,
             sortable: false,
             renderCell: (params) => {
                 const emp = params.row;
-                const available = allowedActions[emp.status] || [];
+                // const available = allowedActions[emp.status] || [];
                 return (
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                        {available.includes('Chuyển phòng') && (
-                            <Select
-                                size="small"
-                                value=""
-                                displayEmpty
-                                onChange={(e) => handleAction(emp.id, 'Chuyển phòng', e.target.value)}
-                            >
-                                <MenuItem value="" disabled>Chuyển phòng</MenuItem>
-                                {departments.map(dep => (
-                                    <MenuItem key={dep} value={dep}>{dep}</MenuItem>
-                                ))}
-                            </Select>
-                        )}
-                        {available.includes('Đổi chức vụ') && (
-                            <Select
-                                size="small"
-                                value=""
-                                displayEmpty
-                                onChange={(e) => handleAction(emp.id, 'Đổi chức vụ', e.target.value)}
-                            >
-                                <MenuItem value="" disabled>Đổi chức vụ</MenuItem>
-                                {(positionsByDepartment[emp.department] || []).map(pos => (
-                                    <MenuItem key={pos} value={pos}>{pos}</MenuItem>
-                                ))}
-                            </Select>
-                        )}
+                        <Select
+                            size="small"
+                            value=""
+                            displayEmpty
+                            onChange={(e) => handleAction(emp.id, 'Chuyển phòng', e.target.value)}
+                        >
+                            <MenuItem value="" disabled>Chuyển phòng ban</MenuItem>
+                            {departments.map(dep => (
+                                <MenuItem key={dep} value={dep}>{dep}</MenuItem>
+                            ))}
+                        </Select>
+
+                        <Select
+                            size="small"
+                            value=""
+                            displayEmpty
+                            onChange={(e) => handleAction(emp.id, 'Đổi chức vụ', e.target.value)}
+                        >
+                            <MenuItem value="" disabled>Chuyển vị trí</MenuItem>
+                            {(positionsByDepartment[emp.department] || []).map(pos => (
+                                <MenuItem key={pos} value={pos}>{pos}</MenuItem>
+                            ))}
+                        </Select>
                     </Box>
                 );
             },
@@ -166,21 +139,21 @@ function Employee() {
         {
             field: 'moreActions',
             headerName: 'Thao tác khác',
-            width: 180,
+            width: 200,
             sortable: false,
             renderCell: (params) => {
                 const emp = params.row;
-                const available = allowedActions[emp.status] || [];
+                const isDeleted = emp.status === 'Đã nghỉ việc';
                 return (
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                        {available.includes('Đánh dấu nghỉ việc') && (
-                            <Button size="small" onClick={() => handleAction(emp.id, 'Đánh dấu nghỉ việc')}>
-                                Nghỉ việc
-                            </Button>
-                        )}
-                        {available.includes('Khôi phục') && (
+                        {isDeleted ? (
                             <Button size="small" onClick={() => handleAction(emp.id, 'Khôi phục')}>
                                 Khôi phục
+                            </Button>
+                        ) : (
+
+                            <Button size="small" onClick={() => handleAction(emp.id, 'Đánh dấu nghỉ việc')}>
+                                Nghỉ việc
                             </Button>
                         )}
                         <Button size="small" onClick={() => setSelectedEmployee(emp)}>Chi tiết</Button>
@@ -249,6 +222,7 @@ function Employee() {
                 rows={rowsWithSTT}
                 columns={columns}
                 pageSize={5}
+                loading={loading}
                 rowsPerPageOptions={[5]}
                 disableRowSelectionOnClick
                 autoHeight
@@ -274,15 +248,14 @@ function Employee() {
                             </Box>
                             <Box className="info-row">
                                 <Typography><b>Họ tên:</b> {selectedEmployee.name}</Typography>
-                                <Typography><b>Giới tính:</b> {selectedEmployee.gender}</Typography>
+                                <Typography><b>Ngày sinh:</b> {selectedEmployee.birthday}</Typography>
                             </Box>
                             <Typography><b>Email:</b> {selectedEmployee.email}</Typography>
                             <Typography><b>SĐT:</b> {selectedEmployee.phone}</Typography>
                             <Typography><b>Địa chỉ:</b> {selectedEmployee.address}</Typography>
                             <Typography><b>Phòng ban:</b> {selectedEmployee.department}</Typography>
                             <Typography><b>Chức vụ:</b> {selectedEmployee.position}</Typography>
-                            <Typography><b>Ngày bắt đầu:</b> {selectedEmployee.startDate}</Typography>
-                            <Typography><b>Ngày nghỉ việc:</b> {selectedEmployee.endDate || '—'}</Typography>
+
                         </>
                     )}
                 </DialogContent>
