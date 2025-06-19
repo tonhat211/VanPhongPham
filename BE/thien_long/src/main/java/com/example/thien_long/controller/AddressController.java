@@ -158,6 +158,32 @@ public class AddressController {
         return ResponseEntity.ok(wards);
     }
 
+    @GetMapping("/areas")
+    public ResponseEntity<?> getAreas() {
+        System.out.println("get Areas");
+        boolean isSuccess = false;
+        List<Area> provinces = areaRepository.findProvinces();
+        List<Area> wards = areaRepository.findWards(null);
+
+        Map<String,List<Area>> wardsByProvinceCode = wards.stream()
+                .collect(Collectors.groupingBy(item -> item.getParent().getCode(),
+                        Collectors.mapping(                    // downstream collector
+                                w -> new Area(w.getId(), w.getName(), w.getCode()),
+                                Collectors.toList()
+                        )));
+        for (Area a : provinces) {
+            List<Area> temp = wardsByProvinceCode.getOrDefault(a.getCode(), new ArrayList<>());
+            a.setChildren(temp);
+        }
+
+        Map<String, Object> re = new HashMap<>();
+        if(!provinces.isEmpty()) {
+            re.put("provinces", provinces);
+            re.put("success", true);
+        } else re.put("success", false);
+
+        return ResponseEntity.ok(re);
+    }
 
 
 

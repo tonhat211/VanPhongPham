@@ -19,6 +19,33 @@
             filter: brightness(1.5);
         }
     }
+
+    .confirm-delete {
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        color: var(--text-third-color);
+        border-radius: 10px;
+        display: none;
+        .heading {
+            color: white;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button:hover {
+            filter: brightness(1.5);
+            cursor: pointer;
+        }
+
+        &.active {
+            display: block;
+        }
+    }
 }
 
 .imgs-container {

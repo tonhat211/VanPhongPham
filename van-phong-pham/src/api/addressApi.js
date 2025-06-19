@@ -8,6 +8,7 @@ import ProductModel from '~/models/ProductModel';
 import AddressModel from '~/models/AddressModel';
 import AddressItemModel from '~/models/AreaModel';
 import AreaModel from '~/models/AreaModel';
+import Area from '~/models/Area';
 
 // {
 //   "userId": 1,
@@ -17,6 +18,9 @@ import AreaModel from '~/models/AreaModel';
 //   "voucherCode": null,
 //   "note": "Giao giờ hành chính"
 // }
+
+const CACHE_TTL = 24 * 60 * 60 * 1000;
+
 export async function addAddress({ name, phone, province, ward, detail, isDefault }) {
     console.log('Add address');
     const userStr = localStorage.getItem('user'); // hoặc dữ liệu bạn đang dùng
@@ -126,4 +130,40 @@ export async function getWard({ provinceCode }) {
     const data = response.data;
     const wards = data.map((item) => new AreaModel(item.id, item.name, item.code));
     return wards;
+}
+
+const CACHE_AREAS = 'areas';
+export const CACHE_AREAMAP = "area_map"
+export async function getAreas() {
+    console.log('get areas');
+    const AreasRaw = localStorage.getItem(CACHE_AREAS);
+    const AreaMapraw = localStorage.getItem(CACHE_AREAMAP);
+    if (AreasRaw && AreaMapraw) {
+        const { data, ts } = JSON.parse(AreasRaw);
+        if (Date.now() - ts < CACHE_TTL) return data;
+    }
+
+    let url = `/addresses/areas`;
+
+    const response = await axiosInstance.get(url);
+
+    const data = response.data;
+    const success = data.success;
+    let provinces;
+    const areaMap = new Map();
+    if (success) {
+        provinces = data.provinces.map((item) => {
+            const children = item.children.map((ward) => {
+                areaMap.set(ward.code, ward.name);
+                return new AreaModel(ward.id, ward.name, ward.code)});
+            areaMap.set(item.code, item.name);
+            return new AreaModel(item.id, item.name, item.code, children);
+        });
+    }
+    // console.log("Areas: " + JSON.stringify(provinces,null,2));
+    localStorage.setItem(CACHE_AREAS, JSON.stringify({ data: provinces, ts: Date.now() }));  // luu cache cua areas
+    const mapObj = Object.fromEntries(areaMap);
+    localStorage.setItem(CACHE_AREAMAP, JSON.stringify({  data: mapObj }));  // luu cache cua areaMap
+
+    return provinces;
 }

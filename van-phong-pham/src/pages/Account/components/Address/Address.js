@@ -9,7 +9,15 @@ import styles from './Address.module.scss';
 import { CustomInput, Modal } from '~/pages/components';
 import Area from '~/models/Area';
 import useI18n from '~/hooks/useI18n';
-import { addAddress, addAdress, deleteAddress, editAddress, getAddress, getProvince, getWard } from '~/api/addressApi';
+import {
+    addAddress,
+    CACHE_AREAMAP,
+    deleteAddress,
+    editAddress,
+    getAddress,
+    getAreas,
+    getProvince,
+} from '~/api/addressApi';
 
 const cx = classNames.bind(styles);
 
@@ -21,6 +29,8 @@ function Address() {
         setModalType(type);
         setSelectedItem(item);
     };
+    const areaMapCache = localStorage.getItem(CACHE_AREAMAP);
+    const areaMap = areaMapCache ? JSON.parse(areaMapCache).data : {};
 
     const closeModal = () => {
         setModalType(null);
@@ -29,14 +39,22 @@ function Address() {
     const [selectedItem, setSelectedItem] = useState(null);
     const [addresses, setAddresses] = useState([]);
 
-    const [provinces, setProvinces] = useState([]);
-    const fetchProvinces = () => {
-        getProvince()
+    const [areas, setAreas] = useState([]);
+    const [areasLookup, setAreasLookup] = useState(new Map());
+
+    const fetchAreas = () => {
+        getAreas()
             .then((data) => {
-                setProvinces(data);
+                setAreas(data);
+                const m = new Map();
+                data.forEach((p) => {
+                    m.set(p.code, p.children || []);
+                });
+
+                setAreasLookup(m);
             })
             .catch((err) => {
-                console.error('Lỗi tải dia chi:', err);
+                console.error('Lỗi tải area item:', err);
             });
     };
 
@@ -47,38 +65,21 @@ function Address() {
         CONFIRM_DELETE: 'CONFIRM_DELETE',
     };
 
-    const provinceMap = useMemo(() => {
-        const map = new Map();
-        provinces.forEach((item) => map.set(item.code, item.name));
-        return map;
-    }, [provinces]);
-
-    const [areaMap, setAreaMap] = useState(new Map());
-
-    const updateAreaMap = (areas) => {
-        const map = new Map();
-        areas.forEach((area) => {
-            map.set(area.code, area.name);
-        });
-        setAreaMap(map);
-    };
-
     useEffect(() => {
         getAddress()
             .then((data) => {
                 setAddresses(data.addresses);
-                const map = new Map();
-                data.areas.forEach((area) => {
-                    map.set(area.code, area.name);
-                });
-                setAreaMap(map);
             })
             .catch((err) => {
                 console.error('Lỗi tải dia chi:', err);
             });
 
-        fetchProvinces();
+        fetchAreas();
     }, []);
+
+    const getWardByProvince = (code) => {
+        return areasLookup.get(code) || [];
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -88,23 +89,14 @@ function Address() {
             </button>
             <AddressList items={addresses} />
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                {modalType === MODAL_TYPES.ADD_ADDRESS && (
-                    <AddAddress provinceMap={provinceMap} updateAreaMap={updateAreaMap} />
-                )}
-                {modalType === MODAL_TYPES.EDIT_ADDRESS && (
-                    <EditAddress
-                        item={selectedItem}
-                        areaMap={areaMap}
-                        updateAreaMap={updateAreaMap}
-                        provinceMap={provinceMap}
-                    />
-                )}
+                {modalType === MODAL_TYPES.ADD_ADDRESS && <AddAddress />}
+                {modalType === MODAL_TYPES.EDIT_ADDRESS && <EditAddress item={selectedItem} />}
                 {modalType === MODAL_TYPES.CONFIRM_DELETE && <ConfirmDelete item={selectedItem} />}
             </Modal>
         </div>
     );
 
-    function AddAddress({ provinceMap, updateAreaMap }) {
+    function AddAddress() {
         const [name, setName] = useState('');
         const [phone, setPhone] = useState('');
         const [detail, setDetail] = useState('');
@@ -112,41 +104,20 @@ function Address() {
         const [province, setProvince] = useState('');
         const [checkedDefault, setCheckedDefault] = useState(false);
 
-        const [wardMap, setWardMap] = useState(new Map());
+        const [wardList, setWardList] = useState([]);
 
         const handleChange = (e) => {
             setCheckedDefault(e.target.checked);
         };
 
         const handleProvinceChange = (e) => {
-            // setProvince(e.target.value);
-            const code = e.target.value; // luôn là string
+            const code = e.target.value;
             if (code !== province) {
-                // tránh set trùng
                 setProvince(code);
-                setWard(''); // reset ward khi đổi tỉnh
-                setWardMap(new Map()); // xoá danh sách xã/phường cũ
+                const newWards = getWardByProvince(code);
+                setWardList(newWards);
             }
         };
-
-        const fetchWards = (provinceCode) => {
-            getWard({ provinceCode })
-                .then((data) => {
-                    const map = new Map();
-                    data.forEach((area) => {
-                        map.set(area.code, area.name);
-                    });
-                    setWardMap(map);
-                })
-                .catch((err) => {
-                    console.error('Lỗi tải dia chi:', err);
-                });
-        };
-
-        useEffect(() => {
-            if (!province) return;
-            fetchWards(province);
-        }, [province]);
 
         const handleWardChange = (e) => {
             setWard(e.target.value);
@@ -157,14 +128,18 @@ function Address() {
             const re = await addAddress({ name, phone, province, ward, detail, isDefault });
             if (re.success === true) {
                 setAddresses(re.addresses);
-
-                updateAreaMap(re.areas);
                 closeModal();
                 toast.success(re.message);
             } else {
                 toast.error(re.message);
             }
         };
+
+        useEffect(() => {
+            if (province) console.log('province changed: ' + province);
+            if (wardList) console.log('wardList changed: ' + JSON.stringify(wardList, null, 2));
+            if (ward) console.log('ward changed: ' + ward);
+        }, [province, wardList, ward]);
 
         return (
             <div className={cx('form-container')} style={{ padding: '10px' }}>
@@ -192,23 +167,21 @@ function Address() {
                         <div className="grid-col-5">
                             <select value={province} onChange={handleProvinceChange}>
                                 <option value="">{t('choose-province')}</option>
-                                {provinceMap &&
-                                    Array.from(provinceMap.entries()).map(([code, name]) => (
-                                        <option value={code} key={code}>
-                                            {name}
-                                        </option>
-                                    ))}
+                                {areas?.map((p) => (
+                                    <option key={p.code} value={p.code}>
+                                        {p.name}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <div className="grid-col-5">
                             <select value={ward} onChange={handleWardChange}>
                                 <option value="">{t('choose-ward')}</option>
-                                {wardMap &&
-                                    Array.from(wardMap.entries()).map(([code, name]) => (
-                                        <option value={code} key={code}>
-                                            {name}
-                                        </option>
-                                    ))}
+                                {wardList?.map((item) => (
+                                    <option value={item.code} key={item.code}>
+                                        {item.name}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -229,46 +202,27 @@ function Address() {
         );
     }
 
-    function EditAddress({ item, updateAreaMap, provinceMap }) {
+    function EditAddress({ item }) {
         const [name, setName] = useState(item.name);
         const [phone, setPhone] = useState(item.phone);
         const [detail, setDetail] = useState(item.detail);
         const [ward, setWard] = useState(item.ward);
         const [province, setProvince] = useState(item.province);
         const [checkedDefault, setCheckedDefault] = useState(item.isDefault);
-        const [wardMap, setWardMap] = useState(new Map());
-
-        const fetchWards = (provinceCode) => {
-            getWard({ provinceCode })
-                .then((data) => {
-                    const map = new Map();
-                    data.forEach((area) => {
-                        map.set(area.code, area.name);
-                    });
-                    setWardMap(map);
-                })
-                .catch((err) => {
-                    console.error('Lỗi tải dia chi:', err);
-                });
-        };
+        const [wardList, setWardList] = useState([]);
 
         const handleChange = (e) => {
             setCheckedDefault(e.target.checked);
         };
 
         const handleProvinceChange = (e) => {
-            // setProvince(e.target.value);
             const code = e.target.value;
-            if (code !== province) setProvince(code);
+            if (code !== province) {
+                setProvince(code);
+                const newWardList = getWardByProvince(code);
+                setWardList(newWardList);
+            }
         };
-
-        useEffect(() => {
-            fetchWards(province);
-        }, [province]);
-
-        // useEffect(() => {
-        //     fetchWards(item.province);
-        // }, []);
 
         const handleWardChange = (e) => {
             setWard(e.target.value);
@@ -280,13 +234,18 @@ function Address() {
             const re = await editAddress({ id, name, phone, province, ward, detail, isDefault });
             if (re.success === true) {
                 setAddresses(re.addresses);
-                updateAreaMap(re.areas);
                 closeModal();
                 toast.success(re.message);
             } else {
                 toast.error(re.message);
             }
         };
+
+        useEffect(() => {
+            if (ward) console.log('ward initital: ' + ward);
+            const newWardList = getWardByProvince(province);
+            setWardList(newWardList);
+        }, []);
 
         return (
             <div className={cx('form-container')} style={{ padding: '10px' }}>
@@ -314,23 +273,21 @@ function Address() {
                         <div className="grid-col-5">
                             <select value={province} onChange={handleProvinceChange}>
                                 <option value="">{t('choose-province')}</option>
-                                {provinceMap &&
-                                    Array.from(provinceMap.entries()).map(([code, name]) => (
-                                        <option value={code} key={code}>
-                                            {name}
-                                        </option>
-                                    ))}
+                                {areas?.map((item) => (
+                                    <option value={item.code} key={item.code}>
+                                        {item.name}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <div className="grid-col-5">
                             <select value={ward} onChange={handleWardChange}>
                                 <option value="">{t('choose-ward')}</option>
-                                {wardMap &&
-                                    Array.from(wardMap.entries()).map(([code, name]) => (
-                                        <option value={code} key={code}>
-                                            {name}
-                                        </option>
-                                    ))}
+                                {wardList?.map((item) => (
+                                    <option value={item.code} key={item.code}>
+                                        {item.name}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -382,8 +339,8 @@ function Address() {
                     <p className={cx('label')}>
                         {t('address')}{' '}
                         <span className={cx('value')}>
-                            {item.detail} | {areaMap.get(item.ward) || item.ward} |{' '}
-                            {areaMap.get(item.province) || item.province}
+                            {item.detail} | {areaMap[item.ward] || item.ward} |{' '}
+                            {areaMap[item.province] || item.province}
                         </span>
                     </p>
                 </div>
@@ -427,8 +384,8 @@ function Address() {
                     <p className={cx('label')}>
                         {t('address')}{' '}
                         <span className={cx('value')}>
-                            {item.detail} | {areaMap.get(item.ward) || item.ward} |{' '}
-                            {areaMap.get(item.province) || item.province}
+                            {item.detail} | {areaMap[item.ward] || item.ward} |{' '}
+                            {areaMap[item.province] || item.province}
                         </span>
                     </p>
                 </div>

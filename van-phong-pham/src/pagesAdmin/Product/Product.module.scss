@@ -1,4 +1,11 @@
 .wrapper {
+    table {
+        tr {
+            &.blocked {
+                background-color: var(--blocked-color) !important;
+            }
+        }
+    }
     .search-form {
         border: 1px solid #dddde3;
         border-radius: 10px;
@@ -58,7 +65,7 @@
 
         .img-container {
             padding: 4px;
-           
+
             img {
                 width: 100%;
                 border: 1px solid var(--header-color);
@@ -68,13 +75,15 @@
 
         .imgs-container {
             max-width: 50vw;
+            display: flex;
+            flex-wrap: wrap;
         }
 
         .rate-container {
             margin-top: 10px;
             display: flex;
             align-items: baseline;
-    
+
             p {
                 margin-left: 10px;
                 font-size: 1.1rem;
@@ -91,6 +100,7 @@
         padding: 4px 10px;
         align-items: center;
         margin-bottom: 10px;
+        position: relative;
 
         button {
             color: var(--price-color);
@@ -100,6 +110,36 @@
             &:hover {
                 cursor: pointer;
                 filter: brightness(1.5);
+            }
+        }
+
+        .confirm-delete {
+            position: absolute;
+            right: 0;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: var(--text-third-color);
+            border-radius: 4px;
+            justify-content: space-around;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            display: none;
+            .heading {
+                color: white;
+                // margin-top: 20px;
+                text-align: center;
+                font-weight: 600;
+            }
+
+            button:hover {
+                filter: brightness(1.5);
+                cursor: pointer;
+            }
+
+            &.active {
+                display: flex;
             }
         }
     }

@@ -10,6 +10,7 @@ public class Constant {
     public static final String UPLOAD_DIR = "uploads";
 
     public static final String THUMBNAIL_TYPE = "THUMBNAIL";
+    public static final String NULL_VALUE = "NULL_VALUE";
 
     // hash password
     public static String hashPassword(String password) {
