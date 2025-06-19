@@ -11,13 +11,13 @@
   font-weight: bold;
 }
 .employee-container .MuiDataGrid-root .MuiDataGrid-cell {
-  display: block;
+  display: flex;
+  text-align: left;
+  justify-content: flex-start;
   white-space: normal !important;
   line-height: 1.5;
-  align-items: flex-start;
+  align-items: center;
   padding: 0.5rem 1rem;
-  word-break: break-word;
-  overflow: visible !important;
 }
 .employee-container .MuiDataGrid-root .MuiDataGrid-row {
   min-height: 80px;

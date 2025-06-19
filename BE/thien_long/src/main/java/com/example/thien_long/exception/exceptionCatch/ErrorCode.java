@@ -23,6 +23,8 @@ public enum ErrorCode {
     INVALID_TOKEN(1012,"Token không hợp lệ.", HttpStatus.BAD_REQUEST),
     PWDOLD_NOT_MATCHES(1014, "Mật khẩu cũ không khớp", HttpStatus.BAD_REQUEST),
     PWDNEW_AND_CONFIRM_NOT_MATCHES(1015, "Mật khẩu mới và mật khẩu xác nhận không khớp", HttpStatus.BAD_REQUEST),
+    INVALID_ACTION(1017,"action không hợp lệ.", HttpStatus.BAD_REQUEST),
+    EMPLOYEE_NOT_FOUND(1018,"Nhân viên không tồn tại.", HttpStatus.BAD_REQUEST),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

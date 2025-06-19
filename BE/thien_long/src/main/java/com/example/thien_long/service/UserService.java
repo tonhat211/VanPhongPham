@@ -3,9 +3,11 @@ import com.example.thien_long.dto.request.ChangePasswordRequest;
 import com.example.thien_long.dto.request.ForgotPasswordRequest;
 import com.example.thien_long.dto.request.UserRegisterRequest;
 import com.example.thien_long.dto.request.UserUpdateInfoRequest;
+import com.example.thien_long.dto.response.CustomerResponse;
 import com.example.thien_long.dto.response.UserResponse;
 import com.example.thien_long.exception.exceptionCatch.AppException;
 import com.example.thien_long.exception.exceptionCatch.ErrorCode;
+import com.example.thien_long.mapper.CustomerMapper;
 import com.example.thien_long.mapper.UserMapper;
 import com.example.thien_long.mapper.UserUpdateMapper;
 import com.example.thien_long.model.*;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.example.thien_long.repository.VerifyCodeRepository;
 
@@ -42,6 +45,7 @@ public class UserService {
     EmailService emailService;
 
     private final UserUpdateMapper userUpdateMapper;
+    private final CustomerMapper customerMapper;
 
     public UserResponse register(UserRegisterRequest request) {
         try {
@@ -128,7 +132,7 @@ public class UserService {
     @Transactional
     public UserResponse updateUserInfo(Long userId, UserUpdateInfoRequest request) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         // Cập nhật thông tin cơ bản của user
         userUpdateMapper.updateUserFromRequest(request, user);
@@ -185,5 +189,44 @@ public class UserService {
         user.setPwd(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
 
+    }
+
+    public List<CustomerResponse> getAllActivCustomers() {
+        return userRepository.findByIsDeletedAndIsLocked(0, false)
+                .stream()
+                .map(customerMapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<CustomerResponse> getAllCustomers() {
+        return userRepository.findAll()
+                .stream()
+                .map(customerMapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    public void changeStatus(Long id, String status) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        switch (status.toUpperCase()) {
+            case "LOCK":
+                user.setLocked(true);
+                break;
+            case "UNLOCK":
+                user.setLocked(false);
+                break;
+            case "RESTORE":
+                user.setLocked(false);
+                user.setIsDeleted(0);
+                break;
+            case "FLAG":
+                user.setIsDeleted(1);
+                break;
+            default:
+                throw new AppException(ErrorCode.INVALID_ACTION);
+        }
+
+        userRepository.save(user);
     }
 }

@@ -13,9 +13,12 @@
     }
 
     .MuiDataGrid-cell {
+      display: flex;
+      text-align: left;
+      justify-content: flex-start;
       white-space: normal;
       line-height: 1.5;
-      align-items: flex-start;
+      align-items: center;
       padding: 0.5rem 1rem;
     }
 
