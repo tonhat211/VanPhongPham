@@ -8,12 +8,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {
     List<SubCategory> findAll();
 
- }
+    @Query("SELECT c FROM SubCategory c WHERE c.isDeleted = 0 and c.code=:code")
+    Optional<SubCategory> findByCode(@Param("code") String code);
+
+
+}
 
 //
 

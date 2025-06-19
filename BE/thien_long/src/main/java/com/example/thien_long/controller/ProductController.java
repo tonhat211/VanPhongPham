@@ -1,7 +1,6 @@
 package com.example.thien_long.controller;
 
 import com.example.thien_long.dto.BasicProductResponse;
-import com.example.thien_long.dto.MenuResponse;
 import com.example.thien_long.dto.ProductDetailResponse;
 import com.example.thien_long.exception.ProductNotFoundException;
 import com.example.thien_long.model.*;
@@ -72,9 +71,7 @@ public class ProductController {
         }
 
         Page<BasicProductResponse> result = productRepository.findAll(sub,brands,bfPrice,afPrice, pageable);
-
         result = translate(result,locale);
-
         return ResponseEntity.ok(result);
     }
 
@@ -123,11 +120,11 @@ public class ProductController {
         Optional<List<ProductDetail>> optionalProductDetails = productDetailRepository.findByProductIdForProductDetail(id);
         List<ProductDetail> productDetails = optionalProductDetails.orElse(Collections.emptyList());
 
-        List<String> imgUrls = imageRepository.findUrlsByProductId(id);
+        List<String> imgNames = imageRepository.findNameByProductId(id);
 
         Optional<List<Review>> optionalReviews = reviewRepository.findByProductId(id);
         List<Review> reviews = optionalReviews.orElse(Collections.emptyList());
-        ProductDetailResponse result = new ProductDetailResponse(product,productDetails,imgUrls,reviews);
+        ProductDetailResponse result = new ProductDetailResponse(product,productDetails,imgNames,reviews);
         String lang = locale.getLanguage();
         if ("en".equals(lang)) {
             String translatedName = translationService.getProductNameById(id,lang);

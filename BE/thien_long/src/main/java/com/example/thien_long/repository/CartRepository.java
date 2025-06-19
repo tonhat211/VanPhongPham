@@ -20,7 +20,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
     @Query("""
     SELECT new com.example.thien_long.dto.response.CartItemResponse(
-        ct.id, ct.productDetail.id, ct.productDetail.product.thumbnail.url, ct.productDetail.product.name,ct.productDetail.title, ct.productDetail.initPrice,
+        ct.id, ct.productDetail.id, ct.productDetail.product.thumbnail.name, ct.productDetail.product.name,ct.productDetail.title, ct.productDetail.initPrice,
         ct.productDetail.price, ct.quantity)
     FROM CartItem ct
     WHERE 

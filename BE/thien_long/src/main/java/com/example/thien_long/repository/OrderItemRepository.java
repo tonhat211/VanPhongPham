@@ -16,7 +16,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     @Query("""
     SELECT new com.example.thien_long.dto.response.OrderItemResponse (
         ot.id, ot.order.id, ot.productDetail.product.id, ot.productDetail.product.name, 
-        ot.productDetail.title, ot.qty, ot.productDetail.product.thumbnail.url,
+        ot.productDetail.title, ot.qty, ot.productDetail.product.thumbnail.name,
         ot.priceUnit)
     FROM OrderItem ot
     WHERE ot.order.id=:id
@@ -26,7 +26,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     @Query("""
     SELECT new com.example.thien_long.dto.response.OrderItemResponse (
         ot.id, ot.order.id, ot.productDetail.product.id, ot.productDetail.product.name, 
-        ot.productDetail.title, ot.qty, ot.productDetail.product.thumbnail.url,
+        ot.productDetail.title, ot.qty, ot.productDetail.product.thumbnail.name,
         ot.priceUnit)
     FROM OrderItem ot
     WHERE ot.order.id IN :ids 

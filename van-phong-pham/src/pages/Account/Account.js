@@ -86,7 +86,7 @@ function Account() {
                 </div>
                 <div className="d-flex-center">
                     <p style={{ fontSize: '1.4rem' }}>
-                        {t('hello')}, <span className={cx('name')}>Tô Minh Nhật</span>
+                        {t('hello')}, <span className={cx('name')}>To nhat</span>
                     </p>
                 </div>
                 <div className={cx('menu-container')}>

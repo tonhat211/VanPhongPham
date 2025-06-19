@@ -1,12 +1,9 @@
 package com.example.thien_long.dto;
 
-import com.example.thien_long.model.Brand;
 import com.example.thien_long.model.Category;
-import com.example.thien_long.model.Image;
 import com.example.thien_long.model.SubCategory;
 import com.example.thien_long.service.Constant;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +20,7 @@ public class MenuResponse {
         this.title = category.getTitle();
         this.link = category.getCode();
         this.level = category.getLevel();
-        this.icon = Constant.ICON_IMG_DIR+"/"+ category.getIcon().getUrl();
+        this.icon = Constant.ICON_IMG_DIR+"/"+ category.getIcon().getName();
         this.subs = subs;
     }
 

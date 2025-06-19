@@ -10,7 +10,7 @@ function Modal({ isOpen, onClose, children }) {
     if (!isOpen) return null;
     return (
         <div className={cx('modal-overlay')} onClick={onClose}>
-            <div className={cx('modal-content')} onClick={(e) => e.stopPropagation()}>
+            <div className={classNames(cx('modal-content'), 'max-w-60 max-w-80-tab max-w-80-mob')} onClick={(e) => e.stopPropagation()}>
                 <button className={cx('close-btn')} onClick={onClose}>
                     <FontAwesomeIcon icon={faXmark} />
                 </button>
