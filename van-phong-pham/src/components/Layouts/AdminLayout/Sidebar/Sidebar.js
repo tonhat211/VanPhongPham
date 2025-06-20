@@ -14,11 +14,12 @@ const menuData = [
     new MenuItem('Thống kê/báo cáo', '/admin/dashboard'),
     new MenuItem('Quản lý khách hàng', '/admin/customer'),
     new MenuItem('Quản lý nhân viên', '/admin/employee'),
-    new MenuItem('Quản lý sản phẩm', '/admin/product'),
+    new MenuItem('Quản lý sản phẩm', '/admin/products'),
     new MenuItem('Quản lý kho hàng', '/admin/category'),
-    new MenuItem('Quản lý đơn hàng', '/admin/order'),
+    new MenuItem('Quản lý đơn hàng', '/admin/orders'),
     new MenuItem('Quản lý khuyến mãi ', '/admin/discount'),
-    new MenuItem('Quản lý logs ', '/admin/logs')
+    new MenuItem('Quản lý logs ', '/admin/logs'),
+    new MenuItem('Quản lý phân quyền ', '/admin/permissions')
 ]
 
 function Sidebar() {

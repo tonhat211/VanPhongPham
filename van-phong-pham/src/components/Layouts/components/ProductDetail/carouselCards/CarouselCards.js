@@ -11,9 +11,16 @@ import useI18n from '~/hooks/useI18n';
 function CarouselCards() {
     const { t, lower } = useI18n();
     // du lieu demo
-    let recentlyViewedProducts = localStorage.getItem('recentlyViewedProducts') || [];
-    if (recentlyViewedProducts) {
-        recentlyViewedProducts = JSON.parse(recentlyViewedProducts);
+    // let recentlyViewedProducts = localStorage.getItem('recentlyViewedProducts') || [];
+    // if (recentlyViewedProducts) {
+    //     recentlyViewedProducts = JSON.parse(recentlyViewedProducts);
+    // }
+    let recentlyViewedProducts = [];
+    try {
+        recentlyViewedProducts = JSON.parse(localStorage.getItem('recentlyViewedProducts') ?? '[]');
+    } catch (e) {
+        console.warn('Corrupted recentlyViewedProducts in localStorage – resetting');
+        localStorage.removeItem('recentlyViewedProducts');
     }
     return (
         <>
@@ -45,7 +52,6 @@ function CarouselCards() {
                                 slidesPerView: 6,
                             },
                         }}
-
                         onSwiper={(swiper) => swiper.update()}
                     >
                         {recentlyViewedProducts.map((item, index) => (

@@ -1,0 +1,185 @@
+.wrapper {
+
+    .action-btn {
+        border-radius: 4px;
+        background-color: var(--primary-hover-color);
+        border: none;
+        &.minus {
+            color: red;
+            background-color: var(--blocked-light-color);
+        }
+
+        &.plus {
+            color: blue;
+            background-color: var(--primary-hover-color);
+        }
+
+        &:hover {
+            cursor: pointer;
+            filter: brightness(1.5);
+        }
+    }
+    table {
+        tr {
+            &.blocked {
+                background-color: var(--blocked-color) !important;
+            }
+
+            &.selected {
+                background-color: var(--label-admin);
+            }
+        }
+    }
+    .search-form {
+        border: 1px solid #dddde3;
+        border-radius: 10px;
+        overflow: hidden;
+        min-width: 100%;
+
+        input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 1.6rem;
+            height: 40px;
+        }
+
+        &:focus-within {
+            // outline: 2px solid var(--primary-color);
+            box-shadow: 0 0 0 0.25rem var(--primary-hover-color);
+        }
+
+        i {
+            margin: auto 10px;
+        }
+
+        .search-btn {
+            width: 40px;
+            &:hover {
+                cursor: pointer;
+                opacity: 0.4;
+            }
+        }
+    }
+
+    .pLabel {
+        color: var(--text-secondary-color);
+        font-size: 1.2rem;
+    }
+
+    select {
+        font-size: 1.2rem;
+    }
+
+    .content {
+        display: flex;
+        // background-color: var(--header-color);
+        .content-item {
+            overflow-y: scroll;
+            max-height: 90vh;
+            
+            &.left {
+                padding-right: 8px;
+                border-right: 2px solid var(--header-color);
+            }
+
+            &.right {
+                padding-left: 10px;
+            }
+        }
+    }
+
+    .title {
+        font-size: 1.6rem;
+        text-align: center;
+    }
+
+    .product-detail {
+        .heading {
+            color: var(--header-color);
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .img-container {
+            padding: 4px;
+
+            img {
+                width: 100%;
+                border: 1px solid var(--header-color);
+                border-radius: 10px;
+            }
+        }
+
+        .imgs-container {
+            max-width: 50vw;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .rate-container {
+            margin-top: 10px;
+            display: flex;
+            align-items: baseline;
+
+            p {
+                margin-left: 10px;
+                font-size: 1.1rem;
+                color: black;
+            }
+        }
+    }
+
+    .classification {
+        font-size: 1.2rem;
+        color: var(--text-secondary-color);
+        border: 1px solid var(--header-color);
+        border-radius: 4px;
+        padding: 4px 10px;
+        align-items: center;
+        margin-bottom: 10px;
+        position: relative;
+
+        button {
+            color: var(--price-color);
+            border: none;
+            padding: 4px;
+            background-color: white;
+            &:hover {
+                cursor: pointer;
+                filter: brightness(1.5);
+            }
+        }
+
+        .confirm-delete {
+            position: absolute;
+            right: 0;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: var(--text-third-color);
+            border-radius: 4px;
+            justify-content: space-around;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            display: none;
+            .heading {
+                color: white;
+                // margin-top: 20px;
+                text-align: center;
+                font-weight: 600;
+            }
+
+            button:hover {
+                filter: brightness(1.5);
+                cursor: pointer;
+            }
+
+            &.active {
+                display: flex;
+            }
+        }
+    }
+}

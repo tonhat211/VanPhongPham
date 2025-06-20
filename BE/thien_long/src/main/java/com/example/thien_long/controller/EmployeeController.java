@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,11 +24,13 @@ public class EmployeeController {
     final JwtService jwtService;
     final EmployeeService employeeService;
 
+    @PreAuthorize("hasAuthority('ADMIN_EMPLOYEE')")
     @GetMapping("/employee/all")
     public ApiResponse<List<EmployeeResponse>> getAllEmployees(@RequestHeader("Authorization") String authHeader) {
         return ApiResponse.success(employeeService.getAll());
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_EMPLOYEE')")
     @PutMapping("/employee/update-action")
     public ApiResponse<Void> updateEmployeeAction(@RequestHeader("Authorization") String authHeader,  @RequestBody EmployeeActionRequest request) {
         employeeService.updateEmployeeAction(request);

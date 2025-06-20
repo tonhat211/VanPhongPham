@@ -7,6 +7,7 @@ export const logoutUser = async (token) => {
         toast.success('Đăng xuất thành công!');
         return response.data.result;
     } catch (error) {
+        localStorage.removeItem("token");
         console.error('Lỗi đăng xuất:', error);
         toast.error('Đăng xuất thất bại');
         throw error;

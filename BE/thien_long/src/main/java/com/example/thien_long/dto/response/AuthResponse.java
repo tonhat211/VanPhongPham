@@ -3,6 +3,8 @@ package com.example.thien_long.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,4 +14,5 @@ public class AuthResponse {
     String token;
     boolean authenticated;
     UserResponse user;
+    Set<String> permissions;
 }

@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 
 export function useUpdateUrlParams() {
     const [searchParams, setSearchParams] = useSearchParams();
-    console.log('useUpdateUrlParams');
+    // console.log('useUpdateUrlParams');
 
     return function updateUrlParams(updates) {
         const newParams = new URLSearchParams(searchParams.toString());
