@@ -365,10 +365,11 @@
         "phone": "Số điện thoại",
         "gender": "Giới tính",
         "address": "Địa chỉ",
-        "joinDate": "Ngày tham gia",
+        "birth": "Ngày sinh",
         "status": "Trạng thái",
         "orders": "Đơn hàng",
         "actions": "Thao tác",
+        "no-action": "Không có thao tác",
         "details": "Chi tiết",
         "dialogTitle": "Thông tin khách hàng",
 
@@ -388,42 +389,62 @@
     },
 
     "adEmployee": {
-        "title": "Quản lý nhân viên",
-        "allDepartments": "Tất cả phòng ban",
-        "allPositions": "Tất cả chức vụ",
-        "allStatuses": "Tất cả trạng thái",
-        "searchPlaceholder": "Tìm kiếm tên hoặc email",
-        "clearFilter": "Xóa lọc",
         "columns": {
             "name": "Họ tên",
-            "email": "Email",
             "department": "Phòng ban",
             "position": "Chức vụ",
             "status": "Trạng thái",
-            "actions": "Thao tác thay đổi",
+            "actions": "Thao tác",
             "moreActions": "Thao tác khác"
         },
-        "actions": {
-            "transferDepartment": "Chuyển phòng",
-            "changePosition": "Đổi chức vụ",
-            "markResigned": "Nghỉ việc",
-            "restore": "Khôi phục",
-            "details": "Chi tiết"
+        "selects": {
+            "department": "Chuyển phòng ban",
+            "position": "Chuyển vị trí",
+            "allDepartments": "Tất cả phòng ban",
+            "allPositions": "Tất cả chức vụ",
+            "allStatuses": "Tất cả trạng thái"
         },
-        "dialog": {
-            "title": "Thông tin nhân viên",
-            "fields": {
-                "status": "Trạng thái",
-                "name": "Họ tên",
-                "gender": "Giới tính",
-                "email": "Email",
-                "phone": "SĐT",
-                "address": "Địa chỉ",
-                "department": "Phòng ban",
-                "position": "Chức vụ",
-                "startDate": "Ngày bắt đầu",
-                "endDate": "Ngày nghỉ việc"
-            }
+        "statuses": {
+            "ACTIVE": "Đang làm việc",
+            "FLAG": "Đã nghỉ việc",
+            "FLAGGED": "Đã nghỉ việc",
+            "RESTORE": "Khôi phục"
+        },
+        "statusesText": {
+            "Đang làm việc": "Đang làm việc",
+            "Đã nghỉ việc": "Đã nghỉ việc"
+        },
+        "actions": {
+            "CHUYEN_PHONG": "Chuyển phòng",
+            "DOI_CHUC_VU": "Đổi chức vụ",
+            "FLAG": "Đánh dấu nghỉ việc",
+            "RESTORE": "Khôi phục"
+        },
+        "detail": "Chi tiết",
+        "detailTitle": "Thông tin nhân viên",
+        "phone": "SĐT",
+        "address": "Địa chỉ",
+        "birthday": "Ngày sinh",
+        "searchPlaceholder": "Tìm kiếm tên hoặc email",
+        "clearFilter": "Xóa lọc",
+        "departments": {
+            "Kế toán": "Kế toán",
+            "Kỹ thuật": "Kỹ thuật",
+            "Hành chính": "Hành chính",
+            "Marketing": "Marketing",
+            "Nhân sự": "Nhân sự"
+        },
+        "positions": {
+            "Nhân viên kế toán": "Nhân viên kế toán",
+            "Trưởng phòng kế toán": "Trưởng phòng kế toán",
+            "Nhân viên kỹ thuật": "Nhân viên kỹ thuật",
+            "Trưởng phòng kỹ thuật": "Trưởng phòng kỹ thuật",
+            "Nhân viên hành chính": "Nhân viên hành chính",
+            "Trưởng phòng hành chính": "Trưởng phòng hành chính",
+            "Nhân viên marketing": "Nhân viên marketing",
+            "Trưởng phòng marketing": "Trưởng phòng marketing",
+            "Nhân viên nhân sự": "Nhân viên nhân sự",
+            "Trưởng phòng nhân sự": "Trưởng phòng nhân sự"
         }
     },
 

@@ -20,12 +20,12 @@ function Customer() {
     const customers = useSelector((state) => state.customer.list);
 
     const statusDisplayMap = {
-        ACTIVE: 'Đang hoạt động',
-        LOCKED: 'Đã bị khóa',
-        UNLOCK: 'Mở khóa',
-        FLAG: 'Đánh dấu đã xóa',
-        FLAGGED: 'Đánh dấu đã xóa',
-        RESTORE: 'Khôi phục',
+        ACTIVE:  t('adCustomer.status_active'),
+        LOCKED: t('adCustomer.status_locked'),
+        UNLOCK: t('adCustomer.action_unlock'),
+        FLAG: t('adCustomer.status_flagged'),
+        FLAGGED: t('adCustomer.status_flagged'),
+        RESTORE: t('adCustomer.status_restore'),
     };
 
     const rowsWithSTT = customers.map((customer, index) => ({
@@ -35,16 +35,16 @@ function Customer() {
     }));
 
     const allowedNextStatuses = {
-        'Đang hoạt động': [
-            { label: 'Khóa', action: 'LOCK' },
-            { label: 'Đánh dấu đã xóa', action: 'FLAG' }
+       [t('adCustomer.status_active')]: [
+            { label: t('adCustomer.action_lock'), action: 'LOCK' },
+            { label: t('adCustomer.action_flag'), action: 'FLAG' }
         ],
-        'Đã bị khóa': [
-            { label: 'Mở khóa', action: 'UNLOCK' },
-            { label: 'Đánh dấu đã xóa', action: 'FLAG' }
+        [t('adCustomer.status_locked')]: [
+            { label: t('adCustomer.action_unlock'), action: 'UNLOCK' },
+            { label: t('adCustomer.action_flag'), action: 'FLAG' }
         ],
-        'Đánh dấu đã xóa': [
-            { label: 'Khôi phục', action: 'RESTORE' }
+        [t('adCustomer.status_flagged')]: [
+            { label: t('adCustomer.action_restore'), action: 'RESTORE' }
         ],
         // 'Đã bị xóa': []
     };
@@ -74,23 +74,23 @@ function Customer() {
     const columns = [
         {
             field: 'stt',
-            headerName: 'STT',
+            headerName: t('adCustomer.stt'),
             width: 80,
             sortable: false,
             filterable: false,
         },
-        { field: 'name', headerName: 'Họ tên', flex: 1 },
-        { field: 'email', headerName: 'Email', flex: 1 },
+        { field: 'name', headerName: t('adCustomer.fullname'), flex: 1 },
+        { field: 'email', headerName: t('adCustomer.email'), flex: 1 },
         {
             field: 'status',
-            headerName: 'Trạng thái',
+            headerName: t('adCustomer.status'),
             width: 150,
             renderCell: (params) => {
                 const colorMap = {
-                    'Đang hoạt động': 'green',
-                    'Đã bị khóa': 'orange',
+                    [t('adCustomer.status_active')]: 'green',
+                    [t('adCustomer.status_locked')]: 'orange',
                     // 'Đã bị xóa': 'red',
-                    'Đánh dấu đã xóa': 'red',
+                    [t('adCustomer.status_flagged')]: 'red',
                 };
                 return (
                     <span style={{ color: colorMap[params.value] || 'black', fontWeight: 500 }}>
@@ -101,7 +101,7 @@ function Customer() {
         },
         {
             field: 'actions',
-            headerName: 'Thao tác',
+            headerName: t('adCustomer.actions'),
             width: 250,
             sortable: false,
             filterable: false,
@@ -120,7 +120,7 @@ function Customer() {
                             }}
                             renderValue={() => (
                                 <span style={{ color: '#aaa' }}>
-                        {availableStatuses.length === 0 ? 'Không có thao tác' : 'Chọn thao tác'}
+                        {availableStatuses.length === 0 ? t('adCustomer.no-action') : t('adCustomer.actions')}
                     </span>
                             )}
                             disabled={availableStatuses.length === 0}
@@ -163,7 +163,7 @@ function Customer() {
                         </Select>
 
                         <Button onClick={() => setSelectedCustomers(params.row)}>
-                            Chi tiết
+                            {t('adCustomer.details')}
                         </Button>
                     </Box>
                 );
@@ -171,14 +171,14 @@ function Customer() {
         },
         {
             field: 'orders',
-            headerName: 'Đơn hàng',
+            headerName: t('adCustomer.orders'),
             width: 250,
             renderCell: () => (
                 <span
                     onClick={() => navigate(`/admin/order`)}
                     style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
                 >
-                    Đơn hàng
+                   {t('adCustomer.orders')}
                 </span>
             ),
         },
@@ -208,23 +208,23 @@ function Customer() {
                             minWidth: 500,
                         },
                     }}>
-                <DialogTitle className="title-dialog">Thông tin khách hàng</DialogTitle>
+                <DialogTitle className="title-dialog">{t('adCustomer.dialogTitle')}</DialogTitle>
                 <DialogContent className="customer-dialog-content">
                     {selectedCustomers && (
                         <>
                             <Box className="info-row">
                                 <Typography><b>ID:</b> {selectedCustomers.id}</Typography>
-                                <Typography><b>Ngày sinh:</b> {selectedCustomers.birthday}</Typography>
+                                <Typography><b>{t('adCustomer.birth')}:</b> {selectedCustomers.birthday}</Typography>
                             </Box>
 
                             <Box className="info-row">
-                            <Typography><b>Họ tên:</b> {selectedCustomers.name}</Typography>
+                            <Typography><b>{t('adCustomer.fullname')}:</b> {selectedCustomers.name}</Typography>
                             </Box>
 
-                            <Typography><b>Số điện thoại:</b> {selectedCustomers.phone}</Typography>
-                            <Typography><b>Email:</b> {selectedCustomers.email}</Typography>
+                            <Typography><b>{t('adCustomer.phone')}:</b> {selectedCustomers.phone}</Typography>
+                            <Typography><b>{t('adCustomer.email')}:</b> {selectedCustomers.email}</Typography>
 
-                            <Typography><b>Địa chỉ:</b> {selectedCustomers.fullAddress}</Typography>
+                            <Typography><b>{t('adCustomer.address')}:</b> {selectedCustomers.fullAddress}</Typography>
 
                         </>
                     )}

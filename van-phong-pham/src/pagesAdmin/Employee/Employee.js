@@ -43,10 +43,10 @@ function Employee() {
     const { list: employees, loading } = useSelector((state) => state.employees);
 
     const statusDisplayMap = {
-        ACTIVE: 'Đang hoạt động',
-        FLAG: 'Đã nghỉ việc',
-        FLAGGED: 'Đã nghỉ việc',
-        RESTORE: 'Khôi phục',
+        ACTIVE: t('adEmployee.statuses.ACTIVE'),
+        FLAG: t('adEmployee.statuses.FLAG'),
+        FLAGGED: t('adEmployee.statuses.FLAGGED'),
+        RESTORE: t('adEmployee.statuses.RESTORE'),
     };
 
     const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -64,10 +64,10 @@ function Employee() {
     }, [dispatch]);
 
     const action_map = {
-        'Chuyển phòng': 'CHUYEN_PHONG',
-        'Đổi chức vụ': 'DOI_CHUC_VU',
-        'Đánh dấu nghỉ việc': 'FLAG',
-        'Khôi phục': 'RESTORE',
+        [t('adEmployee.actions.CHUYEN_PHONG')]: 'CHUYEN_PHONG',
+        [t('adEmployee.actions.DOI_CHUC_VU')]: 'DOI_CHUC_VU',
+        [t('adEmployee.actions.FLAG')]: 'FLAG',
+        [t('adEmployee.actions.RESTORE')]: 'RESTORE',
     };
 
     const handleAction = (id, actionLabel, value= '') => {
@@ -96,14 +96,14 @@ function Employee() {
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 80 },
-        { field: 'name', headerName: 'Họ tên', flex: 1 },
+        { field: 'name', headerName: t('adEmployee.columns.name'), flex: 1 },
         { field: 'email', headerName: 'Email', flex: 1 },
-        { field: 'department', headerName: 'Phòng ban', width: 110 },
-        { field: 'position', headerName: 'Chức vụ', width: 130 },
-        { field: 'status', headerName: 'Trạng thái', width: 130 },
+        { field: 'department', headerName: t('adEmployee.columns.department'), width: 110 },
+        { field: 'position', headerName: t('adEmployee.columns.position'), width: 130 },
+        { field: 'status', headerName: t('adEmployee.columns.status'), width: 130 },
         {
             field: 'actions',
-            headerName: 'Thao tác',
+            headerName: t('adEmployee.columns.actions'),
             width: 320,
             sortable: false,
             renderCell: (params) => {
@@ -115,11 +115,11 @@ function Employee() {
                             size="small"
                             value=""
                             displayEmpty
-                            onChange={(e) => handleAction(emp.id, 'Chuyển phòng', e.target.value)}
+                            onChange={(e) => handleAction(emp.id, t('adEmployee.actions.CHUYEN_PHONG'), e.target.value)}
                         >
-                            <MenuItem value="" disabled>Chuyển phòng ban</MenuItem>
+                            <MenuItem value="" disabled>{t('adEmployee.selects.department')}</MenuItem>
                             {departments.map(dep => (
-                                <MenuItem key={dep} value={dep}>{dep}</MenuItem>
+                                <MenuItem key={dep} value={dep}>{t(`adEmployee.departments.${dep}`)}</MenuItem>
                             ))}
                         </Select>
 
@@ -127,11 +127,11 @@ function Employee() {
                             size="small"
                             value=""
                             displayEmpty
-                            onChange={(e) => handleAction(emp.id, 'Đổi chức vụ', e.target.value)}
+                            onChange={(e) => handleAction(emp.id, t('adEmployee.actions.DOI_CHUC_VU'), e.target.value)}
                         >
-                            <MenuItem value="" disabled>Chuyển vị trí</MenuItem>
+                            <MenuItem value="" disabled>{t('adEmployee.selects.position')}</MenuItem>
                             {(positionsByDepartment[emp.department] || []).map(pos => (
-                                <MenuItem key={pos} value={pos}>{pos}</MenuItem>
+                                <MenuItem key={pos} value={pos}>{t(`adEmployee.positions.${pos}`)}</MenuItem>
                             ))}
                         </Select>
                     </Box>
@@ -140,25 +140,25 @@ function Employee() {
         },
         {
             field: 'moreActions',
-            headerName: 'Thao tác khác',
+            headerName: t('adEmployee.columns.moreActions'),
             width: 200,
             sortable: false,
             renderCell: (params) => {
                 const emp = params.row;
-                const isDeleted = emp.status === 'Đã nghỉ việc';
+                const isDeleted = emp.status === t('adEmployee.statuses.FLAG');
                 return (
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                         {isDeleted ? (
-                            <Button size="small" onClick={() => handleAction(emp.id, 'Khôi phục')}>
-                                Khôi phục
+                            <Button size="small" onClick={() => handleAction(emp.id, t('adEmployee.actions.RESTORE'))}>
+                                {t('adEmployee.actions.RESTORE')}
                             </Button>
                         ) : (
 
-                            <Button size="small" onClick={() => handleAction(emp.id, 'Đánh dấu nghỉ việc')}>
-                                Nghỉ việc
+                            <Button size="small" onClick={() => handleAction(emp.id, t('adEmployee.actions.FLAG'))}>
+                                {t('adEmployee.actions.FLAG')}
                             </Button>
                         )}
-                        <Button size="small" onClick={() => setSelectedEmployee(emp)}>Chi tiết</Button>
+                        <Button size="small" onClick={() => setSelectedEmployee(emp)}>{t('adEmployee.detail')}</Button>
                     </Box>
                 );
             }
@@ -174,9 +174,9 @@ function Employee() {
                     displayEmpty
                     onChange={(e) => setFilters(prev => ({ ...prev, department: e.target.value, position: '' }))}
                 >
-                    <MenuItem value="">Tất cả phòng ban</MenuItem>
+                    <MenuItem value="">{t('adEmployee.selects.allDepartments')}</MenuItem>
                     {departments.map(dep => (
-                        <MenuItem key={dep} value={dep}>{dep}</MenuItem>
+                        <MenuItem key={dep} value={dep}>{t(`adEmployee.departments.${dep}`)}</MenuItem>
                     ))}
                 </Select>
 
@@ -187,9 +187,9 @@ function Employee() {
                     onChange={(e) => setFilters(prev => ({ ...prev, position: e.target.value }))}
                     disabled={!filters.department}
                 >
-                    <MenuItem value="">Tất cả chức vụ</MenuItem>
+                    <MenuItem value="">{t('adEmployee.selects.allPositions')}</MenuItem>
                     {(positionsByDepartment[filters.department] || []).map(pos => (
-                        <MenuItem key={pos} value={pos}>{pos}</MenuItem>
+                        <MenuItem key={pos} value={pos}>{t(`adEmployee.positions.${pos}`)}</MenuItem>
                     ))}
                 </Select>
 
@@ -199,15 +199,15 @@ function Employee() {
                     displayEmpty
                     onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
                 >
-                    <MenuItem value="">Tất cả trạng thái</MenuItem>
+                    <MenuItem value="">{t('adEmployee.selects.allStatuses')}</MenuItem>
                     {statuses.map(status => (
-                        <MenuItem key={status} value={status}>{status}</MenuItem>
+                        <MenuItem key={status} value={status}>{t(`adEmployee.statusesText.${status}`)}</MenuItem>
                     ))}
                 </Select>
 
                 <TextField
                     size="small"
-                    placeholder="Tìm kiếm tên hoặc email"
+                    placeholder={t('adEmployee.searchPlaceholder')}
                     value={filters.search}
                     onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
                 />
@@ -216,7 +216,7 @@ function Employee() {
                     variant="outlined"
                     onClick={() => setFilters({ department: '', position: '', status: '', search: '' })}
                 >
-                    Xóa lọc
+                    {t('adEmployee.clearFilter')}
                 </Button>
             </Box>
 
@@ -240,23 +240,23 @@ function Employee() {
                 disableScrollLock={true}
                 PaperProps={{ sx: { minWidth: 500 } }}
             >
-                <DialogTitle>Thông tin nhân viên</DialogTitle>
+                <DialogTitle>{t('adEmployee.detailTitle')}</DialogTitle>
                 <DialogContent>
                     {selectedEmployee && (
                         <>
                             <Box className="info-row">
                                 <Typography><b>ID:</b> {selectedEmployee.id}</Typography>
-                                <Typography><b>Trạng thái:</b> {selectedEmployee.status}</Typography>
+                                <Typography><b>{t('adEmployee.columns.status')}:</b> {selectedEmployee.status}</Typography>
                             </Box>
                             <Box className="info-row">
-                                <Typography><b>Họ tên:</b> {selectedEmployee.name}</Typography>
-                                <Typography><b>Ngày sinh:</b> {selectedEmployee.birthday}</Typography>
+                                <Typography><b>{t('adEmployee.columns.name')}:</b> {selectedEmployee.name}</Typography>
+                                <Typography><b>{t('adEmployee.birthday')}:</b> {selectedEmployee.birthday}</Typography>
                             </Box>
                             <Typography><b>Email:</b> {selectedEmployee.email}</Typography>
-                            <Typography><b>SĐT:</b> {selectedEmployee.phone}</Typography>
-                            <Typography><b>Địa chỉ:</b> {selectedEmployee.address}</Typography>
-                            <Typography><b>Phòng ban:</b> {selectedEmployee.department}</Typography>
-                            <Typography><b>Chức vụ:</b> {selectedEmployee.position}</Typography>
+                            <Typography><b>{t('adEmployee.phone')}:</b> {selectedEmployee.phone}</Typography>
+                            <Typography><b>{t('adEmployee.address')}:</b> {selectedEmployee.address}</Typography>
+                            <Typography><b>{t('adEmployee.columns.department')}:</b> {selectedEmployee.department}</Typography>
+                            <Typography><b>{t('adEmployee.columns.position')}:</b> {selectedEmployee.position}</Typography>
 
                         </>
                     )}

@@ -367,10 +367,11 @@
         "phone": "Phone Number",
         "gender": "Gender",
         "address": "Address",
-        "joinDate": "Join Date",
+        "birth": "Birthday",
         "status": "Status",
         "orders": "Orders",
         "actions": "Actions",
+      "no-action": "No actions",
         "details": "Details",
         "dialogTitle": "Customer Information",
 
@@ -387,47 +388,68 @@
         "action_restore": "Restore"
     },
 
-    "adEmployee": {
-        "title": "Employee Management",
-        "allDepartments": "All Departments",
-        "allPositions": "All Positions",
-        "allStatuses": "All Statuses",
-        "searchPlaceholder": "Search by name or email",
-        "clearFilter": "Clear Filters",
-        "columns": {
-            "name": "Name",
-            "email": "Email",
-            "department": "Department",
-            "position": "Position",
-            "status": "Status",
-            "actions": "Change Actions",
-            "moreActions": "Other Actions"
-        },
-        "actions": {
-            "transferDepartment": "Transfer Department",
-            "changePosition": "Change Position",
-            "markResigned": "Mark as Resigned",
-            "restore": "Restore",
-            "details": "Details"
-        },
-        "dialog": {
-            "title": "Employee Details",
-            "fields": {
-                "status": "Status",
-                "name": "Name",
-                "gender": "Gender",
-                "email": "Email",
-                "phone": "Phone",
-                "address": "Address",
-                "department": "Department",
-                "position": "Position",
-                "startDate": "Start Date",
-                "endDate": "End Date"
-            }
-        }
+  "adEmployee": {
+    "columns": {
+      "name": "Full Name",
+      "department": "Department",
+      "position": "Position",
+      "status": "Status",
+      "actions": "Actions",
+      "moreActions": "More Actions"
     },
+    "selects": {
+      "department": "Change Department",
+      "position": "Change Position",
+      "allDepartments": "All Departments",
+      "allPositions": "All Positions",
+      "allStatuses": "All Statuses"
+    },
+    "statuses": {
+      "ACTIVE": "Working",
+      "FLAG": "Resigned",
+      "FLAGGED": "Resigned",
+      "RESTORE": "Restore"
+    },
+    "statusesText": {
+      "Đang làm việc": "Working",
+      "Đã nghỉ việc": "Resigned"
+    },
+    "actions": {
+      "CHUYEN_PHONG": "Change Department",
+      "DOI_CHUC_VU": "Change Position",
+      "FLAG": "Mark as Resigned",
+      "RESTORE": "Restore"
+    },
+    "detail": "Details",
+    "detailTitle": "Employee Information",
+    "phone": "Phone",
+    "address": "Address",
+    "birthday": "Birthday",
+    "searchPlaceholder": "Search by name or email",
+    "clearFilter": "Clear Filters",
+    "departments": {
+      "Kế toán": "Accounting",
+      "Kỹ thuật": "Engineering",
+      "Hành chính": "Administration",
+      "Marketing": "Marketing",
+      "Nhân sự": "Human Resources"
+    },
+    "positions": {
+      "Nhân viên kế toán": "Accounting Staff",
+      "Trưởng phòng kế toán": "Accounting Manager",
+      "Nhân viên kỹ thuật": "Technical Staff",
+      "Trưởng phòng kỹ thuật": "Technical Manager",
+      "Nhân viên hành chính": "Administrative Staff",
+      "Trưởng phòng hành chính": "Administrative Manager",
+      "Nhân viên marketing": "Marketing Staff",
+      "Trưởng phòng marketing": "Marketing Manager",
+      "Nhân viên nhân sự": "HR Staff",
+      "Trưởng phòng nhân sự": "HR Manager"
+    }
+  },
 
-    "footer": {
+
+  "footer": {
         "subscribeTitle": "Subscribe to newsletter",
         "subscribePlaceholder": "Enter your email address",
         "subscribeButton": "Subscribe",
