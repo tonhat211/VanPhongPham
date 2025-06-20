@@ -1,3 +1,6 @@
+.wrapper table tr.blocked {
+  background-color: var(--blocked-color) !important;
+}
 .wrapper .search-form {
   border: 1px solid #dddde3;
   border-radius: 10px;
@@ -24,6 +27,91 @@
 .wrapper .search-form .search-btn:hover {
   cursor: pointer;
   opacity: 0.4;
+}
+.wrapper .pLabel {
+  color: var(--text-secondary-color);
+  font-size: 1.2rem;
+}
+.wrapper select {
+  font-size: 1.2rem;
+}
+.wrapper .title {
+  font-size: 1.6rem;
+  text-align: center;
+}
+.wrapper .product-detail .heading {
+  color: var(--header-color);
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+.wrapper .product-detail .img-container {
+  padding: 4px;
+}
+.wrapper .product-detail .img-container img {
+  width: 100%;
+  border: 1px solid var(--header-color);
+  border-radius: 10px;
+}
+.wrapper .product-detail .imgs-container {
+  max-width: 50vw;
+  display: flex;
+  flex-wrap: wrap;
+}
+.wrapper .product-detail .rate-container {
+  margin-top: 10px;
+  display: flex;
+  align-items: baseline;
+}
+.wrapper .product-detail .rate-container p {
+  margin-left: 10px;
+  font-size: 1.1rem;
+  color: black;
+}
+.wrapper .classification {
+  font-size: 1.2rem;
+  color: var(--text-secondary-color);
+  border: 1px solid var(--header-color);
+  border-radius: 4px;
+  padding: 4px 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  position: relative;
+}
+.wrapper .classification button {
+  color: var(--price-color);
+  border: none;
+  padding: 4px;
+  background-color: white;
+}
+.wrapper .classification button:hover {
+  cursor: pointer;
+  filter: brightness(1.5);
+}
+.wrapper .classification .confirm-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--text-third-color);
+  border-radius: 4px;
+  justify-content: space-around;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  display: none;
+}
+.wrapper .classification .confirm-delete .heading {
+  color: white;
+  text-align: center;
+  font-weight: 600;
+}
+.wrapper .classification .confirm-delete button:hover {
+  filter: brightness(1.5);
+  cursor: pointer;
+}
+.wrapper .classification .confirm-delete.active {
+  display: flex;
 }
 
 /*# sourceMappingURL=Product.module.css.map */
