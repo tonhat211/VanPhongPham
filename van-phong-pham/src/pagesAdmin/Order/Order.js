@@ -34,20 +34,8 @@ import OrderModel, {
 } from '~/models/OrderModel';
 import { formatMoney } from '~/utils';
 import useI18n from '~/hooks/useI18n';
-import { productApi } from '~/api';
 import { useData } from '~/context/DataContext';
-import { getProductsByCategory } from '~/api/productApi';
-import {
-    deleteImg,
-    getAdminProductDetails,
-    getAdminProductsByCategory,
-    updateBaseProduct,
-    insertImgs,
-    deleteThumb,
-    insertThumb,
-    deleteDetail,
-    updateDetail,
-} from '~/api/adminProductApi';
+
 import { useUpdateUrlParams } from '~/utils/url';
 import { toast } from 'react-toastify';
 import { getAllOrder, updateStatus } from '~/api/adminOrderApi';
@@ -117,8 +105,6 @@ function Order() {
     const sortBy = searchParams.get('sortBy') || 'price';
     const direction = searchParams.get('direction') || 'asc';
     const size = parseInt(searchParams.get('size') || '20');
-    const [products, setProducts] = useState([]);
-    const [productDetails, setProductDetails] = useState(null);
     const navigate = useNavigate();
     const viewTypes = [
         { link: '', title: 'Tất cả' },
@@ -159,10 +145,7 @@ function Order() {
     const [viewType, setViewType] = useState(viewTypes[0].link);
     const [selectedItem, setSelectedItem] = useState(null);
 
-    const handleViewTypeChange = (e) => {
-        setViewType(e.target.value);
-        navigate(`/admin/products/${e.target.value}`);
-    };
+
 
     useEffect(() => {
         fetchOrders();

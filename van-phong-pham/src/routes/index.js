@@ -46,13 +46,13 @@ const privateRoutes = [
 
 
     // can role
-    { path: '/admin/employee', component: Employee, layout: AdminLayout },
+    { path: '/admin/employee', component: Employee, layout: AdminLayout, permissions: ['ADMIN_EMPLOYEE'] }, 
     { path: '/admin/products', component: AdminProduct, layout: AdminLayout, permissions: ['ADMIN_PRODUCT']},
     { path: '/admin/products/:category', component: AdminProduct, layout: AdminLayout, permissions: ['ADMIN_PRODUCT']},
-    { path: '/admin/permissions', component: Permission, layout: AdminLayout, permissions: ['ADMIN'] },
+    { path: '/admin/permissions', component: Permission, layout: AdminLayout, permissions: ['ADMIN_PERMISSION'] },
     { path: '/admin/dashboard', component: Dashboard, layout: AdminLayout },
     // { path: '/', component: Dashboard, layout: AdminLayout },
-    { path: '/admin/customer', component: Customer, layout: AdminLayout },
+    { path: '/admin/customer', component: Customer, layout: AdminLayout, permissions: ['ADMIN_USER'] },
     { path: '/admin/orders', component: AdminOrder, layout: AdminLayout, permissions: ['ADMIN_ORDER'] },
 ];
 

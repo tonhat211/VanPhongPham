@@ -6,12 +6,18 @@ import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import bannerTopHomePage from '~/assets/images/bannerTopHomeImgs/bannerTopHomePage';
-import hotProductsHomePage from '~/assets/images/imgsHotProductsHome/hotProductsHomePage';
+import hotProductsHomePageRaw from '~/assets/images/imgsHotProductsHome/hotProductsHomePage';
 import ProductItemCategory from '~/components/Layouts/components/ProductItemCategory/ProductItemCategory';
 import Button from '@mui/material/Button';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import images from '~/assets/images';
+import useI18n from '~/hooks/useI18n';
 function Home() {
+    const { t, lower } = useI18n();
+    const hotProductsHomePage = hotProductsHomePageRaw.map((item, index) => ({
+        ...item,
+        title: t(`hot-sections.${index}`),
+    }));
     return (
         <div className="home-container">
             <div className="banner-top-container">
@@ -76,7 +82,7 @@ function Home() {
                 </div>
                 <div className="btn_wrapper">
                     <Button className="toggle_btn">
-                        Xem tất cả <KeyboardArrowRightIcon/>
+                        {t('all-view')} <KeyboardArrowRightIcon/>
                     </Button>
                 </div>
 
@@ -93,7 +99,7 @@ function Home() {
                 </div>
                 <div className="btn_wrapper">
                     <Button className="toggle_btn">
-                        Xem tất cả <KeyboardArrowRightIcon />
+                        {t('all-view')} <KeyboardArrowRightIcon />
                     </Button>
                 </div>
             </div>
@@ -107,14 +113,14 @@ function Home() {
 
                 <div className="title-product-container">
                     <h6 className="title-item">
-                       <a href="#"> MỸ THUẬT </a>
+                       <a href="#"> {t('categories.3')} </a>
                     </h6>
                     <div className="item-cate-list">
-                        <div className="item-cate cate-1">Sản phẩm HOT</div>
-                        <div className="item-cate">Bút lông màu</div>
-                        <div className="item-cate">Sáp màu</div>
-                        <div className="item-cate">Màu nước</div>
-                        <div className="item-cate">Sáp nặn</div>
+                        <div className="item-cate cate-1">{t('category-3.hot')}</div>
+                        <div className="item-cate">{t('category-3.pen-color')}</div>
+                        <div className="item-cate">{t('category-3.crayon')}</div>
+                        <div className="item-cate">{t('category-3.water-color')}</div>
+                        <div className="item-cate">{t('category-3.clay')}</div>
                     </div>
                 </div>
 
@@ -124,7 +130,7 @@ function Home() {
 
                 <div className="btn_wrapper">
                     <Button className="toggle_btn">
-                        Xem tất cả <KeyboardArrowRightIcon />
+                        {t('all-view')} <KeyboardArrowRightIcon />
                     </Button>
                 </div>
             </div>
@@ -138,7 +144,7 @@ function Home() {
 
                 <div className="title-product-container">
                     <h6 className="title-item">
-                        <a href="#"> BÚT VIẾT CAO CẤP </a>
+                        <a href="#"> {t('categories.4')} </a>
                     </h6>
                     <div className="item-cate-list">
                         <div className="item-cate cate-1">Parker</div>
@@ -151,7 +157,7 @@ function Home() {
                 </div>
                 <div className="btn_wrapper">
                     <Button className="toggle_btn">
-                        Xem tất cả <KeyboardArrowRightIcon />
+                        {t('all-view')} <KeyboardArrowRightIcon />
                     </Button>
                 </div>
             </div>
@@ -167,7 +173,7 @@ function Home() {
                 </div>
                 <div className="btn_wrapper">
                     <Button className="toggle_btn">
-                        Xem tất cả <KeyboardArrowRightIcon />
+                        {t('all-view')} <KeyboardArrowRightIcon />
                     </Button>
                 </div>
             </div>
@@ -181,14 +187,14 @@ function Home() {
 
                 <div className="title-product-container">
                     <h6 className="title-item">
-                        <a href="#"> BÚT VIẾT </a>
+                        <a href="#"> {t('categories.6')}  </a>
                     </h6>
                     <div className="item-cate-list">
-                        <div className="item-cate cate-1">Bút Bi</div>
-                        <div className="item-cate">Bút Gel</div>
-                        <div className="item-cate">Bút chì</div>
-                        <div className="item-cate">Bút dạ quang</div>
-                        <div className="item-cate">Bút xóa</div>
+                        <div className="item-cate cate-1">{t('category-6.pen-ball')}</div>
+                        <div className="item-cate">{t('category-6.pen-gel')}</div>
+                        <div className="item-cate">{t('category-6.pencil')}</div>
+                        <div className="item-cate">{t('category-6.highlighter')}</div>
+                        <div className="item-cate">{t('category-6.pen-correction')}</div>
                     </div>
                 </div>
 
@@ -197,7 +203,7 @@ function Home() {
                 </div>
                 <div className="btn_wrapper">
                     <Button className="toggle_btn">
-                        Xem tất cả <KeyboardArrowRightIcon />
+                        {t('all-view')} <KeyboardArrowRightIcon />
                     </Button>
                 </div>
             </div>
@@ -213,7 +219,7 @@ function Home() {
                 </div>
                 <div className="btn_wrapper">
                     <Button className="toggle_btn">
-                        Xem tất cả <KeyboardArrowRightIcon />
+                        {t('all-view')} <KeyboardArrowRightIcon />
                     </Button>
                 </div>
             </div>
@@ -227,13 +233,13 @@ function Home() {
 
                 <div className="title-product-container">
                     <h6 className="title-item">
-                        <a href="#"> KHO SÁCH - NÂNG TẦM TRI THỨC </a>
+                        <a href="#"> {t('categories.8')} </a>
                     </h6>
                     <div className="item-cate-list">
-                        <div className="item-cate cate-1">Sách học Anh văn</div>
-                        <div className="item-cate">Sách kĩ năng</div>
-                        <div className="item-cate">Sách TA Mai Lan Hương</div>
-                        <div className="item-cate">Sách tiếng Anh</div>
+                        <div className="item-cate cate-1"> {t('category-8.english-study')}</div>
+                        <div className="item-cate">{t('category-8.skills')}</div>
+                        <div className="item-cate">{t('category-8.mai-lan-huong')}</div>
+                        <div className="item-cate">{t('category-8.english-book')}</div>
                     </div>
                 </div>
 
@@ -242,7 +248,7 @@ function Home() {
                 </div>
                 <div className="btn_wrapper">
                     <Button className="toggle_btn">
-                        Xem tất cả <KeyboardArrowRightIcon />
+                        {t('all-view')} <KeyboardArrowRightIcon />
                     </Button>
                 </div>
             </div>

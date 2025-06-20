@@ -67,17 +67,17 @@ function Info() {
 
     const validateInput = () => {
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            toast.error('Email không hợp lệ');
+            toast.error(t('infoUser.errEmail'));
             return false;
         }
 
         if (!/^\d{9,11}$/.test(phone)) {
-            toast.error('Số điện thoại không hợp lệ');
+            toast.error(t('infoUser.errPhone'));
             return false;
         }
 
         if (!birthday || isNaN(birthday.getTime())) {
-            toast.error('Ngày sinh không hợp lệ');
+            toast.error(t('infoUser.errBirthday'));
             return false;
         }
 
@@ -89,13 +89,13 @@ function Info() {
         }
 
         if (age < 16 || age > 85) {
-            toast.error('Tuổi phải từ 16 đến 85');
+            toast.error(t('infoUser.errAge'));
             return false;
         }
 
         const parts = address.split(',').map((p) => p.trim());
         if (parts.length < 3) {
-            toast.error('Địa chỉ phải bao gồm: số nhà/đường, phường/xã, tỉnh/thành');
+            toast.error(t('infoUser.errAddress'));
             return false;
         }
 
@@ -142,7 +142,7 @@ function Info() {
         );
 
         if (!isChanged) {
-            toast.info('Bạn chưa thay đổi thông tin nào.');
+            toast.info(t('infoUser.noChange'));
             return;
         }
 
@@ -167,22 +167,22 @@ function Info() {
 
             localStorage.setItem('user', JSON.stringify(newUser));
             setUser(newUser);
-            toast.success('Thông tin đã được cập nhật!');
+            toast.success(t('infoUser.updateSuccess'));
         } catch (error) {
             console.error('Cập nhật thất bại:', error);
-            toast.error('Cập nhật thất bại!');
+            toast.error(t('infoUser.updateFail'));
         }
     };
     return (
         <div className={cx('wrapper')}>
-            <h1 className={cx('wrapper')}>{t('Thông tin tài khoản')}</h1>
+            <h1 className={cx('wrapper')}>{t('infoUser.title')}</h1>
             <form>
                 {/* Họ và tên */}
                 <div className={cx('form-item')}>
                     <CustomInput
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        label={t('Email')}
+                        label={t('infoUser.email')}
                         className="mb-10"
                     />
                 </div>
@@ -190,7 +190,7 @@ function Info() {
                     <CustomInput
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        label={t('Họ và tên')}
+                        label={t('infoUser.name')}
                         className="mb-10"
                     />
                 </div>
@@ -199,7 +199,7 @@ function Info() {
                         value={birthday ? birthday.toLocaleDateString('vi-VN') : ''}
                         onChange={() => {}} //Không cho nhập bằng tay
                         onClick={() => openModal(MODAL_TYPES.BIRTHDAY_CALENDAR)}
-                        label={t('ngày sinh')}
+                        label={t('infoUser.birthday')}
                         className="mb-10"
                         readOnly
                     />
@@ -208,7 +208,7 @@ function Info() {
                     <CustomInput
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        label={t('số điện thoại ')}
+                        label={t('infoUser.phone')}
                         className="mb-10"
                     />
                 </div>
@@ -216,8 +216,8 @@ function Info() {
                     <CustomInput
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
-                        label={t('địa chỉ mặc định')}
-                        placeholder="Ví dụ: 222 Linh Trung, Thủ Đức, Hồ Chí Minh"
+                        label={t('infoUser.address')}
+                        placeholder={t('infoUser.addressHint')}
                         className="mb-10"
                     />
                 </div>
@@ -225,7 +225,7 @@ function Info() {
                 {/* Nút cập nhật */}
                 <div className={cx('form-item')}>
                     <button type="button" className={cx('update-button')} onClick={handleUpdate}>
-                        Cập nhật thông tin
+                        {t('infoUser.updateBtn')}
                     </button>
                 </div>
             </form>

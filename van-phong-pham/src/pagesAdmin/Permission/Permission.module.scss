@@ -26,9 +26,14 @@
             }
 
             &.selected {
-                background-color: var(--label-admin);
+                background-color: var(--label-admin) !important;
+            }
+
+            &:hover {
+                cursor: pointer !important;
             }
         }
+
     }
     .search-form {
         border: 1px solid #dddde3;

@@ -62,7 +62,7 @@ function Header() {
         <header className={classNames(cx('wrapper'), 'grid')}>
             <div className={classNames('grid-row')} style={{ alignItems: 'center', justifyContent: 'space-between' }}>
                 <div className="grid-col-2">
-                    <img src={images.logo} alt="Thien Long" className={classNames(cx('logo'))} />
+                    <Link to="/" ><img src={images.logo} alt="Thien Long" className={classNames(cx('logo'))} /></Link>
                 </div>
                 <div className={cx('menu')}>
                     <p

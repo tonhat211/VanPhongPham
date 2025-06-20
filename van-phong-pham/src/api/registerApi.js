@@ -5,7 +5,7 @@ export const registerUser = async (data) => {
         let url =`/register`;
         console.log('Đang gửi:', data);
         const response = await axiosInstance.post(url, data);
-        toast.success('Đăng ký thành công!');
+        // toast.success('Đăng ký thành công!');
         return response.data;
     } catch (error) {
         console.log('Lỗi đăng ký:', error);

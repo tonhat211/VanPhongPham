@@ -21,6 +21,7 @@
   --breadcrumb-backround-color: #dbe8ff;
   --red-light-a: #ffe0e2;
   --border-color: rgba(23, 23, 23, 0.14);
+  --blocked-color: #ff7979;
   --label-admin: #007aff;
   --background-admin: linear-gradient(90deg, #09bce4 0%, #2659f3 100%);
 }
@@ -363,6 +364,10 @@ body {
   display: block;
 }
 
+.max-w-60 {
+  max-width: 60%;
+}
+
 @media (min-width: 720px) and (max-width: 1024px) {
   .grid {
     min-width: 720px;
@@ -406,6 +411,9 @@ body {
   }
   .grid-col-4-tab {
     width: 33.33%;
+  }
+  .max-w-80-tab {
+    max-width: 80%;
   }
 }
 @media (min-width: 0px) and (max-width: 719px) {
@@ -473,6 +481,9 @@ body {
   }
   .p-content-size-mob {
     font-size: 1.2rem !important;
+  }
+  .max-w-80-mob {
+    max-width: 80%;
   }
 }
 

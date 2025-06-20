@@ -9,7 +9,9 @@ import { forgotPassword, loginUser } from '~/api/LoginApi';
 import { useDispatch } from 'react-redux';
 import { fetchCart } from '~/pages/productCardsPage/cartSlice';
 import { useAuth } from '~/context/AuthContext';
+import useI18n from '~/hooks/useI18n';
 function LoginPage() {
+    const { t, lower } = useI18n();
     const [mode, setMode] = useState('login');
     const [formData, setFormData] = useState({
         email: '',
@@ -22,19 +24,20 @@ function LoginPage() {
 
     const validateField = (name, value) => {
         if (!value.trim()) {
-            return 'Trường này là bắt buộc';
+            return t('login.force-input');
         }
 
         if (name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-            return 'Email không hợp lệ';
+            return t('login.erro-mail');
         }
 
         if (name === 'pwd') {
             if (value.length < 8) {
-                return 'Mật khẩu phải có ít nhất 8 ký tự';
+                return t('login.erro-pass');
             }
             if (/\s/.test(value)) {
-                return 'Mật khẩu không được chứa khoảng trắng';
+                return t('login.no-space');
+
             }
         }
         return '';
@@ -65,7 +68,7 @@ function LoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) {
-            toast.error('Vui lòng kiểm tra lại thông tin');
+            toast.error(t('login.error-toast'));
             return;
         }
         try {
@@ -82,19 +85,22 @@ function LoginPage() {
             const response = await loginUser(payload);
             dispatch(fetchCart());
             login(response.user, response.permissions);
+            toast.success(t('login.success-toast'));
+            // setTimeout(() => navigate('/', { state: { email: formData.email } }), 2000);
+
 
             navigate('/', { state: { email: formData.email } });
             // console.log('handleSubmit ' + JSON.stringify(response.permissions, null, 2));
         } catch (error) {
-            // toast.error(error.message || "Đăng nhập thất bại");
+            toast.error(error.message || t('login.fail-toast'));
         }
     };
 
     const [resetEmail, setResetEmail] = useState('');
 
     const validateResetEmail = () => {
-        if (!resetEmail.trim()) return 'Trường này là bắt buộc';
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(resetEmail)) return 'Email không hợp lệ';
+        if (!resetEmail.trim()) return t('login.force-input');
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(resetEmail)) return t('login.erro-mail');
         return '';
     };
 
@@ -104,63 +110,51 @@ function LoginPage() {
         const error = validateResetEmail();
         if (error) {
             setErrors((prev) => ({ ...prev, email: error }));
-            toast.error('Vui lòng kiểm tra lại email');
+            toast.error(t('login.reset-error-toast'));
             return;
         }
 
         try {
             await forgotPassword(resetEmail);
-            toast.success('Đã gửi email đặt lại mật khẩu!');
+            toast.success(t('login.reset-success-toast'));
             setResetEmail('');
             setMode('login');
         } catch (err) {
-            toast.error(err.message || 'Gửi email thất bại');
+            toast.error(err.message || t('login.fail-mail'));
         }
     };
 
     const renderLoginForm = () => (
         <>
-            <h4>Đăng nhập</h4>
+            <h4>{t('login.title')}</h4>
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>
-                        Email <span> *</span>
-                    </label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Nhập Email"
-                    />
+                    <label>{t('login.email-label')} <span> *</span></label>
+                    <input type="email"  name="email"
+                           value={formData.email}
+                           onBlur={handleBlur}
+                           onChange={handleChange}
+                           placeholder={t('login.email-label')} />
                     {errors.email && <p className="error-text">{errors.email}</p>}
                 </div>
                 <div className="form-group">
-                    <label>
-                        Mật khẩu <span> *</span>
-                    </label>
-                    <input
-                        type="password"
-                        name="pwd"
-                        value={formData.pwd}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Nhập Mật khẩu"
-                    />
+                    <label>{t('login.password-label')} <span> *</span></label>
+                    <input type="password" name="pwd"
+                           value={formData.pwd}
+                           onBlur={handleBlur}
+                           onChange={handleChange}
+                           placeholder={t('login.placeholder-password')} />
                     {errors.pwd && <p className="error-text">{errors.pwd}</p>}
                 </div>
-                <button type="submit" className="submit-btn">
-                    Đăng nhập
-                </button>
+                <button type="submit" className="submit-btn">{t('login.title')}</button>
             </form>
 
             <div className="account-login-container">
                 <p className="account-title">
-                    Quên mật khẩu? Nhấn vào
-                    <a onClick={() => setMode('reset')}> đây </a>
+                    {t('login.forgot-password')}
+                    <a onClick={() => setMode('reset')}> {t('login.here')}</a>
                 </p>
-                <p className="account-title">Hoặc đăng nhập bằng</p>
+                <p className="account-title">{t('login.with')} </p>
                 <div className="account-gg-fb">
                     <Button className="account-gg">
                         {' '}
@@ -172,8 +166,8 @@ function LoginPage() {
                     </Button>
                 </div>
                 <p className="account-title">
-                    Bạn chưa có tài khoản?
-                    <a href="/register"> Đăng ký tại đây </a>
+                    {t('login.register-prompt')}
+                    <a href="/register"> {t('login.register-link')} </a>
                 </p>
             </div>
         </>
@@ -181,47 +175,32 @@ function LoginPage() {
 
     const renderResetForm = () => (
         <>
-            <h4>ĐẶT LẠI MẬT KHẨU</h4>
-            <p className="reset-text">Chúng tôi sẽ gửi cho bạn một email để kích hoạt việc đặt lại mật khẩu.</p>
+            <h4>{t('login.reset-title')}</h4>
+            <p className="reset-text">{t('login.reset-desc')}</p>
             <form className="reset-form" onSubmit={handleforgotPassword}>
                 <div className="form-group">
-                    <label>
-                        Email <span> *</span>{' '}
-                    </label>
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        onBlur={handleBlur}
-                        value={resetEmail}
-                        onChange={(e) => setResetEmail(e.target.value)}
-                    />
+                    <label>{t('login.email-label')} <span> *</span> </label>
+                    <input type="email" placeholder="Email" name="email"
+                           onBlur={handleBlur} value={resetEmail}
+                           onChange={(e) => setResetEmail(e.target.value)}/>
                     {errors.email && <p className="error-text">{errors.email}</p>}
                 </div>
-                <button type="submit" className="submit-btn yellow-btn">
-                    Lấy lại mật khẩu
-                </button>
+                <button type="submit" className="submit-btn yellow-btn">{t('login.reset-submit')}</button>
             </form>
 
             <div className="account-login-container">
-                <p className="back-link">
-                    <a onClick={() => setMode('login')}>Quay lại</a>
-                </p>
-                <p className="account-title">Hoặc đăng nhập bằng</p>
-                <div className="account-gg-fb">
-                    <Button className="account-gg">
-                        {' '}
-                        <GoogleIcon style={{ fontSize: 20 }} /> Google
-                    </Button>
-                    <Button className="account-fb">
-                        {' '}
-                        <FacebookRoundedIcon style={{ fontSize: 20 }} /> Facebook
-                    </Button>
-                </div>
-                <p className="account-title">
-                    Bạn chưa có tài khoản?
-                    <a> Đăng ký tại đây </a>
-                </p>
+            <p className="back-link">
+                <a onClick={() => setMode('login')}>{t('login.reset-back')}</a>
+            </p>
+            <p className="account-title">{t('login.with')}</p>
+            <div className="account-gg-fb">
+                <Button className="account-gg"> <GoogleIcon style={{ fontSize: 20 }} /> Google</Button>
+                <Button className="account-fb"> <FacebookRoundedIcon style={{ fontSize: 20 }} /> Facebook</Button>
+            </div>
+            <p className="account-title">
+                {t('login.register-prompt')}
+                <a href="/register"> {t('login.register-link')} </a>
+            </p>
             </div>
         </>
     );
