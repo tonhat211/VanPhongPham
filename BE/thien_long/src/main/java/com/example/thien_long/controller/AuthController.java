@@ -37,7 +37,8 @@ public class AuthController {
     @PostMapping("/refresh")
     ApiResponse<AuthResponse> authenticate(@RequestBody RefreshRequest request)
             throws ParseException, JOSEException {
-        return ApiResponse.success(authService.refreshToken(request));
+//        return ApiResponse.success(authService.refreshToken(request));
+        return ApiResponse.success(authService.refresh(request));
     }
 
     @PostMapping("/logout")

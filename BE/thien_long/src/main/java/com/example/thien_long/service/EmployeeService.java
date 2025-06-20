@@ -28,6 +28,8 @@ public class EmployeeService {
             "Nhân sự", List.of("Nhân viên nhân sự", "Trưởng phòng nhân sự")
     );
 
+
+
     public List<EmployeeResponse> getAll() {
         return employeeRepository.findAll()
                 .stream()

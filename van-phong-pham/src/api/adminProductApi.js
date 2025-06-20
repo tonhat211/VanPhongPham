@@ -268,7 +268,6 @@ export async function updateStatus({ id, status }) {
     console.log('updateStatus');
     let url = `/admin/products/edit/status`;
     const params = { id, status };
-    // console.log("params: " + JSON.stringify(params,null,2));
     const response = await axiosInstance.post(url, params);
 
     const data = response.data;

@@ -26,6 +26,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -70,6 +71,7 @@ public class AdminProductController {
     @Autowired
     private EntityManager entityManager;
 
+    @PreAuthorize("hasAuthority('ADMIN_PRODUCT')")
     @GetMapping("")
     public ResponseEntity<Page<BasicAdminProductResponse>> findAllCategory(
             @RequestParam(defaultValue = "0") int page,
@@ -88,6 +90,7 @@ public class AdminProductController {
     }
 
     //localhost:8080/api/v1/products/but-viet?sub=but-da-quang,but-chi&sortBy=price&direction=asc&page=0&size=10
+    @PreAuthorize("hasAuthority('ADMIN_PRODUCT')")
     @GetMapping("/{categoryCode}")
     public ResponseEntity<Page<BasicAdminProductResponse>> findByCategory(
             @PathVariable String categoryCode,
@@ -106,6 +109,7 @@ public class AdminProductController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN_PRODUCT')")
     @GetMapping("/detail/{id}")
     public ResponseEntity<AdminProductDetailResponse> findDetail(
             @PathVariable long id) {
@@ -138,6 +142,7 @@ public class AdminProductController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasAuthority('EDIT_PRODUCT')")
     @PostMapping("/edit/base")
     public ResponseEntity<?> editBase(@RequestBody AdminProductDetailRequest request) {
         System.out.println("admin/products/edit");
@@ -177,6 +182,7 @@ public class AdminProductController {
         return ResponseEntity.ok(re);
     }
 
+    @PreAuthorize("hasAuthority('EDIT_PRODUCT')")
     @PostMapping("/edit/details")
     public ResponseEntity<?> editDetail(@RequestBody AdminProductDetailRequest request) {
         System.out.println("admin/products/edit");
@@ -218,6 +224,7 @@ public class AdminProductController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasAuthority('EDIT_PRODUCT')")
     @PostMapping("/edit/image/delete")
     public ResponseEntity<?> deleteImg(@RequestBody AdminProductDetailRequest request) {
         System.out.println("edit/image/delete");
@@ -265,6 +272,7 @@ public class AdminProductController {
         return ResponseEntity.ok(re);
     }
 
+    @PreAuthorize("hasAuthority('EDIT_PRODUCT')")
     @PostMapping(path = "/edit/image/insert" ,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> insertImg(@RequestPart("files") MultipartFile[] files,
@@ -309,6 +317,7 @@ public class AdminProductController {
         return ResponseEntity.ok(re);
     }
 
+    @PreAuthorize("hasAuthority('EDIT_PRODUCT')")
     @PostMapping("/edit/thumbnail/delete")
     public ResponseEntity<?> deleteThumb(@RequestBody AdminProductDetailRequest request) {
         System.out.println("edit/thumbnail/delete");
@@ -350,6 +359,7 @@ public class AdminProductController {
         return ResponseEntity.ok(re);
     }
 
+    @PreAuthorize("hasAuthority('EDIT_PRODUCT')")
     @PostMapping(path = "/edit/thumbnail/insert" ,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> insertThumb(@RequestPart("file") MultipartFile file,
@@ -380,6 +390,8 @@ public class AdminProductController {
         return ResponseEntity.ok(re);
     }
 
+
+    @PreAuthorize("hasAuthority('DELETE_PRODUCT')")
     @PostMapping("/edit/detail/delete")
     public ResponseEntity<?> deleteDetail(@RequestBody AdminProductDetailRequest request) {
         System.out.println("edit/detail/delete");
@@ -402,6 +414,7 @@ public class AdminProductController {
         return ResponseEntity.ok(re);
     }
 
+    @PreAuthorize("hasAuthority('EDIT_PRODUCT')")
     @PostMapping("/edit/detail")
     public ResponseEntity<?> updateDetail(@RequestBody AdminProductDetailRequest request) {
         System.out.println("edit/detail/update");
@@ -437,6 +450,7 @@ public class AdminProductController {
         return ResponseEntity.ok(re);
     }
 
+    @PreAuthorize("hasAuthority('ADD_PRODUCT')")
     @PostMapping("/add/detail")
     public ResponseEntity<?> addDetail(@RequestBody AdminProductDetailRequest request) {
         System.out.println("add/detail");
@@ -470,7 +484,7 @@ public class AdminProductController {
         return ResponseEntity.ok(re);
     }
 
-
+    @PreAuthorize("hasAuthority('EDIT_PRODUCT_STATUS')")
     @PostMapping("/edit/status")
     public ResponseEntity<?> editStatus(@RequestBody AdminProductDetailRequest request) {
         System.out.println("admin/products/edit/status: " +request.getStatus());

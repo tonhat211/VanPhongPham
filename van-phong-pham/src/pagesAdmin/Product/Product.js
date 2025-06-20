@@ -103,7 +103,7 @@ function Product() {
     const size = parseInt(searchParams.get('size') || '20');
     const [products, setProducts] = useState([]);
     const [productDetails, setProductDetails] = useState(null);
- const navigate = useNavigate();
+    const navigate = useNavigate();
     const viewTypes = [
         { link: '', title: 'Tất cả' },
         ...menus.map((menu) => ({

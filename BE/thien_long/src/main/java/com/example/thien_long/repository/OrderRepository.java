@@ -30,4 +30,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
         WHERE o.id=:id
         """)
         OrderResponse findOrderResponseById(@Param("id") long id);
+
+        @Query("""
+        SELECT new com.example.thien_long.dto.response.OrderResponse (
+        o.id, o.createdAt, o.updatedAt,o.initMoney, o.payedMoney,o.status,o.receiverInfo)
+        FROM Order o
+        ORDER BY o.updatedAt DESC
+        """)
+        List<OrderResponse> findAllByAdmin();
+
 }

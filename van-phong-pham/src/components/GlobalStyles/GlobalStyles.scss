@@ -24,6 +24,7 @@
     --red-light-a: #ffe0e2;
     --border-color: rgba(23, 23, 23, 0.14);
     --blocked-color: #ff7979;
+    --blocked-light-color: #ffc9c9;
     --label-admin: #007aff;
     --background-admin: linear-gradient(90deg, #09bce4 0%, #2659f3 100%);
 }
@@ -315,6 +316,15 @@ body {
 
     tbody tr:nth-child(even) {
         background-color: #dddddd;
+
+        &.type-1 {
+            background-color: var(--third-color);
+        }
+    }
+
+    
+    tbody tr:nth-child(odd) {
+        background-color: white;
     }
 }
 

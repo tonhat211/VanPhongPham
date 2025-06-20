@@ -8,12 +8,14 @@ export const loginUser = async (data) => {
         const response = await axiosInstance.post(url, data);
         // toast.success('Đăng nhập thành công!');
 
-        const { token, user } = response.data.result;
+        const { token, user, permissions } = response.data.result;
 
         // Lưu thông tin vào localStorage
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
-        return { token, user };
+        console.log('response token: ' + JSON.stringify(token,null,2))
+        return { token, user, permissions};
+
     } catch (error) {
         console.log('Lỗi đăng nhập:', error);
         throw error.response?.data.result || { message: 'Đăng nhập thất bại' };

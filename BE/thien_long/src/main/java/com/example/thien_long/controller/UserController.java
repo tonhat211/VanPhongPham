@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,16 +53,19 @@ public class UserController {
         return ApiResponse.success(null);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN_USER')")
     @GetMapping("/admin/custom/all-active")
     public ApiResponse<List<CustomerResponse>> getAllActivCustomers(@RequestHeader("Authorization") String authHeader) {
         return ApiResponse.success(userService.getAllActivCustomers());
     }
 
+    @PreAuthorize("hasAuthority('ADMIN_USER')")
     @GetMapping("/admin/custom/all")
     public ApiResponse<List<CustomerResponse>> getAllCustomers(@RequestHeader("Authorization") String authHeader) {
         return ApiResponse.success(userService.getAllCustomers());
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_USER')")
     @PutMapping("/admin/custom/update-status")
     public ApiResponse<Void> changeStatus(@RequestHeader("Authorization") String authHeader,  @RequestBody CustomerRequest request) {
         userService.changeStatus(request.getId(), request.getStatus());

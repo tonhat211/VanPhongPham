@@ -14,6 +14,7 @@ import { useFEContext } from '~/context/FEProvider';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from '~/api/axiosInstance';
 import { useSelector } from 'react-redux';
+import { useAuth } from '~/context/AuthContext';
 
 const cx = classNames.bind(styles);
 
@@ -61,6 +62,9 @@ function Header() {
         return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
 
+    const { logout } = useAuth();
+
+
     // Xử lý đăng xuất
     const handleLogout = async () => {
         try {
@@ -71,6 +75,7 @@ function Header() {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             setUser(null);
+            logout();  
             toast.success('Đăng xuất thành công!');
             navigate('/login');
         } catch (error) {

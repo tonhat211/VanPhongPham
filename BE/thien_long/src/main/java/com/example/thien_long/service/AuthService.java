@@ -9,12 +9,9 @@ import com.example.thien_long.dto.response.TokenValidityResponse;
 import com.example.thien_long.exception.exceptionCatch.AppException;
 import com.example.thien_long.exception.exceptionCatch.ErrorCode;
 import com.example.thien_long.mapper.UserMapper;
-import com.example.thien_long.model.Cart;
-import com.example.thien_long.model.InvalidatedToken;
-import com.example.thien_long.repository.CartRepository;
-import com.example.thien_long.repository.InvalidatedTokenRepository;
-import com.example.thien_long.repository.UserRepository;
-import com.example.thien_long.repository.VerifyCodeRepository;
+import com.example.thien_long.model.*;
+import com.example.thien_long.repository.*;
+import com.example.thien_long.security.JwtUtil;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -23,17 +20,16 @@ import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
-import com.example.thien_long.model.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -58,6 +54,10 @@ public class AuthService {
     @Value("${jwt.refreshable-duration}")
     protected long REFRESHABLE_DURATION;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private JwtUtil jwtUtil;
 
 
     public TokenValidityResponse tokenValidity(TokenValidityRequest request) throws JOSEException, ParseException {
@@ -78,6 +78,18 @@ public class AuthService {
         var user = userRepository
                 .findByEmail(request.getEmail())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        Set<String> permissions = new HashSet<>();
+        Optional<Employee> employeeOpt = employeeRepository.findById(user.getId());
+        if(employeeOpt.isPresent()) {
+            Employee employee = employeeOpt.get();
+            permissions = employee.getPermissions()
+                    .stream()
+                    .map(p -> p.getName().toUpperCase())  // chuẩn hóa chữ HOA
+                    .collect(Collectors.toSet());
+
+        }
+
 
         // Kiểm tra email đã được verify chưa
         var verifyCode = verifyCodeRepository
@@ -100,51 +112,84 @@ public class AuthService {
                                 .build()
                 ));
 
-        var token = generateToken(user);
+//        var token = generateToken(user, permissions);
+        String token = jwtUtil.generate(user, permissions);
+
         var userResponse = userMapper.toUserResponse(user);
 
-        return AuthResponse.builder().token(token).authenticated(true).user(userResponse).build();
+        return AuthResponse.builder().token(token).authenticated(true).user(userResponse).permissions(permissions).build();
     }
 
     public void logout(LogoutRequest request) throws ParseException, JOSEException {
-        try {
-            var signToken = verifyToken(request.getToken(), true);
-
-            String jit = signToken.getJWTClaimsSet().getJWTID();
-            Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
-
-            InvalidatedToken invalidatedToken = new InvalidatedToken(jit, new java.sql.Date(expiryTime.getTime()));
-            invalidatedTokenRepository.save(invalidatedToken);
-        } catch (AppException exception) {
-            log.info("Token đã tồn tại");
-        }
+//        try {
+//            var signToken = verifyToken(request.getToken(), true);
+//
+//            String jit = signToken.getJWTClaimsSet().getJWTID();
+//            Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
+//
+//            InvalidatedToken invalidatedToken = new InvalidatedToken(jit, new java.sql.Date(expiryTime.getTime()));
+//            invalidatedTokenRepository.save(invalidatedToken);
+//        } catch (AppException exception) {
+//            log.info("Token đã tồn tại");
+//        }
+        SignedJWT jwt = jwtUtil.verify(request.getToken(), true);
+        invalidatedTokenRepository.save(
+                new InvalidatedToken(jwt.getJWTClaimsSet().getJWTID(),
+                        new java.sql.Date(jwt.getJWTClaimsSet()
+                                .getExpirationTime().getTime())));
     }
 
-    public AuthResponse refreshToken(RefreshRequest request) throws ParseException, JOSEException {
-        var signedJWT = verifyToken(request.getToken(), true);
+//    public AuthResponse refreshToken(RefreshRequest request) throws ParseException, JOSEException {
+//        var signedJWT = verifyToken(request.getToken(), true);
+//
+//        var jit = signedJWT.getJWTClaimsSet().getJWTID();
+//        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+//
+//        InvalidatedToken invalidatedToken = new InvalidatedToken(jit, new java.sql.Date(expiryTime.getTime()));
+//        invalidatedTokenRepository.save(invalidatedToken);
+//
+//        long userID = Long.parseLong(signedJWT.getJWTClaimsSet().getSubject());
+//
+//
+//        var user =
+//                userRepository.findById(userID).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+//
+//        Set<String> permissions = new HashSet<>();
+//        Optional<Employee> employeeOpt = employeeRepository.findById(user.getId());
+//        if(employeeOpt.isPresent()) {
+//            Employee employee = employeeOpt.get();
+//            permissions = employee.getPermissions()
+//                    .stream()
+//                    .map(Permission::getName)
+//                    .collect(Collectors.toSet());
+//        }
+//        var token = generateToken(user, permissions);
+//        var userResponse = userMapper.toUserResponse(user);
+//
+//        return AuthResponse.builder().token(token).authenticated(true).user(userResponse).build();
+//    }
+public AuthResponse refresh(RefreshRequest req) throws ParseException, JOSEException {
+    SignedJWT jwt = jwtUtil.verify(req.getToken(), true);
+    Set<String> perms = new HashSet<>(jwt.getJWTClaimsSet().getStringListClaim("permissions"));
+    User user = userRepository.findById(Long.parseLong(jwt.getJWTClaimsSet().getSubject()))
+            .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
-        var jit = signedJWT.getJWTClaimsSet().getJWTID();
-        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+    String newToken = jwtUtil.generate(user, perms);
+    return AuthResponse.builder()
+            .token(newToken)
+            .authenticated(true)
+            .user(userMapper.toUserResponse(user))
+            .permissions(perms)
+            .build();
+}
 
-        InvalidatedToken invalidatedToken = new InvalidatedToken(jit, new java.sql.Date(expiryTime.getTime()));
-        invalidatedTokenRepository.save(invalidatedToken);
 
-        long userID = Long.parseLong(signedJWT.getJWTClaimsSet().getSubject());
-
-        var user =
-                userRepository.findById(userID).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
-
-        var token = generateToken(user);
-        var userResponse = userMapper.toUserResponse(user);
-
-        return AuthResponse.builder().token(token).authenticated(true).user(userResponse).build();
-    }
-
-    private String generateToken(User user) {
+    private String generateToken(User user, Set<String> permissions) {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(String.valueOf(user.getId()))
+                .claim("permissions", permissions)
                 .issueTime(new Date())
                 .expirationTime(new Date(
                         Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))

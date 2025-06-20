@@ -1,39 +1,38 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import i18n from '../i18n';      
-
+import i18n from '../i18n';
+import { Navigate } from 'react-router-dom';
 
 const API_BASE = 'http://localhost:8080/api/v1';
 export const SERVER_URL_BASE = 'http://localhost:8080';
 
-
 const axiosInstance = axios.create({
-  baseURL: API_BASE,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+    baseURL: API_BASE,
+    withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json',
+    },
 });
 
 // gắn JWT token vào header Authorization
 axiosInstance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      config.headers['Accept-Language'] = i18n.language || 'vi';
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        config.headers['Accept-Language'] = i18n.language || 'vi';
 
-    //     console.log('Request:', {
-    //   url: config.url,
-    //   method: config.method,
-    //   headers: config.headers,
-    //   params: config.params,
-    //   data: config.data,
-    // });
-      return config;
+        //     console.log('Request:', {
+        //   url: config.url,
+        //   method: config.method,
+        //   headers: config.headers,
+        //   params: config.params,
+        //   data: config.data,
+        // });
+        return config;
     },
-    (error) => Promise.reject(error)
+    (error) => Promise.reject(error),
 );
 
 // Flag tránh lặp vô hạn nếu refresh thất bại
@@ -52,7 +51,7 @@ const processQueue = (error, token = null) => {
 };
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
+    (response) => response,
     async (error) => {
         const originalRequest = error.config;
 
@@ -76,7 +75,6 @@ axiosInstance.interceptors.response.use(
             try {
                 // const refreshResponse = await axios.post(`${API_BASE}/auth/refresh`, {
                 const refreshResponse = await axiosInstance.post('/auth/refresh', {
-
                     token: localStorage.getItem('token'),
                 });
 
@@ -95,27 +93,28 @@ axiosInstance.interceptors.response.use(
                 isRefreshing = false;
             }
         }
-    // Bắt lỗi toàn cục
-    if (error.response) {
-      const status = error.response.status;
+        // Bắt lỗi toàn cục
+        if (error.response) {
+            const status = error.response.status;
 
-      // Xử lý các lỗi thường gặp
-      if (status === 401) {
-        toast.warning('Bạn chưa đăng nhập hoặc phiên đã hết hạn');
-      } else if (status === 403) {
-        toast.error('Bạn không có quyền truy cập');
-      } else if (status === 500) {
-        toast.error('Lỗi máy chủ, vui lòng thử lại sau');
-      } else {
-        const message = error.response.data?.message || 'Đã xảy ra lỗi';
-        toast.error(message);
-      }
-    } else {
-      toast.error('Không thể kết nối đến máy chủ');
-    }
+            // Xử lý các lỗi thường gặp
+            if (status === 401) {
+                toast.warning('Bạn chưa đăng nhập hoặc phiên đã hết hạn');
+            } else if (status === 403) {
+                toast.error('Bạn không có quyền');
+                // window.location.href = '/403';
+            } else if (status === 500) {
+                toast.error('Lỗi máy chủ, vui lòng thử lại sau');
+            } else {
+                const message = error.response.data?.message || 'Đã xảy ra lỗi';
+                toast.error(message);
+            }
+        } else {
+            toast.error('Không thể kết nối đến máy chủ');
+        }
 
-    return Promise.reject(error);
-  }
+        return Promise.reject(error);
+    },
 );
 
 export default axiosInstance;

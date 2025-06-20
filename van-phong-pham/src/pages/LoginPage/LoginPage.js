@@ -2,12 +2,13 @@ import { useState } from 'react';
 import Button from '@mui/material/Button';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-import './LoginPage.scss'
+import './LoginPage.scss';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { forgotPassword, loginUser } from '~/api/LoginApi';
 import { useDispatch } from 'react-redux';
-import { fetchCart} from '~/pages/productCardsPage/cartSlice';
+import { fetchCart } from '~/pages/productCardsPage/cartSlice';
+import { useAuth } from '~/context/AuthContext';
 import useI18n from '~/hooks/useI18n';
 function LoginPage() {
     const { t, lower } = useI18n();
@@ -19,6 +20,7 @@ function LoginPage() {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { login } = useAuth();
 
     const validateField = (name, value) => {
         if (!value.trim()) {
@@ -75,12 +77,20 @@ function LoginPage() {
                 pwd: formData.pwd,
             };
 
+            // const payload = {
+            //     email: "tonhat@gmail.com",
+            //     pwd: "nook1234",
+            // };
+
             const response = await loginUser(payload);
             dispatch(fetchCart());
+            login(response.user, response.permissions);
             toast.success(t('login.success-toast'));
-            setTimeout(() => navigate('/', { state: { email: formData.email } }), 2000);
+            // setTimeout(() => navigate('/', { state: { email: formData.email } }), 2000);
 
 
+            navigate('/', { state: { email: formData.email } });
+            // console.log('handleSubmit ' + JSON.stringify(response.permissions, null, 2));
         } catch (error) {
             toast.error(error.message || t('login.fail-toast'));
         }
@@ -146,8 +156,14 @@ function LoginPage() {
                 </p>
                 <p className="account-title">{t('login.with')} </p>
                 <div className="account-gg-fb">
-                    <Button className="account-gg"> <GoogleIcon style={{ fontSize: 20 }} /> Google</Button>
-                    <Button className="account-fb"> <FacebookRoundedIcon style={{ fontSize: 20 }} /> Facebook</Button>
+                    <Button className="account-gg">
+                        {' '}
+                        <GoogleIcon style={{ fontSize: 20 }} /> Google
+                    </Button>
+                    <Button className="account-fb">
+                        {' '}
+                        <FacebookRoundedIcon style={{ fontSize: 20 }} /> Facebook
+                    </Button>
                 </div>
                 <p className="account-title">
                     {t('login.register-prompt')}
@@ -191,9 +207,7 @@ function LoginPage() {
 
     return (
         <div className="login-container">
-            <div className="login-section">
-                {mode === 'login' ? renderLoginForm() : renderResetForm()}
-            </div>
+            <div className="login-section">{mode === 'login' ? renderLoginForm() : renderResetForm()}</div>
 
             <ul className="bg-bubbles">
                 <li></li>
@@ -207,7 +221,6 @@ function LoginPage() {
                 <li></li>
                 <li></li>
             </ul>
-
         </div>
     );
 }
