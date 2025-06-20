@@ -135,11 +135,11 @@ function Orders() {
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'createdAt', headerName: 'Tạo lúc', width: 150 },
+        { field: 'createdAt', headerName: 'Tạo lúc', width: 100 },
         {
             field: 'products',
             headerName: 'Danh sách sản phẩm',
-            minWidth: 300,
+            width: 200,
             renderCell: (params) => (
                 <Box sx={{ display: 'flex', flexDirection: 'column', whiteSpace: 'normal', lineHeight: 1.5}}>
                     {params.value.map((product, idx) => (
@@ -151,7 +151,7 @@ function Orders() {
         {
             field: 'total',
             headerName: 'Tổng tiền',
-            width: 150,
+            width: 100,
             valueFormatter:  (params) => formatPrices(params.value)
         },
         {

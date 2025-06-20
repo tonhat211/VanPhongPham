@@ -14,7 +14,9 @@ function AdminLayout({ children }) {
         <div >
             <Header />
             <div className={cx('wrapper')}>
+                <div className={cx('sidebar')}>
                 <Sidebar />
+                </div>
                 <div className={cx('content-container')}>
                     <Breadcrumb />
                     <div className={cx('content')}>{children}</div>

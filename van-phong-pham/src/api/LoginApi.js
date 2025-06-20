@@ -6,7 +6,7 @@ export const loginUser = async (data) => {
         let url =`/auth/login`;
         console.log('Đang gửi:', data);
         const response = await axiosInstance.post(url, data);
-        toast.success('Đăng nhập thành công!');
+        // toast.success('Đăng nhập thành công!');
 
         const { token, user } = response.data.result;
 
@@ -23,10 +23,9 @@ export const loginUser = async (data) => {
 export const forgotPassword = async (email) => {
     try {
         const response = await axiosInstance.post('/forgot-password', { email });
-        toast.success("Email đặt lại mật khẩu đã được gửi!");
+        // toast.success("Email đặt lại mật khẩu đã được gửi!");
         return response.data;
     } catch (error) {
-        toast.error(error.response?.data?.message || "Gửi email thất bại");
-        throw error;
+        throw error.response?.data.result || { message: 'Gửi email thất bại' };
     }
 };

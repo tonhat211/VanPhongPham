@@ -2,8 +2,6 @@
   border-radius: 10px;
   background-color: var(--primary-backround-color);
   border: none;
-  padding: 15px;
-  margin-left: 15px;
 }
 .wrapper h1 {
   color: orange;

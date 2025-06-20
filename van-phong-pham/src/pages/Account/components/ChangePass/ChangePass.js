@@ -37,22 +37,22 @@ function ChangePass() {
             const { oldPassword, newPassword, confirmPassword } = formData;
 
             if (![oldPassword, newPassword, confirmPassword].every(Boolean)) {
-                toast.error("Vui lòng điền đầy đủ tất cả các trường.");
+                toast.error(t('changePass.toast-fillAll'));
                 return false;
             }
 
             if (/\s/.test(oldPassword) || /\s/.test(newPassword)) {
-                toast.error("Mật khẩu không được chứa khoảng trắng.");
+                toast.error(t('changePass.toast-noWhitespace'));
                 return false;
             }
 
             if (oldPassword.length < 8 || newPassword.length < 8) {
-                toast.error("Mật khẩu phải có ít nhất 8 ký tự.");
+                toast.error(t('changePass.toast-minLength'));
                 return false;
             }
 
             if (newPassword !== confirmPassword) {
-                toast.error("Mật khẩu mới và xác nhận mật khẩu không khớp.");
+                toast.error(t('changePass.toast-passwordMismatch'));
                 return false;
             }
 
@@ -67,54 +67,54 @@ function ChangePass() {
                 setFormData({ oldPassword: '', newPassword: '', confirmPassword: '' });
             } catch (error) {
                 console.error('Cập nhật thất bại:', error);
-                toast.error('Cập nhật thất bại!');
+                toast.error(t('changePass.toast-failed'));
             }
         };
 
         return (
         <div className={cx('wrapper')}>
-            <h1 className={cx('wrapper')}>{t('Bạn muốn đổi mật khẩu?')}</h1>
+            <h1 className={cx('wrapper')}>{t('changePass.title')}</h1>
             <form className="change-pass-form" onSubmit={handleSubmit}>
                 <div className={cx('form-item')}>
                     <CustomInput
-                        label="Mật khẩu cũ"
+                        label={t('changePass.oldPassword')}
                         type={showPassword.oldPassword ? 'text' : 'password'}
                         value={formData.oldPassword}
                         onChange={handleChange('oldPassword')}
                         required
                     />
                     <p className={cx('toggle-text')} onClick={() => togglePasswordVisibility('oldPassword')}>
-                        {showPassword.oldPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                        {showPassword.oldPassword ? t('changePass.hidePassword') : t('changePass.showPassword')}
                     </p>
                 </div>
                 <div className={cx('form-item')}>
                     <CustomInput
-                        label="Mật khẩu mới"
+                        label={t('changePass.newPassword')}
                         type={showPassword.newPassword ? 'text' : 'password'}
                         value={formData.newPassword}
                         onChange={handleChange('newPassword')}
                         required
                     />
                     <p className={cx('toggle-text')} onClick={() => togglePasswordVisibility('newPassword')}>
-                        {showPassword.newPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                        {showPassword.newPassword ? t('changePass.hidePassword') : t('changePass.showPassword')}
                     </p>
                 </div>
                 <div className={cx('form-item')}>
                     <CustomInput
-                        label="Nhập lại mật khẩu mới"
+                        label={t('changePass.confirmPassword')}
                         type={showPassword.confirmPassword ? 'text' : 'password'}
                         value={formData.confirmPassword}
                         onChange={handleChange('confirmPassword')}
                         required
                     />
                     <p className={cx('toggle-text')} onClick={() => togglePasswordVisibility('confirmPassword')}>
-                        {showPassword.confirmPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                        {showPassword.confirmPassword ? t('changePass.hidePassword') : t('changePass.showPassword')}
                     </p>
                 </div>
                 {/* Nút cập nhật */}
                 <div className={cx('form-item')}>
                     <button type="submit" className={cx('update-button')}>
-                        Cập nhật mật khẩu
+                        {t('changePass.updateButton')}
                     </button>
                 </div>
             </form>

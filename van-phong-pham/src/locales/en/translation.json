@@ -104,7 +104,45 @@
   "matching-results": "Matching Results",
   "sold": "Sold",
   "quick-view": "Quick View",
+  "all-view": "See all",
   "change-password": "Change Password",
+
+  "categories": {
+    "3": "FINE ARTS",
+    "4": "PREMIUM PENS",
+    "6": "PENS",
+    "8": "BOOK WAREHOUSE - ENRICH KNOWLEDGE"
+  },
+  "category-3": {
+    "hot": "HOT products",
+    "pen-color": "Color markers",
+    "crayon": "Crayons",
+    "water-color": "Watercolors",
+    "clay": "Clay"
+  },
+  "category-6": {
+    "pen-ball": "Ballpoint pens",
+    "pen-gel": "Gel pens",
+    "pencil": "Pencils",
+    "highlighter": "Highlighters",
+    "pen-correction": "Correction pens"
+  },
+  "category-8": {
+    "english-study": "English study books",
+    "skills": "Skill books",
+    "mai-lan-huong": "Mai Lan Huong Books",
+    "english-book": "English books"
+  },
+
+  "hot-sections": {
+    "0": "Promotion Handbook",
+    "1": "New Products",
+    "2": "Official Outlet",
+    "3": "Printing Solutions",
+    "4": "Office Supplies for Business",
+    "5": "Top Sale",
+    "6": "Track Order"
+  },
 
     "detail": {
         "product-detail": "Product Details",
@@ -118,7 +156,7 @@
         "price": "Price",
         "original-price": "Original Price",
         "discount": "Discount",
-        "discount-percent": "Save %{percent}%",
+        "discount-percent": "Sale ",
         "classification": "Classification",
         "quantity": "Quantity",
         "add-to-cart": "Add to cart",
@@ -149,7 +187,7 @@
         "discount3Condition": "Orders from 1,300,000₫",
         "discount3Code": "0425SALE200",
 
-        "expiration": "30/04/2025",
+        "expiration": "30/07/2025",
         "conditions": "Conditions",
         "copy": "Copy code",
         "copied": "Copied",
@@ -174,7 +212,8 @@
         "popupCancel": "Cancel",
         "popupSubmit": "Submit review",
         "prev": "Prev",
-        "next": "Next"
+        "next": "Next",
+      "star": "Star"
     },
 
     "carousel": {
@@ -262,7 +301,13 @@
         "reset-error-toast": "Please check your email",
         "reset-success-toast": "Password reset email sent!",
         "success-toast": "Login successful",
-        "fail-toast": "Login failed"
+        "fail-toast": "Login failed",
+      "fail-mail": "Failed to send email",
+      "force-input" : "This field is required",
+      "erro-mail" : "Invalid email",
+      "erro-pass" : "Password must be at least 8 characters",
+      "no-space" : "Password cannot contain spaces"
+
     },
 
     "register": {
@@ -285,26 +330,20 @@
         "label-detail": "Address",
         "label-password": "Password",
 
-        "placeholder-firstname": "First Name",
-        "placeholder-lastname": "Last Name",
-        "placeholder-company-name": "Company Name",
-        "placeholder-tax-code": "Tax Code",
-        "placeholder-company-address": "Company Address",
-        "placeholder-company-email": "Company Email",
-        "placeholder-personal-email": "Email",
-        "placeholder-phone": "Phone Number",
-        "placeholder-birthday": "Date of Birth",
-        "placeholder-province": "Province/City",
-        "placeholder-ward": "Ward/Commune",
-        "placeholder-detail": "Address",
-        "placeholder-password": "Password",
-
-        "submit-button": "Register",
         "login-question": "Already have an account",
         "login-link": "Login here",
 
         "toast-success": "Registration successful, please verify your email",
-        "toast-error": "Please check your information"
+        "toast-error": "Please check your information",
+      "no-emoji": "No emojis allowed",
+      "only-letter": "Only letters, no numbers or special characters",
+      "erro-limit": "Must be 2 to 50 characters",
+      "no-special-character": "Only letters and numbers, no special characters",
+      "erro-limit-add": "Address must be 5 to 100 characters",
+      "erro-phone": "Invalid phone number",
+      "erro-birth": "Invalid date of birth",
+      "birth-limit": "Age must be 16 to 85",
+      "erro-register": "Registration failed"
     },
 
     "otp": {

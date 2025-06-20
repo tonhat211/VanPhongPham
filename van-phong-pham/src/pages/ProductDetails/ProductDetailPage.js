@@ -8,8 +8,10 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductDetail } from '~/api/productApi';
 import { DatasetRounded } from '@mui/icons-material';
+import useI18n from '~/hooks/useI18n';
 
 function ProductDetailPage() {
+    const { t, lower } = useI18n();
     const { id } = useParams();
     const [product, setProduct] = useState(null);
 
@@ -53,7 +55,7 @@ function ProductDetailPage() {
                     </div>
                 </>
             ) : (
-                <p>Đang tai san pham</p>
+                <p>{t('detail.loading')}</p>
             )}
         </div>
     );

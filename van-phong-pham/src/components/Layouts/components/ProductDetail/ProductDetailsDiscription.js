@@ -2,8 +2,10 @@ import productsData from '~/data/productData';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import './ProductDetailsDiscription.scss';
+import useI18n from '~/hooks/useI18n';
 
 function ProductDetailsDiscription({ description = [] }) {
+    const { t, lower } = useI18n();
     // const product = productsData.find(item => item.id === productId);
     const [isExpanded, setIsExpanded] = useState(false);
     const maxContentLength = 1;
@@ -53,7 +55,7 @@ function ProductDetailsDiscription({ description = [] }) {
 
     return (
         <div className="description_container">
-            <h2>Mô tả sản phẩm</h2>
+            <h2> {t('productDiscript.title')}</h2>
             <div className="warp_descript">
                 <div className={`description_content ${isExpanded ? 'expanded' : ''}`}>{renderDescription()}</div>
                 <div className="btn_wrapper">
@@ -63,7 +65,7 @@ function ProductDetailsDiscription({ description = [] }) {
                         onClick={() => setIsExpanded(!isExpanded)}
                         className="toggle_btn"
                     >
-                        {isExpanded ? 'Thu gọn' : 'Xem thêm'}
+                        {isExpanded ? t('productDiscript.collapse') : t('productDiscript.expand')}
                     </Button>
                 </div>
             </div>
