@@ -106,6 +106,44 @@
     "sold": "Đã bán",
     "quick-view": "Xem nhanh",
     "change-password": "Đổi mật khẩu",
+    "all-view": "Xem tất cả",
+
+    "categories": {
+        "3": "MỸ THUẬT",
+        "4": "BÚT VIẾT CAO CẤP",
+        "6": "BÚT VIẾT",
+        "8": "KHO SÁCH - NÂNG TẦM TRI THỨC"
+    },
+    "category-3": {
+        "hot": "Sản phẩm HOT",
+        "pen-color": "Bút lông màu",
+        "crayon": "Sáp màu",
+        "water-color": "Màu nước",
+        "clay": "Sáp nặn"
+    },
+    "category-6": {
+        "pen-ball": "Bút bi",
+        "pen-gel": "Bút gel",
+        "pencil": "Bút chì",
+        "highlighter": "Bút dạ quang",
+        "pen-correction": "Bút xóa"
+    },
+    "category-8": {
+        "english-study": "Sách học Anh văn",
+        "skills": "Sách kỹ năng",
+        "mai-lan-huong": "Sách TA Mai Lan Hương",
+        "english-book": "Sách tiếng Anh"
+    },
+
+    "hot-sections": {
+        "0": "Cẩm nang ưu đãi",
+        "1": "Sản phẩm mới",
+        "2": "Outlet chính hãng",
+        "3": "Giải pháp in ấn",
+        "4": "Văn phòng phẩm doanh nghiệp",
+        "5": "Top sale",
+        "6": "Kiểm tra đơn hàng"
+    },
 
     "detail": {
         "product-detail": "Chi tiết sản phẩm",
@@ -119,7 +157,7 @@
         "price": "Giá bán",
         "original-price": "Giá gốc",
         "discount": "Giảm giá",
-        "discount-percent": "Giảm %{percent}%",
+        "discount-percent": "Giảm ",
         "classification": "Phân loại",
         "quantity": "Số lượng",
         "add-to-cart": "Thêm vào giỏ hàng",
@@ -150,7 +188,7 @@
         "discount3Condition": "Đơn hàng từ 1.300.000đ",
         "discount3Code": "0425SALE200",
 
-        "expiration": "30/04/2025",
+        "expiration": "30/07/2025",
         "conditions": "Điều kiện",
         "copy": "Sao chép mã",
         "copied": "Đã sao chép",
@@ -181,7 +219,8 @@
         "popupCancel": "Hủy",
         "popupSubmit": "Gửi đánh giá",
         "prev": "Trước",
-        "next": "Tiếp"
+        "next": "Tiếp",
+        "star": "Sao"
     },
 
     "carousel": {
@@ -246,7 +285,6 @@
         "invalid-email": "Email không hợp lệ",
         "password-minlength": "Mật khẩu phải có ít nhất 8 ký tự",
         "password-no-whitespace": "Mật khẩu không được chứa khoảng trắng",
-        "submit": "Đăng nhập",
         "forgot-password": "Quên mật khẩu? Nhấn vào",
         "here": "đây",
         "with": "Hoặc đăng nhập bằng",
@@ -262,7 +300,12 @@
         "reset-error-toast": "Vui lòng kiểm tra lại email",
         "reset-success-toast": "Đã gửi email đặt lại mật khẩu!",
         "success-toast": "Đăng nhập thành công",
-        "fail-toast": "Đăng nhập thất bại"
+        "fail-toast": "Đăng nhập thất bại",
+        "fail-mail": "Gửi email thất bại",
+        "force-input" : "Trường này là bắt buộc",
+        "erro-mail" : "Email không hợp lệ",
+        "erro-pass" : "Mật khẩu phải có ít nhất 8 ký tự",
+        "no-space" : "Mật khẩu không được chứa khoảng trắng"
     },
 
     "register": {
@@ -277,7 +320,7 @@
         "label-tax-code": "Mã số thuế",
         "label-company-address": "Địa chỉ công ty",
         "label-company-email": "Email công ty",
-        "label-personal-email": "Email cá nhân",
+        "label-personal-email": "Email",
         "label-phone": "Số điện thoại",
         "label-birthday": "Ngày sinh",
         "label-province": "Tỉnh/Thành phố",
@@ -285,26 +328,20 @@
         "label-detail": "Địa chỉ",
         "label-password": "Mật khẩu",
 
-        "placeholder-firstname": "Họ",
-        "placeholder-lastname": "Tên",
-        "placeholder-company-name": "Tên công ty",
-        "placeholder-tax-code": "Mã số thuế",
-        "placeholder-company-address": "Địa chỉ công ty",
-        "placeholder-company-email": "Email công ty",
-        "placeholder-personal-email": "Email",
-        "placeholder-phone": "Số điện thoại",
-        "placeholder-birthday": "Ngày sinh",
-        "placeholder-province": "Tỉnh/Thành phố",
-        "placeholder-ward": "Phường/Xã",
-        "placeholder-detail": "Địa chỉ",
-        "placeholder-password": "Mật khẩu",
-
-        "submit-button": "Đăng ký",
         "login-question": "Bạn đã có tài khoản",
         "login-link": "Đăng nhập tại đây",
 
         "toast-success": "Đăng ký thành công, mời xác minh Email",
-        "toast-error": "Vui lòng kiểm tra lại thông tin"
+        "toast-error": "Vui lòng kiểm tra lại thông tin",
+        "no-emoji": "Không được chứa biểu tượng cảm xúc (emoji)",
+        "only-letter": "Chỉ được nhập chữ cái, không chứa số hoặc ký tự đặc biệt",
+        "erro-limit": "Phải từ 2 đến 50 ký tự",
+        "no-special-character": "Chỉ được nhập chữ và số, không chứa ký tự đặc biệt",
+        "erro-limit-add": "Địa chỉ phải từ 5 đến 100 ký tự",
+        "erro-phone": "Số điện thoại không hợp lệ",
+        "erro-birth": "Ngày sinh không hợp lệ",
+        "birth-limit": "Tuổi phải từ 16 đến 85",
+        "erro-register": "Đăng ký thất bại"
     },
 
     "otp": {

@@ -10,20 +10,23 @@ import { toast } from 'react-toastify';
 import { formatMoney } from '~/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem, fetchCart } from '~/pages/productCardsPage/cartSlice';
+import useI18n from '~/hooks/useI18n';
 
-const statuses = [
-    {
-        state: 'còn hàng',
-        description: 'Sản phẩm hiện có sẵn trong kho.',
-    },
-    {
-        state: 'hết hàng',
-        description: 'Sản phẩm đã hết hàng.',
-    },
-];
 
-// function ProductInfoPanel({productId}) {
 function ProductInfoPanel({ product }) {
+    const { t, lower } = useI18n();
+
+    const statuses = [
+        {
+            state: t('detail.status-instock'),
+            description: t('detail.status-instock-description'),
+        },
+        {
+            state: t('detail.status-outstock'),
+            description: t('detail.status-outstock-description'),
+        },
+    ];
+
     const [detail, setDetail] = useState(product.details ? product.details[0] : null);
     useEffect(() => {
      
@@ -40,10 +43,10 @@ function ProductInfoPanel({ product }) {
         try {
             await dispatch(addCartItem({ productDetailId: detail.id, quantity }));
             dispatch(fetchCart());
-            toast.success('Đã thêm vào giỏ hàng!');
+            toast.success(t('detail.toast-add-success'));
         } catch (error) {
             console.error('Lỗi khi thêm giỏ hàng:', error);
-            toast.error('Thêm vào giỏ hàng thất bại');
+            toast.error(t('detail.toast-add-failed'));
         }
     };
 
@@ -57,10 +60,10 @@ function ProductInfoPanel({ product }) {
                             <h1 className="title_info">{product.name}</h1>
                             <div className="infoBrand_status">
                                 <span className="brand_product">
-                                    Thương hiệu: <span className="product_data">{product.brand}</span>
+                                    {t('detail.brand')}: <span className="product_data">{product.brand}</span>
                                 </span>
                                 <span className="status_product">
-                                    Trạng thái:{' '}
+                                    {t('detail.status')}:{' '}
                                     <span className="product_data">
                                         {detail.qty > 0 ? statuses[0].state : statuses[1].state}
                                     </span>
@@ -68,7 +71,7 @@ function ProductInfoPanel({ product }) {
                             </div>
                             <div className="info_idP">
                                 <span className="product_id">
-                                    Mã sản phẩm: <span className="product_data">{product.id}</span>
+                                    {t('detail.code')}: <span className="product_data">{product.id}</span>
                                 </span>
                             </div>
                         </div>
@@ -93,7 +96,7 @@ function ProductInfoPanel({ product }) {
                     {/* Phân loại (nếu có) */}
                     {product.details && product.details.length > 0 && (
                         <div className="product_categories">
-                            <p className="label_option">Phân loại:</p>
+                            <p className="label_option">  {t('detail.classification')}:</p>
                             <div className="categories_wrapper">
                                 {product.details.map((item, index) => (
                                     <button key={index} className="category_box">
@@ -106,7 +109,7 @@ function ProductInfoPanel({ product }) {
 
                     <div className="left_3">
                         <div className="product_quatity">
-                            <p className="label_quatity">Số lượng: </p>
+                            <p className="label_quatity">{t('detail.quantity')}: </p>
                             <div className="p_quantity">
                                 <button className="btn_decrement" onClick={handleDecrement}>
                                     -
@@ -123,19 +126,19 @@ function ProductInfoPanel({ product }) {
                         <div className="add_Cart">
                             <Button className="btn_cart">
                                 <ShoppingCartOutlinedIcon className="icart" />
-                                <span className="cart"  onClick={handleAddToCart}>Thêm vào giỏ hàng</span>
+                                <span className="cart"  onClick={handleAddToCart}>{t('detail.add-to-cart')}</span>
                             </Button>
                         </div>
                         <div className="buy_now">
                             <Button className="btn_buy">
-                                <span>Mua ngay</span>
+                                <span>{t('detail.buy-now')}</span>
                             </Button>
                         </div>
                     </div>
                 </>
             ) : (
                 <>
-                    <p>Dang tai</p>
+                    <p>{t('detail.loading')}</p>
                 </>
             )}
         </div>

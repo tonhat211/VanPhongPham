@@ -4,8 +4,10 @@ import reviews from '~/data/Review';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import productsData from '~/data/productData';
+import useI18n from '~/hooks/useI18n';
 
 function ReviewAndRating({ product }) {
+    const { t, lower } = useI18n();
     const [selectedRating, setSelectedRating] = useState(null);
     const [hoverRating, setHoverRating] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
@@ -37,13 +39,13 @@ function ReviewAndRating({ product }) {
 
     return (
         <div className="review-rating-container">
-            <h3>Đánh giá sản phẩm: {product?.name}</h3>
+            <h3>{t('review.title')}: {product?.name}</h3>
             <div className="rating-summary">
                 {/*<div className="rating-total-star">*/}
 
                 {/*</div>*/}
                 <div className="star-warpper-container">
-                    <h3>Đánh giá sản phẩm</h3>
+                    <h3>{t('review.title')}</h3>
                     <div className="star-hover-wrapper">
                         {[1, 2, 3, 4, 5].map((star) => (
                             <span
@@ -70,7 +72,7 @@ function ReviewAndRating({ product }) {
             {showPopup && (
                 <div className="popup-overlay">
                     <div className="popup-content">
-                        <h4>ĐÁNH GIÁ SẢN PHẨM</h4>
+                        <h4>{t('review.title')}</h4>
                         <div className="popup-stars">
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <span
@@ -83,16 +85,16 @@ function ReviewAndRating({ product }) {
                             ))}
                         </div>
                         <textarea
-                            placeholder="Hãy chia sẻ đánh giá của bạn về sản phẩm"
+                            placeholder={t('review.popupPlaceholder')}
                             maxLength={500}
                         ></textarea>
                         <div className="image-upload">
-                            <label>Hình ảnh đánh giá</label>
+                            <label>{t('review.popupImageLabel')}</label>
                             <div className="upload-box">+</div>
                         </div>
                         <div className="popup-buttons">
                             <button onClick={() => setShowPopup(false)}>Hủy</button>
-                            <button>Gửi đánh giá</button>
+                            <button>{t('review.popupSubmit')}</button>
                         </div>
                     </div>
                 </div>
@@ -100,14 +102,14 @@ function ReviewAndRating({ product }) {
 
             {/* Bộ lọc đánh giá */}
             <div className="filter-bar">
-                <span>Lọc đánh giá:</span>
+                <span>{t('review.filterLabel')}:</span>
                 {[5, 4, 3, 2, 1].map((star) => (
                     <button
                         key={star}
                         className={selectedRating === star ? "active" : ""}
                         onClick={() => handleRatingClick(star)}
                     >
-                        {star} sao
+                        {star} {t('review.star')}
                     </button>
                 ))}
 
@@ -116,8 +118,8 @@ function ReviewAndRating({ product }) {
                     value={sortOrder}
                     onChange={(e) => setSortOrder(e.target.value)}
                 >
-                    <option value="newest">Từ mới đến cũ</option>
-                    <option value="oldest">Từ cũ đến mới</option>
+                    <option value="newest">{t('review.sortNewest')}</option>
+                    <option value="oldest">{t('review.sortOldest')}</option>
                 </select>
             </div>
 
@@ -142,7 +144,7 @@ function ReviewAndRating({ product }) {
                     onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                     disabled={currentPage === 1}
                 >
-                    Prev
+                    {t('review.prev')}
                 </button>
                 <span>
                     {currentPage}/{totalPages}
@@ -151,7 +153,7 @@ function ReviewAndRating({ product }) {
                     onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                     disabled={currentPage === totalPages}
                 >
-                    Next
+                    {t('review.next')}
                 </button>
             </div>
         </div>

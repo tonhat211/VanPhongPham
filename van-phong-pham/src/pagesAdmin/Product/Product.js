@@ -19,7 +19,7 @@ import {
 import styles from './Product.module.scss';
 import images from '~/assets/images';
 import { CustomInput, Modal, EditorWithUseQuill as Editor, StarRating } from '~/pages/components';
-import { ImageUpload, MultiImageUpload } from '~/pages/components/InputFile';
+import { ImageUpload, MultiImageUpload } from '~/pages/components/InputFile/index';
 
 import { formatMoney } from '~/utils';
 import useI18n from '~/hooks/useI18n';

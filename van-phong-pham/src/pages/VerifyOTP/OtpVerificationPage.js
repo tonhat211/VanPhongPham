@@ -3,7 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './OtpVerificationPage.scss';
 import { verifyCode } from '~/api/verifyCodeApi';
 import { toast } from 'react-toastify';
+import useI18n from '~/hooks/useI18n';
 function OtpVerificationPage() {
+    const { t, lower } = useI18n();
     const [otp, setOtp] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -12,29 +14,29 @@ function OtpVerificationPage() {
 
     const handleVerify = async () => {
         if (!email) {
-            toast.error("Không có email xác định.");
+            toast.error(t('otp.noEmail'));
             return;
         }
 
         try {
             await verifyCode({ email, code: otp });
-            toast.success("Xác minh Email thành công");
+            toast.success(t('otp.success'));
             setTimeout(() => navigate("/login", { state: { email } }), 2000);
         } catch (err) {
-            toast.error("Mã OTP không hợp lệ hoặc đã hết hạn");
+            toast.error(t('otp.invalidCode'));
         }
     };
 
     return (
         <div className="otp-verification-container">
             <div className="otp-box">
-                <h2 className="title">Xác minh Email</h2>
-                <p className="description">Nhập mã OTP đã được gửi đến email của bạn.</p>
+                <h2 className="title">{t('otp.title')}</h2>
+                <p className="description">{t('otp.desc')}</p>
 
                 <input
                     type="text"
                     className="otp-input"
-                    placeholder="Nhập mã OTP"
+                    placeholder={t('otp.placeholder')}
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
                 />
@@ -42,11 +44,11 @@ function OtpVerificationPage() {
                 {error && <p className="error">{error}</p>}
 
                 <button className="verify-button" onClick={handleVerify}>
-                    Xác minh
+                    {t('otp.verify')}
                 </button>
 
-                <p className="note">Mã OTP sẽ hết hạn sau 30 phút.</p>
-                <a href="/register"> Quay lại </a>
+                <p className="note"> {t('otp.note')}</p>
+                <a href="/register">  {t('otp.back')} </a>
             </div>
 
             <ul className="bg-bubbles">

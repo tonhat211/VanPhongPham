@@ -6,7 +6,9 @@ import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { toast } from 'react-toastify';
 import { registerUser } from '~/api/registerApi';
 import { useNavigate } from 'react-router-dom';
+import useI18n from '~/hooks/useI18n';
 function RegisterPages({children}) {
+    const { t, lower } = useI18n();
     const [customerType, setCustomerType] = useState('personal');
     const [formData, setFormData] = useState({
         firstName: '',
@@ -37,47 +39,53 @@ function RegisterPages({children}) {
 
     const validateField = (name, value) => {
         if (!value.trim()) {
-            return 'Trường này là bắt buộc';
+            return t('login.force-input');
         }
         if (['firstName', 'lastName', 'province', 'ward'].includes(name)) {
             if (containsEmoji(value)) {
-                return 'Không được chứa biểu tượng cảm xúc (emoji)';
+                return t('register.no-emoji');
+
             }
             if (!isVietnameseLettersOnly(value)) {
-                return 'Chỉ được nhập chữ cái, không chứa số hoặc ký tự đặc biệt';
+                return  t('register.only-letter');
+
             }
             if (value.length < 2 || value.length > 50) {
-                return 'Phải từ 2 đến 50 ký tự';
+                return  t('register.erro-limit');
+
             }
         }
 
         if (name === 'detail') {
             if (containsEmoji(value)) {
-                return 'Không được chứa emoji trong địa chỉ';
+                return t('register.no-emoji');
             }
             if (!isVietnameseLettersAndNumbers(value)) {
-                return 'Chỉ được nhập chữ và số, không chứa ký tự đặc biệt';
+                return t('register.no-special-character');
+
             }
             if (value.length < 5 || value.length > 100) {
-                return 'Địa chỉ phải từ 5 đến 100 ký tự';
+                return  t('register.erro-limit-add');
+
             }
         }
 
 
         if (name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-            return 'Email không hợp lệ';
+            return t('login.erro-mail');
         }
 
         if (name === 'phone' && !/^\d{9,11}$/.test(value)) {
-            return 'Số điện thoại không hợp lệ';
+            return t('register.erro-phone');
+
         }
 
         if (name === 'password') {
             if (value.length < 8) {
-                return 'Mật khẩu phải có ít nhất 8 ký tự';
+                return t('login.erro-pass');
             }
             if (/\s/.test(value)) {
-                return 'Mật khẩu không được chứa khoảng trắng';
+                return t('login.no-space');
             }
         }
 
@@ -90,10 +98,12 @@ function RegisterPages({children}) {
                 age--;
             }
             if (isNaN(birthDate.getTime())) {
-                return 'Ngày sinh không hợp lệ';
+                return t('register.erro-birth');
+
             }
             if (age < 16 || age > 85) {
-                return 'Tuổi phải từ 16 đến 85';
+                return t('register.tbirth-limit');
+
             }
         }
         return '';
@@ -124,7 +134,7 @@ function RegisterPages({children}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) {
-            toast.error("Vui lòng kiểm tra lại thông tin");
+            toast.error(t('login.error-toast'));
             return;
         }
         try {
@@ -148,52 +158,53 @@ function RegisterPages({children}) {
 
             const response = await registerUser(payload);
             console.log("Đăng ký thành công, Xác minh Email:", response);
-            toast.success("Đăng ký thành công,mời xác minh Email");
+            toast.success(t('register.toast-success'));
             setTimeout(() => navigate('/verify-code', { state: { email: formData.email } }), 2000);
 
         } catch (error) {
-            toast.error(error.message || "Đăng ký thất bại");
+            toast.error(error.message ||  t('register.erro-register'));
+
         }
     };
 
     return (
         <div className="register-page-container">
             <div className="register-section">
-                <h4>Đăng ký</h4>
-                <p>Bạn là khách hàng:</p>
+                <h4>{t('register.title')}</h4>
+                <p>{t('register.type-label')}</p>
                 <div className="register-tabs">
                     <button
                         className={customerType === 'personal' ? 'active' : ''}
                         onClick={() => setCustomerType('personal')}
                     >
-                        Khách hàng Cá nhân và Nội bộ Thiên Long
+                        {t('register.type-personal')}
                     </button>
                     <button
                         className={customerType === 'business' ? 'active' : ''}
                         onClick={() => setCustomerType('business')}
                     >
-                        Khách hàng Ưu tiên (Xuất hóa đơn)
+                        {t('register.type-business')}
                     </button>
                 </div>
 
                 <form className="register" onSubmit={handleSubmit}>
                     <div className="form-row">
                         <div className="form-group">
-                            <label>Họ <span>(*)</span></label>
+                            <label> {t('register.label-firstname')} <span>(*)</span></label>
                             <input name="firstName"
                                    value={formData.firstName}
                                    onBlur={handleBlur}
                                    onChange={handleChange}
-                                   placeholder="Họ" />
+                                   placeholder={ t('register.label-firstname')} />
                             {errors.firstName && <p className="error-text">{errors.firstName}</p>}
                         </div>
                         <div className="form-group">
-                            <label>Tên <span>(*)</span></label>
+                            <label> {t('register.label-lastname')} <span>(*)</span></label>
                             <input name="lastName"
                                    value={formData.lastName}
                                    onBlur={handleBlur}
                                    onChange={handleChange}
-                                   placeholder="Tên" />
+                                   placeholder={ t('register.label-lastname')} />
                             {errors.lastName && <p className="error-text">{errors.lastName}</p>}
                         </div>
                     </div>
@@ -202,22 +213,22 @@ function RegisterPages({children}) {
                         <>
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label>Tên công ty <span>(*)</span></label>
-                                    <input placeholder="Tên công ty" />
+                                    <label>{t('register.label-company-name')} <span>(*)</span></label>
+                                    <input placeholder={t('register.label-company-name')} />
                                 </div>
                                 <div className="form-group">
-                                    <label>Mã số thuế <span>(*)</span></label>
-                                    <input placeholder="Mã số thuế" />
+                                    <label>{t('register.label-tax-code')} <span>(*)</span></label>
+                                    <input placeholder={ t('register.label-tax-code')} />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label>Địa chỉ công ty <span>(*)</span></label>
-                                    <input placeholder="Địa chỉ công ty" />
+                                    <label>{t('register.label-company-address')} <span>(*)</span></label>
+                                    <input placeholder={t('register.label-company-address')} />
                                 </div>
                                 <div className="form-group">
-                                    <label>Email công ty <span>(*)</span></label>
-                                    <input placeholder="Email công ty" />
+                                    <label>{t('register.label-company-email')} <span>(*)</span></label>
+                                    <input placeholder={t('register.label-company-email')} />
                                 </div>
                             </div>
                         </>
@@ -225,93 +236,93 @@ function RegisterPages({children}) {
 
                     <div className="form-row">
                         <div className="form-group">
-                            <label>Email cá nhân <span>(*)</span></label>
+                            <label>{t('register.label-personal-email')} <span>(*)</span></label>
                             <input
                                 name="email"
                                 value={formData.email}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                placeholder="Email" />
+                                placeholder={t('register.label-personal-email')} />
                             {errors.email && <p className="error-text">{errors.email}</p>}
                         </div>
                         <div className="form-group">
-                            <label>Số điện thoại <span>(*)</span></label>
+                            <label>{t('register.label-phone')} <span>(*)</span></label>
                             <input name="phone"
                                    value={formData.phone}
                                    onBlur={handleBlur}
                                    onChange={handleChange}
-                                   placeholder="Số điện thoại" />
+                                   placeholder={t('register.label-phone')} />
                             {errors.phone && <p className="error-text">{errors.phone}</p>}
                         </div>
                     </div>
 
                     <div className="form-row">
                         <div className="form-group full-width">
-                            <label>Ngày sinh <span>(*)</span></label>
+                            <label>{t('register.label-birthday')}<span>(*)</span></label>
                             <input type="date"
                                    name="birthday"
                                    value={formData.birthday}
                                    onBlur={handleBlur}
                                    onChange={handleChange}
-                                   placeholder="Ngày sinh" />
+                                   placeholder={t('register.label-birthday')} />
                             {errors.birthday && <p className="error-text">{errors.birthday}</p>}
                         </div>
                     </div>
 
                     <div className="form-row">
                         <div className="form-group">
-                            <label>Tỉnh/Thành phố <span>(*)</span></label>
+                            <label>{t('register.label-province')} <span>(*)</span></label>
                             <input
                                 name="province"
                                 value={formData.province}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                placeholder="Tỉnh/Thành phố" />
+                                placeholder={t('register.label-province')} />
                             {errors.province && <p className="error-text">{errors.province}</p>}
                         </div>
                         <div className="form-group">
-                            <label>Phường/Xã <span>(*)</span></label>
+                            <label>{t('register.label-ward')} <span>(*)</span></label>
                             <input name="ward"
                                    value={formData.ward}
                                    onBlur={handleBlur}
                                    onChange={handleChange}
-                                   placeholder="Phường/Xã" />
+                                   placeholder={t('register.label-ward')} />
                             {errors.ward && <p className="error-text">{errors.ward}</p>}
                         </div>
                     </div>
 
                     <div className="form-row">
                         <div className="form-group full-width">
-                            <label>Địa chỉ <span>(*)</span></label>
+                            <label>{t('register.label-detail')}<span>(*)</span></label>
                             <input type="address"
                                    name="detail"
                                    value={formData.detail}
                                    onBlur={handleBlur}
                                    onChange={handleChange}
-                                   placeholder="Địa chỉ" />
+                                   placeholder={t('register.label-detail')} />
                             {errors.detail && <p className="error-text">{errors.detail}</p>}
                         </div>
                     </div>
 
                     <div className="form-row">
                         <div className="form-group full-width">
-                            <label>Mật khẩu <span>(*)</span></label>
+                            <label>{t('register.label-password')}<span>(*)</span></label>
                             <input type="password"
                                    name="password"
                                    value={formData.password}
                                    onBlur={handleBlur}
                                    onChange={handleChange}
-                                   placeholder="Mật khẩu" />
+                                   placeholder={t('register.label-password')} />
                             {errors.password && <p className="error-text">{errors.password}</p>}
                         </div>
                     </div>
 
-                    <button type="submit" className="submit-btn">Đăng ký</button>
+                    <button type="submit" className="submit-btn">{t('register.title')}</button>
                 </form>
 
                 <div className="account-login-container">
-                    <p className="account-title">Bạn đã có tài khoản
-                        <a href="/login"> Đăng nhập tại đây </a>
+                    <p className="account-title">{t('register.login-question')}
+                        <a href="/login"> {t('register.login-link')} </a>
                     </p>
                     <div className="account-gg-fb">
                         <Button className="account-gg"> <GoogleIcon style={{ fontSize: 20 }} /> Google</Button>

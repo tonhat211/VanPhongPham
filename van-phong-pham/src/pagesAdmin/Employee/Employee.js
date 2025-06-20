@@ -16,8 +16,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchEmployees, updateEmployeeAction } from '~/pagesAdmin/Employee/employeeSlice';
 import { fetchCustomers } from '~/pagesAdmin/Customer/customerSlice';
 import { toast } from 'react-toastify';
+import useI18n from '~/hooks/useI18n';
 
 function Employee() {
+    const { t, lower } = useI18n();
 
     const departments = ['Kế toán', 'Kỹ thuật', 'Hành chính', 'Marketing', 'Nhân sự'];
 
