@@ -1,0 +1,51 @@
+.img-container {
+  padding: 4px;
+  position: relative;
+}
+.img-container img {
+  width: 100%;
+  border: 1px solid var(--header-color);
+  border-radius: 10px;
+}
+.img-container .remove-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 2rem;
+  color: var(--text-third-color);
+}
+.img-container .remove-btn:hover {
+  cursor: pointer;
+  filter: brightness(1.5);
+}
+.img-container .confirm-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  color: var(--text-third-color);
+  border-radius: 10px;
+  display: none;
+}
+.img-container .confirm-delete .heading {
+  color: white;
+  margin-top: 20px;
+  text-align: center;
+}
+.img-container .confirm-delete button:hover {
+  filter: brightness(1.5);
+  cursor: pointer;
+}
+.img-container .confirm-delete.active {
+  display: block;
+}
+
+.imgs-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/*# sourceMappingURL=ImageUpload.module.css.map */
