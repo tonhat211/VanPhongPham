@@ -107,7 +107,7 @@ function Order() {
     const size = parseInt(searchParams.get('size') || '20');
     const navigate = useNavigate();
     const viewTypes = [
-        { link: '', title: 'Tất cả' },
+        { link: '', title: t('all') },
         ...menus.map((menu) => ({
             link: menu.link,
             title: menu.title,
@@ -177,9 +177,9 @@ function Order() {
                 });
                 return bumped ? [bumped, ...rest] : prev;
             });
-            toast.success('cap nhat thanh cong');
+            toast.success(t('update-success'));
         } else {
-            toast.error('Cap nhat that bai');
+            toast.error(t('update-fail'));
         }
     };
 
@@ -247,12 +247,12 @@ function Order() {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Dat vao</th>
-                        <th>Danh sach san pham</th>
-                        <th>Tong tien</th>
-                        <th>Trang thai</th>
-                        <th>Cap nhat vao</th>
-                        <th>Thao tác</th>
+                        <th>{t('order-at')}</th>
+                        <th>{t('product-list')}</th>
+                        <th>{t('total-money')}</th>
+                        <th>{t('status')}</th>
+                        <th>{t('update-at')}</th>
+                        <th>{t('action')}</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -115,7 +115,7 @@ function Product() {
     const categories = [
         {
             link: 'none',
-            title: 'Không xác định',
+            title: t('undefined'),
         },
         ...menus.map((menu) => ({
             link: menu.link,
@@ -126,7 +126,7 @@ function Product() {
     const subCategories = [
         {
             link: 'none',
-            title: 'Không xác định',
+            title: t('undefined'),
         },
         ...menus.flatMap((menu) =>
             (menu.subs || []).map((sub) => ({
@@ -238,7 +238,7 @@ function Product() {
                             product.id === id ? { ...product, thumbnail: data.thumbnail.url } : product,
                         ),
                     );
-                    toast.success('Da thiet lap ve anh mac dinh');
+                    toast.success(t('set-dafault-img'));
                     return data.thumbnail;
                 }
                 return null;
@@ -259,7 +259,7 @@ function Product() {
                             product.id === selectedItem.id ? { ...product, thumbnail: data.thumbnail.url } : product,
                         ),
                     );
-                    toast.success('Them anh thanh cong');
+                    toast.success(t("update-success"));
                     return data.thumbnail;
                 }
                 return null;
@@ -283,7 +283,7 @@ function Product() {
             .then((data) => {
                 const success = data.success;
                 if (success) {
-                    toast.success('Cap nhat thanh cong');
+                    toast.success(t("update-success"));
                     return data.base;
                 }
                 return null;
@@ -301,7 +301,7 @@ function Product() {
                 const id = data.id;
                 const status = data.status;
                 if (success) {
-                    toast.success('Cap nhat thanh cong');
+                    toast.success(t("update-success"));
                     if ('DELETE' === status) {
                         const filteredProducts = products.filter((item) => item.id !== id);
                         setProducts(filteredProducts);
@@ -343,11 +343,11 @@ function Product() {
                         openModal(MODAL_TYPES.ADD);
                     }}
                 >
-                    Thêm sản phẩm
+                    {t('add-product')}
                 </Link>
             </div>
             <div className="d-flex-al-center" style={{ marginTop: '10px' }}>
-                <p className={cx('pLabel')}>Xem theo phaan loaji</p>
+                <p className={cx('pLabel')}>{t('view-by-category')}</p>
                 <select style={{ marginLeft: '10px' }} value={viewType} onChange={handleViewTypeChange}>
                     {viewTypes &&
                         viewTypes.map((item) => (
@@ -445,15 +445,15 @@ function Product() {
                 </colgroup>
                 <thead>
                     <tr>
-                        <th>STT</th>
+                        <th>{t('num-order')}</th>
                         <th>ID</th>
-                        <th>Ảnh</th>
-                        <th>Tên sản phẩm</th>
-                        <th>Thuong hieu</th>
-                        <th>Phan loai</th>
-                        <th>Da ban</th>
+                        <th>{t('image')}</th>
+                        <th>{t('name')}</th>
+                        <th>{t('brand')}</th>
+                        <th>{t('category')}</th>
+                        <th>{t('sold-qty')}</th>
                         {/* <th>Feedback</th> */}
-                        <th>Thao tác</th>
+                        <th>{t('action')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -626,7 +626,7 @@ function EditorProduct({
             .then((data) => {
                 const success = data.success;
                 if (success) {
-                    toast.success('Them anh thanh cong');
+                    toast.success(t('update-success'));
                     const newImages = data.images;
                     if (newImages) {
                         setImages((prev) => [...prev, ...newImages]);
@@ -679,7 +679,7 @@ function EditorProduct({
                     const newDetailId = data.detailId;
                     const filteredDetails = classifications.filter((detail) => detail.id !== newDetailId);
                     setClassifications(filteredDetails);
-                    toast.success('Cap nhat thanh cong');
+                    toast.success(t('update-success'));
                 }
             })
             .catch((err) => {
@@ -703,7 +703,7 @@ function EditorProduct({
                     setClassifications((prev) =>
                         prev.map((cls) => (cls.id === id ? { ...cls, title, initPrice, price, qty } : cls)),
                     );
-                    toast.success('Cap nhat thanh cong');
+                    toast.success(t('update-success'));
                 }
             })
             .catch((err) => {
@@ -716,7 +716,7 @@ function EditorProduct({
             .then((data) => {
                 const success = data.success;
                 if (success) {
-                    toast.success('xoa anh thanh cong');
+                    toast.success(t('update-success'));
                     const removedId = data.imgId;
                     if (removedId) {
                         setImages((prev) => prev.filter((img) => img.id !== removedId));
@@ -732,7 +732,7 @@ function EditorProduct({
     return (
         <div className={cx('product-detail')} style={{ padding: '10px' }}>
             <p className={cx('title')}>
-                {mode === 'VIEW' ? 'Chi tiết sản phẩm' : mode === 'EDIT' ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm'}
+                {mode === 'VIEW' ? t('product-detail') : mode === 'EDIT' ? t('edit-product') : t('update-product')}
             </p>
 
             <div style={{ marginTop: '20px' }}>
@@ -766,7 +766,7 @@ function EditorProduct({
 
                 <div className="d-flex-al-center" style={{ marginTop: '10px' }}>
                     <div className="grid-col-6">
-                        <p className={cx('heading')}>Phân loại</p>
+                        <p className={cx('heading')}>{t('category')}</p>
                         <select
                             style={{ marginLeft: '10px' }}
                             value={categoryCode}
@@ -782,7 +782,7 @@ function EditorProduct({
                         </select>
                     </div>
                     <div className="grid-col-6">
-                        <p className={cx('heading')}>Phân loại phụ</p>
+                        <p className={cx('heading')}>{t('sub-category')}</p>
                         <select
                             style={{ marginLeft: '10px' }}
                             value={subCategoryCode}
@@ -800,7 +800,7 @@ function EditorProduct({
                 </div>
                 <div className="d-flex-al-center" style={{ marginTop: '10px' }}>
                     <div className="grid-col-6">
-                        <p className={cx('heading')}>Thuong hieu</p>
+                        <p className={cx('heading')}>{t('brand')}</p>
                         <select
                             style={{ marginLeft: '10px' }}
                             value={brandCode}
@@ -819,7 +819,7 @@ function EditorProduct({
                 </div>
                 <div style={{ margin: '20px 0' }}>
                     <div className="d-flex-space-between">
-                        <p className={cx('heading')}>Các phân loại của sản phẩm</p>
+                        <p className={cx('heading')}>{t('categories-of-product')}</p>
                         {isDisabled || (
                             <Link
                                 className="fake-a"
@@ -829,7 +829,7 @@ function EditorProduct({
                                     handleAddClassification();
                                 }}
                             >
-                                Thêm phân loại
+                                {t('add-category')}
                             </Link>
                         )}
                     </div>
