@@ -31,6 +31,7 @@ import {
     getPermissionsOfEmployee,
     removePermission,
 } from '~/api/permissionApi';
+import { t } from 'i18next';
 
 // import {Editor as Editor1} from '~/pages/components/EditorWithUseQuill/Editor'
 
@@ -58,19 +59,19 @@ const permissionActions = [
     },
     {
         value: 'OWNER',
-        title: 'Nguoi so huu',
+        title: t('owner'),
     },
     {
         value: 'EDIT',
-        title: 'cap nhat',
+        title: t("edit"),
     },
     {
         value: 'DISABLE',
-        title: 'vo hieu',
+        title: t("disable"),
     },
     {
         value: 'ENABLE',
-        title: 'kich hoat',
+        title: t("enable"),
     },
 ];
 
@@ -205,31 +206,31 @@ function Permission() {
 
     const handleRemovePermission = async (id) => {
         if (!selectedEmployeeId) {
-            toast.error('chua chon nhan vien');
+            toast.error(t('unknown-employee'));
             return;
         }
         const result = await removePermission({ employeeId: selectedEmployeeId, permissionId: id });
         if (result.success) {
-            toast.success('Go quyen thanh cong');
+            toast.success(t("remove-perm-success"));
             const filterPermissions = permissionDataShow.filter((item) => item.id !== id);
             setPermissionDataShow(filterPermissions);
         } else {
-            toast.error('Go quyen that bai');
+            toast.error(t('remove-perm-fail'));
         }
     };
 
     const handleAddPermission = async (id) => {
         if (!selectedEmployeeId) {
-            toast.error('chua chon nhan vien');
+            toast.error(t('unknown-employee'));
             return;
         }
         const result = await addPermission({ employeeId: selectedEmployeeId, permissionId: id });
         if (result.success) {
-            toast.success('Them quyen thanh cong');
+            toast.success(t("add-perm-success"));
             const filterPermissions = permissionDataShow.filter((item) => item.id !== id);
             setPermissionDataShow(filterPermissions);
         } else {
-            toast.error('Them quyen that bai');
+            toast.error(t("add-perm-success"));
         }
     };
     useEffect(() => {
@@ -280,7 +281,7 @@ function Permission() {
         return (
             <table className="custom-table fixed">
                 <caption style={{ fontWeight: 'bold', fontSize: '1.6rem', padding: '8px' }}>
-                    Danh sách nhân viên
+                    {t('employee-list')}
                 </caption>
                 <colgroup>
                     <col style={{ width: '5%' }} />
@@ -294,14 +295,14 @@ function Permission() {
                 </colgroup>
                 <thead>
                     <tr>
-                        <th>STT</th>
+                        <th>{t('num-order')}</th>
                         <th>ID</th>
-                        <th>Ho ten</th>
+                        <th>{t('fullname')}</th>
                         <th>Email</th>
                         {/* <th>Phan loai</th>
                         <th>Da ban</th> */}
                         {/* <th>Feedback</th> */}
-                        <th>Thao tác</th>
+                        <th>{t('action')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -320,7 +321,7 @@ function Permission() {
                         <tr>
                             {/* 5 = số cột của thead – chỉnh lại cho khớp */}
                             <td colSpan={5} style={{ textAlign: 'center', padding: '1rem' }}>
-                                Không có dữ liệu nào
+                                {t('not-thing')}
                             </td>
                         </tr>
                     )}
@@ -352,7 +353,7 @@ function Permission() {
                 <td className="center">
                     <div className="d-flex-col">
                         <button className={classNames(cx(), 'btn btn-primary')} onClick={handleClickAddMoreBtn}>
-                            Them
+                            {t('add')}
                         </button>
                     </div>
                 </td>
@@ -372,9 +373,9 @@ function Permission() {
         return (
             <table className="custom-table fixed">
                 <caption style={{ fontWeight: 'bold', fontSize: '1.6rem', padding: '8px' }}>
-                    {mode==="ALL" && "Tất cả quyền"} 
-                    {mode==="ADD" && "Quyền có thể gán"} 
-                    {mode==="REMOVE" && "Quyền hiện có"} 
+                    {mode==="ALL" && t('all-permissions')} 
+                    {mode==="ADD" && t('can-add-permission-list')} 
+                    {mode==="REMOVE" && t('exist-permission-list')} 
                 </caption>
                 <colgroup>
                     <col style={{ width: '5%' }} />
@@ -389,15 +390,15 @@ function Permission() {
                 </colgroup>
                 <thead>
                     <tr>
-                        <th>STT</th>
+                        <th>{t('num-order')}</th>
                         <th>ID</th>
-                        <th>Ten</th>
+                        <th>{t('name')}</th>
                         {/* <th>url</th> */}
                         {/* <th>mo ta</th> */}
                         {/* <th>Phan loai</th>
                         <th>Da ban</th> */}
                         {/* <th>Feedback</th> */}
-                        <th>Thao tác</th>
+                        <th>{t('action')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -415,7 +416,7 @@ function Permission() {
                     ) : (
                         <tr>
                             <td colSpan={4} style={{ textAlign: 'center', padding: '1rem' }}>
-                                Không có dữ liệu nào
+                                {t('not-thing')}
                             </td>
                         </tr>
                     )}

@@ -476,6 +476,55 @@
         "personalDataPolicy": "Chính sách bảo mật thông tin cá nhân",
         "contactInfo": "Thông tin liên hệ",
         "copyright": "© 2021 Copyright - Bản quyền thuộc Tập đoàn Thiên Long"
-    }
+    },
+    "employee-list": "Danh sách nhân viên",
+    "owner": "Người sở hữu",
+    "edit": "Chỉnh sửa",
+    "disable": "Vô hiệu",
+    "enable": "Kích hoạt",
+    "unknown-employee": "Chưa chọn nhân viên",
+    "remove-perm-success": "Gỡ quyền thành công",
+    "remove-perm-fail": "Gỡ quyền thất bại",
+    "add-perm-success": "Gắn quyền thành công",
+    "add-perm-fail": "Gắn quyền thất bại",
+    "num-order": "Số thứ tự",
+    "action": "Thao tác",
+    "not-thing": "Không có dữ liệu nào",
+    "add": "Thêm",
+    "all-permissions": "Tất cả quyền",
+    "can-add-permission-list": "Danh sách quyền có thể gán",
+    "exist-permission-list": "Danh sách quyền đang có",
+    "name": "Tên",
+    "update-success": "Cập nhật thành công",
+    "update-fail": "Cập nhật thất bại",
+    "order-at": "Đặt vào",
+    "product-list": "Danh sách sản phẩm",
+    "total-money": "Tổng tiền",
+    "status": "Trạng thái",
+    "update-at": "Cập nhật vào",
+    "delivery":"Giao hàng",
+    "complete": "Hoàn thành",
+    "undefined": "Không xác định",
+    "set-dafault-img": "Đã thiết lập về ảnh mặc định",
+    "add-product": "Thêm sản phẩm",
+    "view-by-category": "Xem theo phân loại",
+    "sold-qty": "Đã bán",
+    "image": "Ảnh",
+    "product-detail": "Chi tiết sản phẩm",
+    "edit-product": "Cập nhật sản phẩm",
+    "add-product": "Thêm sản phẩm",
+    "categories-of-product": "Những phân loại của sản phẩm",
+    "add-category": "Thêm phân loại",
+    "permissions": "Phân quyền",
+    "orders": "Đơn hàng"
+
+
+
+
+
+
+
+
+    
 
 }
